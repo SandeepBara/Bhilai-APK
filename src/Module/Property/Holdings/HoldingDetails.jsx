@@ -611,17 +611,17 @@ const HoldingDetails = ({ route, navigation }) => {
         {yesNo(safData?.userPermission?.canAdd) === 'Yes' && (
           <>
             {[
-              ['ReAssessment', { isRessessment: true }],
-              ['Mutation', { isMutation: true }],
+              ['Reassessment', 'Reassessment'],
+              ['Mutation', 'Mutation'],
             ].map(([label, mode]) => (
               <TouchableOpacity
                 key={label}
                 accessibilityRole="button"
                 disabled={isLocked}
                 style={[styles.actionBtn, isLocked && styles.disabledButton]}
-                onPress={() => navigation.navigate('ApplyAssessmentComponentized', {
-                  id, ...mode, safData, ownerList, taxDetails, transDtls,
-                  memoDtls, tcVerfivication, paymentDtls,
+                onPress={() => navigation.push('ApplyAssessment', {
+                  assessmentType: mode,
+                  holding: { ...safData, id: safData.id ?? id },
                 })}
               >
                 <Text style={styles.actionBtnText}>{label}</Text>

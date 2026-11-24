@@ -101,6 +101,10 @@ function PreviewDetails({ data, masters, apartments }) {
         <Fields fields={[
           ['Application Type', data.applicationFrom],
           ['Assessment Type', data.assessmentType || 'New Assessment'],
+    ...(data.assessmentType === 'Mutation' ? [
+      ['Mode of Ownership Transfer', label('transferMode', data.transferModeMstrId, 'transferMode')],
+      ['Percentage of Property Transfer', String(data.percentageOfPropertyTransfer) + '%'],
+    ] : []),
           ['Ward No', label('wardList', data.wardMstrId, 'wardNo')],
           ['Ownership Type', label('ownershipType', data.ownershipTypeMstrId, 'ownershipType')],
           ['Property Type', label('propertyType', data.propTypeMstrId, 'propertyType')],

@@ -10,6 +10,7 @@ import {
   Platform,
   Switch,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { BASE_URL } from '../../../config';
@@ -42,6 +43,13 @@ const assessmentFlags = [
 ];
 
 const ApplyAssessment = ({ navigation, route }) => {
+  const { bottom } = useSafeAreaInsets();
+  const holding = route.params?.holding;
+  const assessmentType = route.params?.assessmentType ?? 'New Assessment';
+  const isMutation = assessmentType === 'Mutation';
+  const hydratedHolding = useRef(null);
+  const [transferMode, setTransferMode] = useState(null);
+  const [transferPercentage, setTransferPercentage] = useState('');
   const [applicationFrom, setApplicationFrom] = useState('');
   const [roadType, setRoadType] = useState('');
   const [previewing, setPreviewing] = useState(false);
@@ -49,7 +57,6 @@ const ApplyAssessment = ({ navigation, route }) => {
   const [assessmentOptions, setAssessmentOptions] = useState(
     Object.fromEntries(assessmentFlags.map(([key]) => [key, false])),
   );
-  // Route params removed - this is now only for New Assessment
 
   // All state variables
   const [newWardLabel, setNewWardLabel] = useState('');
@@ -109,7 +116,7 @@ const ApplyAssessment = ({ navigation, route }) => {
   const [correspondingState, setCorrespondingState] = useState('');
   const [correspondingPincode, setCorrespondingPincode] = useState('');
   const [error, setError] = useState({});
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(() => holding ? null : new Date());
   const [apartmentList, setApartmentList] = useState([]);
   const [apartmentDetail, setApartmentDetail] = useState(null);
   const [loadingApartments, setLoadingApartments] = useState(false);
@@ -411,8 +418,88 @@ const ApplyAssessment = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    setApartmentDetail(null);
-    setApartmentList([]);
+    if (!holding || !data || hydratedHolding.current === holding) return;
+    hydratedHolding.current = holding;
+    const text = value => String(value ?? '');
+    const flag = value => [true, 1, '1', 'true'].includes(value);
+    const yearMonth = value => text(value).match(/^\d{4}-\d{2}/)?.[0] ?? '';
+    const dateText = value => text(value).slice(0, 10);
+
+    setApplicationFrom(holding.applicationFrom ?? '');
+    setRoadType(holding.roadTypeMstrId ?? data.roadType?.find(item => item.roadType === holding.roadType)?.id ?? '');
+    setOldWard(holding.wardMstrId ?? data.wardList?.find(item => String(item.wardNo) === String(holding.wardNo))?.id ?? '');
+    setNewWard(holding.newWardMstrId ?? '');
+    setOwnershipType(holding.ownershipTypeMstrId ?? data.ownershipType?.find(item => item.ownershipType === holding.ownershipType)?.id ?? '');
+    setPropertyType(holding.propTypeMstrId ?? data.propertyType?.find(item => item.propertyType === holding.propertyType)?.id ?? '');
+    setPropertyTypeLabel(holding.propertyType ?? '');
+    setZone(holding.zoneMstrId ?? '');
+    setKhataNo(text(holding.khataNo));
+    setPlotNo(text(holding.plotNo));
+    setVillageName(text(holding.villageMaujaName));
+    setPlotArea(text(holding.areaOfPlot));
+    setBuildArea(text(holding.builtupArea));
+    setPropertyAddress(text(holding.propAddress));
+    setCity(text(holding.propCity));
+    setDistrict(text(holding.propDist));
+    setState(text(holding.propState));
+    setPincode(text(holding.propPinCode));
+    setIsChecked(flag(holding.isCorrAddDiffer));
+    setCorrespondingAddress(text(holding.corrAddress));
+    setCorrespondingCity(text(holding.corrCity));
+    setCorrespondingDistrict(text(holding.corrDist));
+    setCorrespondingState(text(holding.corrState));
+    setCorrespondingPincode(text(holding.corrPinCode));
+    setMobileTower(flag(holding.isMobileTower) ? 'yes' : 'no');
+    setTowerArea(text(holding.towerArea));
+    setInstallationDate(dateText(holding.towerInstallationDate));
+    setRainHarvesting(flag(holding.isWaterHarvesting ?? holding.rainWaterHarvesting) ? 'yes' : 'no');
+    if (holding.flatRegistryDate) {
+      const registryDate = new Date(holding.flatRegistryDate);
+      if (!Number.isNaN(registryDate.getTime())) setSelectedDate(registryDate);
+    }
+    setAssessmentOptions(Object.fromEntries(assessmentFlags.map(([key]) => [key, flag(holding[key])])));
+    if (holding.owners?.length) {
+      setOwnerDetails(holding.owners.map(owner => ({
+        id: owner.id,
+        propertyDetailId: owner.propertyDetailId,
+        ownerName: text(owner.ownerName),
+        guardianName: text(owner.guardianName),
+        relation: text(owner.relationType),
+        mobile: text(owner.mobileNo),
+        aadhaar: text(owner.aadharNo),
+        pan: text(owner.panNo),
+        email: text(owner.email),
+        address: text(owner.address),
+        gender: text(owner.gender),
+        dob: dateText(owner.dob),
+        isArmedForce: flag(owner.isArmedForce),
+        isSpeciallyAbled: flag(owner.isSpeciallyAbled),
+      })));
+    }
+    if (holding.floors?.length) {
+      setFloorDetails(holding.floors.map(floor => ({
+        existingFloorId: floor.id,
+        zoneMstrId: floor.zoneMstrId,
+        floorName: floor.floorMasterId,
+        usageType: floor.usageTypeMasterId,
+        occupancyType: floor.occupancyTypeMasterId,
+        constructionType: floor.constructionTypeMasterId,
+        builtUpArea: text(floor.builtupArea),
+        fromDate: yearMonth(floor.dateFrom),
+        uptoDate: yearMonth(floor.dateUpto),
+      })));
+    }
+  }, [holding, data]);
+
+  useEffect(() => {
+    const holdingWardId = holding?.wardMstrId ?? data?.wardList?.find(ward =>
+      String(ward.wardNo) === String(holding?.wardNo),
+    )?.id;
+    const existingApartmentId = String(oldWard) === String(holdingWardId)
+      ? holding?.appartmentDetailsId : null;
+    setApartmentDetail(Number(propertyType) === 3 ? existingApartmentId ?? null : null);
+    setApartmentList(existingApartmentId && holding?.apartmentName
+      ? [{ label: holding.apartmentName, value: existingApartmentId }] : []);
     if (Number(propertyType) !== 3 || !oldWard) {
       setLoadingApartments(false);
       return;
@@ -446,7 +533,7 @@ const ApplyAssessment = ({ navigation, route }) => {
     return () => {
       current = false;
     };
-  }, [oldWard, propertyType]);
+  }, [oldWard, propertyType, holding, data]);
 
   // Modified field change handlers with real-time validation
   const handleFieldChange = (fieldName, value, setter) => {
@@ -829,6 +916,16 @@ const ApplyAssessment = ({ navigation, route }) => {
   }
 
   const handleSubmit = async () => {
+    if (assessmentType !== 'New Assessment' && !holding?.id) {
+      Alert.alert('Holding details', 'The linked holding is unavailable.');
+      return;
+    }
+    if (isMutation && (!transferMode || !Number.isFinite(Number(transferPercentage))
+      || Number(transferPercentage) < 0.1 || Number(transferPercentage) > 100)) {
+      Alert.alert('Ownership transfer', 'Select a transfer mode and enter a percentage from 0.1 to 100.');
+      return;
+    }
+
     if (!applicationFrom || !roadType) {
       Alert.alert('Required fields', 'Select the application type and road type.');
       return;
@@ -843,7 +940,12 @@ const ApplyAssessment = ({ navigation, route }) => {
     const payload = {
       newWardLabel,
       zoneLabel,
-      assessmentType: 'New Assessment',
+      assessmentType,
+      ...(holding && { previousHoldingId: holding.id }),
+      ...(isMutation && {
+        transferModeMstrId: transferMode,
+        percentageOfPropertyTransfer: Number(transferPercentage),
+      }),
       applicationFrom,
       roadTypeMstrId: roadType,
       ...assessmentOptions,
@@ -912,6 +1014,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         ? formatDate1(completionDate)
         : '2021-02-03',
       ownerDtl: (ownerDetails || []).map(owner => ({
+        ...(owner.id && { id: owner.id, propertyDetailId: owner.propertyDetailId }),
         ownerName: owner.ownerName,
         guardianName: owner.guardianName,
         mobileNo: owner.mobile,
@@ -928,6 +1031,7 @@ const ApplyAssessment = ({ navigation, route }) => {
       floorDtl:
         propertyTypeLabel !== 'VACANT LAND'
           ? (floorDetails || []).map(floor => ({
+              ...(floor.existingFloorId && { propFloorDetailId: floor.existingFloorId }),
               builtupArea:
                 floor.builtUpArea !== undefined && floor.builtUpArea !== ''
                   ? parseFloat(floor.builtUpArea)
@@ -1128,7 +1232,8 @@ const ApplyAssessment = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <HeaderNavigation />
-      <ScrollView ref={scrollViewRef} contentContainerStyle={styles.container}>
+      <ScrollView ref={scrollViewRef} contentContainerStyle={[styles.container, { paddingBottom: bottom + 16 }]}>
+        {holding && <Text style={styles.cardTitle}>{assessmentType}</Text>}
         {/* Assessment Type Section */}
         <View style={styles.cardContainer}>
           <View style={styles.card}>
@@ -1241,7 +1346,7 @@ const ApplyAssessment = ({ navigation, route }) => {
 
                 {showDatePicker && (
                   <DateTimePicker
-                    value={selectedDate}
+                    value={selectedDate || new Date()}
                     maximumDate={new Date()}
                     mode="date"
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
@@ -1294,6 +1399,31 @@ const ApplyAssessment = ({ navigation, route }) => {
             </View>
           </View>
         </View>
+
+        {isMutation && (
+          <View style={styles.cardContainer}>
+            <View style={styles.card}>
+              <Text style={styles.label}>Mode of Ownership Transfer *</Text>
+              <Dropdown
+                style={styles.dropdown}
+                data={data?.transferMode ?? []}
+                labelField="transferMode"
+                valueField="id"
+                placeholder="Select Mode of Ownership Transfer"
+                value={transferMode}
+                onChange={item => setTransferMode(item.id)}
+              />
+              <Text style={styles.label}>Percentage of Property Transfer *</Text>
+              <TextInput
+                style={styles.input}
+                keyboardType="decimal-pad"
+                value={transferPercentage}
+                onChangeText={setTransferPercentage}
+                placeholder="0.1 to 100"
+              />
+            </View>
+          </View>
+        )}
 
         {/* MULTIPLE OWNER DETAILS SECTION */}
         <View style={styles.cardContainer}>
