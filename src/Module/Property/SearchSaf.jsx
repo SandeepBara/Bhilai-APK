@@ -121,7 +121,7 @@ function SearchSaf() {
             <View style={styles.buttonRow}>
                 <TouchableOpacity
                     style={styles.button1}
-                    onPress={() => navigation.navigate('SafDueDetails', { id: item.id })}
+                    onPress={() => navigation.navigate('SafDetails', { id: item.id })}
                 >
                     <Text style={styles.surveyButtonText}>View</Text>
                 </TouchableOpacity>

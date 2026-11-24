@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   ScrollView,
   StyleSheet,
@@ -31,7 +32,54 @@ import {
 } from './Model/Model';
 import { getToken } from '../../../utils/auth';
 import { HOLDIGN_API_ROUTES } from '../../../api/apiRoutes';
+const yesNo = value => [true, 1, '1', 'true'].includes(value) ? 'Yes' : 'No';
+
+function HoldingFields({ title, fields, notice }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.heading}>{title}</Text>
+      {notice ? <Text accessibilityRole="alert" style={styles.assessmentNotice}>{notice}</Text> : null}
+      {fields.map(([label, value, onPress]) => (
+        <View key={label} style={styles.row}>
+          <Text style={styles.labelFixed}>{label}</Text>
+          <Text onPress={onPress} style={[styles.value, onPress && styles.fieldLink]}>
+            {value ?? 'NA'}
+          </Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function HoldingTable({ title, columns, rows, note }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.heading}>{title}</Text>
+      {note ? <Text style={styles.value}>{note}</Text> : null}
+      {rows.length > 0 ? (
+        <ScrollView horizontal>
+          <View>
+            <View style={[styles.tableRow, styles.tableHeader]}>
+              {columns.map(column => (
+                <Text key={column} style={[styles.tableCell, styles.headerText]}>{column}</Text>
+              ))}
+            </View>
+            {rows.map((row, index) => (
+              <View key={index} style={styles.tableRow}>
+                {row.map((value, column) => (
+                  <Text key={columns[column]} style={styles.tableCell}>{value ?? 'NA'}</Text>
+                ))}
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      ) : <Text style={styles.value}>No records available.</Text>}
+    </View>
+  );
+}
+
 const HoldingDetails = ({ route, navigation }) => {
+  const { bottom } = useSafeAreaInsets();
   const { id } = route.params;
   console.log(id, 'holdign id');
   const [holdingData, setHoldingData] = useState('');
@@ -113,7 +161,7 @@ const HoldingDetails = ({ route, navigation }) => {
         setWorkflowId(responseData?.workflowId);
         setOwnerList(responseData?.owners || []);
         setFloorData(responseData?.floors || []);
-        setTaxDetails(responseData?.tranDtls || []);
+        setTaxDetails(responseData?.taxDtl || []);
         setTranDtls(responseData?.tranDtls || []);
         setMemoDtls(responseData?.memoDtls || []);
         setTcVerfivication(responseData?.tcVerifications || []);
@@ -361,495 +409,113 @@ const HoldingDetails = ({ route, navigation }) => {
     );
   }
 
+  const isLocked = yesNo(safData?.lockStatus) === 'Yes';
+
+  const openDemand = showPayment => {
+    setShowPayNow(showPayment);
+    setViewDemandVisible(true);
+    viewdemand(id);
+  };
+
   return (
-    <ScrollView style={styles.scroll}>
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={{ paddingBottom: bottom + 12 }}
+    >
       <HeaderNavigation />
       <View style={styles.container}>
-        <View style={styles.card}>
-          <Text style={styles.heading}>Basic Details</Text>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Ward No:</Text>
-            <Text style={styles.value}>{safData?.wardNo || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>New Ward No:</Text>
-            <Text style={styles.value}>{safData?.newWardNo || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Assessment Type:</Text>
-            <Text style={styles.value}>{safData?.assessmentType}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>New Holding No:</Text>
-            <Text style={styles.value}>{safData?.newHoldingNo || 'N/A'}</Text>
-          </View>
-
-          {/* propTypeMstrId */}
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Property Type:</Text>
-            <Text style={styles.value}>{safData?.propertyType || 'N/A'}</Text>
-          </View>
-
-          {safData?.propTypeMstrId == 3 && (
-            <>
-              <View style={styles.row}>
-                <Text style={styles.labelFixed}>Apartment Name:</Text>
-                <Text style={styles.value}>
-                  {safData?.apartmentName || 'N/A'}
-                </Text>
-              </View>
-
-              <View style={styles.row}>
-                <Text style={styles.labelFixed}>Flat Registry Date:</Text>
-                <Text style={styles.value}>
-                  {safData?.flatRegistryDate || 'N/A'}
-                </Text>
-              </View>
-            </>
-          )}
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Ownership Type:</Text>
-            <Text style={styles.value}>{safData?.ownershipType || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Khata No:</Text>
-            <Text style={styles.value}>{safData?.khataNo || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Plot No:</Text>
-            <Text style={styles.value}>{safData?.plotNo || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Road Width (ft):</Text>
-            <Text style={styles.value}>{safData?.roadWidth || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Area of Plot (sq. ft):</Text>
-            <Text style={styles.value}>{safData?.areaOfPlot || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Rainwater Harvesting:</Text>
-            <Text style={styles.value}>
-              {safData?.isWaterHarvesting ? 'Yes' : 'No'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Address:</Text>
-            <Text style={styles.value}>{safData?.propAddress || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>City:</Text>
-            <Text style={styles.value}>{safData?.propCity || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>District:</Text>
-            <Text style={styles.value}>{safData?.propDist || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>State:</Text>
-            <Text style={styles.value}>{safData?.propState || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Pin Code:</Text>
-            <Text style={styles.value}>{safData?.propPinCode || 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Zone:</Text>
-            <Text style={styles.value}>{safData?.zone || 'N/A'}</Text>
-          </View>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.heading}>Owner Details</Text>
-
-          {ownerList.length > 0 ? (
-            <ScrollView horizontal>
-              <View>
-                {/* Table Header */}
-                <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Sl No.
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Owner
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Guardian
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Relation
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Mobile
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Gender
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>DOB</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Email
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Aadhar
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>PAN</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Specially Abled
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Armed Force
-                  </Text>
-                </View>
-
-                {/* Table Rows */}
-                {ownerList.map((owner, index) => (
-                  <View key={index} style={styles.tableRow}>
-                    <Text style={styles.tableCell}>{index + 1}</Text>
-                    <Text style={styles.tableCell}>
-                      {owner.ownerName ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {owner.guardianName ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {owner.relationType ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {owner.mobileNo ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {owner.gender ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>{owner.dob ?? 'N/A'}</Text>
-                    <Text style={styles.tableCell}>{owner.email ?? 'N/A'}</Text>
-                    <Text style={styles.tableCell}>
-                      {owner.aadharNo || 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>{owner.panNo || 'N/A'}</Text>
-                    <Text style={styles.tableCell}>
-                      {owner.isSpeciallyAbled ? 'Yes' : 'No'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {owner.isArmedForce ? 'Yes' : 'No'}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          ) : (
-            <View style={styles.row}>
-              <Text style={styles.value}>No owner details available.</Text>
-            </View>
-          )}
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.heading}>Electricity Details</Text>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Electricity K. No:</Text>
-            <Text style={styles.value}>
-              {safData?.electConsumerNo ?? 'N/A'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>ACC No.:</Text>
-            <Text style={styles.value}>{safData?.electAccNo ?? 'N/A'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>BIND/BOOK No.:</Text>
-            <Text style={styles.value}>
-              {safData?.electBindBookNo ? safData.electBindBookNo : 'N/A'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Electricity Consumer Category:
-            </Text>
-            <Text style={styles.value}>
-              {safData?.electConsCategory ?? 'N/A'}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.heading}>
-            Building Plan / Water Connection Details
-          </Text>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Building Plan Approval No:</Text>
-            <Text style={styles.value}>
-              {safData?.buildingPlanApprovalNo
-                ? safData.buildingPlanApprovalNo
-                : 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Building Plan Approval Date:</Text>
-            <Text style={styles.value}>
-              {safData?.buildingPlanApprovalDate
-                ? safData.buildingPlanApprovalDate
-                : 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Water Consumer No:</Text>
-            <Text style={styles.value}>
-              {safData?.waterConnNo ? safData.waterConnNo : 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Water Connection Date:</Text>
-            <Text style={styles.value}>
-              {safData?.waterConnDate ? safData.waterConnDate : 'NA'}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.heading}>Property Details</Text>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Khata No:</Text>
-            <Text style={styles.value}>{safData?.khataNo ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Plot No:</Text>
-            <Text style={styles.value}>{safData?.plotNo ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Village/Mauja Name:</Text>
-            <Text style={styles.value}>
-              {safData?.villageMaujaName ?? 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Area of Plot (in Decimal):</Text>
-            <Text style={styles.value}>{safData?.areaOfPlot ?? 'NA'}</Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.heading}>Property Address</Text>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Address:</Text>
-            <Text style={styles.value}>{safData?.propAddress ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>City:</Text>
-            <Text style={styles.value}>{safData?.propCity ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Pin:</Text>
-            <Text style={styles.value}>{safData?.propPinCode ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>State:</Text>
-            <Text style={styles.value}>{safData?.propState ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>District:</Text>
-            <Text style={styles.value}>{safData?.propDist ?? 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              If Corresponding Address Different:
-            </Text>
-            <Text style={styles.value}>
-              {safData?.isCorrAddDiffer ? 'Yes' : 'No'}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.heading}>Floor Details</Text>
-
-          {floordata?.length > 0 ? (
-            <ScrollView horizontal>
-              <View>
-                {/* Table Header */}
-                <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Sl No.
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Floor
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Usage Type
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Occupancy Type
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Construction Type
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Carpet Area
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Built-up Area
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    From Date
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Upto Date
-                  </Text>
-                </View>
-
-                {/* Table Rows */}
-                {floordata.map((floor, index) => (
-                  <View key={index} style={styles.tableRow}>
-                    <Text style={styles.tableCell}>{index + 1}</Text>
-                    <Text style={styles.tableCell}>
-                      {floor.floorName ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.usageType ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.occupancyName ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.constructionType ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.carpetArea ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.builtupArea ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.dateFrom ?? 'N/A'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {floor.dateUpto ? floor.dateUpto : 'N/A'}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          ) : (
-            <View style={styles.row}>
-              <Text style={styles.value}>No floor details available.</Text>
-            </View>
-          )}
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.heading}>Additional Property Details</Text>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Does Property Have Mobile Tower(s)?
-            </Text>
-            <Text style={styles.value}>
-              {safData?.isMobileTower ? 'Yes' : 'No'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Date of Installation of Mobile Tower:
-            </Text>
-            <Text style={styles.value}>
-              {safData?.towerInstallationDate || 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Total Area Covered by Mobile Tower & its Equipments (Sq. Ft.):
-            </Text>
-            <Text style={styles.value}>{safData?.towerArea || 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Does Property Have Hoarding Board(s)?
-            </Text>
-            <Text style={styles.value}>
-              {safData?.isHoardingBoard ? 'Yes' : 'No'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Date of Installation of Hoarding Board(s):
-            </Text>
-            <Text style={styles.value}>
-              {safData?.hoardingInstallationDate || 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Total Area of Wall / Roof / Land (in Sq. Ft.):
-            </Text>
-            <Text style={styles.value}>{safData?.hoardingArea || 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>Is Property a Petrol Pump?</Text>
-            <Text style={styles.value}>
-              {safData?.isPetrolPump ? 'Yes' : 'No'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Completion Date of Petrol Pump:
-            </Text>
-            <Text style={styles.value}>
-              {safData?.petrolPumpCompletionDate || 'NA'}
-            </Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Underground Storage Area (in Sq. Ft.):
-            </Text>
-            <Text style={styles.value}>{safData?.underGroundArea || 'NA'}</Text>
-          </View>
-
-          <View style={styles.row}>
-            <Text style={styles.labelFixed}>
-              Rainwater Harvesting Provision?
-            </Text>
-            <Text style={styles.value}>
-              {safData?.isWaterHarvesting ? 'Yes' : 'No'}
-            </Text>
-          </View>
-        </View>
-
+        <HoldingFields title="Property Details"
+          notice={safData?.isAssessmentDue === true
+            ? 'Assessment is due' + (safData.lastAssessmentYear ? ' (last assessed: ' + safData.lastAssessmentYear + ')' : '')
+            : null}
+          fields={[
+            ['Ward No', safData?.wardNo], ['New Holding No', safData?.newHoldingNo],
+            ['Old Holding No', safData?.holdingNo],
+            ['SAF No', safData?.safNo, safData?.safDetailId
+              ? () => navigation.navigate('SafDetails', { id: safData.safDetailId }) : undefined],
+            ['Assessment Type', safData?.assessmentType], ['Last Assessment Year', safData?.lastAssessmentYear],
+            ['Plot No', safData?.plotNo], ['Property Type', safData?.propertyType],
+            ['Area of Plot (In Sqft)', safData?.areaOfPlot], ['Ownership Type', safData?.ownershipType],
+            ['Rain Water Harvesting', yesNo(safData?.rainWaterHarvesting)],
+            ['Holding Type', safData?.holdingType], ['Address', safData?.propAddress],
+            ...(safData?.assessmentType?.toLowerCase() === 'mutation' ? []
+              : [['Road Type', safData?.roadType]]),
+          ]}
+        />
+        <HoldingTable title="Owner Details"
+          columns={['SL', 'Owner', 'Guardian', 'Relation', 'Mobile', 'Email', 'Aadhar No',
+            'PAN No', 'Gender', 'Dob', 'Armed Force', 'Specially Abled']}
+          rows={ownerList.map((owner, index) => [
+            index + 1, owner.ownerName, owner.guardianName, owner.relationType,
+            owner.mobileNo, owner.email, owner.aadharNo, owner.panNo, owner.gender,
+            owner.dob, yesNo(owner.isArmedForce).toUpperCase(),
+            yesNo(owner.isSpeciallyAbled).toUpperCase(),
+          ])}
+        />
+        <HoldingFields title="Property Details" fields={[
+          ['Khata No', safData?.khataNo], ['Plot No', safData?.plotNo],
+          ['Village/Mauja Name', safData?.villageMaujaName],
+          ['Area of Plot (in Decimal)', safData?.areaOfPlot],
+        ]} />
+        <HoldingFields title="Property Address" fields={[
+          ['Property Address', safData?.propAddress], ['City', safData?.propCity],
+          ['Pin', safData?.propPinCode], ['State', safData?.propState],
+          ['District', safData?.propDist],
+          ['If Corresponding Address Different', yesNo(safData?.isCorrAddDiffer)],
+        ]} />
+        {yesNo(safData?.isCorrAddDiffer) === 'Yes' && (
+          <HoldingFields title="Correspondence Address" fields={[
+            ['Correspondence Address', safData.corrAddress], ['City', safData.corrCity],
+            ['Pin', safData.corrPinCode], ['State', safData.corrState], ['District', safData.corrDist],
+          ]} />
+        )}
+        <HoldingTable title="Floor Details"
+          note="Built Up refers to the entire carpet area along with the thickness of the external walls, internal walls, and columns."
+          columns={['SL', 'Floor No', 'Usage Type', 'Occupancy Type', 'Construction Type',
+            'Built Up Area (in Sq. Ft)', 'From Date', 'Upto Date (Leave blank for current date)']}
+          rows={floordata.map((floor, index) => [
+            index + 1, floor.floorName, floor.usageType, floor.occupancyName,
+            floor.constructionType, floor.builtupArea, floor.dateFrom, floor.dateUpto ?? '',
+          ])}
+        />
+        <HoldingFields title="Additional Property Details" fields={[
+          ['Does Property Have Mobile Tower(s)?', yesNo(safData?.isMobileTower)],
+          ...(yesNo(safData?.isMobileTower) === 'Yes'
+            ? [['Date of Installation of Mobile Tower', safData.towerInstallationDate]] : []),
+          ['Widow/Abandoned/Mentally Disable/Visually Impaired?', yesNo(safData?.isWidow)],
+          ['Ex-Army (Income Tax Exempted)?', yesNo(safData?.isExArmy)],
+          ['Physically Disable?', yesNo(safData?.isDisabledPerson)],
+          ['Old Property waived Off?', yesNo(safData?.isOldProperty)],
+          ['Belongs to IHSDP?', yesNo(safData?.isDp)],
+          ['Is School?', yesNo(safData?.isSchool)],
+          ['Is Complex?', yesNo(safData?.isComplex)],
+          ['Is Chabutra?', yesNo(safData?.isChabutra)],
+          ['Holding Belongs To Shop?', yesNo(safData?.isShopHolding)],
+        ]} />
+        {Array.isArray(safData?.additionalDoc) && safData.additionalDoc.length > 0 && (
+          <HoldingTable title="Additional Document"
+            columns={['SL', 'Document Name', 'File']}
+            rows={safData.additionalDoc.map((doc, index) => [
+              index + 1, doc.documentName, doc.docPath ? (
+                <Text
+                  accessibilityRole="link"
+                  style={{ color: '#1d4ed8' }}
+                  onPress={() => Linking.openURL(doc.docPath).catch(() =>
+                    Alert.alert('Unable to open document'),
+                  )}
+                >View</Text>
+              ) : 'No file',
+            ])}
+          />
+        )}
+        <HoldingTable title="Tax Details"
+          columns={['SL', 'ARV', 'Effect From', 'Property Tax', 'Holding Tax',
+            'Composite Tax', 'Water Tax', 'Education Cess', 'RWH Penalty']}
+          rows={taxDetails.map((tax, index) => [
+            index + 1, tax.arv, tax.fyear, tax.propertyTax, tax.holdingTax,
+            tax.compositeTax, tax.waterTax, tax.educationCess, tax.rwhTax,
+          ])}
+        />
         {transDtls.length > 0 && (
           <View style={styles.card}>
             <Text style={styles.heading}>Payment Details</Text>
@@ -919,238 +585,64 @@ const HoldingDetails = ({ route, navigation }) => {
           </View>
         )}
 
-        {Array.isArray(memoDtls) && memoDtls.length > 0 && (
-          <View style={styles.card}>
-            <Text style={styles.heading}>Memo Details</Text>
-
-            <ScrollView horizontal>
-              <View>
-                {/* Table Header */}
-                <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>SL</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Memo No
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Memo Type
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Holding No
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Quarter
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Financial Year
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Quarterly Tax
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Created At
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    User Name
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    User Name
-                  </Text>
-                </View>
-
-                {/* Table Rows */}
-                {memoDtls.map((item, index) => (
-                  <View style={styles.tableRow} key={index}>
-                    <Text style={styles.tableCell}>{index + 1}</Text>
-                    <Text style={styles.tableCell}>{item.memoNo ?? 'NA'}</Text>
-                    <Text style={styles.tableCell}>
-                      {item.memoType ?? 'NA'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {item.holdingNo ?? 'NA'}
-                    </Text>
-                    <Text style={styles.tableCell}>{item.qtr ?? 'NA'}</Text>
-                    <Text style={styles.tableCell}>{item.fyear ?? 'NA'}</Text>
-                    <Text style={styles.tableCell}>
-                      {item.quarterlyTax ?? 'NA'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {item.createdAt
-                        ? new Date(item.createdAt).toLocaleDateString('en-GB')
-                        : 'NA'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {item.userName ?? 'NA'}
-                    </Text>
-                    <TouchableOpacity
-                      style={styles.button}
-                      onPress={() => setVisible(true)}
-                    >
-                      <Text style={styles.buttonText}>View</Text>
-                    </TouchableOpacity>
-
-                    <PropertyTaxNoticeModal
-                      visible={visible}
-                      onClose={() => setVisible(false)}
-                    />
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
-        )}
-
-        {tcVerfivication.length > 0 && (
-          <View style={styles.card}>
-            <Text style={styles.heading}>Tc Varification</Text>
-
-            <ScrollView horizontal>
-              <View>
-                {/* Table Header */}
-                <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>SL</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Transaction No
-                  </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    Payment Mode
-                  </Text>
-
-                  <Text style={[styles.tableCell, styles.headerText]}>
-                    View
-                  </Text>
-                </View>
-
-                {/* Table Body */}
-                {tcVerfivication.map((item, index) => (
-                  <View style={styles.tableRow} key={index}>
-                    <Text style={styles.tableCell}>{index + 1}</Text>
-                    <Text style={styles.tableCell}>
-                      {item?.verifiedBy ?? 'NA'}
-                    </Text>
-                    <Text style={styles.tableCell}>
-                      {item?.towerInstallationDate ?? 'NA'}
-                    </Text>
-
-                    <TouchableOpacity onPress={() => handleView(item.id)}>
-                      <Text style={{ color: 'blue' }}>View</Text>
-                    </TouchableOpacity>
-
-                    {/* TC Verification Modal */}
-                    <TCVerificationModal
-                      visible={isVisible}
-                      onClose={() => setIsVisible(false)}
-                      id={selectedData}
-                    />
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
+        {Array.isArray(safData?.swm) && safData.swm.length > 0 && (
+          <HoldingTable title="SWM Details"
+            columns={['SL', 'Consumer No.', 'Owner Name', 'Guardian Name', 'Mobile No', 'Address']}
+            rows={safData.swm.map((item, index) => [
+              index + 1, item.consumerNo, item.ownerName, item.guardianName, item.mobileNo, item.address,
+            ])}
+          />
         )}
       </View>
       <View style={styles.buttonContainer}>
-        {/* <TouchableOpacity
-          onPress={() => documentview(id)}
-          style={styles.actionBtn}
-        >
-          <Text style={styles.actionBtnText}> View</Text>
-        </TouchableOpacity> */}
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('ApplyAssessmentComponentized', {
-              id: id,
-              isRessessment: true,
-              safData: safData,
-              ownerList: ownerList,
-              taxDetails: taxDetails,
-              transDtls: transDtls,
-              memoDtls: memoDtls,
-              tcVerfivication: tcVerfivication,
-              paymentDtls: paymentDtls,
-            })
-          }
-          style={[
-            styles.actionBtn,
-            safData?.propertyType === 'VACANT LAND' && styles.disabledButton,
-          ]}
-          disabled={safData?.propertyType === 'VACANT LAND'}
-        >
-          <Text
-            style={[
-              styles.actionBtnText,
-              safData?.propertyType === 'VACANT LAND' &&
-                styles.disabledButtonText,
-            ]}
-          >
-            📋 Ressessment{' '}
-            {safData?.propertyType === 'VACANT LAND'
-              ? '(Not Available for Vacant Land)'
-              : ''}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('ApplyAssessmentComponentized', {
-              id: id,
-              isMutation: true,
-              safData: safData,
-              ownerList: ownerList,
-              taxDetails: taxDetails,
-              transDtls: transDtls,
-              memoDtls: memoDtls,
-              tcVerfivication: tcVerfivication,
-              paymentDtls: paymentDtls,
-            })
-          }
-          style={styles.actionBtn}
-        >
-          <Text style={styles.actionBtnText}> Mutation</Text>
-        </TouchableOpacity>
-        {/* {safData?.paymentStatus == 0 && (
-          <TouchableOpacity
-            onPress={() => {
-              setShowPayNow(false);
-              setViewDemandVisible(true);
-              viewdemand(id);
-            }}
-            style={styles.viewButton}
-          >
-            <Text style={styles.viewButtonText}>👁️ View Demand</Text>
-          </TouchableOpacity>
-        )} */}
-        <TouchableOpacity
-          onPress={() => {
-            setShowPayNow(false);
-            setViewDemandVisible(true);
-            viewdemand(id);
-          }}
-          style={styles.actionBtn}
+          accessibilityRole="button"
+          disabled={isLocked}
+          style={[styles.actionBtn, isLocked && styles.disabledButton]}
+          onPress={() => openDemand(false)}
         >
           <Text style={styles.actionBtnText}>View Demand</Text>
         </TouchableOpacity>
-        {/* 
-        {safData?.paymentStatus == 0 && (
+        {yesNo(safData?.userPermission?.canTakePayment) === 'Yes' && (
           <TouchableOpacity
-            onPress={() => {
-              setShowPayNow(true); // ✅ Show Pay Now
-              setViewDemandVisible(true);
-              viewdemand(id);
-            }}
-            style={styles.viewButton}
+            accessibilityRole="button"
+            disabled={isLocked}
+            style={[styles.actionBtn, isLocked && styles.disabledButton]}
+            onPress={() => openDemand(true)}
           >
-            <Text style={styles.viewButtonText}>🔄 Proceed Payment</Text>
+            <Text style={styles.actionBtnText}>Proceed Payment</Text>
           </TouchableOpacity>
-        )} */}
-        <TouchableOpacity
-          onPress={() => {
-            setShowPayNow(true); // ✅ Show Pay Now
-            setViewDemandVisible(true);
-            viewdemand(id);
-          }}
-          style={styles.actionBtn}
-        >
-          <Text style={styles.actionBtnText}>Proceed Payment</Text>
-        </TouchableOpacity>
+        )}
+        {safData?.safDetailId != null && (
+          <TouchableOpacity
+            accessibilityRole="button"
+            style={styles.actionBtn}
+            onPress={() => navigation.navigate('SafDetails', { id: safData.safDetailId })}
+          >
+            <Text style={styles.actionBtnText}>View SAF</Text>
+          </TouchableOpacity>
+        )}
+        {yesNo(safData?.userPermission?.canAdd) === 'Yes' && (
+          <>
+            {[
+              ['ReAssessment', { isRessessment: true }],
+              ['Mutation', { isMutation: true }],
+            ].map(([label, mode]) => (
+              <TouchableOpacity
+                key={label}
+                accessibilityRole="button"
+                disabled={isLocked}
+                style={[styles.actionBtn, isLocked && styles.disabledButton]}
+                onPress={() => navigation.navigate('ApplyAssessmentComponentized', {
+                  id, ...mode, safData, ownerList, taxDetails, transDtls,
+                  memoDtls, tcVerfivication, paymentDtls,
+                })}
+              >
+                <Text style={styles.actionBtnText}>{label}</Text>
+              </TouchableOpacity>
+            ))}
+          </>
+        )}
       </View>
       <PayNowModal
         visible={payNowModalVisible}
@@ -1271,6 +763,8 @@ const HoldingDetails = ({ route, navigation }) => {
 export default HoldingDetails;
 
 const styles = StyleSheet.create({
+  assessmentNotice: { color: '#991b1b', backgroundColor: '#fef2f2', padding: 8 },
+  fieldLink: { color: '#1d4ed8' },
   scroll: {
     backgroundColor: Colors.background,
     flex: 1,

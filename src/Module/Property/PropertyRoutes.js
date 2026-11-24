@@ -7,7 +7,7 @@ import FieldVarification from './Saf/FieldVarification';
 import SurveyPage from './Saf/SurveyPage';
 import VerifiedStatus from './Saf/VerifiedStatus';
 import SearchAssesment from './Saf/SearchAssesment';
-import SafDueDetails from './Saf/SafDueDetails';
+import SafDetails from './Saf/SafDetails';
 import ApplyAssessment from './Saf/ApplyAssessment';
 import AssessmentSummary from './Saf/AssessmentSummary';
 import ApplyAssessmentComponentized from './Saf/ApplyAssessmentComponentized';
@@ -26,7 +26,7 @@ export const propertyRoutes = [
   { name: 'FieldVarification', component: FieldVarification },
   { name: 'VerifiedStatus', component: VerifiedStatus },
   { name: 'SearchAssesment', component: SearchAssesment },
-  { name: 'SafDueDetails', component: SafDueDetails },
+  { name: 'SafDetails', component: SafDetails },
   { name: 'ApplyAssessment', component: ApplyAssessment },
   { name: 'AssessmentSummary', component: AssessmentSummary },
   { name: 'ApplyAssessmentComponentized', component: ApplyAssessmentComponentized },

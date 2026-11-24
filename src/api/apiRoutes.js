@@ -9,6 +9,7 @@ export const PROPERTY_REPORTS_API ={
   PAYMENT_MODE_WISE_REPORT_API:`${BASE_URL}/api/property/report/collection-summary`, 
 }
 export const SAF_API_ROUTES = {
+  REVIEW_TAX: `${BASE_URL}/api/property/review-tax`,
   SAF_VARIFICATION_MODEL: `${BASE_URL}/api/property/field-verification-dtl`,
   APPLY_SAF: `${BASE_URL}/api/property/saf-apply`,
   APPLY_SAF_RESSESMENT_API: `${BASE_URL}/api/property/saf-apply`,

@@ -1,31 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
-  Button,
+  useWindowDimensions,
   Alert,
   ActivityIndicator,
   Modal,
   TouchableOpacity,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '../../Constants/Colors';
 import axios from 'axios';
 import { SAF_API_ROUTES } from '../../../api/apiRoutes'; // make sure this is your API route
 import { getToken } from '../../../utils/auth';
-import { showToast } from '../../../utils/toast';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
-import { validateExtraChargesDates } from '../../../Validation/validation.';
 import Clipboard from '@react-native-clipboard/clipboard';
 // OR for newer versions:
-
-const Row = ({ label, value }) => (
-  <View style={styles.row}>
-    <Text style={styles.label}>{label}</Text>
-    <Text style={styles.value}>{value}</Text>
-  </View>
-);
 
 const Section = ({ title, children }) => (
   <View style={styles.section}>
@@ -34,284 +26,281 @@ const Section = ({ title, children }) => (
   </View>
 );
 
-const AssessmentSummary = ({ route, navigation }) => {
-  const [copiedSafNo, setCopiedSafNo] = useState(''); // ✅ add this
-  const [modalVisible, setModalVisible] = useState(false);
-  const data = route.params?.data || {};
-  // console.log('data  AssessmentSummary', route.params?.masterData || {});
-  const ownerDetails = data.ownerDtl || [];
-  // console.log('owner Datails', ownerDetails);
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(route.params?.data || {});
-  const [savedSafId, setSavedSafId] = useState(null);
+function Fields({ fields }) {
+  const { width } = useWindowDimensions();
 
-  const masterData = route.params?.masterData || {};
-  const getMasterName = (list, id, labelKey) => {
-    if (!Array.isArray(list)) return '';
-    const item = list.find(i => i.id === id);
-    return item ? item[labelKey] : '';
-  };
-  const mappedProperty = {
-    ...data,
-    zone: getMasterName(masterData.zone, data.zoneMstrId, 'zoneName'),
-    ward: getMasterName(masterData.wardList, data.wardMstrId, 'wardNo'),
+  return (
+    <View style={styles.grid}>
+      {fields.map(([label, value]) => (
+        <View key={label} style={[
+          styles.field,
+          (width < 360 || String(value ?? '').length > 40) && styles.fullField,
+        ]}>
+          <Text style={styles.fieldLabel}>{label}</Text>
+          <Text style={styles.fieldValue}>{value == null || value === '' ? '—' : value}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
 
-    ownershipType: getMasterName(
-      masterData.ownershipType,
-      data.ownershipTypeMstrId,
-      'ownershipType',
-    ),
+function PreviewTable({ columns, rows, emptyMessage }) {
+  if (!rows.length) return emptyMessage ? <Text>{emptyMessage}</Text> : null;
 
-    propertyType: getMasterName(
-      masterData.propertyType,
-      data.propTypeMstrId,
-      'propertyType',
-    ),
-  };
-  // Map floor details with names
-  const floorss = (data.floorDtl || []).map(floor => ({
-    floorName: getMasterName(
-      masterData.floorType,
-      floor.floorMasterId,
-      'floorName',
-    ),
-    usageType: getMasterName(
-      masterData.usageType,
-      floor.usageTypeMasterId,
-      'usageType',
-    ),
+  return (
+    <ScrollView horizontal style={styles.table} showsHorizontalScrollIndicator>
+      <View>
+        {[columns, ...rows].map((row, index) => (
+          <View key={index} style={[styles.tableRow, index % 2 === 1 && styles.tableStripe]}>
+            {row.map((value, column) => (
+              <Text key={columns[column]} style={[
+                styles.tableCell,
+                columns[column] === 'SL' && styles.numberCell,
+                column === row.length - 1 && styles.lastCell,
+                index === 0 && styles.tableHeading,
+              ]}>
+                {value ?? ''}
+              </Text>
+            ))}
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
 
-    occupancyType: getMasterName(
-      masterData.occupancyType,
-      floor.occupancyTypeMasterId,
-      'occupancyName',
-    ),
-    constructionType: getMasterName(
-      masterData.constructionType,
-      floor.constructionTypeMasterId,
-      'constructionType',
-    ),
-    builtUpArea: floor.builtupArea,
-    fromDate: floor.dateFrom,
-    uptoDate: floor.dateUpto1,
-  }));
-  console.log('floors details', floorss);
+const checked = value => value === true || value === 1 || value === '1';
 
-  // Example usage:
-  // const floors = mapFloorData(data.floorDtl, masterData);
+function PreviewDetails({ data, masters, apartments }) {
+  const label = (list, id, field) =>
+    masters[list]?.find(item => String(item.id) === String(id))?.[field];
+  const apartment = apartments.find(
+    item => String(item.value) === String(data.appartmentDetailsId),
+  );
+  const flags = [
+    ['Have Mobile Tower(s)?', data.isMobileTower],
+    ['Widow/Abandoned/Mentally Disabled/Visually Impaired?', data.isWidow],
+    ['Ex-Army (Income Tax Exempted)?', data.isExArmy],
+    ['Physically Disabled?', data.isDisabledPerson],
+    ['Old Property Waived Off in 2026–2027', data.isOldProperty],
+    ['Belongs to IHSDP?', data.isDp],
+    ['Is School?', data.isSchool],
+    ...(checked(data.isSchool) ? [['Is 12A School?', data.is12ASchool]] : []),
+    ['Is Complex?', data.isComplex],
+    ['Is Chabutra?', data.isChabutra],
+    ['Holding Belongs to Shop?', data.isShopHolding],
+  ].map(([name, value]) => [name, checked(value) ? 'YES' : 'NO']);
 
-  // function convertToYearMonth(date) {
-  //   if (!date) return '2025-10'; // fallback to current month
-
-  //   // If it's already in YYYY-MM format
-  //   if (/^\d{4}-\d{2}$/.test(date)) {
-  //     return date;
-  //   }
-
-  //   // If it's a Date object
-  //   if (date instanceof Date) {
-  //     const year = date.getFullYear();
-  //     const month = String(date.getMonth() + 1).padStart(2, '0');
-  //     return `${year}-${month}`;
-  //   }
-
-  //   // If it's a full ISO date like "2025-10-01T00:00:00Z"
-  //   if (/^\d{4}-\d{2}-\d{2}/.test(date)) {
-  //     const [year, month] = date.split('-');
-  //     return `${year}-${month}`;
-  //   }
-
-  //   // If it's in MM/YYYY or MM-YYYY
-  //   if (date.includes('/') || date.includes('-')) {
-  //     const parts = date.split(/[-/]/);
-  //     if (parts.length === 2) {
-  //       const [part1, part2] = parts;
-  //       // If first part is year
-  //       if (part1.length === 4) {
-  //         return `${part1}-${part2.padStart(2, '0')}`;
-  //       } else {
-  //         return `${part2}-${part1.padStart(2, '0')}`;
-  //       }
-  //     }
-  //   }
-
-  //   return '2025-10';
-  // }
-
-  const parseDate = str => {
-    if (!str) return null;
-    // Convert MM/YYYY → YYYY-MM-01
-    const [month, year] = str.split('/');
-    return new Date(`${year}-${month}-01`);
-  };
-  function formatDate1(dateInput) {
-    if (!dateInput) return '';
-
-    // Handle ISO date format (from date pickers)
-    if (dateInput.includes('T')) {
-      return dateInput.split('T')[0]; // Already in YYYY-MM-DD format
-    }
-
-    // Handle DD/MM/YYYY format
-    if (dateInput.includes('/')) {
-      const parts = dateInput.split('/');
-      if (parts.length !== 3) return '';
-
-      const day = parts[0].padStart(2, '0');
-      const month = parts[1].padStart(2, '0');
-      const year = parts[2];
-
-      return `${year}-${month}-${day}`;
-    }
-
-    // Handle YYYY-MM-DD format (already correct)
-    if (dateInput.includes('-') && dateInput.length === 10) {
-      return dateInput;
-    }
-
-    return '';
+  if (checked(data.isMobileTower) && data.towerInstallationDate) {
+    flags.splice(1, 0, ['Installation Date', data.towerInstallationDate]);
   }
 
+  return (
+    <>
+      <Section title="Assessment Information">
+        <Fields fields={[
+          ['Application Type', data.applicationFrom],
+          ['Assessment Type', data.assessmentType || 'New Assessment'],
+          ['Ward No', label('wardList', data.wardMstrId, 'wardNo')],
+          ['Ownership Type', label('ownershipType', data.ownershipTypeMstrId, 'ownershipType')],
+          ['Property Type', label('propertyType', data.propTypeMstrId, 'propertyType')],
+          ...(Number(data.propTypeMstrId) === 3 ? [['Apartment Name', apartment?.label]] : []),
+          ['Road Type', label('roadType', data.roadTypeMstrId, 'roadType')],
+          ['BPL Category', checked(data.isBpl) ? 'YES' : 'NO'],
+        ]} />
+      </Section>
+      <Section title="Owner Details">
+        <PreviewTable
+          columns={['SL', 'Name', 'Gender', 'Guardian Name', 'Relation', 'Mobile No.', 'Address']}
+          rows={(data.ownerDtl ?? []).map((owner, index) => [
+            index + 1, owner.ownerName, owner.gender, owner.guardianName,
+            owner.relationType, owner.mobileNo, owner.address,
+          ])}
+          emptyMessage="No owner details provided."
+        />
+      </Section>
+      <Section title="Property Details">
+        <Fields fields={[
+          ['Khata No.', data.khataNo],
+          ['Plot No.', data.plotNo],
+          ['Village/Mauja Name', data.villageMaujaName],
+          ['Area of Plot (in Sqft)', data.areaOfPlot],
+        ]} />
+      </Section>
+      <Section title="Property Address">
+        <Fields fields={[
+          ['Property Address', data.propAddress], ['City', data.propCity],
+          ['District', data.propDist], ['State', data.propState],
+          ['Pincode', data.propPinCode],
+        ]} />
+        {checked(data.isCorrAddDiffer) && (
+          <>
+            <Text style={styles.subheading}>Correspondence Address</Text>
+            <Fields fields={[
+              ['Correspondence Address', data.corrAddress], ['City', data.corrCity],
+              ['District', data.corrDist], ['State', data.corrState],
+              ['Pincode', data.corrPinCode],
+            ]} />
+          </>
+        )}
+      </Section>
+      <Section title="Floor Details">
+        <PreviewTable
+          columns={[
+            'SL', 'Zone', 'Floor', 'Usage Type', 'Occupancy Type',
+            'Construction Type', 'Builtup Area', 'Date From', 'Date Upto',
+          ]}
+          rows={(data.floorDtl ?? []).map((floor, index) => [
+            index + 1,
+            label(masters.zoneType ? 'zoneType' : 'zone', floor.zoneMstrId, 'zoneName'),
+            label('floorType', floor.floorMasterId, 'floorName'),
+            label('usageType', floor.usageTypeMasterId, 'usageType'),
+            label('occupancyType', floor.occupancyTypeMasterId, 'occupancyName'),
+            label('constructionType', floor.constructionTypeMasterId, 'constructionType'),
+            floor.builtupArea, floor.dateFrom, floor.dateUpto,
+          ])}
+          emptyMessage="No floor details provided."
+        />
+      </Section>
+      <Section title="Additional Details">
+        <Fields fields={flags} />
+      </Section>
+    </>
+  );
+}
+
+const amount = value => Number(value ?? 0).toFixed(2);
+
+function TaxHistory({ tax }) {
+  const eras = Array.isArray(tax?.ruleSetVersionTax)
+    ? tax.ruleSetVersionTax.filter(era => era?.floors?.length || era?.taxDiff?.length)
+    : [];
+  eras.sort((a, b) =>
+    String(a.effectiveFromFyear ?? '').localeCompare(String(b.effectiveFromFyear ?? '')),
+  );
+
+  if (!eras.length) return <Text>No tax details available.</Text>;
+
+  return eras.map((era, index) => (
+    <View key={index} style={styles.taxEra}>
+      {era.floors?.length > 0 && (
+        <>
+          <Text style={styles.subheading}>
+            Annual Rental Value as per the rate of {era.effectiveFromFyear}
+          </Text>
+          <PreviewTable
+            columns={[
+              'Code', 'Floor Name', 'Construction Date', 'Effect From',
+              'Built-up Area', 'Rate', 'Total ARV', 'Widow & Others',
+              '10% Rebate on ARV', 'Old House Discount (%)',
+              '25% Disability Discount', 'Net ARV',
+            ]}
+            rows={era.floors.map(floor => [
+              floor.code, floor.floorName, floor.dateFrom,
+              floor.fromFYear ?? era.effectiveFromFyear,
+              floor.builtupArea, floor.arvRate, amount(floor.yearlyARV),
+              '0.00', amount(floor.aRV10PercentRebate), '0.00', '0.00', amount(floor.aRV),
+            ])}
+          />
+        </>
+      )}
+      <PreviewTable
+        columns={[
+          'Effect From', 'ARV', 'Rate (%)', 'Property Tax', 'Composite Tax',
+          'Common Water Tax', 'Personal Water Tax', 'Education Cess', 'Yearly Tax',
+        ]}
+        rows={(era.taxDiff ?? []).map(year => [
+          year.year ? `FY:${year.year}` : '', amount(year.aRV),
+          amount(year.ratePercent), amount(year.holdingTax), amount(year.compositeTax),
+          amount(year.waterTax), '0.00', amount(year.educationCessTax), amount(year.totalTax),
+        ])}
+      />
+    </View>
+  ));
+}
+
+const AssessmentSummary = ({ route, navigation }) => {
+  const { bottom } = useSafeAreaInsets();
+  const [copiedSafNo, setCopiedSafNo] = useState(''); // ✅ add this
+  const [modalVisible, setModalVisible] = useState(false);
+  const data = route.params?.data;
+  const masters = route.params?.masterData ?? {};
+  const apartments = route.params?.apartmentList ?? [];
+  const [loading, setLoading] = useState(false);
+  const submitting = useRef(false);
+  const [savedSafId, setSavedSafId] = useState(null);
+  const [tax, setTax] = useState(null);
+  const [taxLoading, setTaxLoading] = useState(Boolean(data));
+  const [taxError, setTaxError] = useState('');
+
+  useEffect(() => {
+    if (!data) return;
+    const controller = new AbortController();
+
+    async function loadTax() {
+      setTax(null);
+      setTaxLoading(true);
+      setTaxError('');
+      try {
+        const token = await getToken();
+        const { data: result } = await axios.post(
+          SAF_API_ROUTES.REVIEW_TAX,
+          { ...data, swmConsumer: data.swmConsumer ?? [] },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+            signal: controller.signal,
+          },
+        );
+        if (controller.signal.aborted) return;
+        if (result.status) {
+          setTax(result.data);
+        } else {
+          const messages = Object.values(result.errors || {}).flat().join('\n');
+          setTaxError(messages || result.message || 'Unable to calculate tax.');
+        }
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        const result = error.response?.data;
+        const messages = Object.values(result?.errors || {}).flat().join('\n');
+        setTaxError(messages || result?.message || 'Unable to calculate tax.');
+      } finally {
+        if (!controller.signal.aborted) setTaxLoading(false);
+      }
+    }
+
+    loadTax();
+    return () => controller.abort();
+  }, [data]);
+
   const handleSubmit = async () => {
-    setLoading(true);
+    if (!data || submitting.current || savedSafId) return;
+    submitting.current = true;
+    setLoading(true);console.log('Submitting SAF with data:', data); // ✅ log the data for debugging
+
     try {
       const token = await getToken();
-
-      const payload = {
-        assessmentType: 'New Assessment',
-        waterConnDate: data.waterConnDate,
-        waterConnNo: data.waterConnNo,
-        builtupArea: data.builtupArea,
-
-        electAccNo: data.electAccNo,
-        electBindBookNo: data.electBindBookNo,
-        electConsCategory: data.electConsCategory,
-        electConsumerNo: data.electConsumerNo,
-        zoneMstrId: String(data.zoneMstrId),
-        wardMstrId: data.wardMstrId,
-        newWardMstrId: String(data.newWardMstrId),
-        ownershipTypeMstrId: data.ownershipTypeId || 1,
-        propTypeMstrId: data.propTypeMstrId,
-        zoneMstrId: String(data.zoneMstrId),
-        appartmentDetailsId: String(data.appartmentDetailsId || ''),
-        flatRegistryDate: data.flatRegistryDate,
-        roadWidth: String(data.roadWidth),
-        khataNo: data.khataNo,
-        plotNo: data.plotNo,
-        villageMaujaName: data.villageMaujaName || 'NA',
-        areaOfPlot: String(data.plotArea || data.areaOfPlot || '0'),
-        propAddress: data.propAddress || 'NA',
-        propCity: data.propCity || 'NA',
-        propDist: data.propDist || 'NA',
-        propPinCode: parseInt(data.propPinCode || '0', 10),
-        propState: data.propState || 'NA',
-
-        isMobileTower: String(data.isMobileTower),
-        ...(data.isMobileTower === '1' && {
-          towerArea: String(data.towerArea || '50'),
-          towerInstallationDate: data.towerInstallationDate || '',
-        }),
-
-        isHoardingBoard: String(data.isHoardingBoard === '1' ? 1 : 0),
-        ...(data.isHoardingBoard === '1' && {
-          hoardingArea: String(data.hoardingArea || '50'),
-          hoardingInstallationDate:
-            formatDate1(data.hoardingInstallationDate) || '',
-        }),
-
-        isPetrolPump: String(data.isPetrolPump === '1' ? 1 : 0),
-        ...(data.isPetrolPump === '1' && {
-          underGroundArea: String(data.underGroundArea || '25'),
-          petrolPumpCompletionDate:
-            formatDate1(data.petrolPumpCompletionDate) || '',
-        }),
-
-        isWaterHarvesting: String(data.isWaterHarvesting === '1' ? 1 : 0),
-        ...(data.isWaterHarvesting === '1' && {
-          waterHarvestingDate: formatDate1(data.waterHarvestingDate) || '',
-        }),
-
-        landOccupationDate: '2021-02-03',
-
-        ownerDtl: (data.ownerDtl || []).map((owner, index) => ({
-          id: owner.id || index + 1,
-          ownerName: owner.ownerName || 'NA',
-          guardianName: owner.guardianName || '',
-          relationType: owner.relationType || '',
-          adharNo: owner.aadhaar || '',
-          mobileNo: owner.mobile || '1234567890',
-          email: owner.email || '',
-          gender:
-            owner.gender === 'male'
-              ? 'Male'
-              : owner.gender === 'female'
-              ? 'Female'
-              : 'Other',
-          dob: owner.dob ? formatDate1(owner.dob) : '2000-01-01',
-          isArmedForce: owner.armedForces === 'yes' ? '1' : '0',
-          isSpeciallyAbled: owner.speciallyAbled === 'yes' ? '1' : '0',
-        })),
-
-        floorDtl:
-          data.floorDtl && data.floorDtl.length > 0
-            ? data.floorDtl.map(floorDtl => ({
-                builtupArea: String(floorDtl.builtupArea || '100'),
-                dateFrom: floorDtl.dateFrom || '',
-                dateUpto: floorDtl.dateUpto1 || '',
-                floorMasterId: String(floorDtl.floorMasterId || '2'),
-                usageTypeMasterId: String(floorDtl.usageTypeMasterId || '1'),
-                constructionTypeMasterId: String(
-                  floorDtl.constructionTypeMasterId || '1',
-                ),
-                occupancyTypeMasterId: String(
-                  floorDtl.occupancyTypeMasterId || '1',
-                ),
-              }))
-            : [
-                {
-                  builtupArea: '100',
-                  dateFrom: '2014-01',
-                  dateUpto1: '2012-04',
-                  floorMasterId: '2',
-                  usageTypeMasterId: '1',
-                  constructionTypeMasterId: '1',
-                  occupancyTypeMasterId: '1',
-                },
-              ],
-      };
-
-      console.log('Final payload Summurty:', JSON.stringify(payload, null, 2));
-      const response = await axios.post(SAF_API_ROUTES.APPLY_SAF, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setLoading(false);
-      console.log('Full Response:', response.data);
-      if (response.data.status) {
-        const { message, data } = response.data;
-        const safId = data?.safId; // ✅ get SAF ID
-
-        setSavedSafId(safId);
-
-        // Show success message immediately
-        showToast('success', message);
-        const safNo = data?.safNo;
-
-        if (safNo) {
-          Clipboard.setString(safNo); // copy SAF No
-          setCopiedSafNo(safNo); // ✅ save SAF No in state
-          setTimeout(() => {
-            setModalVisible(true); // ✅ show modal
-          }, 2000);
-        }
-      } else {
-        Alert.alert('Error', response.data.message || 'Something went wrong');
+      const response = await axios.post(SAF_API_ROUTES.APPLY_SAF, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });console.log('SAF submission response:', response.data); // ✅ log the response for debugging
+      const result = response.data;
+      if (!result.status) {
+        const errors = Object.values(result.errors || {}).flat().join('\n');
+        Alert.alert('SAF submission', errors || result.message || 'Unable to submit.');
+        return;
       }
-    } catch (error) {
+
+      setSavedSafId(result.data?.safId);
+      const safNo = result.data?.safNo || '';
+      setCopiedSafNo(safNo);
+      if (safNo) Clipboard.setString(safNo);
+      setModalVisible(true);
+    } catch (error) {console.error('Error submitting SAF:', error); // ✅ log the error for debugging
+      const result = error.response?.data;
+      const errors = Object.values(result?.errors || {}).flat().join('\n');
+      Alert.alert('SAF submission', errors || result?.message || error.message);
+    } finally {
+      submitting.current = false;
       setLoading(false);
-      Alert.alert('Error', error.message || 'API request failed');
     }
   };
 
@@ -319,265 +308,57 @@ const AssessmentSummary = ({ route, navigation }) => {
     setModalVisible(false);
 
     if (savedSafId) {
-      navigation.navigate('SafDueDetails', { id: savedSafId }); // ✅ correct navigation
+      navigation.navigate('SafDetails', { id: savedSafId }); // ✅ correct navigation
     }
   };
 
   return (
     <>
       <HeaderNavigation />
-      <ScrollView style={styles.container}>
-        {data.id && (
-          <Section title="Assessment ID">
-            <Row label="ID" value={data.id} />
-          </Section>
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <Text accessibilityRole="header" style={styles.title}>Assessment Preview</Text>
+        {data ? (
+          <>
+            <PreviewDetails data={data} masters={masters} apartments={apartments} />
+            <Section title="Tax Details">
+              {taxLoading && <ActivityIndicator color={Colors.headignColor} />}
+              {taxError ? <Text style={styles.error} accessibilityRole="alert">{taxError}</Text> : null}
+              {!taxLoading && !taxError && <TaxHistory tax={tax} />}
+            </Section>
+          </>
+        ) : <Text style={styles.empty}>No data to preview.</Text>}
+
+      </ScrollView>
+
+      <View style={[styles.actions, { paddingBottom: 12 + bottom }]}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+        {data && (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityState={{ disabled: loading || Boolean(savedSafId), busy: loading }}
+            disabled={loading || Boolean(savedSafId)}
+            style={[styles.submitButton, savedSafId && styles.disabledButton]}
+            onPress={() =>
+              Alert.alert('Submit assessment?', 'Confirm the SAF details before submitting.', [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Submit', onPress: handleSubmit },
+              ])
+            }
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.submitText}>Submit</Text>
+            )}
+          </TouchableOpacity>
         )}
-        <Section title="Property Details">
-          <View style={styles.ownerCard}>
-            <Row label="Assessment Type" value="New Assessment" />
-            <Row label="Zone" value={data.zoneLabel} />
-            <Row label="Old Ward" value={mappedProperty.ward} />
-            <Row label="New Ward" value={mappedProperty.newWardLabel} />
-            <Row label="Ownership Type" value={mappedProperty.ownershipType} />
-            <Row label="Property Type" value={mappedProperty.propertyType} />
-            <Row label="Road Width (ft)" value={data.roadWidth} />
-          </View>
-        </Section>
-        <Section title="Property Address">
-          <View style={styles.ownerCard}>
-            <Row label="Property Address" value={data.propAddress} />
-            <Row label="City" value={data.propCity} />
-            <Row label="District" value={data.propDist} />
-            <Row label="State" value={data.propState} />
-            <Row label="Pincode" value={data.propState} />
-            <Row
-              label="Is Correspondence Address Different?"
-              value={data.correspondingAddress ? 'Yes' : 'No'}
-            />
-            {data.correspondingAddress && (
-              <>
-                <Row
-                  label="Correspondence Address"
-                  value={data.correspondingAddress}
-                />
-                <Row label="City" value={data.correspondingCity} />
-                <Row label="District" value={data.correspondingDistrict} />
-                <Row label="State" value={data.correspondingState} />
-                <Row label="Pincode" value={data.correspondingPincode} />
-              </>
-            )}
-          </View>
-        </Section>
-        <Section title="Owner Details">
-          {(ownerDetails || []).map(
-            (
-              {
-                ownerName,
-                guardianName,
-                gender,
-                dob,
-                mobileNo,
-                relationType,
-                adharNo,
-                email,
-                pan,
-                isArmedForce,
-                isSpeciallyAbled,
-              },
-              index,
-            ) => (
-              <View key={index} style={styles.ownerCard}>
-                <Text style={{ fontWeight: '600', marginBottom: 4 }}>
-                  Owner {index + 1}
-                </Text>
-                <Row label="Owner Name" value={ownerName} />
-                <Row label="Guardian Name" value={guardianName} />
-                <Row label="Gender" value={gender} />
-                <Row label="DOB" value={dob} />
-                <Row label="Mobile No." value={mobileNo} />
-                <Row label="Email" value={email} />
-                <Row label="Relation" value={relationType} />
-                <Row label="Aadhaar No." value={adharNo} />
-                <Row label="PAN No." value={pan} />
-                <Row
-                  label="Is Armed Force?"
-                  value={
-                    isArmedForce === '1' || isArmedForce === 1 ? 'Yes' : 'No'
-                  }
-                />
-                <Row
-                  label="Is Specially Abled?"
-                  value={
-                    isSpeciallyAbled === '1' || isSpeciallyAbled === 1
-                      ? 'Yes'
-                      : 'No'
-                  }
-                />
-              </View>
-            ),
-          )}
-        </Section>
-        <Section title="Electricity Details">
-          <View style={styles.ownerCard}>
-            <Row label="KNO" value={data.electAccNo} />
-            <Row label="ACC No" value={data.electAccNo} />
-            <Row label="BIND/BOOK No" value={data.electBindBookNo} />
-            <Row label="Electricity Category" value={data.electConsCategory} />
-          </View>
-        </Section>
-        <Section title="Water Connection Details">
-          <View style={styles.ownerCard}>
-            <Row label="Water Connection No" value={data.waterConnNo} />
-            <Row
-              label="Water Connection Date"
-              value={
-                data.waterConnDate
-                  ? new Date(data.waterConnDate).toLocaleDateString('en-GB')
-                  : ''
-              }
-            />
-          </View>
-        </Section>
-        <Section title="Extra Charges">
-          <View style={styles.ownerCard}>
-            {/* Mobile Tower */}
-            <Row
-              label="Have Mobile Tower?"
-              value={
-                data.isMobileTower === '1' || data.isMobileTower === 1
-                  ? 'Yes'
-                  : 'No'
-              }
-            />
-            {(data.isMobileTower === '1' || data.isMobileTower === 1) && (
-              <>
-                <Row label="Tower Area" value={data.towerArea} />
-                <Row
-                  label="Installation Date"
-                  value={
-                    data.towerInstallationDate
-                      ? new Date(data.towerInstallationDate).toLocaleDateString(
-                          'en-GB',
-                        )
-                      : ''
-                  }
-                />
-              </>
-            )}
-
-            {/* Hoarding Board */}
-            <Row
-              label="Have Hoarding Board(s)?"
-              value={
-                data.isHoardingBoard === '1' || data.isHoardingBoard === 1
-                  ? 'Yes'
-                  : 'No'
-              }
-            />
-            {(data.isHoardingBoard === '1' || data.isHoardingBoard === 1) && (
-              <>
-                <Row label="Hoarding Area" value={data.hoardingArea} />
-                <Row
-                  label="Hoarding Installation Date"
-                  value={
-                    data.hoardingInstallationDate
-                      ? new Date(
-                          data.hoardingInstallationDate,
-                        ).toLocaleDateString('en-GB')
-                      : ''
-                  }
-                />
-              </>
-            )}
-
-            {/* Petrol Pump */}
-            <Row
-              label="Have Petrol Pump?"
-              value={
-                data.isPetrolPump === '1' || data.isPetrolPump === 1
-                  ? 'Yes'
-                  : 'No'
-              }
-            />
-            {(data.isPetrolPump === '1' || data.isPetrolPump === 1) && (
-              <>
-                <Row label="Pump Area" value={data.underGroundArea} />
-                <Row
-                  label="Pump Installation Date"
-                  value={
-                    data.petrolPumpCompletionDate
-                      ? new Date(
-                          data.petrolPumpCompletionDate,
-                        ).toLocaleDateString('en-GB')
-                      : ''
-                  }
-                />
-              </>
-            )}
-
-            {/* Rainwater Harvesting */}
-            <Row
-              label="Have Rainwater Harvesting?"
-              value={
-                data.isWaterHarvesting === '1' || data.isWaterHarvesting === 1
-                  ? 'Yes'
-                  : 'No'
-              }
-            />
-            {(data.isWaterHarvesting === '1' ||
-              data.isWaterHarvesting === 1) && (
-              <Row
-                label="Completion Date"
-                value={
-                  data.waterHarvestingDate
-                    ? new Date(data.waterHarvestingDate).toLocaleDateString(
-                        'en-GB',
-                      )
-                    : ''
-                }
-              />
-            )}
-          </View>
-        </Section>
-
-        {floorss.map((floor, index) => (
-          <View key={index} style={styles.ownerCard}>
-            <Text style={{ fontWeight: '600', marginBottom: 4 }}>
-              Floor {index + 1}
-            </Text>
-
-            <Row label="Floor Name" value={floor.floorName} />
-            <Row label="Usage Type" value={floor.usageType} />
-            <Row label="Occupancy Type" value={floor.occupancyType} />
-            <Row label="Construction Type" value={floor.constructionType} />
-            <Row label="Built-Up Area" value={floor.builtUpArea} />
-            <Row
-              label="From Date"
-              value={floor.fromDate ? floor.fromDate.replace('-', '/') : ''} // "2025/10"
-            />
-            <Row
-              label="Upto Date"
-              value={floor.uptoDate ? floor.uptoDate.replace('-', '/') : ''} // "2025/10"
-            />
-          </View>
-        ))}
-
-        <View style={{ margin: 20 }}>
-          {loading ? (
-            <ActivityIndicator size="large" color={Colors.headignColor} />
-          ) : (
-            <>
-              <Button title="Back" onPress={() => navigation.goBack()} />
-              <View style={{ marginTop: 10 }}>
-                <Button
-                  title="Submit Assessment"
-                  onPress={handleSubmit}
-                  color={Colors.headignColor}
-                />
-              </View>
-            </>
-          )}
-        </View>
+      </View>
 
         <Modal
           transparent={true}
@@ -595,59 +376,81 @@ const AssessmentSummary = ({ route, navigation }) => {
             </View>
           </View>
         </Modal>
-      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
-  },
+  container: { flex: 1, backgroundColor: '#f1f5f9' },
+  content: { padding: 16, paddingBottom: 20 },
+  title: { fontSize: 25, fontWeight: '700', color: '#10263a', marginBottom: 16 },
   section: {
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: '#f7f7f7',
-    borderRadius: 8,
+    marginBottom: 12,
+    padding: 14,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
-  sectionTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 8,
-    color: Colors.background,
-    padding: 10,
-    backgroundColor: Colors.headignColor,
+  sectionTitle: { fontSize: 17, fontWeight: '700', color: '#10263a', marginBottom: 10 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -5 },
+  field: { width: '50%', paddingHorizontal: 5, paddingVertical: 5 },
+  fullField: { width: '100%' },
+  fieldLabel: { color: '#475569', fontSize: 12, fontWeight: '600', marginBottom: 4 },
+  fieldValue: {
+    color: '#10263a',
+    backgroundColor: '#f1f5f9',
+    borderRadius: 6,
+    minHeight: 34,
+    paddingHorizontal: 9,
+    paddingVertical: 7,
   },
-  row: {
+  subheading: { color: '#10263a', fontSize: 14, fontWeight: '700', marginVertical: 8 },
+  table: { borderRadius: 8, borderWidth: 1, borderColor: '#e2e8f0' },
+  tableRow: { flexDirection: 'row', backgroundColor: '#fff' },
+  tableStripe: { backgroundColor: '#f8fafc' },
+  tableCell: {
+    width: 118,
+    paddingHorizontal: 9,
+    paddingVertical: 9,
+    color: '#1e293b',
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderRightColor: '#cbd5e1',
+  },
+  numberCell: { width: 40, textAlign: 'center' },
+  lastCell: { borderRightWidth: 0 },
+  tableHeading: { fontSize: 12, fontWeight: '700', backgroundColor: '#e8eef5' },
+  taxEra: { gap: 8, marginBottom: 10 },
+  empty: { color: '#475569' },
+  error: { color: '#991b1b', backgroundColor: '#fef2f2', padding: 10, borderRadius: 6 },
+  actions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 6,
+    gap: 10,
+    padding: 12,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#e2e8f0',
   },
-  label: {
-    fontWeight: '600',
-    color: '#555',
+  backButton: {
     flex: 1,
-  },
-  value: {
-    flex: 1,
-    color: '#222',
-    textAlign: 'right',
-  },
-  ownerCard: {
-    padding: 15,
-    marginBottom: 10,
+    minHeight: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2, // for Android shadow
+    borderColor: '#cbd5e1',
   },
+  backText: { color: '#10263a', fontWeight: '700' },
+  submitButton: {
+    flex: 2,
+    minHeight: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    backgroundColor: '#14532d',
+  },
+  disabledButton: { opacity: 0.5 },
+  submitText: { color: '#fff', fontWeight: '700' },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)', // dark transparent background

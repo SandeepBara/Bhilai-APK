@@ -40,7 +40,7 @@ const RessesmentSummry = ({ route, navigation }) => {
   const handleCloseModal = id => {
     setModalVisible(false);
     if (id) {
-      navigation.navigate('SafDueDetails', { id });
+      navigation.navigate('SafDetails', { id });
     } else {
       console.warn('SAF ID is missing. Navigation cancelled.');
     }

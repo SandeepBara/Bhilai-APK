@@ -29,13 +29,14 @@ const PropertyDetails = ({
   roadWidthRef,
   buildArea,
   setBuildArea,
+  counterFieldsOnly = false,
 }) => {
   return (
     <View style={styles.section}>
-      <Text style={styles.label}>Property Details</Text>
+      {!counterFieldsOnly && <Text style={styles.label}>Property Details</Text>}
 
       {/* Khata No */}
-      <Text style={styles.label}>Khata No. *</Text>
+      <Text style={styles.label}>Khata No.{!counterFieldsOnly && ' *'}</Text>
       <TextInput
         ref={khataNoRef}
         style={[styles.input, errors.khataNo && styles.inputError]}
@@ -48,7 +49,7 @@ const PropertyDetails = ({
       {errors.khataNo && <Text style={styles.errorText}>{errors.khataNo}</Text>}
 
       {/* Plot No */}
-      <Text style={styles.label}>Plot No. *</Text>
+      <Text style={styles.label}>{counterFieldsOnly ? 'Plot No/Khasra No.' : 'Plot No. *'}</Text>
       <TextInput
         ref={plotNoRef}
         style={[styles.input, errors.plotNo && styles.inputError]}
@@ -61,7 +62,7 @@ const PropertyDetails = ({
       {errors.plotNo && <Text style={styles.errorText}>{errors.plotNo}</Text>}
 
       {/* Village Name */}
-      <Text style={styles.label}>Village/Mauja Name *</Text>
+      <Text style={styles.label}>Village/Mauja Name</Text>
       <TextInput
         ref={villageNameRef}
         style={[styles.input, errors.villageName && styles.inputError]}
@@ -91,42 +92,46 @@ const PropertyDetails = ({
         <Text style={styles.errorText}>{errors.plotArea}</Text>
       )}
 
-      {/* Built-up Area */}
-      <Text style={styles.label}>Built-up Area *</Text>
-      <TextInput
-        ref={plotAreaRef}
-        style={[styles.input, errors.buildArea && styles.inputError]}
-        placeholder="100.00"
-        placeholderTextColor="grey"
-        value={buildArea}
-        onChangeText={setBuildArea}
-        keyboardType="numeric"
-        editable={isEditable}
-      />
-      {errors.buildArea && (
-        <Text style={styles.errorText}>{errors.buildArea}</Text>
-      )}
+      {!counterFieldsOnly && (
+        <>
+          {/* Built-up Area */}
+          <Text style={styles.label}>Built-up Area *</Text>
+          <TextInput
+            ref={plotAreaRef}
+            style={[styles.input, errors.buildArea && styles.inputError]}
+            placeholder="100.00"
+            placeholderTextColor="grey"
+            value={buildArea}
+            onChangeText={setBuildArea}
+            keyboardType="numeric"
+            editable={isEditable}
+          />
+          {errors.buildArea && (
+            <Text style={styles.errorText}>{errors.buildArea}</Text>
+          )}
 
-      {/* Road Width */}
-      <Text style={styles.label}>Road Width (in ft) *</Text>
-      <TextInput
-        ref={roadWidthRef}
-        style={[styles.input, errors.roadWidth && styles.inputError]}
-        placeholder="Road Width"
-        placeholderTextColor="grey"
-        value={roadWidth}
-        onChangeText={setRoadWidth}
-        keyboardType="numeric"
-        editable={isEditable}
-      />
-      {errors.roadWidth && (
-        <Text style={styles.errorText}>{errors.roadWidth}</Text>
-      )}
+          {/* Road Width */}
+          <Text style={styles.label}>Road Width (in ft) *</Text>
+          <TextInput
+            ref={roadWidthRef}
+            style={[styles.input, errors.roadWidth && styles.inputError]}
+            placeholder="Road Width"
+            placeholderTextColor="grey"
+            value={roadWidth}
+            onChangeText={setRoadWidth}
+            keyboardType="numeric"
+            editable={isEditable}
+          />
+          {errors.roadWidth && (
+            <Text style={styles.errorText}>{errors.roadWidth}</Text>
+          )}
 
-      <Text style={styles.label}>
-        In Case of No Road Enter "0" (For Vacant Land Only)
-      </Text>
-      <ErrorText error={errors.noRoad} />
+          <Text style={styles.label}>
+            In Case of No Road Enter "0" (For Vacant Land Only)
+          </Text>
+          <ErrorText error={errors.noRoad} />
+        </>
+      )}
     </View>
   );
 };

@@ -99,7 +99,7 @@ const SearchAssessment = ({ navigation }) => {
   };
 
   const handleViewPress = item => {
-    navigation.navigate('SafDueDetails', { id: item.id });
+    navigation.navigate('SafDetails', { id: item.id });
   };
 
   const renderItem = ({ item, index }) => (

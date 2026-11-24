@@ -128,7 +128,7 @@ const FieldVarification = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button2}
-        onPress={() => navigation.navigate('SafDueDetails', { id: item.id })}
+        onPress={() => navigation.navigate('SafDetails', { id: item.id })}
       >
         <Text style={styles.surveyButtonText}>Details</Text>
       </TouchableOpacity>

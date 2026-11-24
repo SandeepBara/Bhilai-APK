@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  Switch,
 } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
@@ -16,12 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AddressSection from './components/AddressSection';
-import ElectricityDetailsSection from './components/ElectricityDetailsSection';
-import WaterConnectionDetailsSection from './components/WaterConnectionDetailsSection';
-import ExtraChargesSection from './components/ExtraChargesSection';
-import FloorDetailsSection from './components/FloorDetailsSection';
 import PropertyDetails from './components/PropertyDetails';
-import { handleValidation, scrollToInput } from './AssessmentValidation';
 import { getToken } from '../../../utils/auth';
 import { PROPERTY_API } from '../../../api/apiRoutes';
 import { showToast } from '../../../utils/toast';
@@ -31,7 +27,28 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 
+const assessmentFlags = [
+  ['isBpl', 'BPL category'],
+  ['isWidow', 'Does Property belongs to Widow/Abandoment/Mentally Disable/Visually Impaired? If Yes Than Check'],
+  ['isExArmy', 'Does Property belongs with name of Ex-Army? And have Income Tax Exempted From GOVT. If Yes Than Check'],
+  ['isDisabledPerson', 'Does Property belong to Physically Disable? If Yes Than Check'],
+  ['isOldProperty', 'Old Property waived Off In 2026-2027'],
+  ['isDp', 'If Property belongs to IHSDP? If Yes Than Check'],
+  ['isSchool', 'If School? If Yes Than Check'],
+  ['is12ASchool', 'If School is 12A? If Yes Than Check'],
+  ['isComplex', 'If Complex? If Yes Than Check'],
+  ['isChabutra', 'If Chabutra? If Yes Than Check'],
+  ['isShopHolding', 'If Holding Belongs To Shop? If Yes Than Check'],
+];
+
 const ApplyAssessment = ({ navigation, route }) => {
+  const [applicationFrom, setApplicationFrom] = useState('');
+  const [roadType, setRoadType] = useState('');
+  const [previewing, setPreviewing] = useState(false);
+  const previewInFlight = useRef(false);
+  const [assessmentOptions, setAssessmentOptions] = useState(
+    Object.fromEntries(assessmentFlags.map(([key]) => [key, false])),
+  );
   // Route params removed - this is now only for New Assessment
 
   // All state variables
@@ -161,7 +178,7 @@ const ApplyAssessment = ({ navigation, route }) => {
 
     switch (fieldName) {
       case 'oldWard':
-        return !value ? 'Old Ward is required' : '';
+        return !value ? 'Ward No is required' : '';
       // case 'newWard':
       //   return !value ? 'New Ward is required' : '';
       case 'ownershipType':
@@ -179,7 +196,6 @@ const ApplyAssessment = ({ navigation, route }) => {
         if (!addressRegex.test(value)) return 'Invalid Plot No';
         return '';
       case 'villageName':
-        if (!value) return 'Village Name is required';
         if (!alphabetRegex.test(value))
           return 'Village Name must contain only letters';
         return '';
@@ -322,6 +338,7 @@ const ApplyAssessment = ({ navigation, route }) => {
   };
 
   const updateFloorDetail = (index, field, value) => {
+    console.log('Updating floor detail:', { index, field, value });
     const updated = [...floorDetails];
     updated[index][field] = value;
     setFloorDetails(updated);
@@ -393,39 +410,43 @@ const ApplyAssessment = ({ navigation, route }) => {
     setIsChecked(!isChecked);
   };
 
-  // Fetch Apartments from API when Flats is selected
   useEffect(() => {
-    if (propertyTypeLabel === 'FLATS / UNIT IN MULTI STORIED BUILDING') {
-      fetchApartments();
-    }
-  }, [propertyTypeLabel]);
-
-  const fetchApartments = async () => {
-    try {
-      setLoadingApartments(true);
-      const token = await getToken();
-      const body = oldWard ? { oldWardId: oldWard } : {};
-
-      const response = await axios.post(PROPERTY_API.APARTMENT_API, body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.data?.status) {
-        const formatted = response.data.data.map(item => ({
-          label: `${item.apartmentName} (${item.aptCode})`,
-          value: item.id,
-        }));
-        setApartmentList(formatted);
-      }
-    } catch (error) {
-      console.error('Error fetching apartments:', error);
-    } finally {
+    setApartmentDetail(null);
+    setApartmentList([]);
+    if (Number(propertyType) !== 3 || !oldWard) {
       setLoadingApartments(false);
+      return;
     }
-  };
+
+    let current = true;
+    setLoadingApartments(true);
+
+    const fetchApartments = async () => {
+      try {
+        const token = await getToken();
+        const response = await axios.post(
+          PROPERTY_API.APARTMENT_API,
+          { oldWardId: oldWard },
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        if (current && response.data?.status) {
+          setApartmentList(response.data.data.map(item => ({
+            label: item.apartmentName,
+            value: item.id,
+          })));
+        }
+      } catch {
+        if (current) showToast('error', 'Unable to load apartments for this ward');
+      } finally {
+        if (current) setLoadingApartments(false);
+      }
+    };
+
+    fetchApartments();
+    return () => {
+      current = false;
+    };
+  }, [oldWard, propertyType]);
 
   // Modified field change handlers with real-time validation
   const handleFieldChange = (fieldName, value, setter) => {
@@ -455,18 +476,11 @@ const ApplyAssessment = ({ navigation, route }) => {
 
     // Basic Field Validations
     if (!oldWard) {
-      newErrors.oldWard = 'Old Ward is required';
+      newErrors.oldWard = 'Ward No is required';
       setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Select Old Ward');
+      showToast('error', 'Select Ward');
       return false;
     }
-
-    // if (!newWard) {
-    //   newErrors.newWard = 'New Ward is required';
-    //   setError(prev => ({ ...prev, ...newErrors }));
-    //   showToast('error', 'Select New Ward');
-    //   return false;
-    // }
 
     if (!ownershipType) {
       newErrors.ownershipType = 'Ownership Type is required';
@@ -482,27 +496,8 @@ const ApplyAssessment = ({ navigation, route }) => {
       return false;
     }
 
-    if (!zone) {
-      newErrors.zone = 'Zone is required';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Select Zone');
-      return false;
-    }
-
-    if (!buildArea) {
-      newErrors.buildArea = 'Built-up Area is required';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Enter Built-up Area');
-      return false;
-    } else if (isNaN(buildArea)) {
-      newErrors.buildArea = 'Built-up Area must be a number';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Built-up Area must be numeric');
-      return false;
-    } else if (Number(buildArea) <= 0) {
-      newErrors.buildArea = 'Built-up Area must be greater than 0';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Built-up Area must be greater than 0');
+    if (Number(propertyType) === 3 && !apartmentDetail) {
+      showToast('error', 'Select Apartment Name');
       return false;
     }
 
@@ -524,12 +519,12 @@ const ApplyAssessment = ({ navigation, route }) => {
         return false;
       }
 
-      if (!owner.guardianName) {
-        newErrors[`guardianName_${i}`] = 'Guardian Name is required';
-        setError(prev => ({ ...prev, ...newErrors }));
+      if (!owner.guardianName?.trim()) {
         showToast('error', `Enter Guardian Name for Owner ${i + 1}`);
         return false;
-      } else if (!nameRegex.test(owner.guardianName)) {
+      }
+
+      if (!nameRegex.test(owner.guardianName)) {
         newErrors[`guardianName_${i}`] =
           'Guardian Name can only contain letters and spaces';
         setError(prev => ({ ...prev, ...newErrors }));
@@ -537,10 +532,15 @@ const ApplyAssessment = ({ navigation, route }) => {
         return false;
       }
 
-      if (!owner.relation) {
+      if (owner.guardianName && !owner.relation) {
         newErrors[`relation_${i}`] = 'Relation is required';
         setError(prev => ({ ...prev, ...newErrors }));
         showToast('error', `Select Relation for Owner ${i + 1}`);
+        return false;
+      }
+
+      if (!owner.address?.trim()) {
+        showToast('error', `Enter Owner Address for Owner ${i + 1}`);
         return false;
       }
 
@@ -548,13 +548,6 @@ const ApplyAssessment = ({ navigation, route }) => {
         newErrors[`gender_${i}`] = 'Gender is required';
         setError(prev => ({ ...prev, ...newErrors }));
         showToast('error', `Select Gender for Owner ${i + 1}`);
-        return false;
-      }
-
-      if (!owner.dob) {
-        newErrors[`dob_${i}`] = 'Date of Birth is required';
-        setError(prev => ({ ...prev, ...newErrors }));
-        showToast('error', `Select Date of Birth for Owner ${i + 1}`);
         return false;
       }
 
@@ -579,36 +572,21 @@ const ApplyAssessment = ({ navigation, route }) => {
     const addressRegex = /^[A-Za-z0-9\s,./-]+$/;
     const pincodeRegex = /^[0-9]{6}$/;
 
-    if (!khataNo) {
-      newErrors.khataNo = 'Khata No is required';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Enter Khata No');
-      return false;
-    } else if (!addressRegex.test(khataNo)) {
+    if (khataNo && !addressRegex.test(khataNo)) {
       newErrors.khataNo = 'Invalid Khata No';
       setError(prev => ({ ...prev, ...newErrors }));
       showToast('error', 'Khata No can only contain letters, numbers, , . / -');
       return false;
     }
 
-    if (!plotNo) {
-      newErrors.plotNo = 'Plot No is required';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Enter Plot No');
-      return false;
-    } else if (!addressRegex.test(plotNo)) {
+    if (plotNo && !addressRegex.test(plotNo)) {
       newErrors.plotNo = 'Invalid Plot No';
       setError(prev => ({ ...prev, ...newErrors }));
       showToast('error', 'Plot No can only contain letters, numbers, , . / -');
       return false;
     }
 
-    if (!villageName) {
-      newErrors.villageName = 'Village Name is required';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Enter Village Name');
-      return false;
-    } else if (!alphabetRegex.test(villageName)) {
+    if (villageName && !alphabetRegex.test(villageName)) {
       newErrors.villageName = 'Invalid Village Name';
       setError(prev => ({ ...prev, ...newErrors }));
       showToast('error', 'Village Name must contain only letters');
@@ -627,24 +605,6 @@ const ApplyAssessment = ({ navigation, route }) => {
       return false;
     }
 
-    if (!roadWidth) {
-      newErrors.roadWidth = 'Road Width is required';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Enter Road Width');
-      return false;
-    } else if (isNaN(roadWidth)) {
-      newErrors.roadWidth = 'Road Width must be a number';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Road Width must be numeric');
-      return false;
-    } else if (Number(roadWidth) > 499) {
-      newErrors.roadWidth = 'Road Width must not be greater than 499';
-      setError(prev => ({ ...prev, ...newErrors }));
-      showToast('error', 'Road Width equal or less than 499');
-      return false;
-    }
-
-    // Address Validations
     if (!propertyAddress) {
       newErrors.address = 'Address is required';
       setError(prev => ({ ...prev, ...newErrors }));
@@ -869,6 +829,11 @@ const ApplyAssessment = ({ navigation, route }) => {
   }
 
   const handleSubmit = async () => {
+    if (!applicationFrom || !roadType) {
+      Alert.alert('Required fields', 'Select the application type and road type.');
+      return;
+    }
+
     const isValid = await Validate();
     console.log('isValid:', isValid);
     if (!isValid) {
@@ -879,18 +844,30 @@ const ApplyAssessment = ({ navigation, route }) => {
       newWardLabel,
       zoneLabel,
       assessmentType: 'New Assessment',
+      applicationFrom,
+      roadTypeMstrId: roadType,
+      ...assessmentOptions,
+      is12ASchool: assessmentOptions.isSchool && assessmentOptions.is12ASchool,
+      isCorrAddDiffer: isChecked,
+      ...(isChecked && {
+        corrAddress: correspondingAddress,
+        corrCity: correspondingCity,
+        corrDist: correspondingDistrict,
+        corrState: correspondingState,
+        corrPinCode: correspondingPincode,
+      }),
       zoneMstrId: zone,
       wardMstrId: oldWard,
       newWardMstrId: newWard,
       ownershipTypeMstrId: ownershipType,
-      electAccNo: khataNo,
+      electAccNo: accNo,
       electBindBookNo: bindBookNo,
       electConsCategory: electricityCategory,
       electConsumerNo: kno,
       waterConnDate: waterConnectionDate,
       waterConnNo: waterConnectionNo,
       propTypeMstrId: propertyType,
-      appartmentDetailsId: apartmentDetail || '',
+      appartmentDetailsId: Number(propertyType) === 3 ? apartmentDetail : null,
       flatRegistryDate: selectedDate
         ? selectedDate.toISOString().split('T')[0]
         : '',
@@ -903,7 +880,7 @@ const ApplyAssessment = ({ navigation, route }) => {
       propCity: city,
       propDist: district,
 
-      builtupArea: buildArea,
+      // builtupArea: buildArea,
       propPinCode: pincode,
       propState: state,
       isMobileTower: mobileTower === 'yes' ? '1' : '0',
@@ -938,9 +915,13 @@ const ApplyAssessment = ({ navigation, route }) => {
         ownerName: owner.ownerName,
         guardianName: owner.guardianName,
         mobileNo: owner.mobile,
-        relationType: owner.relation,
+        aadharNo: owner.aadhaar || null,
+        panNo: owner.pan?.toUpperCase() || null,
+        email: owner.email || null,
+        relationType: owner.guardianName ? owner.relation : null,
         gender: owner.gender,
-        dob: owner.dob,
+        address: owner.address || '',
+        dob: owner.dob || null,
         isArmedForce: owner.isArmedForce ? 1 : 0,
         isSpeciallyAbled: owner.isSpeciallyAbled ? 1 : 0,
       })),
@@ -952,8 +933,9 @@ const ApplyAssessment = ({ navigation, route }) => {
                   ? parseFloat(floor.builtUpArea)
                   : null,
 
-              dateFrom: convertToYearMonth(floor.fromDate),
-              dateUpto1: convertToYearMonth(floor.uptoDate),
+              dateFrom: floor.fromDate,
+              dateUpto: floor.uptoDate || null,
+              zoneMstrId: floor.zoneMstrId || zone,
               floorMasterId: floor.floorName,
               usageTypeMasterId: floor.usageType,
               constructionTypeMasterId: floor.constructionType,
@@ -961,34 +943,38 @@ const ApplyAssessment = ({ navigation, route }) => {
             }))
           : [],
     };
+    console.log('Payload:', payload);
 
-    console.log(JSON.stringify(payload, null, 2));
+    if (previewInFlight.current) return;
+    previewInFlight.current = true;
+    setPreviewing(true);
     try {
       const token = await getToken();
+      const config = { headers: { Authorization: `Bearer ${token}` } };
       const response = await axios.post(
         PROPERTY_API.TEST_REQUEST_API,
         payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        },
+        config,
       );
 
-      console.log('API Response:', response.data);
-      if (response.data.status && response.data.message === 'Valid Request') {
-        showToast('success', response.data.message);
-        navigation.navigate('AssessmentSummary', {
-          data: payload,
-          masterData: data,
-        });
-      } else {
-        showToast('error', response.data.message);
+      if (!response.data.status) {
+        const errors = Object.values(response.data.errors || {}).flat().join('\n');
+        Alert.alert('Review application', errors || response.data.message);
+        return;
       }
+
+      navigation.navigate('AssessmentSummary', {
+        data: payload,
+        masterData: data,
+        apartmentList,
+      });
     } catch (error) {
-      console.error('API Test Error:', error.response?.data || error.message);
-      showToast('error', 'API Test Failed ❌');
+      const result = error.response?.data;
+      const errors = Object.values(result?.errors || {}).flat().join('\n');
+      Alert.alert('Review application', errors || result?.message || error.message);
+    } finally {
+      setPreviewing(false);
+      previewInFlight.current = false;
     }
   };
 
@@ -1087,6 +1073,16 @@ const ApplyAssessment = ({ navigation, route }) => {
       value: cunstruct.id,
     })) || [];
 
+  const fromYearOptions = data?.fyearList?.map(year => ({
+    label: year.fyear,
+    value : year.fromDate
+  })) || [];
+
+  const uptoYearOptions = data?.fyearList?.map(year => ({
+    label: year.fyear,
+    value : year.uptoDate
+  })) || [];
+
   const wardDropdownOptions =
     data?.wardList?.map(ward => ({
       label: ward?.wardNo,
@@ -1120,7 +1116,7 @@ const ApplyAssessment = ({ navigation, route }) => {
     { label: 'S/O', value: 'S/O' },
     { label: 'D/O', value: 'D/O' },
     { label: 'W/O', value: 'W/O' },
-    { label: 'F/O', value: 'F/O' },
+    { label: 'C/O', value: 'C/O' },
   ];
 
   const selectelectcate =
@@ -1135,10 +1131,19 @@ const ApplyAssessment = ({ navigation, route }) => {
       <ScrollView ref={scrollViewRef} contentContainerStyle={styles.container}>
         {/* Assessment Type Section */}
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Assessment Type</Text>
           <View style={styles.card}>
+            <Text>Application Type *</Text>
+            <Dropdown
+              style={styles.dropdown}
+              data={(data?.applicationType || []).map(value => ({ label: value, value }))}
+              labelField="label"
+              valueField="value"
+              placeholder="Select Application Type"
+              value={applicationFrom}
+              onChange={item => setApplicationFrom(item.value)}
+            />
             <Text style={[styles.label, error.oldWard && styles.errorLabel]}>
-              Old Ward *
+              Ward No *
             </Text>
             <Dropdown
               style={[styles.dropdown, error.oldWard && styles.errorInput]}
@@ -1155,28 +1160,6 @@ const ApplyAssessment = ({ navigation, route }) => {
             {error.oldWard && (
               <Text style={styles.errorText}>{error.oldWard}</Text>
             )}
-
-            {/* <Text style={[styles.label, error.newWard && styles.errorLabel]}>
-              New Ward *
-            </Text>
-            <Dropdown
-              style={[styles.dropdown, error.newWard && styles.errorInput]}
-              data={newWardOptions}
-              labelField="label"
-              valueField="value"
-              placeholder="Select"
-              placeholderTextColor="grey"
-              value={newWard}
-              onChange={item => {
-                setNewWard(item.value);
-                setNewWardLabel(item.label);
-                markFieldAsTouched('newWard');
-                clearFieldError('newWard');
-              }}
-            />
-            {error.newWard && (
-              <Text style={styles.errorText}>{error.newWard}</Text>
-            )} */}
 
             <Text
               style={[styles.label, error.ownershipType && styles.errorLabel]}
@@ -1230,7 +1213,7 @@ const ApplyAssessment = ({ navigation, route }) => {
               <Text style={styles.errorText}>{error.propertyType}</Text>
             )}
 
-            {propertyTypeLabel === 'FLATS / UNIT IN MULTI STORIED BUILDING' && (
+            {Number(propertyType) === 3 && (
               <View>
                 <Text
                   style={[
@@ -1289,31 +1272,26 @@ const ApplyAssessment = ({ navigation, route }) => {
               </View>
             )}
 
-            <Text style={[styles.label, error.zone && styles.errorLabel]}>
-              Circe *
-            </Text>
+            <Text>Road Type *</Text>
             <Dropdown
-              style={[styles.dropdown, error.zone && styles.errorInput]}
-              data={zoneType}
-              labelField="label"
-              valueField="value"
-              placeholder="Select"
-              placeholderTextColor="grey"
-              value={zone}
-              onChange={item => {
-                setZone(item.value);
-                setZoneLabel(item.label);
-                markFieldAsTouched('zone');
-                clearFieldError('zone');
-              }}
+              style={styles.dropdown}
+              data={data?.roadType || []}
+              labelField="roadType"
+              valueField="id"
+              placeholder="Select Road Type"
+              value={roadType}
+              onChange={item => setRoadType(item.id)}
             />
-            {error.zone && <Text style={styles.errorText}>{error.zone}</Text>}
-            <Text style={styles.infoText}>
-              Zone 1: Over bridge to Saheed chowk.
-            </Text>
-            <Text style={styles.infoText}>
-              Zone 2: Rest area other than Zone 1.
-            </Text>
+            <View style={styles.assessmentOption}>
+              <Text style={styles.assessmentOptionLabel}>BPL category</Text>
+              <Switch
+                accessibilityLabel="BPL category"
+                value={assessmentOptions.isBpl}
+                onValueChange={value =>
+                  setAssessmentOptions(previous => ({ ...previous, isBpl: value }))
+                }
+              />
+            </View>
           </View>
         </View>
 
@@ -1388,29 +1366,6 @@ const ApplyAssessment = ({ navigation, route }) => {
               <Text
                 style={[
                   styles.label,
-                  error[`dob_${index}`] && styles.errorLabel,
-                ]}
-              >
-                Date of Birth *
-              </Text>
-              <TouchableOpacity
-                style={[
-                  styles.dateInput,
-                  error[`dob_${index}`] && styles.errorInput,
-                ]}
-                onPress={() => setOwnerDatePicker({ index, show: true })}
-              >
-                <Text style={styles.dateText}>
-                  {owner.dob || 'Select Date of Birth'}
-                </Text>
-              </TouchableOpacity>
-              {error[`dob_${index}`] && (
-                <Text style={styles.errorText}>{error[`dob_${index}`]}</Text>
-              )}
-
-              <Text
-                style={[
-                  styles.label,
                   error[`guardianName_${index}`] && styles.errorLabel,
                 ]}
               >
@@ -1467,7 +1422,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                   error[`mobile_${index}`] && styles.errorLabel,
                 ]}
               >
-                Mobile Number *
+                Mobile No / WhatsApp No *
               </Text>
               <TextInput
                 style={[
@@ -1486,61 +1441,107 @@ const ApplyAssessment = ({ navigation, route }) => {
                 <Text style={styles.errorText}>{error[`mobile_${index}`]}</Text>
               )}
 
-              <Text style={styles.label}>Aadhaar Number</Text>
+              <Text style={styles.label}>Owner Address *</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Enter Aadhaar Number"
-                keyboardType="numeric"
-                value={owner.aadhaar}
-                onChangeText={value =>
-                  updateOwnerDetail(index, 'aadhaar', value)
+                accessibilityLabel="Owner address"
+                placeholder="Owner address"
+                value={owner.address || ''}
+                onChangeText={value => updateOwnerDetail(index, 'address', value)}
+              />
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityState={{ expanded: !!owner.showAdditionalDetails }}
+                onPress={() =>
+                  updateOwnerDetail(index, 'showAdditionalDetails', !owner.showAdditionalDetails)
                 }
-                maxLength={12}
-              />
+              >
+                <Text style={styles.dateText}>
+                  {owner.showAdditionalDetails ? 'Hide additional owner details' : 'Additional owner details'}
+                </Text>
+              </TouchableOpacity>
+              {owner.showAdditionalDetails && (
+                <>
+                  <Text
+                    style={[
+                      styles.label,
+                      error[`dob_${index}`] && styles.errorLabel,
+                    ]}
+                  >
+                    Date of Birth
+                  </Text>
+                  <TouchableOpacity
+                    style={[
+                      styles.dateInput,
+                      error[`dob_${index}`] && styles.errorInput,
+                    ]}
+                    onPress={() => setOwnerDatePicker({ index, show: true })}
+                  >
+                    <Text style={styles.dateText}>
+                      {owner.dob || 'Select Date of Birth'}
+                    </Text>
+                  </TouchableOpacity>
+                  {error[`dob_${index}`] && (
+                    <Text style={styles.errorText}>{error[`dob_${index}`]}</Text>
+                  )}
 
-              <Text style={styles.label}>PAN Number</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter PAN Number"
-                value={owner.pan}
-                onChangeText={value => updateOwnerDetail(index, 'pan', value)}
-                maxLength={10}
-              />
+                  <Text style={styles.label}>Aadhaar Number</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter Aadhaar Number"
+                    keyboardType="numeric"
+                    value={owner.aadhaar}
+                    onChangeText={value =>
+                      updateOwnerDetail(index, 'aadhaar', value)
+                    }
+                    maxLength={12}
+                  />
 
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter Email"
-                keyboardType="email-address"
-                value={owner.email}
-                onChangeText={value => updateOwnerDetail(index, 'email', value)}
-              />
+                  <Text style={styles.label}>PAN Number</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter PAN Number"
+                    value={owner.pan}
+                    onChangeText={value => updateOwnerDetail(index, 'pan', value)}
+                    maxLength={10}
+                  />
 
-              <Text style={styles.label}>Armed Forces</Text>
-              <Dropdown
-                style={styles.dropdown}
-                data={yesNoOptions}
-                labelField="label"
-                valueField="value"
-                placeholder="Select Armed Forces"
-                value={owner.armedForces}
-                onChange={item =>
-                  updateOwnerDetail(index, 'armedForces', item.value)
-                }
-              />
+                  <Text style={styles.label}>Email</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Enter Email"
+                    keyboardType="email-address"
+                    value={owner.email}
+                    onChangeText={value => updateOwnerDetail(index, 'email', value)}
+                  />
 
-              <Text style={styles.label}>Specially Abled</Text>
-              <Dropdown
-                style={styles.dropdown}
-                data={yesNoOptions}
-                labelField="label"
-                valueField="value"
-                placeholder="Select Specially Abled"
-                value={owner.speciallyAbled}
-                onChange={item =>
-                  updateOwnerDetail(index, 'speciallyAbled', item.value)
-                }
-              />
+                  <Text style={styles.label}>Armed Forces</Text>
+                  <Dropdown
+                    style={styles.dropdown}
+                    data={yesNoOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select Armed Forces"
+                    value={owner.armedForces}
+                    onChange={item =>
+                      updateOwnerDetail(index, 'armedForces', item.value)
+                    }
+                  />
+
+                  <Text style={styles.label}>Specially Abled</Text>
+                  <Dropdown
+                    style={styles.dropdown}
+                    data={yesNoOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select Specially Abled"
+                    value={owner.speciallyAbled}
+                    onChange={item =>
+                      updateOwnerDetail(index, 'speciallyAbled', item.value)
+                    }
+                  />
+                </>
+              )}
             </View>
           ))}
 
@@ -1560,49 +1561,10 @@ const ApplyAssessment = ({ navigation, route }) => {
         )}
 
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Electricity Details</Text>
-          <View style={styles.card}>
-            <ElectricityDetailsSection
-              kno={kno}
-              setKno={setKno}
-              accNo={accNo}
-              setAccNo={setAccNo}
-              bindBookNo={bindBookNo}
-              setBindBookNo={setBindBookNo}
-              electricityCategory={electricityCategory}
-              setElectricityCategory={setElectricityCategory}
-              selectelectcate={selectelectcate}
-              errors={{
-                kno: !kno ? 'K. No is required' : '',
-                accNo: !accNo ? 'ACC No is required' : '',
-                electricityCategory: !electricityCategory
-                  ? 'Select a category'
-                  : '',
-              }}
-            />
-          </View>
-        </View>
-
-        <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Water Connection Details</Text>
-          <View style={styles.card}>
-            <WaterConnectionDetailsSection
-              waterConnectionNo={waterConnectionNo}
-              setWaterConnectionNo={setWaterConnectionNo}
-              waterConnectionDate={waterConnectionDate}
-              setWaterConnectionDate={setWaterConnectionDate}
-              showWaterConnectionDatePicker={showWaterConnectionDatePicker}
-              setShowWaterConnectionDatePicker={
-                setShowWaterConnectionDatePicker
-              }
-            />
-          </View>
-        </View>
-
-        <View style={styles.cardContainer}>
           <Text style={styles.cardTitle}>Property Details</Text>
           <View style={styles.card}>
             <PropertyDetails
+              counterFieldsOnly
               khataNo={khataNo}
               setKhataNo={value =>
                 handleFieldChange('khataNo', value, setKhataNo)
@@ -1694,53 +1656,6 @@ const ApplyAssessment = ({ navigation, route }) => {
         </View>
 
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Extra Charges</Text>
-          <View style={styles.card}>
-            <ExtraChargesSection
-              propertyTypeId={propertyType}
-              mobileTower={mobileTower}
-              setMobileTower={setMobileTower}
-              towerArea={towerArea}
-              setTowerArea={setTowerArea}
-              installationDate={installationDate}
-              setInstallationDate={setInstallationDate}
-              showInstallationDatePicker={showInstallationDatePicker}
-              setShowInstallationDatePicker={setShowInstallationDatePicker}
-              hoarding={hoarding}
-              setHoarding={setHoarding}
-              hoardingArea={hoardingArea}
-              setHoardingArea={setHoardingArea}
-              hoardingInstallationDate={hoardingInstallationDate}
-              setHoardingInstallationDate={setHoardingInstallationDate}
-              showHoardingInstallationDatePicker={
-                showHoardingInstallationDatePicker
-              }
-              setShowHoardingInstallationDatePicker={
-                setShowHoardingInstallationDatePicker
-              }
-              petrolPump={petrolPump}
-              setPetrolPump={setPetrolPump}
-              pumpArea={pumpArea}
-              setPumpArea={setPumpArea}
-              pumpInstallationDate={pumpInstallationDate}
-              setPumpInstallationDate={setPumpInstallationDate}
-              showPumpInstallationDatePicker={showPumpInstallationDatePicker}
-              setShowPumpInstallationDatePicker={
-                setShowPumpInstallationDatePicker
-              }
-              rainHarvesting={rainHarvesting}
-              setRainHarvesting={setRainHarvesting}
-              completionDate={completionDate}
-              setCompletionDate={setCompletionDate}
-              showDatePicker={showDatePicker}
-              setShowDatePicker={setShowDatePicker}
-              yesNoOptions={yesNoOptions}
-              error={error}
-            />
-          </View>
-        </View>
-
-        <View style={styles.cardContainer}>
           {propertyTypeLabel !== 'VACANT LAND' && (
             <>
               <Text style={styles.cardTitle}>Floor Details</Text>
@@ -1758,6 +1673,16 @@ const ApplyAssessment = ({ navigation, route }) => {
                     )}
                   </View>
 
+                  <Text style={styles.label}>Floor Zone *</Text>
+                  <Dropdown
+                    style={styles.dropdown}
+                    data={zoneType}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select Floor Zone"
+                    value={floor.zoneMstrId || zone}
+                    onChange={item => updateFloorDetail(index, 'zoneMstrId', item.value)}
+                  />
                   <Text
                     style={[
                       styles.label,
@@ -1911,38 +1836,47 @@ const ApplyAssessment = ({ navigation, route }) => {
                       error[`floor_${index}_fromDate`] && styles.errorLabel,
                     ]}
                   >
-                    From Date (MM/YYYY) *
+                    From Date *
                   </Text>
-                  <TouchableOpacity
+                  <Dropdown
                     style={[
-                      styles.dateInput,
-                      error[`floor_${index}_fromDate`] && styles.errorInput,
+                      styles.dropdown,
+                      error[`floor_${index}_fromDate`] &&
+                        styles.errorInput,
                     ]}
-                    onPress={() =>
-                      setDatePicker({ index, field: 'fromDate', show: true })
+                    data={fromYearOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select"
+                    placeholderStyle={{ color: 'grey' }}
+                    value={floor.fromDate}
+                    onChange={item =>
+                      updateFloorDetail(index, 'fromDate', item.value)
                     }
-                  >
-                    <Text style={styles.dateText}>
-                      {floor.fromDate || 'Select From Date'}
-                    </Text>
-                  </TouchableOpacity>
+                  />
                   {error[`floor_${index}_fromDate`] && (
                     <Text style={styles.errorText}>
                       {error[`floor_${index}_fromDate`]}
                     </Text>
                   )}
 
-                  <Text style={styles.label}>Up to Date (MM/YYYY)</Text>
-                  <TouchableOpacity
-                    style={styles.dateInput}
-                    onPress={() =>
-                      setDatePicker({ index, field: 'uptoDate', show: true })
+                  <Text style={styles.label}>Up to Date </Text>
+                  <Dropdown
+                    style={[
+                      styles.dropdown,
+                      error[`floor_${index}_uptoDate`] &&
+                        styles.errorInput,
+                    ]}
+                    data={uptoYearOptions}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select"
+                    placeholderStyle={{ color: 'grey' }}
+                    value={floor.uptoDate}
+                    onChange={item =>
+                      updateFloorDetail(index, 'uptoDate', item.value)
                     }
-                  >
-                    <Text style={styles.dateText}>
-                      {floor.uptoDate || 'Select Up to Date'}
-                    </Text>
-                  </TouchableOpacity>
+                  />
                 </View>
               ))}
 
@@ -1953,6 +1887,25 @@ const ApplyAssessment = ({ navigation, route }) => {
           )}
         </View>
 
+
+        {assessmentFlags.map(([key, label]) => {
+          if (key === 'isBpl') return null;
+          if (key === 'is12ASchool' && !assessmentOptions.isSchool) return null;
+
+          return (
+            <View key={key} style={styles.assessmentOption}>
+              <Text style={styles.assessmentOptionLabel}>{label}</Text>
+              <Switch
+                accessibilityLabel={label}
+                value={assessmentOptions[key]}
+                onValueChange={value =>
+                  setAssessmentOptions(previous => ({ ...previous, [key]: value }))
+                }
+              />
+            </View>
+          );
+        })}
+
         {datePicker.show && (
           <DateTimePicker
             mode="date"
@@ -1962,7 +1915,12 @@ const ApplyAssessment = ({ navigation, route }) => {
           />
         )}
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit}
+          disabled={previewing}
+          accessibilityState={{ busy: previewing, disabled: previewing }}
+        >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -1971,6 +1929,14 @@ const ApplyAssessment = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  assessmentOption: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  assessmentOptionLabel: {
+    flex: 1,
+  },
   container: {
     padding: 16,
     backgroundColor: '#f5f5f5',
