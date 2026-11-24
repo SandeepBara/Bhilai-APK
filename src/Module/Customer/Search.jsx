@@ -23,6 +23,7 @@ import { PROPERTY_API, CUSTOMER_API } from '../../api/apiRoutes';
 import { getToken } from '../../utils/auth';
 import Pagination from '../../Components/Pagination';
 import styles from '../../style/SearchStyles';
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
 const Search = ({ navigation }) => {
   const [value, setValue] = useState(null); // selected ward id
@@ -126,33 +127,33 @@ const Search = ({ navigation }) => {
   const renderItem = ({ item, index }) => (
     <View style={styles.resultCard}>
       <View style={styles.row}>
-        <Text style={styles.label}>SL No:</Text>
-        <Text style={styles.value}>{index + 1 + (page - 1) * 5}</Text>
+        <Text selectable style={styles.label}>SL No:</Text>
+        <Text selectable style={styles.value}>{index + 1 + (page - 1) * 5}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Ward No:</Text>
-        <Text style={styles.value}>{item.wardNo}</Text>
+        <Text selectable style={styles.label}>Ward No:</Text>
+        <Text selectable style={styles.value}>{item.wardNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Consumer No:</Text>
-        <Text style={styles.value}>{item.consumerNo}</Text>
+        <Text selectable style={styles.label}>Consumer No:</Text>
+        <Text selectable style={styles.value}>{item.consumerNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Owner:</Text>
-        <Text style={styles.value}>{item.ownerName}</Text>
+        <Text selectable style={styles.label}>Owner:</Text>
+        <Text selectable style={styles.value}>{item.ownerName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Address:</Text>
-        <Text style={[styles.value, { flex: 1, textAlign: 'right' }]}>
+        <Text selectable style={styles.label}>Address:</Text>
+        <Text selectable style={[styles.value, { flex: 1, textAlign: 'right' }]}>
           {item.address}
         </Text>
       </View>
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.viewButton}
         onPress={() => handleViewPress(item)}
       >
         <Text style={styles.viewButtonText}>View</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
@@ -163,7 +164,7 @@ const Search = ({ navigation }) => {
       {/* 🔵 SEARCH UI OUTSIDE FLATLIST (Fixes Input Focus Issue) */}
       <View style={styles.seacrhCont}>
         <View style={styles.searchhead}>
-          <Text style={styles.text}>Search Consumer</Text>
+          <Text selectable style={styles.text}>Search Consumer</Text>
         </View>
 
         <View style={styles.selectWardKey}>
@@ -186,14 +187,14 @@ const Search = ({ navigation }) => {
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => search(1)}>
+        <CopyableTouchableOpacity style={styles.button} onPress={() => search(1)}>
           <Text style={styles.buttonText}>
             {loadingSearch ? 'Searching...' : 'Search'}
           </Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         {searchResults.length === 0 && !loadingSearch && (
-          <Text style={styles.noResults}>No results to show</Text>
+          <Text selectable style={styles.noResults}>No results to show</Text>
         )}
       </View>
 

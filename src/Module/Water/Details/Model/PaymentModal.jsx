@@ -14,6 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { getToken } from '../../../../utils/auth';
 import { WATER_API_ROUTES } from '../../../../api/apiRoutes';
 import axios from 'axios';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const PaymentModal = ({
   visible,
@@ -135,74 +136,74 @@ export const PaymentModal = ({
         <View style={styles.overlay}>
           <View style={styles.modalContent}>
             <ScrollView>
-              <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+              <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
                 <Text style={styles.closeText}>×</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
               {/* Title */}
-              <Text style={styles.mainTitle}>View Demand</Text>
+              <Text selectable style={styles.mainTitle}>View Demand</Text>
 
               {/* Table Header */}
               <View style={styles.tableHeader}>
-                <Text style={[styles.tableHeaderText, { flex: 1 }]}>#</Text>
-                <Text style={[styles.tableHeaderText, { flex: 3 }]}>
+                <Text selectable style={[styles.tableHeaderText, { flex: 1 }]}>#</Text>
+                <Text selectable style={[styles.tableHeaderText, { flex: 3 }]}>
                   Charge Type
                 </Text>
-                <Text style={[styles.tableHeaderText, { flex: 2 }]}>
+                <Text selectable style={[styles.tableHeaderText, { flex: 2 }]}>
                   Connection Fee
                 </Text>
-                <Text style={[styles.tableHeaderText, { flex: 2 }]}>
+                <Text selectable style={[styles.tableHeaderText, { flex: 2 }]}>
                   Penalty
                 </Text>
-                <Text style={[styles.tableHeaderText, { flex: 2 }]}>Total</Text>
+                <Text selectable style={[styles.tableHeaderText, { flex: 2 }]}>Total</Text>
               </View>
 
               {/* Table Row (from demandList[0]) */}
               {tradeDetails?.demandList?.map((item, index) => (
                 <View style={styles.tableRow} key={item.id || index}>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                     {index + 1}
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 3 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 3 }]}>
                     {item.chargeFor}
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                     {item.connFee}
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                     {item.penalty}
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                     {item.amount}
                   </Text>
                 </View>
               ))}
 
               {/* Main Demand */}
-              <Text style={styles.sectionTitle}>Main Demand</Text>
+              <Text selectable style={styles.sectionTitle}>Main Demand</Text>
               <View style={styles.demandBox}>
-                <Text style={styles.demandText}>
+                <Text selectable style={styles.demandText}>
                   Demand: {tradeDetails?.demandAmount || '0.00'}
                 </Text>
-                <Text style={styles.penaltyText}>
+                <Text selectable style={styles.penaltyText}>
                   Penalty: {tradeDetails?.realizationPenalty || '0.00'} [
                   {tradeDetails?.description}]
                 </Text>
               </View>
               {/* Total */}
               <View style={styles.totalBox}>
-                <Text style={styles.totalText}>
+                <Text selectable style={styles.totalText}>
                   Total Payable Amount: {tradeDetails?.payableAmount || '0.00'}
                 </Text>
               </View>
               {/* Pay Now Button */}
               <View style={styles.totalBox}>
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   onPress={() => setPayNowModalVisible(true)}
                   style={styles.confirmButton}
                 >
                   <Text>Pay Now</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
             </ScrollView>
           </View>
@@ -218,10 +219,10 @@ export const PaymentModal = ({
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent1}>
-            <Text style={styles.modalTitle}>💳 Make Payment</Text>
+            <Text selectable style={styles.modalTitle}>💳 Make Payment</Text>
 
             {/* Payment Type Dropdown */}
-            <Text>Payment Type *</Text>
+            <Text selectable>Payment Type *</Text>
             <Dropdown
               style={styles.dropdown}
               data={paymentTypeData}
@@ -233,7 +234,7 @@ export const PaymentModal = ({
             />
 
             {/* Payment Mode Dropdown */}
-            <Text>Payment Mode *</Text>
+            <Text selectable>Payment Mode *</Text>
             <Dropdown
               style={styles.dropdown}
               data={paymentModeData}
@@ -247,15 +248,15 @@ export const PaymentModal = ({
             {/* Extra fields if not Cash */}
             {paymentMode && paymentMode !== 'Cash' && (
               <>
-                <Text>Cheque/DD/Ref No *</Text>
+                <Text selectable>Cheque/DD/Ref No *</Text>
                 <TextInput
                   style={styles.input}
                   value={refNo}
                   onChangeText={setRefNo}
                 />
 
-                <Text>Cheque/DD Date *</Text>
-                <TouchableOpacity
+                <Text selectable>Cheque/DD Date *</Text>
+                <CopyableTouchableOpacity
                   onPress={() => setShowDatePicker(true)}
                   style={styles.input}
                 >
@@ -264,7 +265,7 @@ export const PaymentModal = ({
                       ? chequeDate.toLocaleDateString()
                       : 'Select Date'}
                   </Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
 
                 {showDatePicker && (
                   <DateTimePicker
@@ -278,14 +279,14 @@ export const PaymentModal = ({
                   />
                 )}
 
-                <Text>Bank Name *</Text>
+                <Text selectable>Bank Name *</Text>
                 <TextInput
                   style={styles.input}
                   value={bankName}
                   onChangeText={setBankName}
                 />
 
-                <Text>Branch Name *</Text>
+                <Text selectable>Branch Name *</Text>
                 <TextInput
                   style={styles.input}
                   value={branchName}
@@ -295,7 +296,7 @@ export const PaymentModal = ({
             )}
 
             {/* Amount */}
-            <Text>Amount *</Text>
+            <Text selectable>Amount *</Text>
             <TextInput
               style={styles.input}
               value={amount}
@@ -306,14 +307,14 @@ export const PaymentModal = ({
 
             {/* Buttons */}
             <View style={styles.modalButtons}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 onPress={() => setPayNowModalVisible(false)}
                 style={styles.cancelButton}
               >
                 <Text>Cancel</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 onPress={async () => {
                   if (!paymentType || !paymentMode) {
                     Alert.alert(
@@ -344,7 +345,7 @@ export const PaymentModal = ({
                 style={styles.confirmButton}
               >
                 <Text>Proceed</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

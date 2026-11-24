@@ -21,6 +21,7 @@ import { BASE_URL } from '../../../config';
 import Colors from '../../Constants/Colors';
 import { showToast } from '../../../utils/toast';
 import Pagination from '../../../Components/Pagination';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const FieldVarification = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -77,61 +78,61 @@ const FieldVarification = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Ward No.:</Text>
-        <Text style={styles.value}>{item?.wardNo}</Text>
+        <Text selectable style={styles.cardLabel}>Ward No.:</Text>
+        <Text selectable style={styles.value}>{item?.wardNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Assessment Type:</Text>
-        <Text style={styles.value}>{item?.assessmentType}</Text>
+        <Text selectable style={styles.cardLabel}>Assessment Type:</Text>
+        <Text selectable style={styles.value}>{item?.assessmentType}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Property Type:</Text>
-        <Text style={styles.value}>{item?.propertyType}</Text>
+        <Text selectable style={styles.cardLabel}>Property Type:</Text>
+        <Text selectable style={styles.value}>{item?.propertyType}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Applicant Name:</Text>
-        <Text style={styles.value}>{item?.ownerName}</Text>
+        <Text selectable style={styles.cardLabel}>Applicant Name:</Text>
+        <Text selectable style={styles.value}>{item?.ownerName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Mobile No.:</Text>
-        <Text style={styles.value}>{item?.mobileNo}</Text>
+        <Text selectable style={styles.cardLabel}>Mobile No.:</Text>
+        <Text selectable style={styles.value}>{item?.mobileNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>SAF No.:</Text>
-        <TouchableOpacity
+        <Text selectable style={styles.cardLabel}>SAF No.:</Text>
+        <CopyableTouchableOpacity
           onPress={() => copyToClipboard(item?.safNo)}
           style={styles.iconBtn}
         >
           <Text style={{ fontSize: 10, color: '#007bff' }}>📋</Text>
-        </TouchableOpacity>
-        <Text style={styles.value}>{item?.safNo}</Text>
+        </CopyableTouchableOpacity>
+        <Text selectable style={styles.value}>{item?.safNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Property Address:</Text>
-        <Text style={styles.value}>{item?.propAddress}</Text>
+        <Text selectable style={styles.cardLabel}>Property Address:</Text>
+        <Text selectable style={styles.value}>{item?.propAddress}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Apply Date:</Text>
-        <Text style={styles.value}>{item?.applyDate}</Text>
+        <Text selectable style={styles.cardLabel}>Apply Date:</Text>
+        <Text selectable style={styles.value}>{item?.applyDate}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Forward Date:</Text>
-        <Text style={styles.value}>{item?.receivingDate}</Text>
+        <Text selectable style={styles.cardLabel}>Forward Date:</Text>
+        <Text selectable style={styles.value}>{item?.receivingDate}</Text>
       </View>
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.button1}
         onPress={() => navigation.navigate('SurveyPage', { id: item.id })}
       >
         <Text style={styles.surveyButtonText}>Survey</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.button2}
         onPress={() => navigation.navigate('SafDetails', { id: item.id })}
       >
         <Text style={styles.surveyButtonText}>Details</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
@@ -139,7 +140,7 @@ const FieldVarification = ({ navigation }) => {
     <View style={styles.container}>
       <HeaderNavigation />
       <View style={styles.applicationList}>
-        <Text style={styles.title}>Application List</Text>
+        <Text selectable style={styles.title}>Application List</Text>
 
         {loading ? (
           <ActivityIndicator
@@ -153,7 +154,7 @@ const FieldVarification = ({ navigation }) => {
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderItem}
             ListEmptyComponent={
-              <Text style={styles.noData}>No data found.</Text>
+              <Text selectable style={styles.noData}>No data found.</Text>
             }
           />
         )}

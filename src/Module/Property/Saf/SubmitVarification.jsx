@@ -19,10 +19,11 @@ import { useNavigation } from '@react-navigation/native';
 import { showToast } from '../../../utils/toast';
 import moment from 'moment';
 import ImageResizer from 'react-native-image-resizer';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const Card = ({ title, children }) => (
   <View style={styles.card}>
-    {title && <Text style={styles.cardTitle}>{title}</Text>}
+    {title && <Text selectable style={styles.cardTitle}>{title}</Text>}
     {children}
   </View>
 );
@@ -348,39 +349,39 @@ const SubmitVarification = ({ route }) => {
     <>
       <ScrollView contentContainerStyle={styles.container}>
         <HeaderNavigation />
-        <Text style={styles.title}>Submitted Data</Text>
+        <Text selectable style={styles.title}>Submitted Data</Text>
 
         {/* Property Details */}
         <Card title="Property Details">
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Ward No:</Text>{' '}
             {submissionData?.['Ward No']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Verified:</Text>{' '}
             {submissionData?.['Verified_Ward']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>New Ward No:</Text>{' '}
             {submissionData?.['New Ward No (Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Verified:</Text>{' '}
             {submissionData?.['Verified_NewWard']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Zone:</Text>{' '}
             {submissionData?.['Zone (Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Verified:</Text>{' '}
             {submissionData?.['Verified_Zone']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Property Type:</Text>{' '}
             {submissionData?.['Property Type (Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={{ fontWeight: 'bold' }}>Verified:</Text>{' '}
             {submissionData?.['Verified_PropertyType']}
           </Text>
@@ -388,20 +389,20 @@ const SubmitVarification = ({ route }) => {
 
         {floorIds?.length > 0 && (
           <>
-            <Text style={styles.sectionTitle}>Floor Details</Text>
+            <Text selectable style={styles.sectionTitle}>Floor Details</Text>
             {floorIds.map((floor, index) => (
               <View key={index} style={styles.card}>
-                <Text style={styles.cardTitle}>
+                <Text selectable style={styles.cardTitle}>
                   {floor.floorName || `Floor ${index + 1}`} Details
                 </Text>
-                <Text>Floor Name: {floor.floorName || '-'}</Text>
-                <Text>Construction Type: {floor.constructionType || '-'}</Text>
-                <Text>Occupancy Type: {floor.occupancyName || '-'}</Text>
-                <Text>Usage Type: {floor.usageType || '-'}</Text>
-                <Text>Built-up Area: {floor.builtupArea || '-'}</Text>
-                <Text>Carpet Area: {floor.carpetArea || '-'}</Text>
-                <Text>Date From: {floor.dateFrom || '-'}</Text>
-                <Text>Date To: {floor.dateUpto || '-'}</Text>
+                <Text selectable>Floor Name: {floor.floorName || '-'}</Text>
+                <Text selectable>Construction Type: {floor.constructionType || '-'}</Text>
+                <Text selectable>Occupancy Type: {floor.occupancyName || '-'}</Text>
+                <Text selectable>Usage Type: {floor.usageType || '-'}</Text>
+                <Text selectable>Built-up Area: {floor.builtupArea || '-'}</Text>
+                <Text selectable>Carpet Area: {floor.carpetArea || '-'}</Text>
+                <Text selectable>Date From: {floor.dateFrom || '-'}</Text>
+                <Text selectable>Date To: {floor.dateUpto || '-'}</Text>
               </View>
             ))}
           </>
@@ -415,42 +416,42 @@ const SubmitVarification = ({ route }) => {
             {/* Extra Floors */}
             {submissionData?.extraFloors?.length > 0 && (
               <>
-                <Text style={styles.sectionTitle}>Extra Floors</Text>
+                <Text selectable style={styles.sectionTitle}>Extra Floors</Text>
                 {submissionData.extraFloors.map((floor, index) => (
                   <View key={index} style={styles.card}>
-                    <Text style={styles.cardTitle}>Floor {index + 1}</Text>
-                    <Text>Floor Name: {floor.floorName}</Text>
-                    <Text>Construction Type: {floor.constructionType}</Text>
-                    <Text>Occupancy Type: {floor.occupancyType}</Text>
-                    <Text>Usage Type: {floor.usageType}</Text>
-                    <Text>From Date: {floor.fromDate}</Text>
-                    <Text>To Date: {floor.toDate}</Text>
+                    <Text selectable style={styles.cardTitle}>Floor {index + 1}</Text>
+                    <Text selectable>Floor Name: {floor.floorName}</Text>
+                    <Text selectable>Construction Type: {floor.constructionType}</Text>
+                    <Text selectable>Occupancy Type: {floor.occupancyType}</Text>
+                    <Text selectable>Usage Type: {floor.usageType}</Text>
+                    <Text selectable>From Date: {floor.fromDate}</Text>
+                    <Text selectable>To Date: {floor.toDate}</Text>
                   </View>
                 ))}
               </>
             )}
 
             {/* Location */}
-            <Text style={styles.sectionTitle}>Location</Text>
+            <Text selectable style={styles.sectionTitle}>Location</Text>
             {location ? (
               <View>
-                <Text>Latitude: {location.latitude}</Text>
-                <Text>Longitude: {location.longitude}</Text>
+                <Text selectable>Latitude: {location.latitude}</Text>
+                <Text selectable>Longitude: {location.longitude}</Text>
               </View>
             ) : (
-              <Text>No location data</Text>
+              <Text selectable>No location data</Text>
             )}
 
             {/* Photos */}
-            <Text style={styles.sectionTitle}>Captured Photos</Text>
+            <Text selectable style={styles.sectionTitle}>Captured Photos</Text>
             {photos.map((photo, index) =>
               photo.uri ? (
                 <View key={index} style={{ marginBottom: 10 }}>
-                  <Text style={{ fontWeight: 'bold' }}>{photo.label}</Text>
+                  <Text selectable style={{ fontWeight: 'bold' }}>{photo.label}</Text>
                   <Image source={{ uri: photo.uri }} style={styles.image} />
                 </View>
               ) : (
-                <Text key={index}>{photo.label} not captured</Text>
+                <Text selectable key={index}>{photo.label} not captured</Text>
               ),
             )}
           </>
@@ -459,9 +460,9 @@ const SubmitVarification = ({ route }) => {
         {/* Submit Button */}
 
         <View style={styles.submitButtonContainer}>
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
             <Text style={styles.submitButtonText}>Submit</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </ScrollView>
 
@@ -469,14 +470,14 @@ const SubmitVarification = ({ route }) => {
       <Modal visible={showModal} transparent animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.closeButton}
               onPress={() => setShowModal(false)}
             >
               <Text style={styles.closeButtonText}>✕</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <Text style={styles.modalTitle}>Remarks</Text>
+            <Text selectable style={styles.modalTitle}>Remarks</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter your remarks"
@@ -488,21 +489,21 @@ const SubmitVarification = ({ route }) => {
             <View style={styles.buttonRow}>
               {isULBUser && (
                 <>
-                  <TouchableOpacity
+                  <CopyableTouchableOpacity
                     style={[styles.actionButton, styles.backwardButton]}
                     onPress={() => handleSendToLevel('BACKWARD')}
                   >
                     <Text style={styles.buttonText}>Backward</Text>
-                  </TouchableOpacity>
+                  </CopyableTouchableOpacity>
                 </>
               )}
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.actionButton, styles.forwardButton]}
                 onPress={() => handleSendToLevel('FORWARD')}
               >
                 <Text style={styles.buttonText}>Forward</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

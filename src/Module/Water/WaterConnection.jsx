@@ -13,6 +13,7 @@ import axios from 'axios';
 import * as Print from 'expo-print'; // ✅ Import print module
 import { SAF_API_ROUTES } from '../../api/apiRoutes';
 import { getToken } from '../../utils/auth';
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
 export const TCVerificationModal = ({ visible, onClose, id }) => {
   const [extraFloor, setExtraFloor] = useState([]);
@@ -122,16 +123,16 @@ export const TCVerificationModal = ({ visible, onClose, id }) => {
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-between' }}
           >
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
               <Text style={styles.closeText}>✕</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.printBtn} onPress={handlePrint}>
+            </CopyableTouchableOpacity>
+            <CopyableTouchableOpacity style={styles.printBtn} onPress={handlePrint}>
               <Text style={styles.printText}>🖨️ Print</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={styles.header}>
+            <Text selectable style={styles.header}>
               Tax Collector Verification Details
             </Text>
 

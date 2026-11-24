@@ -10,6 +10,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import { formatDate1 } from '../utils/helpers';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const ApartmentDetailsSection = ({
   selectedDate,
@@ -25,17 +26,17 @@ const ApartmentDetailsSection = ({
   return (
     <View style={styles.card}>
       <View>
-        <Text style={[styles.label, error.ownershipType && styles.errorLabel]}>
+        <Text selectable style={[styles.label, error.ownershipType && styles.errorLabel]}>
           Flat Registry Date *
         </Text>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           onPress={() => setShowDatePicker(true)}
           style={styles.dateInput}
         >
           <Text>
             {selectedDate ? formatDate1(selectedDate) : 'Select Date'}
           </Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         {showDatePicker && (
           <DateTimePicker
@@ -54,7 +55,7 @@ const ApartmentDetailsSection = ({
           />
         )}
 
-        <Text style={[styles.label, error.ownershipType && styles.errorLabel]}>
+        <Text selectable style={[styles.label, error.ownershipType && styles.errorLabel]}>
           Appartment Datails *
         </Text>
         <Dropdown

@@ -12,6 +12,7 @@ import { getUserDetails } from '../utils/auth';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../Module/Constants/Colors';
+import { CopyableTouchableOpacity } from './CopyableControl';
 // import { ImageBackground } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -97,7 +98,7 @@ const MenuTreeScreen = () => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.box} onPress={() => handlePress(item)}>
+    <CopyableTouchableOpacity style={styles.box} onPress={() => handlePress(item)}>
       <View style={styles.iconContainer}>
         <Icon name={getIconName(item.icon)} size={40} style={styles.icon} />
       </View>
@@ -111,7 +112,7 @@ const MenuTreeScreen = () => {
           style={{ marginTop: 8 }}
         />
       ) : null} */}
-    </TouchableOpacity>
+    </CopyableTouchableOpacity>
   );
 
   return (
@@ -119,12 +120,12 @@ const MenuTreeScreen = () => {
       {/* Header */}
       <View style={styles.header}>
         {menuStack.length > 1 ? (
-          <TouchableOpacity style={styles.backButton} onPress={goBack}>
+          <CopyableTouchableOpacity style={styles.backButton} onPress={goBack}>
             <Icon name="arrow-back" size={24} color="#090748ff" />
             <Text style={styles.headerText}>Back</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         ) : (
-          <Text style={styles.headerText}>Menu</Text>
+          <Text selectable style={styles.headerText}>Menu</Text>
         )}
       </View>
 
@@ -141,7 +142,7 @@ const MenuTreeScreen = () => {
         // if needed for nested navigation screens
         nestedScrollEnabled={false}
         ListEmptyComponent={
-          <Text style={{ textAlign: 'center', marginTop: 20, color: '#888' }}>
+          <Text selectable style={{ textAlign: 'center', marginTop: 20, color: '#888' }}>
             No menu items found
           </Text>
         }

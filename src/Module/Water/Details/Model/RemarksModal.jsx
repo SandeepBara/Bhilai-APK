@@ -11,6 +11,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { getToken } from '../../../../utils/auth';
 import { WATER_API_ROUTES } from '../../../../api/apiRoutes';
 import axios from 'axios';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const RemarksModal = ({
   visible,
@@ -82,7 +83,7 @@ export const RemarksModal = ({
     >
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.title}>Enter Remarks</Text>
+          <Text selectable style={styles.title}>Enter Remarks</Text>
 
           <TextInput
             style={[styles.textArea, error ? styles.inputError : null]}
@@ -100,16 +101,16 @@ export const RemarksModal = ({
             onFocus={handleFocus}
           />
 
-          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          {error ? <Text selectable style={styles.errorText}>{error}</Text> : null}
 
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.cancelBtn} onPress={onClose}>
+            <CopyableTouchableOpacity style={styles.cancelBtn} onPress={onClose}>
               <Text style={styles.cancelText}>Cancel</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <TouchableOpacity style={styles.sendBtn} onPress={handleSend}>
+            <CopyableTouchableOpacity style={styles.sendBtn} onPress={handleSend}>
               <Text style={styles.sendText}>Send</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </View>

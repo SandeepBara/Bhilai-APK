@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const DatePickerForm = () => {
   const [date, setDate] = useState(new Date());
@@ -41,23 +42,23 @@ const DatePickerForm = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.form}>
-        <Text style={styles.title}>Date Selection Form</Text>
+        <Text selectable style={styles.title}>Date Selection Form</Text>
 
         {/* Date Input Field */}
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Select Date:</Text>
-          <TouchableOpacity
+          <Text selectable style={styles.label}>Select Date:</Text>
+          <CopyableTouchableOpacity
             style={styles.dateInput}
             onPress={() => showPicker(true)}
           >
             <Text style={styles.dateText}>{formatDate(date)}</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
 
         {/* Submit Button */}
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitButtonText}>Submit</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         {/* Date Picker Modal */}
         {show && (

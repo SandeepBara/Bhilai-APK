@@ -34,19 +34,20 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { getToken } from '../../../utils/auth';
+import { CopyableText, CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 const isEnabled = value => [true, 1, '1', 'true'].includes(value);
 const yesNo = value => isEnabled(value) ? 'Yes' : 'No';
 
 function DetailRows({ title, fields }) {
   return (
     <View style={styles.card}>
-      <Text style={styles.heading}>{title}</Text>
+      <Text selectable style={styles.heading}>{title}</Text>
       {fields.map(([label, value, onPress]) => (
         <View key={label} style={styles.row}>
-          <Text style={styles.labelFixed}>{label}</Text>
-          <Text selectable onPress={onPress} style={[styles.value, onPress && styles.linkValue]}>
+          <Text selectable style={styles.labelFixed}>{label}</Text>
+          <CopyableText selectable onPress={onPress} style={[styles.value, onPress && styles.linkValue]}>
             {value ?? 'NA'}
-          </Text>
+          </CopyableText>
         </View>
       ))}
     </View>
@@ -56,13 +57,13 @@ function DetailRows({ title, fields }) {
 function DetailTable({ title, columns, rows }) {
   return (
     <View style={styles.card}>
-      <Text style={styles.heading}>{title}</Text>
+      <Text selectable style={styles.heading}>{title}</Text>
       {rows.length ? (
         <ScrollView horizontal>
           <View>
             <View style={[styles.tableRow, styles.tableHeader]}>
               {columns.map(column => (
-                <Text key={column} style={[styles.tableCell, styles.headerText]}>{column}</Text>
+                <Text selectable key={column} style={[styles.tableCell, styles.headerText]}>{column}</Text>
               ))}
             </View>
             {rows.map((row, index) => (
@@ -74,7 +75,7 @@ function DetailTable({ title, columns, rows }) {
             ))}
           </View>
         </ScrollView>
-      ) : <Text style={styles.value}>No records available.</Text>}
+      ) : <Text selectable style={styles.value}>No records available.</Text>}
     </View>
   );
 }
@@ -410,7 +411,7 @@ const SafDetails = ({ route, navigation }) => {
         }}
       >
         <ActivityIndicator size="large" color={Colors.headignColor} />
-        <Text
+        <Text selectable
           style={{ marginTop: 10, fontSize: 16, color: Colors.headignColor }}
         >
           Loading...
@@ -484,7 +485,7 @@ const SafDetails = ({ route, navigation }) => {
         />
         {Array.isArray(safData?.swmConsumer) && safData.swmConsumer.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.heading}>SWM Consumer Details</Text>
+            <Text selectable style={styles.heading}>SWM Consumer Details</Text>
             {safData.swmConsumer.map((consumer, index) => (
               <View key={consumer.id ?? index}>
                 <DetailRows title="Consumer No." fields={[
@@ -528,32 +529,32 @@ const SafDetails = ({ route, navigation }) => {
 
         {transDtls.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.heading}>Payment Details</Text>
+            <Text selectable style={styles.heading}>Payment Details</Text>
 
             <ScrollView horizontal>
               <View>
                 {/* Table Header */}
                 <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>SL</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>SL</Text>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Transaction No
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Payment Mode
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Date
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     From Qtr / Year
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Upto Qtr / Year
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Amount
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     View
                   </Text>
                 </View>
@@ -581,13 +582,13 @@ const SafDetails = ({ route, navigation }) => {
                       {item?.payableAmt ?? 'NA'}
                     </Text>
 
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       onPress={() => handleViewReceipt(item.id)}
                     >
                       <Text style={[styles.tableCell, { color: 'blue' }]}>
                         View
                       </Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   </View>
                 ))}
               </View>
@@ -597,21 +598,21 @@ const SafDetails = ({ route, navigation }) => {
 
         {tcVerfivication.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.heading}>Field Verification</Text>
+            <Text selectable style={styles.heading}>Field Verification</Text>
 
             <ScrollView horizontal>
               <View>
                 {/* Table Header */}
                 <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>SL</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>SL</Text>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Transaction No
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Payment Mode
                   </Text>
 
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     View
                   </Text>
                 </View>
@@ -627,9 +628,9 @@ const SafDetails = ({ route, navigation }) => {
                       {item?.towerInstallationDate ?? 'NA'}
                     </Text>
 
-                    <TouchableOpacity onPress={() => handleView(item.id)}>
+                    <CopyableTouchableOpacity onPress={() => handleView(item.id)}>
                       <Text style={{ color: 'blue' }}>View</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
 
                     {/* TC Verification Modal */}
                     <TCVerificationModal
@@ -645,38 +646,38 @@ const SafDetails = ({ route, navigation }) => {
         )}
         {Array.isArray(memoDtls) && memoDtls.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.heading}>Memo Details</Text>
+            <Text selectable style={styles.heading}>Memo Details</Text>
 
             <ScrollView horizontal>
               <View>
                 {/* Table Header */}
                 <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>SL</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>SL</Text>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Memo No
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Memo Type
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Holding No
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Quarter
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Financial Year
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Quarterly Tax
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Created At
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     User Name
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     User Name
                   </Text>
                 </View>
@@ -705,12 +706,12 @@ const SafDetails = ({ route, navigation }) => {
                     <Text selectable style={styles.tableCell}>
                       {item.userName ?? 'NA'}
                     </Text>
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       style={styles.button}
                       onPress={() => setVisible(true)}
                     >
                       <Text style={styles.buttonText}>View</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
 
                     <PropertyTaxNoticeModal
                       visible={visible}
@@ -735,16 +736,16 @@ const SafDetails = ({ route, navigation }) => {
       </View>
       <View style={styles.buttonContainer}>
         <View style={styles.secondaryActions}>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             accessibilityRole="button"
             onPress={() => documentview(id)}
             style={styles.actionBtn}
           >
             <Icon name="description" size={20} color="#1e3a5f" />
             <Text style={styles.actionBtnText}>View Document</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {safData?.paymentStatus == 0 && (
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               accessibilityRole="button"
               onPress={() => {
                 setShowPayNow(false);
@@ -755,11 +756,11 @@ const SafDetails = ({ route, navigation }) => {
             >
               <Icon name="receipt" size={20} color="#1e3a5f" />
               <Text style={styles.actionBtnText}>View Demand</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           )}
         </View>
         {safData?.paymentStatus == 0 && (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             accessibilityRole="button"
             onPress={() => {
               setShowPayNow(true);
@@ -772,7 +773,7 @@ const SafDetails = ({ route, navigation }) => {
             <Text style={[styles.actionBtnText, styles.paymentActionText]}>
               Proceed to Payment
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         )}
       </View>
       <PayNowModal

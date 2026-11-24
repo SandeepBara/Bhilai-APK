@@ -237,11 +237,11 @@ const StaffInformation = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.row}>
-      <Text style={styles.cell}>{item.id}</Text>
-      <Text style={styles.cell}>{item.wardNo}</Text>
-      <Text style={styles.cell}>{item.owner}</Text>
-      <Text style={styles.cell}>{item.grad}</Text>
-      <Text style={styles.cell}>{item.address}</Text>
+      <Text selectable style={styles.cell}>{item.id}</Text>
+      <Text selectable style={styles.cell}>{item.wardNo}</Text>
+      <Text selectable style={styles.cell}>{item.owner}</Text>
+      <Text selectable style={styles.cell}>{item.grad}</Text>
+      <Text selectable style={styles.cell}>{item.address}</Text>
       <TouchableOpacity onPress={() => alert(`View ${item.owner}`)}>
         <Icon name="remove-red-eye" size={22} color="#2196F3" />
       </TouchableOpacity>
@@ -269,22 +269,22 @@ const StaffInformation = () => {
       <View style={styles.exportRow}>
         <TouchableOpacity style={styles.exportButton}>
           <Icon name="file-download" size={24} color="#4CAF50" />
-          <Text style={styles.iconLabel}>Excel</Text>
+          <Text selectable style={styles.iconLabel}>Excel</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.exportButton}>
           <Icon name="picture-as-pdf" size={24} color="#F44336" />
-          <Text style={styles.iconLabel}>PDF</Text>
+          <Text selectable style={styles.iconLabel}>PDF</Text>
         </TouchableOpacity>
       </View>
 
       {/* Table Header */}
       <View style={styles.headerRow}>
-        <Text style={styles.headerText}>ID</Text>
-        <Text style={styles.headerText}>Ward No.</Text>
-        <Text style={styles.headerText}>Owner</Text>
-        <Text style={styles.headerText}>Grad.</Text>
-        <Text style={styles.headerText}>Address</Text>
-        <Text style={styles.headerText}>Action</Text>
+        <Text selectable style={styles.headerText}>ID</Text>
+        <Text selectable style={styles.headerText}>Ward No.</Text>
+        <Text selectable style={styles.headerText}>Owner</Text>
+        <Text selectable style={styles.headerText}>Grad.</Text>
+        <Text selectable style={styles.headerText}>Address</Text>
+        <Text selectable style={styles.headerText}>Action</Text>
       </View>
 
       {/* FlatList Table */}
@@ -293,7 +293,7 @@ const StaffInformation = () => {
         keyExtractor={item => item.id}
         renderItem={renderItem}
         ListEmptyComponent={
-          <Text style={styles.emptyText}>No results found</Text>
+          <Text selectable style={styles.emptyText}>No results found</Text>
         }
       />
     </View>

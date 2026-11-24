@@ -47,7 +47,7 @@ const LoginForm = () => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      {error.email ? <Text style={styles.error}>{error.email}</Text> : null}
+      {error.email ? <Text selectable style={styles.error}>{error.email}</Text> : null}
 
       <TextInput
         ref={passwordRef}
@@ -58,7 +58,7 @@ const LoginForm = () => {
         secureTextEntry
       />
       {error.password ? (
-        <Text style={styles.error}>{error.password}</Text>
+        <Text selectable style={styles.error}>{error.password}</Text>
       ) : null}
 
       <Button title="Login" onPress={validateInputs} />

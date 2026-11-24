@@ -16,6 +16,7 @@ import { getToken } from '../../../utils/auth';
 import { useNavigation } from '@react-navigation/native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useState } from 'react';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const SubmitApply = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,8 +80,8 @@ const SubmitApply = ({ route }) => {
 
   const RowItem = ({ label, value }) => (
     <View style={styles.row}>
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.value}>{value}</Text>
+      <Text selectable style={styles.label}>{label}</Text>
+      <Text selectable style={styles.value}>{value}</Text>
     </View>
   );
 
@@ -188,11 +189,11 @@ const SubmitApply = ({ route }) => {
     <View style={{ flex: 1 }}>
       <HeaderNavigation />
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>Submitted Data</Text>
+        <Text selectable style={styles.title}>Submitted Data</Text>
 
         {/* Connection Details */}
         <View style={styles.card}>
-          <Text style={styles.heading}>Connection Details</Text>
+          <Text selectable style={styles.heading}>Connection Details</Text>
           <RowItem
             label="Type of Connection"
             value={formData.connectionTypeId || 'N/A'}
@@ -207,7 +208,7 @@ const SubmitApply = ({ route }) => {
 
         {/* Property Details */}
         <View style={styles.card}>
-          <Text style={styles.heading}>Property Details</Text>
+          <Text selectable style={styles.heading}>Property Details</Text>
           <RowItem label="Ward No" value={formData.wardMstrId} />
           <RowItem label="New Ward No" value={formData.newWardMstrId} />
           <RowItem label="Total Area" value={formData.areaSqft || 'N/A'} />
@@ -218,7 +219,7 @@ const SubmitApply = ({ route }) => {
 
         {/* Applicants */}
         <View style={styles.card}>
-          <Text style={styles.heading}>Applicants</Text>
+          <Text selectable style={styles.heading}>Applicants</Text>
           {formData.ownerDtl?.map((a, index) => (
             <View key={index} style={styles.subCard}>
               <RowItem label="Owner Name" value={a.ownerName || 'N/A'} />
@@ -230,9 +231,9 @@ const SubmitApply = ({ route }) => {
           ))}
         </View>
 
-        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitButtonText}>FINAL SUBMIT</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </ScrollView>
 
       <Modal
@@ -243,13 +244,13 @@ const SubmitApply = ({ route }) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Copied!</Text>
-            <Text style={styles.modalText}>
+            <Text selectable style={styles.modalTitle}>Copied!</Text>
+            <Text selectable style={styles.modalText}>
               Copied Application No: {copiedLicenseNo}
             </Text>
-            <TouchableOpacity style={styles.okButton} onPress={handleOk}>
+            <CopyableTouchableOpacity style={styles.okButton} onPress={handleOk}>
               <Text style={styles.okText}>OK</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </Modal>

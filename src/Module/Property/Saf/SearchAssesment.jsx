@@ -22,6 +22,7 @@ import { BASE_URL } from '../../../config';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Pagination from '../../../Components/Pagination';
 import styles from '../../../style/SearchStyles';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const SearchAssessment = ({ navigation }) => {
   const [value, setValue] = useState(); // ward id
@@ -105,62 +106,62 @@ const SearchAssessment = ({ navigation }) => {
   const renderItem = ({ item, index }) => (
     <View style={styles.resultCard}>
       <View style={styles.row}>
-        <Text style={styles.label}>SL No:</Text>
-        <Text style={styles.value}>{index + 1}</Text>
+        <Text selectable style={styles.label}>SL No:</Text>
+        <Text selectable style={styles.value}>{index + 1}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Apply Date:</Text>
-        <Text style={styles.value}>{item.applyDate}</Text>
+        <Text selectable style={styles.label}>Apply Date:</Text>
+        <Text selectable style={styles.value}>{item.applyDate}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Status:</Text>
-        <Text style={styles.value}>{item.appStatus}</Text>
+        <Text selectable style={styles.label}>Status:</Text>
+        <Text selectable style={styles.value}>{item.appStatus}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Ward No:</Text>
-        <Text style={styles.value}>{item.wardNo}</Text>
+        <Text selectable style={styles.label}>Ward No:</Text>
+        <Text selectable style={styles.value}>{item.wardNo}</Text>
       </View>
       {/* <View style={styles.row}>
         <Text style={styles.label}>New Ward No:</Text>
         <Text style={styles.value}>{item.newWardNo}</Text>
       </View> */}
       <View style={styles.row}>
-        <Text style={styles.label}>Application No:</Text>
-        <Text style={styles.value}>{item.safNo}</Text>
+        <Text selectable style={styles.label}>Application No:</Text>
+        <Text selectable style={styles.value}>{item.safNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Assessment Type:</Text>
-        <Text style={styles.value}>{item.assessmentType}</Text>
+        <Text selectable style={styles.label}>Assessment Type:</Text>
+        <Text selectable style={styles.value}>{item.assessmentType}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Owner:</Text>
-        <Text style={styles.value}>{item.ownerName}</Text>
+        <Text selectable style={styles.label}>Owner:</Text>
+        <Text selectable style={styles.value}>{item.ownerName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Guardian Name:</Text>
-        <Text style={styles.value}>{item.guardianName}</Text>
+        <Text selectable style={styles.label}>Guardian Name:</Text>
+        <Text selectable style={styles.value}>{item.guardianName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Property Type:</Text>
-        <Text style={styles.value}>{item.propertyType}</Text>
+        <Text selectable style={styles.label}>Property Type:</Text>
+        <Text selectable style={styles.value}>{item.propertyType}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Address:</Text>
-        <Text style={[styles.value, { flex: 1 }]} numberOfLines={2}>
+        <Text selectable style={styles.label}>Address:</Text>
+        <Text selectable style={[styles.value, { flex: 1 }]} numberOfLines={2}>
           {item.propAddress}
         </Text>
       </View>
       <View style={[styles.row, { borderBottomWidth: 0 }]}>
-        <Text style={styles.label}>Mobile:</Text>
-        <Text style={styles.value}>{item.mobileNo}</Text>
+        <Text selectable style={styles.label}>Mobile:</Text>
+        <Text selectable style={styles.value}>{item.mobileNo}</Text>
       </View>
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.viewButton}
         onPress={() => handleViewPress(item)}
       >
         <Text style={styles.viewButtonText}>View</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
@@ -171,7 +172,7 @@ const SearchAssessment = ({ navigation }) => {
       {/* 🔹 Search Form */}
       <View style={styles.seacrhCont}>
         <View style={styles.searchhead}>
-          <Text style={styles.text}>Search Application</Text>
+          <Text selectable style={styles.text}>Search Application</Text>
         </View>
 
         <View style={styles.selectWardKey}>
@@ -193,9 +194,9 @@ const SearchAssessment = ({ navigation }) => {
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => onSearch(1)}>
+        <CopyableTouchableOpacity style={styles.button} onPress={() => onSearch(1)}>
           <Text style={styles.buttonText}>Search</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
 
       {/* 🔹 Result List */}

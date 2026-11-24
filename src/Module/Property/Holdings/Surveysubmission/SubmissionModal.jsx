@@ -7,6 +7,7 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const SubmissionModal = ({
   visible,
@@ -21,11 +22,11 @@ const SubmissionModal = ({
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <CopyableTouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>✕</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <Text style={styles.modalTitle}>Remarks</Text>
+          <Text selectable style={styles.modalTitle}>Remarks</Text>
           <TextInput
             style={styles.input}
             placeholder="Enter your remarks"
@@ -36,20 +37,20 @@ const SubmissionModal = ({
 
           <View style={styles.buttonRow}>
             {isULBUser && (
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.actionButton, styles.backwardButton]}
                 onPress={onBackward}
               >
                 <Text style={styles.buttonText}>Backward</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             )}
 
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={[styles.actionButton, styles.forwardButton]}
               onPress={onForward}
             >
               <Text style={styles.buttonText}>Forward</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </View>

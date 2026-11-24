@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const WaterConnectionDetailsSection = ({
   waterConnectionNo,
@@ -22,7 +23,7 @@ const WaterConnectionDetailsSection = ({
 
   return (
     <View style={styles.section}>
-      <Text style={styles.label}>Water Connection No</Text>
+      <Text selectable style={styles.label}>Water Connection No</Text>
       <TextInput
         style={styles.input}
         placeholder="con number"
@@ -32,8 +33,8 @@ const WaterConnectionDetailsSection = ({
         editable={!isDisabled}
       />
 
-      <Text style={styles.label}>Water Connection Date</Text>
-      <TouchableOpacity
+      <Text selectable style={styles.label}>Water Connection Date</Text>
+      <CopyableTouchableOpacity
         style={styles.dateInput}
         onPress={() => !isDisabled && setShowWaterConnectionDatePicker(true)}
       >
@@ -42,7 +43,7 @@ const WaterConnectionDetailsSection = ({
             ? new Date(waterConnectionDate).toLocaleDateString('en-GB')
             : 'Water Connection Date (DD/MM/YYYY)'}
         </Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
 
       {showWaterConnectionDatePicker && !isDisabled && (
         <DateTimePicker

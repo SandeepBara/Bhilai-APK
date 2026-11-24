@@ -24,6 +24,7 @@ import { getToken } from '../../utils/auth';
 import { WORK_FLOW_PERMISSION } from '../../api/apiRoutes';
 import GenerateDemandModal from './Model/GenerateDemandModal';
 import styles from '../../style/DetailsStyle';
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 const Details = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [showDemandModal, setShowDemandModal] = useState(false);
@@ -137,7 +138,7 @@ const Details = ({ route }) => {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color={Colors.primary} />
-        <Text style={{ marginTop: 10 }}>Loading data...</Text>
+        <Text selectable style={{ marginTop: 10 }}>Loading data...</Text>
       </View>
     );
   }
@@ -222,10 +223,10 @@ const Details = ({ route }) => {
         {/* Owner Details */}
         <Section title="Owner Details">
           <View style={styles.ownerHeader}>
-            <Text style={styles.ownerCol}>Owner Name</Text>
-            <Text style={styles.ownerCol}>Guardian Name</Text>
-            <Text style={styles.ownerCol}>Mobile No</Text>
-            <Text style={styles.ownerCol}>Email Id</Text>
+            <Text selectable style={styles.ownerCol}>Owner Name</Text>
+            <Text selectable style={styles.ownerCol}>Guardian Name</Text>
+            <Text selectable style={styles.ownerCol}>Mobile No</Text>
+            <Text selectable style={styles.ownerCol}>Email Id</Text>
           </View>
           {tradeDetails?.owners?.map((owner, index) => (
             <View
@@ -235,10 +236,10 @@ const Details = ({ route }) => {
                 { backgroundColor: index % 2 === 0 ? '#fff' : '#f9f9f9' },
               ]}
             >
-              <Text style={styles.ownerCol}>{owner.ownerName}</Text>
-              <Text style={styles.ownerCol}>{owner.guardianName}</Text>
-              <Text style={styles.ownerCol}>{String(owner.mobileNo)}</Text>
-              <Text style={styles.ownerCol}>{owner.email || 'N/A'}</Text>
+              <Text selectable style={styles.ownerCol}>{owner.ownerName}</Text>
+              <Text selectable style={styles.ownerCol}>{owner.guardianName}</Text>
+              <Text selectable style={styles.ownerCol}>{String(owner.mobileNo)}</Text>
+              <Text selectable style={styles.ownerCol}>{owner.email || 'N/A'}</Text>
             </View>
           ))}
         </Section>
@@ -271,49 +272,49 @@ const Details = ({ route }) => {
             <View>
               {/* Table Header */}
               <View style={styles.docHeader}>
-                <Text style={styles.docCol}>Tran No</Text>
-                <Text style={styles.docCol}>Tran Date</Text>
-                <Text style={styles.docCol}>Payment Mode</Text>
-                <Text style={styles.docCol}>Tran Type</Text>
-                <Text style={styles.docCol}>Demand From</Text>
-                <Text style={styles.docCol}>Demand Upto</Text>
-                <Text style={styles.docCol}>Demand Amt (Excl. Penalty)</Text>
-                <Text style={styles.docCol}>Paid Demand</Text>
-                <Text style={styles.docCol}>Paid Penalty</Text>
-                <Text style={styles.docCol}>Total Paid Amt</Text>
-                <Text style={styles.docCol}>Balance Amt</Text>
-                <Text style={styles.docCol}>View</Text>
+                <Text selectable style={styles.docCol}>Tran No</Text>
+                <Text selectable style={styles.docCol}>Tran Date</Text>
+                <Text selectable style={styles.docCol}>Payment Mode</Text>
+                <Text selectable style={styles.docCol}>Tran Type</Text>
+                <Text selectable style={styles.docCol}>Demand From</Text>
+                <Text selectable style={styles.docCol}>Demand Upto</Text>
+                <Text selectable style={styles.docCol}>Demand Amt (Excl. Penalty)</Text>
+                <Text selectable style={styles.docCol}>Paid Demand</Text>
+                <Text selectable style={styles.docCol}>Paid Penalty</Text>
+                <Text selectable style={styles.docCol}>Total Paid Amt</Text>
+                <Text selectable style={styles.docCol}>Balance Amt</Text>
+                <Text selectable style={styles.docCol}>View</Text>
               </View>
 
               {/* Table Rows */}
               {paymentDtl && paymentDtl.length > 0 ? (
                 paymentDtl.map((item, index) => (
                   <View key={item.id || index} style={styles.paymentRow}>
-                    <Text style={styles.paymentCol}>{item.tranNo}</Text>
-                    <Text style={styles.paymentCol}>{item.tranDate}</Text>
-                    <Text style={styles.paymentCol}>{item.paymentMode}</Text>
-                    <Text style={styles.paymentCol}>{item.tranType}</Text>
-                    <Text style={styles.paymentCol}>{item.fromDate}</Text>
-                    <Text style={styles.paymentCol}>{item.uptoDate}</Text>
-                    <Text style={styles.paymentCol}>{item.demandAmt}</Text>
-                    <Text style={styles.paymentCol}>{item.payableAmt}</Text>
-                    <Text style={styles.paymentCol}>{item.penaltyAmt}</Text>
-                    <Text style={styles.paymentCol}>
+                    <Text selectable style={styles.paymentCol}>{item.tranNo}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.tranDate}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.paymentMode}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.tranType}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.fromDate}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.uptoDate}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.demandAmt}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.payableAmt}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.penaltyAmt}</Text>
+                    <Text selectable style={styles.paymentCol}>
                       {parseFloat(item.payableAmt) +
                         parseFloat(item.penaltyAmt)}
                     </Text>
-                    <Text style={styles.paymentCol}>{item.balance}</Text>
+                    <Text selectable style={styles.paymentCol}>{item.balance}</Text>
 
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       style={styles.viewBtn}
                       onPress={() => setShowReceipt(true)}
                     >
                       <Text style={styles.viewBtnText}>View</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   </View>
                 ))
               ) : (
-                <Text>No payment details found.</Text>
+                <Text selectable>No payment details found.</Text>
               )}
             </View>
           </ScrollView>
@@ -372,7 +373,7 @@ const Details = ({ route }) => {
 
             {/* Show Image */}
             <View style={styles.imageContainer}>
-              <Text style={styles.text}>Last Reading Img</Text>
+              <Text selectable style={styles.text}>Last Reading Img</Text>
               {connectionDtl.docPath ? (
                 <Image
                   source={{ uri: connectionDtl.docPath }}
@@ -380,7 +381,7 @@ const Details = ({ route }) => {
                   resizeMode="contain"
                 />
               ) : (
-                <Text>No document available</Text>
+                <Text selectable>No document available</Text>
               )}
             </View>
           </View>
@@ -388,7 +389,7 @@ const Details = ({ route }) => {
 
         {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={[
               styles.actionBtn,
               (!meterStatusId || meterStatusId === null) && styles.disabledBtn,
@@ -397,28 +398,28 @@ const Details = ({ route }) => {
             disabled={!meterStatusId || meterStatusId === null}
           >
             <Text style={styles.actionBtnText}>Generate Demand</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.actionBtn}
             onPress={() => setShowDemandModal(true)}
           >
             <Text style={styles.actionBtnText}>View Demand</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.actionBtn}
             onPress={() => setShowPaymentModal(true)}
           >
             <Text style={styles.actionBtnText}>Pay Demand</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.actionBtn}
             onPress={() => setShowDocumentModal(true)}
           >
             <Text style={styles.actionBtnText}>View Application</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </ScrollView>
       {/* Modals */}
@@ -460,15 +461,15 @@ const Details = ({ route }) => {
 // Section and Row components
 const Section = ({ title, children }) => (
   <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text selectable style={styles.sectionTitle}>{title}</Text>
     {children}
   </View>
 );
 
 const DetailRow = ({ label, value }) => (
   <View style={styles.row}>
-    <Text style={styles.label}>{label}</Text>
-    <Text style={styles.value}>{value}</Text>
+    <Text selectable style={styles.label}>{label}</Text>
+    <Text selectable style={styles.value}>{value}</Text>
   </View>
 );
 
@@ -483,9 +484,9 @@ const DocRow = ({ name, status }) => {
       : 'black';
   return (
     <View style={styles.docRow}>
-      <Text style={styles.docCol}>{name}</Text>
-      <Text style={styles.docCol}>📄</Text>
-      <Text style={[styles.docCol, { color, fontWeight: 'bold' }]}>
+      <Text selectable style={styles.docCol}>{name}</Text>
+      <Text selectable style={styles.docCol}>📄</Text>
+      <Text selectable style={[styles.docCol, { color, fontWeight: 'bold' }]}>
         {status}
       </Text>
     </View>

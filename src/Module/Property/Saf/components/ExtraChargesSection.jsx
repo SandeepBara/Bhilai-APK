@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const ExtraChargesSection = ({
   propertyTypeId,
@@ -50,7 +51,7 @@ const ExtraChargesSection = ({
 
   return (
     <View style={{ marginBottom: 20 }}>
-      <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+      <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
         Mobile Tower
       </Text>
       <Dropdown
@@ -74,7 +75,7 @@ const ExtraChargesSection = ({
       />
       {mobileTower === 'yes' && (
         <View style={{ marginBottom: 12 }}>
-          <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+          <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
             Total Area Covered by Mobile Tower & Supporting Equipments (in Sq.
             Ft.)
           </Text>
@@ -95,10 +96,10 @@ const ExtraChargesSection = ({
             onChangeText={setTowerArea}
             editable={!isDisabled}
           />
-          <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+          <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
             Date of Installation of Mobile Tower *
           </Text>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={{
               borderWidth: 1,
               borderColor: '#ccc',
@@ -116,7 +117,7 @@ const ExtraChargesSection = ({
                 ? new Date(installationDate).toLocaleDateString('en-GB')
                 : 'DD-MM-YYYY'}
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {showInstallationDatePicker && !isDisabled && (
             <DateTimePicker
               value={installationDate ? new Date(installationDate) : new Date()}
@@ -133,7 +134,7 @@ const ExtraChargesSection = ({
           )}
         </View>
       )}
-      <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+      <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
         Does Property Have Hoarding Board(s) ? *
       </Text>
       <Dropdown
@@ -157,7 +158,7 @@ const ExtraChargesSection = ({
       />
       {hoarding === 'yes' && (
         <View style={{ marginBottom: 12 }}>
-          <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+          <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
             Total Area of Wall / Roof / Land (in Sq. Ft.) *
           </Text>
           <TextInput
@@ -178,10 +179,10 @@ const ExtraChargesSection = ({
             placeholderTextColor="#000"
             editable={!isDisabled}
           />
-          <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+          <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
             Date of Installation of Hoarding Board(s) *
           </Text>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={{
               borderWidth: 1,
               borderColor: '#ccc',
@@ -201,7 +202,7 @@ const ExtraChargesSection = ({
                 ? new Date(hoardingInstallationDate).toLocaleDateString('en-GB')
                 : 'Date of Installation of Hoarding Board(s) *'}
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {showHoardingInstallationDatePicker && !isDisabled && (
             <DateTimePicker
               value={
@@ -225,7 +226,7 @@ const ExtraChargesSection = ({
 
       {propertyTypeId != 4 && (
         <>
-          <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+          <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
             Is property a Petrol Pump ? *
           </Text>
           <Dropdown
@@ -249,7 +250,7 @@ const ExtraChargesSection = ({
           />
           {petrolPump === 'yes' && (
             <View style={{ marginBottom: 12 }}>
-              <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+              <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
                 Total Area of Petrol Pump (in Sq. Ft.) *
               </Text>
               <TextInput
@@ -270,10 +271,10 @@ const ExtraChargesSection = ({
                 placeholderTextColor="#000"
                 editable={!isDisabled}
               />
-              <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+              <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
                 Date of Installation *
               </Text>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={{
                   borderWidth: 1,
                   borderColor: '#ccc',
@@ -293,7 +294,7 @@ const ExtraChargesSection = ({
                     ? new Date(pumpInstallationDate).toLocaleDateString('en-GB')
                     : 'Date of Installation *'}
                 </Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
               {showPumpInstallationDatePicker && !isDisabled && (
                 <DateTimePicker
                   value={
@@ -314,7 +315,7 @@ const ExtraChargesSection = ({
               )}
             </View>
           )}
-          <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+          <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
             Rainwater harvesting provision ? *
           </Text>
           <Dropdown
@@ -338,10 +339,10 @@ const ExtraChargesSection = ({
           />
           {rainHarvesting === 'yes' && (
             <View style={{ marginBottom: 12 }}>
-              <Text style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
+              <Text selectable style={{ fontSize: 14, color: '#555', marginBottom: 5 }}>
                 Rainwater harvesting Completion Date *
               </Text>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={{
                   borderWidth: 1,
                   borderColor: '#ccc',
@@ -364,7 +365,7 @@ const ExtraChargesSection = ({
                     ? new Date(completionDate).toLocaleDateString('en-GB')
                     : 'Completion Date of Petrol Pump *'}
                 </Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
               {showDatePicker && !isDisabled && (
                 <DateTimePicker
                   value={completionDate ? new Date(completionDate) : new Date()}

@@ -10,7 +10,7 @@ const AppHeader = ({ applicationNo, status }) => {
         {applicationNo &&(
         <View style={styles.infoSection}>
             <MaterialIcons name="info" size={24} color="#007AFF" style={{ marginRight: 10 }} />
-            <Text style={styles.text}>
+            <Text selectable style={styles.text}>
             Your applied application no. is: 
             <Text style={styles.applicationNoText}>
                 {applicationNo} 
@@ -23,7 +23,7 @@ const AppHeader = ({ applicationNo, status }) => {
 
       {status &&(
         <View style={[styles.statusBox, { borderColor: statusColor }]}>
-            <Text style={[styles.statusText, { color: statusColor }]}>
+            <Text selectable style={[styles.statusText, { color: statusColor }]}>
             Current Status: {status}
             </Text>
         </View>

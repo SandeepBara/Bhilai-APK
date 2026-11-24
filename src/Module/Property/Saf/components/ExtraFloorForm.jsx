@@ -5,6 +5,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import MonthYearPicker from 'react-native-month-year-picker';
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { formatDate } from '../utils/helpers';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const ExtraFloorForm = ({
   floors,
@@ -25,13 +26,13 @@ const ExtraFloorForm = ({
           style={styles.card}
         >
           <View style={styles.rowlabel}>
-            <Text style={{ color: 'white' }}>
+            <Text selectable style={{ color: 'white' }}>
               Extra Floor {index + 1}
             </Text>
           </View>
 
           <View>
-            <Text style={styles.label}>Floor Name</Text>
+            <Text selectable style={styles.label}>Floor Name</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholder}
@@ -46,7 +47,7 @@ const ExtraFloorForm = ({
               }
             />
 
-            <Text style={styles.label}>Construction Type</Text>
+            <Text selectable style={styles.label}>Construction Type</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholder}
@@ -61,7 +62,7 @@ const ExtraFloorForm = ({
               }
             />
 
-            <Text style={styles.label}>Occupancy Type</Text>
+            <Text selectable style={styles.label}>Occupancy Type</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholder}
@@ -76,7 +77,7 @@ const ExtraFloorForm = ({
               }
             />
 
-            <Text style={styles.label}>Usage Type</Text>
+            <Text selectable style={styles.label}>Usage Type</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholder}
@@ -91,7 +92,7 @@ const ExtraFloorForm = ({
               }
             />
 
-            <Text style={styles.label}>Built-up Area</Text>
+            <Text selectable style={styles.label}>Built-up Area</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter built-up area"
@@ -103,8 +104,8 @@ const ExtraFloorForm = ({
             />
           </View>
 
-          <Text style={styles.label}>Date From</Text>
-          <TouchableOpacity
+          <Text selectable style={styles.label}>Date From</Text>
+          <CopyableTouchableOpacity
             style={styles.dateBox}
             onPress={() =>
               updateFloor(index, 'showFromPicker', true)
@@ -115,7 +116,7 @@ const ExtraFloorForm = ({
                 ? formatDate(floor.fromDate)
                 : 'Select Date'}
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {floor.showFromPicker && (
             <MonthYearPicker
               onChange={(event, newDate) => {
@@ -128,8 +129,8 @@ const ExtraFloorForm = ({
             />
           )}
 
-          <Text style={styles.label}>Date Upto</Text>
-          <TouchableOpacity
+          <Text selectable style={styles.label}>Date Upto</Text>
+          <CopyableTouchableOpacity
             style={styles.dateBox}
             onPress={() =>
               updateFloor(index, 'showToPicker', true)
@@ -140,7 +141,7 @@ const ExtraFloorForm = ({
                 ? formatDate(floor.toDate)
                 : 'Select Date'}
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {floor.showToPicker && (
             <MonthYearPicker
               onChange={(event, newDate) => {
@@ -156,19 +157,19 @@ const ExtraFloorForm = ({
       ))}
 
       <View style={styles.buttonRow}>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           onPress={addFloor}
           style={styles.addButton}
         >
           <Text style={styles.buttonText}>Add Floor</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
         {floors.length > 0 && (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             onPress={removeFloor}
             style={styles.removeButton}
           >
             <Text style={styles.buttonText}>Remove Floor</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         )}
       </View>
     </>

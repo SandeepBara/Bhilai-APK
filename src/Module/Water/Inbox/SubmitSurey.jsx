@@ -17,6 +17,7 @@ import { getToken } from '../../../utils/auth';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const SubmitSurey = () => {
   const navigation = useNavigation();
@@ -151,18 +152,18 @@ const SubmitSurey = () => {
       <HeaderNavigation />
 
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>Water Connection Survey Summary</Text>
+        <Text selectable style={styles.title}>Water Connection Survey Summary</Text>
 
         {modalData && modalData.length > 0 ? (
           <View style={styles.tableContainer}>
             {/* Header Row */}
             <View style={[styles.tableRow, styles.headerRow]}>
-              <Text style={[styles.cell, styles.headerCell, { flex: 2 }]}>
+              <Text selectable style={[styles.cell, styles.headerCell, { flex: 2 }]}>
                 Label
               </Text>
-              <Text style={[styles.cell, styles.headerCell]}>Self</Text>
-              <Text style={[styles.cell, styles.headerCell]}>Verified</Text>
-              <Text style={[styles.cell, styles.headerCell]}>Status</Text>
+              <Text selectable style={[styles.cell, styles.headerCell]}>Self</Text>
+              <Text selectable style={[styles.cell, styles.headerCell]}>Verified</Text>
+              <Text selectable style={[styles.cell, styles.headerCell]}>Status</Text>
             </View>
 
             {/* Data Rows */}
@@ -174,12 +175,12 @@ const SubmitSurey = () => {
                   { backgroundColor: index % 2 === 0 ? '#f9fafb' : '#fff' },
                 ]}
               >
-                <Text style={[styles.cell, { flex: 2 }]}>
+                <Text selectable style={[styles.cell, { flex: 2 }]}>
                   {item.label || '-'}
                 </Text>
-                <Text style={styles.cell}>{item.self || '-'}</Text>
-                <Text style={styles.cell}>{item.verified || '-'}</Text>
-                <Text
+                <Text selectable style={styles.cell}>{item.self || '-'}</Text>
+                <Text selectable style={styles.cell}>{item.verified || '-'}</Text>
+                <Text selectable
                   style={[
                     styles.cell,
                     {
@@ -199,25 +200,25 @@ const SubmitSurey = () => {
             ))}
           </View>
         ) : (
-          <Text style={styles.noData}>No survey data available.</Text>
+          <Text selectable style={styles.noData}>No survey data available.</Text>
         )}
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.submitButton}
           onPress={() => handleSubmit(data)}
         >
           <Text style={styles.submitText}>Submit</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </ScrollView>
       <Modal visible={isModalVisible} transparent animationType="slide">
         <View style={styles.modalBackground}>
           <View style={styles.modalBox}>
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.closeButton}
               onPress={() => setIsModalVisible(false)}
             >
               <Text style={styles.closeText}>×</Text>
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>Remarks</Text>
+            </CopyableTouchableOpacity>
+            <Text selectable style={styles.modalTitle}>Remarks</Text>
 
             <TextInput
               style={styles.input}
@@ -228,18 +229,18 @@ const SubmitSurey = () => {
             />
 
             <View style={styles.buttonRow}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.actionButton, { backgroundColor: '#ef4444' }]}
                 onPress={handleBackward}
               >
                 <Text style={styles.buttonText}>Backward</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </CopyableTouchableOpacity>
+              <CopyableTouchableOpacity
                 style={[styles.actionButton, { backgroundColor: '#22c55e' }]}
                 onPress={handleForward}
               >
                 <Text style={styles.buttonText}>Forward</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

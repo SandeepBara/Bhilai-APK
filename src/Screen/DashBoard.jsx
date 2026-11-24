@@ -48,7 +48,7 @@ const DashBoard = ({ navigation }) => {
     return (
       <View style={styles.mainDashboard}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text selectable style={styles.loadingText}>Loading...</Text>
         </View>
       </View>
     );
@@ -59,7 +59,7 @@ const DashBoard = ({ navigation }) => {
       <View style={styles.mainDashboard}>
         <Header navigation={navigation} />
         <View style={styles.loadingContainer}>
-          <Text style={styles.errorText}>{error}</Text>
+          <Text selectable style={styles.errorText}>{error}</Text>
         </View>
       </View>
     );

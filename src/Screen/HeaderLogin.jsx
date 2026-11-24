@@ -7,12 +7,12 @@ const HeaderLogin = () => {
     <View style={styles.header}>
       <TouchableOpacity style={styles.iconContainer}>
         <Icon name="home-outline" size={24} color="white" />
-        <Text style={styles.headerText}>Home</Text>
+        <Text selectable style={styles.headerText}>Home</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.iconContainer}>
         <Icon name="arrow-back-outline" size={24} color="white" />
-        <Text style={styles.headerText}>Back</Text>
+        <Text selectable style={styles.headerText}>Back</Text>
       </TouchableOpacity>
     </View>
   );

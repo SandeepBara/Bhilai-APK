@@ -4,6 +4,7 @@ import PropertyDetailsTable from './PropertyDetailsTable';
 import FloorDetailsTable from './FloorDetailsTable';
 import OtherPropertyFeaturesTable from './OtherPropertyFeaturesTable';
 import { getLabelByValue, formatDate } from '../utils/helpers';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const PreviewModal = ({
   visible,
@@ -47,7 +48,7 @@ const PreviewModal = ({
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Preview Details</Text>
+          <Text selectable style={styles.modalTitle}>Preview Details</Text>
           <ScrollView style={styles.modalContent}>
             {/* Property Details Table */}
             <PropertyDetailsTable
@@ -77,7 +78,7 @@ const PreviewModal = ({
                     floors.length > 0 &&
                     floors.map((floor, floorIndex) => (
                       <View key={floorIndex} style={styles.cardContainer}>
-                        <Text style={styles.cardTitle}>
+                        <Text selectable style={styles.cardTitle}>
                           Extra Floor {floorIndex + 1} Details
                         </Text>
 
@@ -132,8 +133,8 @@ const PreviewModal = ({
                           },
                         ].map((item, idx) => (
                           <View key={idx} style={styles.cardRow}>
-                            <Text style={styles.cardLabel}>{item.label}</Text>
-                            <Text style={styles.cardValue}>{item.value}</Text>
+                            <Text selectable style={styles.cardLabel}>{item.label}</Text>
+                            <Text selectable style={styles.cardValue}>{item.value}</Text>
                           </View>
                         ))}
                       </View>
@@ -159,19 +160,19 @@ const PreviewModal = ({
           </ScrollView>
 
           <View style={styles.modalButtonContainer}>
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={[styles.modalButton, styles.closeButton]}
               onPress={onClose}
             >
               <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={[styles.modalButton, styles.submitButton]}
               onPress={onSubmit}
             >
               <Text style={styles.submitButtonText}>Submit</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </View>

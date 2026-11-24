@@ -8,64 +8,64 @@ const PropertyDetailsTable = ({
 }) => {
   return (
     <View style={styles.tableContainer}>
-      <Text style={styles.tableTitle}>Property Details</Text>
+      <Text selectable style={styles.tableTitle}>Property Details</Text>
       <View style={styles.table}>
         <View style={styles.tableHeader}>
-          <Text style={styles.tableHeaderText}>Field</Text>
-          <Text style={styles.tableHeaderText}>Current Value</Text>
-          <Text style={styles.tableHeaderText}>Verified Value</Text>
+          <Text selectable style={styles.tableHeaderText}>Field</Text>
+          <Text selectable style={styles.tableHeaderText}>Current Value</Text>
+          <Text selectable style={styles.tableHeaderText}>Verified Value</Text>
         </View>
 
         {assessmentType === 'Mutation' && (
           <View style={styles.tableRow}>
-            <Text style={styles.tableCellLabel}>
+            <Text selectable style={styles.tableCellLabel}>
               Percentage of Property Transfer
             </Text>
-            <Text style={styles.tableCell}>
+            <Text selectable style={styles.tableCell}>
               {previewData['Percentage_Transfer'] || 'N/A'}
             </Text>
-            <Text style={styles.tableCell}>
+            <Text selectable style={styles.tableCell}>
               {previewData['Verified_Percentage'] || 'N/A'}
             </Text>
           </View>
         )}
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCellLabel}>Ward No</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Ward No</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData['Ward No'] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData['Verified_Ward'] || 'N/A'}
           </Text>
         </View>
 
         <View style={[styles.tableRow, styles.tableRowAlternate]}>
-          <Text style={styles.tableCellLabel}>Build-up Area</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Build-up Area</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData['Built-up Area (Current)'] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData['Verified_BuiltupArea'] || 'N/A'}
           </Text>
         </View>
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCellLabel}>Zone</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Zone</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData['Zone (Current)'] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData['Verified_Zone'] || 'N/A'}
           </Text>
         </View>
 
         <View style={[styles.tableRow, styles.tableRowAlternate]}>
-          <Text style={styles.tableCellLabel}>Property Type</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Property Type</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData['Property Type (Current)'] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData['Verified_PropertyType'] || 'N/A'}
           </Text>
         </View>
@@ -73,17 +73,17 @@ const PropertyDetailsTable = ({
         {selectedPropertyLabel === 'FLATS / UNIT IN MULTI STORIED BUILDING' && (
           <>
             <View style={styles.tableRow}>
-              <Text style={styles.tableCellLabel}>Selected Date</Text>
-              <Text style={styles.tableCell}>{previewData.selectedDate}</Text>
-              <Text style={styles.tableCell}> </Text>
+              <Text selectable style={styles.tableCellLabel}>Selected Date</Text>
+              <Text selectable style={styles.tableCell}>{previewData.selectedDate}</Text>
+              <Text selectable style={styles.tableCell}> </Text>
             </View>
 
             <View style={[styles.tableRow, styles.tableRowAlternate]}>
-              <Text style={styles.tableCellLabel}>Apartment Detail</Text>
-              <Text style={styles.tableCell}>
+              <Text selectable style={styles.tableCellLabel}>Apartment Detail</Text>
+              <Text selectable style={styles.tableCell}>
                 {previewData.apartmentLabel || 'N/A'}
               </Text>
-              <Text style={styles.tableCell}> </Text>
+              <Text selectable style={styles.tableCell}> </Text>
             </View>
           </>
         )}

@@ -21,7 +21,7 @@ const ElectricityDetailsSection = ({
   return (
     <View style={styles.container}>
       {/* Electricity K. No */}
-      <Text style={styles.label}>Electricity K. No *</Text>
+      <Text selectable style={styles.label}>Electricity K. No *</Text>
       <TextInput
         style={[
           styles.input,
@@ -35,10 +35,10 @@ const ElectricityDetailsSection = ({
         onChangeText={setKno}
         editable={!isDisabled}
       />
-      {errors.kno && <Text style={styles.errorText}>{errors.kno}</Text>}
+      {errors.kno && <Text selectable style={styles.errorText}>{errors.kno}</Text>}
 
       {/* ACC No */}
-      <Text style={styles.label}>ACC No *</Text>
+      <Text selectable style={styles.label}>ACC No *</Text>
       <TextInput
         style={[styles.input, errors.accNo && styles.inputError]}
         placeholder="xxxx xxxx xxxx"
@@ -48,10 +48,10 @@ const ElectricityDetailsSection = ({
         onChangeText={setAccNo}
         editable={!isDisabled}
       />
-      {errors.accNo && <Text style={styles.errorText}>{errors.accNo}</Text>}
+      {errors.accNo && <Text selectable style={styles.errorText}>{errors.accNo}</Text>}
 
       {/* BIND/BOOK No */}
-      <Text style={styles.label}>BIND/BOOK No</Text>
+      <Text selectable style={styles.label}>BIND/BOOK No</Text>
       <TextInput
         style={[styles.input, errors.bindBookNo && styles.inputError]}
         placeholder="xxxx xxxx xxxx"
@@ -61,11 +61,11 @@ const ElectricityDetailsSection = ({
         editable={!isDisabled}
       />
       {errors.bindBookNo && (
-        <Text style={styles.errorText}>{errors.bindBookNo}</Text>
+        <Text selectable style={styles.errorText}>{errors.bindBookNo}</Text>
       )}
 
       {/* Electricity Category */}
-      <Text style={styles.label}>Electricity Category *</Text>
+      <Text selectable style={styles.label}>Electricity Category *</Text>
       <Dropdown
         style={[
           styles.dropdown,
@@ -79,7 +79,7 @@ const ElectricityDetailsSection = ({
         disabled={isDisabled}
       />
       {errors.electricityCategory && (
-        <Text style={styles.errorText}>{errors.electricityCategory}</Text>
+        <Text selectable style={styles.errorText}>{errors.electricityCategory}</Text>
       )}
     </View>
   );

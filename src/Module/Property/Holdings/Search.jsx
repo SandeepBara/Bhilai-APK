@@ -23,6 +23,7 @@ import { HOLDIGN_API_ROUTES } from '../../../api/apiRoutes';
 import { getToken } from '../../../utils/auth';
 import Pagination from '../../../Components/Pagination'; // ✅ Pagination imported
 import styles from '../../../style/SearchStyles';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const Search = ({ navigation }) => {
   const [value, setValue] = useState(); // Ward ID
@@ -105,7 +106,7 @@ const Search = ({ navigation }) => {
   const renderHeader = () => (
     <View style={styles.seacrhCont}>
       <View style={styles.searchhead}>
-        <Text style={styles.text}>Search Application</Text>
+        <Text selectable style={styles.text}>Search Application</Text>
       </View>
 
       <View style={styles.selectWardKey}>
@@ -127,9 +128,9 @@ const Search = ({ navigation }) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => search(1)}>
+      <CopyableTouchableOpacity style={styles.button} onPress={() => search(1)}>
         <Text style={styles.buttonText}>Search</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
@@ -137,46 +138,46 @@ const Search = ({ navigation }) => {
   const renderItem = ({ item, index }) => (
     <View style={styles.resultCard}>
       <View style={styles.row}>
-        <Text style={styles.label}>SL No:</Text>
-        <Text style={styles.value}>{index + 1}</Text>
+        <Text selectable style={styles.label}>SL No:</Text>
+        <Text selectable style={styles.value}>{index + 1}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Ward No:</Text>
-        <Text style={styles.value}>{item.wardNo}</Text>
+        <Text selectable style={styles.label}>Ward No:</Text>
+        <Text selectable style={styles.value}>{item.wardNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>New Ward No:</Text>
-        <Text style={styles.value}>{item.newWardNo}</Text>
+        <Text selectable style={styles.label}>New Ward No:</Text>
+        <Text selectable style={styles.value}>{item.newWardNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Holding No:</Text>
-        <Text style={styles.value}>{item.holdingNo}</Text>
+        <Text selectable style={styles.label}>Holding No:</Text>
+        <Text selectable style={styles.value}>{item.holdingNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>New Holding No:</Text>
-        <Text style={styles.value}>{item.newHoldingNo}</Text>
+        <Text selectable style={styles.label}>New Holding No:</Text>
+        <Text selectable style={styles.value}>{item.newHoldingNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Owner:</Text>
-        <Text style={styles.value}>{item.ownerName}</Text>
+        <Text selectable style={styles.label}>Owner:</Text>
+        <Text selectable style={styles.value}>{item.ownerName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Mobile:</Text>
-        <Text style={styles.value}>{item.mobileNo}</Text>
+        <Text selectable style={styles.label}>Mobile:</Text>
+        <Text selectable style={styles.value}>{item.mobileNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Address:</Text>
-        <Text style={[styles.value, { flex: 1 }]} numberOfLines={2}>
+        <Text selectable style={styles.label}>Address:</Text>
+        <Text selectable style={[styles.value, { flex: 1 }]} numberOfLines={2}>
           {item.propAddress}
         </Text>
       </View>
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.viewButton}
         onPress={() => handleViewPress(item)}
       >
         <Text style={styles.viewButtonText}>View</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
@@ -196,7 +197,7 @@ const Search = ({ navigation }) => {
           renderItem={renderItem}
           ListEmptyComponent={
             !loadingSearch && (
-              <Text style={{ textAlign: 'center', marginTop: 10 }}>
+              <Text selectable style={{ textAlign: 'center', marginTop: 10 }}>
                 No results found.
               </Text>
             )

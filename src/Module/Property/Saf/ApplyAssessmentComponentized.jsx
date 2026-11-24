@@ -24,6 +24,7 @@ import FloorDetailsSection from './components/FloorDetailsSection';
 import PropertyDetails from './components/PropertyDetails';
 import { showToast } from '../../../utils/toast';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const ApplyAssessmentComponentized = ({ navigation, route }) => {
   // Get data from route params if it's a reassessment or mutation
@@ -613,7 +614,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       <HeaderNavigation />
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.header}>
+        <Text selectable style={styles.header}>
           {isRessessment
             ? 'Reassessment Type'
             : isMutation
@@ -621,7 +622,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             : 'Assessment Type'}
         </Text>
         <View style={styles.section}>
-          <Text style={styles.label}>Old Ward *</Text>
+          <Text selectable style={styles.label}>Old Ward *</Text>
           <Dropdown
             style={styles.dropdown}
             data={wardDropdownOptions}
@@ -632,7 +633,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             onChange={item => setOldWard(item.value)}
             disable={isRessessment || isMutation}
           />
-          <Text style={styles.label}>New Ward *</Text>
+          <Text selectable style={styles.label}>New Ward *</Text>
           <Dropdown
             style={styles.dropdown}
             data={newWardOptions}
@@ -643,7 +644,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             onChange={item => setNewWard(item.value)}
             disable={isRessessment || isMutation}
           />
-          <Text style={styles.label}>Ownership Type *</Text>
+          <Text selectable style={styles.label}>Ownership Type *</Text>
           <Dropdown
             style={styles.dropdown}
             data={ownershipDropdownOptions}
@@ -654,7 +655,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             onChange={item => setOwnershipType(item.value)}
             disable={isRessessment || isMutation}
           />
-          <Text style={styles.label}>Property Type *</Text>
+          <Text selectable style={styles.label}>Property Type *</Text>
           <Dropdown
             style={styles.dropdown}
             data={propertyTypeDropdownOptions}
@@ -668,7 +669,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             }}
             disable={isRessessment || isMutation}
           />
-          <Text style={styles.label}>Zone *</Text>
+          <Text selectable style={styles.label}>Zone *</Text>
           <Dropdown
             style={styles.dropdown}
             data={[
@@ -682,22 +683,22 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             onChange={item => setZone(item.value)}
             disable={isRessessment || isMutation}
           />
-          <Text style={{ color: 'red', fontSize: 12, marginTop: 5 }}>
+          <Text selectable style={{ color: 'red', fontSize: 12, marginTop: 5 }}>
             Zone 1: Over bridge to Saheed chowk.
           </Text>
-          <Text style={{ color: 'red', fontSize: 12 }}>
+          <Text selectable style={{ color: 'red', fontSize: 12 }}>
             Zone 2: Rest area other than Zone 1.
           </Text>
 
           {safData.propTypeMstrId == 3 && (
             <View>
               {/* Date Picker */}
-              <Text
+              <Text selectable
                 style={[styles.label, error.ownershipType && styles.errorLabel]}
               >
                 Select Flat Registry Date *
               </Text>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 disabled={true}
                 style={{
                   borderWidth: 1,
@@ -712,7 +713,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
                     ? selectedDate.toISOString().split('T')[0] // Y-M-D format
                     : 'Select Date'}
                 </Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
               {showDatePicker && (
                 <DateTimePicker
@@ -725,7 +726,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
               )}
 
               {/* Apartment Details Dropdown */}
-              <Text
+              <Text selectable
                 style={[styles.label, error.ownershipType && styles.errorLabel]}
               >
                 Apartment Details *
@@ -739,7 +740,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
                   backgroundColor: '#f0f0f0', // optional, to indicate read-only
                 }}
               >
-                <Text>{safData?.apartmentName || 'N/A'}</Text>
+                <Text selectable>{safData?.apartmentName || 'N/A'}</Text>
               </View>
             </View>
           )}
@@ -747,7 +748,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           {/* Mutation-specific fields */}
           {isMutation && (
             <>
-              <Text style={styles.label}>Mode of Ownership Transfer *</Text>
+              <Text selectable style={styles.label}>Mode of Ownership Transfer *</Text>
               <Dropdown
                 style={styles.dropdown}
                 data={transferModeOptions}
@@ -761,10 +762,10 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
                 }}
               />
               {error.transferMode && (
-                <Text style={styles.errorText}>{error.transferMode}</Text>
+                <Text selectable style={styles.errorText}>{error.transferMode}</Text>
               )}
 
-              <Text style={styles.label}>Property Transfer (0-100%) *</Text>
+              <Text selectable style={styles.label}>Property Transfer (0-100%) *</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter percentage (0-100)"
@@ -778,14 +779,14 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
                 maxLength={3}
               />
               {error.propertyTransferPercentage && (
-                <Text style={styles.errorText}>
+                <Text selectable style={styles.errorText}>
                   {error.propertyTransferPercentage}
                 </Text>
               )}
             </>
           )}
         </View>
-        <Text style={styles.header}>Owner Details</Text>
+        <Text selectable style={styles.header}>Owner Details</Text>
         <OwnerDetailsSection
           ownerName={ownerName}
           setOwnerName={setOwnerName}
@@ -817,7 +818,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           isRessessment={isRessessment}
           isMutation={isMutation}
         />
-        <Text style={styles.header}>Electricity Details</Text>
+        <Text selectable style={styles.header}>Electricity Details</Text>
         <ElectricityDetailsSection
           kno={kno}
           setKno={setKno}
@@ -831,7 +832,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           isRessessment={isRessessment}
           isMutation={isMutation}
         />
-        <Text style={styles.header}>Water Connection Details</Text>
+        <Text selectable style={styles.header}>Water Connection Details</Text>
         <WaterConnectionDetailsSection
           waterConnectionNo={waterConnectionNo}
           setWaterConnectionNo={setWaterConnectionNo}
@@ -842,7 +843,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           isRessessment={isRessessment}
           isMutation={isMutation}
         />
-        <Text style={styles.header}>Property Address</Text>
+        <Text selectable style={styles.header}>Property Address</Text>
         <AddressSection
           address={propertyAddress}
           setAddress={setPropertyAddress}
@@ -857,7 +858,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           isRessessment={isRessessment} // true/false
           isMutation={isMutation}
         />
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.checkboxContainer}
           onPress={handleCheckboxToggle}
           disabled={isRessessment || isMutation}
@@ -866,7 +867,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           <Text style={styles.label}>
             If Corresponding Address Different from Property Address
           </Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
         {isChecked && (
           <View style={styles.extraFields}>
             <AddressSection
@@ -886,7 +887,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             />
           </View>
         )}
-        <Text style={styles.header}>Extra Charges</Text>
+        <Text selectable style={styles.header}>Extra Charges</Text>
         <ExtraChargesSection
           mobileTower={mobileTower}
           setMobileTower={setMobileTower}
@@ -965,9 +966,9 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
             onChange={handleDateChange}
           />
         )}
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <CopyableTouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </ScrollView>
     </View>
   );

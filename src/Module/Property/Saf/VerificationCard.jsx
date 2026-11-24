@@ -15,6 +15,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const VerificationCard = ({
   label,
@@ -70,15 +71,15 @@ const VerificationCard = ({
     <View style={styles.card}>
       {/* Label */}
       <View style={styles.rowlabel}>
-        <Text style={styles.label}>{label}</Text>
+        <Text selectable style={styles.label}>{label}</Text>
       </View>
 
       {/* Self Assessed */}
       <View style={styles.row}>
-        <Text style={styles.value}>Self Assessed</Text>
+        <Text selectable style={styles.value}>Self Assessed</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.value}>{value}</Text>
+        <Text selectable style={styles.value}>{value}</Text>
       </View>
 
       {/* Correct / Incorrect radio */}
@@ -86,7 +87,7 @@ const VerificationCard = ({
         style={[styles.radioGroup, showErrorMessage && styles.radioGroupError]}
       >
         {options.map(option => (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             key={option}
             style={styles.radioOption}
             onPress={() => handleVerificationChange(option)}
@@ -99,13 +100,13 @@ const VerificationCard = ({
               ]}
             />
             <Text style={styles.radioLabel}>{option}</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         ))}
       </View>
 
       {/* Show error message */}
       {showErrorMessage && (
-        <Text style={styles.errorText}>Please select Correct or Incorrect</Text>
+        <Text selectable style={styles.errorText}>Please select Correct or Incorrect</Text>
       )}
 
       <View style={styles.divider} />
@@ -113,15 +114,15 @@ const VerificationCard = ({
       {/* Correct: show value */}
       {selectedVerification === 'Correct' && (
         <View style={styles.staticValueContainer}>
-          <Text style={styles.staticValue}>{value}</Text>
+          <Text selectable style={styles.staticValue}>{value}</Text>
         </View>
       )}
 
       {/* Incorrect + Calendar */}
       {selectedVerification === 'Incorrect' && showCalendarOnIncorrect && (
         <View style={styles.inputContainer}>
-          <Text style={styles.staticValueLabel}>Select Date:</Text>
-          <TouchableOpacity
+          <Text selectable style={styles.staticValueLabel}>Select Date:</Text>
+          <CopyableTouchableOpacity
             style={styles.input}
             onPress={() => setShowPicker(true)}
           >
@@ -130,7 +131,7 @@ const VerificationCard = ({
                 ? moment(calendarValue).format('YYYY-MM')
                 : 'Select Date'}
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
           {showPicker && (
             <MonthPicker
@@ -149,7 +150,7 @@ const VerificationCard = ({
         showInputOnIncorrect &&
         !showCalendarOnIncorrect && (
           <View style={styles.inputContainer}>
-            <Text style={styles.staticValueLabel}>{inputLabel}</Text>
+            <Text selectable style={styles.staticValueLabel}>{inputLabel}</Text>
             <TextInput
               style={styles.input}
               value={inputValue}

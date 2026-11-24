@@ -27,6 +27,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const assessmentFlags = [
   ['isBpl', 'BPL category'],
@@ -1233,11 +1234,11 @@ const ApplyAssessment = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       <HeaderNavigation />
       <ScrollView ref={scrollViewRef} contentContainerStyle={[styles.container, { paddingBottom: bottom + 16 }]}>
-        {holding && <Text style={styles.cardTitle}>{assessmentType}</Text>}
+        {holding && <Text selectable style={styles.cardTitle}>{assessmentType}</Text>}
         {/* Assessment Type Section */}
         <View style={styles.cardContainer}>
           <View style={styles.card}>
-            <Text>Application Type *</Text>
+            <Text selectable>Application Type *</Text>
             <Dropdown
               style={styles.dropdown}
               data={(data?.applicationType || []).map(value => ({ label: value, value }))}
@@ -1247,7 +1248,7 @@ const ApplyAssessment = ({ navigation, route }) => {
               value={applicationFrom}
               onChange={item => setApplicationFrom(item.value)}
             />
-            <Text style={[styles.label, error.oldWard && styles.errorLabel]}>
+            <Text selectable style={[styles.label, error.oldWard && styles.errorLabel]}>
               Ward No *
             </Text>
             <Dropdown
@@ -1263,10 +1264,10 @@ const ApplyAssessment = ({ navigation, route }) => {
               }}
             />
             {error.oldWard && (
-              <Text style={styles.errorText}>{error.oldWard}</Text>
+              <Text selectable style={styles.errorText}>{error.oldWard}</Text>
             )}
 
-            <Text
+            <Text selectable
               style={[styles.label, error.ownershipType && styles.errorLabel]}
             >
               Ownership Type *
@@ -1291,10 +1292,10 @@ const ApplyAssessment = ({ navigation, route }) => {
               }}
             />
             {error.ownershipType && (
-              <Text style={styles.errorText}>{error.ownershipType}</Text>
+              <Text selectable style={styles.errorText}>{error.ownershipType}</Text>
             )}
 
-            <Text
+            <Text selectable
               style={[styles.label, error.propertyType && styles.errorLabel]}
             >
               Property Type *
@@ -1315,12 +1316,12 @@ const ApplyAssessment = ({ navigation, route }) => {
               }}
             />
             {error.propertyType && (
-              <Text style={styles.errorText}>{error.propertyType}</Text>
+              <Text selectable style={styles.errorText}>{error.propertyType}</Text>
             )}
 
             {Number(propertyType) === 3 && (
               <View>
-                <Text
+                <Text selectable
                   style={[
                     styles.label,
                     error.ownershipType && styles.errorLabel,
@@ -1328,7 +1329,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                 >
                   Select Flat Registry Date *
                 </Text>
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={{
                     borderWidth: 1,
                     padding: 10,
@@ -1342,7 +1343,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                       ? selectedDate.toISOString().split('T')[0]
                       : 'Select Date'}
                   </Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
 
                 {showDatePicker && (
                   <DateTimePicker
@@ -1354,7 +1355,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                   />
                 )}
 
-                <Text
+                <Text selectable
                   style={[
                     styles.label,
                     error.ownershipType && styles.errorLabel,
@@ -1377,7 +1378,7 @@ const ApplyAssessment = ({ navigation, route }) => {
               </View>
             )}
 
-            <Text>Road Type *</Text>
+            <Text selectable>Road Type *</Text>
             <Dropdown
               style={styles.dropdown}
               data={data?.roadType || []}
@@ -1388,7 +1389,7 @@ const ApplyAssessment = ({ navigation, route }) => {
               onChange={item => setRoadType(item.id)}
             />
             <View style={styles.assessmentOption}>
-              <Text style={styles.assessmentOptionLabel}>BPL category</Text>
+              <Text selectable style={styles.assessmentOptionLabel}>BPL category</Text>
               <Switch
                 accessibilityLabel="BPL category"
                 value={assessmentOptions.isBpl}
@@ -1403,7 +1404,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         {isMutation && (
           <View style={styles.cardContainer}>
             <View style={styles.card}>
-              <Text style={styles.label}>Mode of Ownership Transfer *</Text>
+              <Text selectable style={styles.label}>Mode of Ownership Transfer *</Text>
               <Dropdown
                 style={styles.dropdown}
                 data={data?.transferMode ?? []}
@@ -1413,7 +1414,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                 value={transferMode}
                 onChange={item => setTransferMode(item.id)}
               />
-              <Text style={styles.label}>Percentage of Property Transfer *</Text>
+              <Text selectable style={styles.label}>Percentage of Property Transfer *</Text>
               <TextInput
                 style={styles.input}
                 keyboardType="decimal-pad"
@@ -1427,22 +1428,22 @@ const ApplyAssessment = ({ navigation, route }) => {
 
         {/* MULTIPLE OWNER DETAILS SECTION */}
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Owner Details</Text>
+          <Text selectable style={styles.cardTitle}>Owner Details</Text>
           {ownerDetails.map((owner, index) => (
             <View key={index} style={styles.card}>
               <View style={styles.floorHeader}>
-                <Text style={styles.floorTitle}>Owner {index + 1}</Text>
+                <Text selectable style={styles.floorTitle}>Owner {index + 1}</Text>
                 {ownerDetails.length > 1 && (
-                  <TouchableOpacity
+                  <CopyableTouchableOpacity
                     style={styles.removeBtn}
                     onPress={() => removeOwner(index)}
                   >
                     <Text style={styles.removeBtnText}>Remove Owner</Text>
-                  </TouchableOpacity>
+                  </CopyableTouchableOpacity>
                 )}
               </View>
 
-              <Text
+              <Text selectable
                 style={[
                   styles.label,
                   error[`ownerName_${index}`] && styles.errorLabel,
@@ -1462,12 +1463,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                 }
               />
               {error[`ownerName_${index}`] && (
-                <Text style={styles.errorText}>
+                <Text selectable style={styles.errorText}>
                   {error[`ownerName_${index}`]}
                 </Text>
               )}
 
-              <Text
+              <Text selectable
                 style={[
                   styles.label,
                   error[`gender_${index}`] && styles.errorLabel,
@@ -1490,10 +1491,10 @@ const ApplyAssessment = ({ navigation, route }) => {
                 }
               />
               {error[`gender_${index}`] && (
-                <Text style={styles.errorText}>{error[`gender_${index}`]}</Text>
+                <Text selectable style={styles.errorText}>{error[`gender_${index}`]}</Text>
               )}
 
-              <Text
+              <Text selectable
                 style={[
                   styles.label,
                   error[`guardianName_${index}`] && styles.errorLabel,
@@ -1513,12 +1514,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                 }
               />
               {error[`guardianName_${index}`] && (
-                <Text style={styles.errorText}>
+                <Text selectable style={styles.errorText}>
                   {error[`guardianName_${index}`]}
                 </Text>
               )}
 
-              <Text
+              <Text selectable
                 style={[
                   styles.label,
                   error[`relation_${index}`] && styles.errorLabel,
@@ -1541,12 +1542,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                 }
               />
               {error[`relation_${index}`] && (
-                <Text style={styles.errorText}>
+                <Text selectable style={styles.errorText}>
                   {error[`relation_${index}`]}
                 </Text>
               )}
 
-              <Text
+              <Text selectable
                 style={[
                   styles.label,
                   error[`mobile_${index}`] && styles.errorLabel,
@@ -1568,10 +1569,10 @@ const ApplyAssessment = ({ navigation, route }) => {
                 maxLength={10}
               />
               {error[`mobile_${index}`] && (
-                <Text style={styles.errorText}>{error[`mobile_${index}`]}</Text>
+                <Text selectable style={styles.errorText}>{error[`mobile_${index}`]}</Text>
               )}
 
-              <Text style={styles.label}>Owner Address *</Text>
+              <Text selectable style={styles.label}>Owner Address *</Text>
               <TextInput
                 style={styles.input}
                 accessibilityLabel="Owner address"
@@ -1579,7 +1580,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                 value={owner.address || ''}
                 onChangeText={value => updateOwnerDetail(index, 'address', value)}
               />
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 accessibilityRole="button"
                 accessibilityState={{ expanded: !!owner.showAdditionalDetails }}
                 onPress={() =>
@@ -1589,10 +1590,10 @@ const ApplyAssessment = ({ navigation, route }) => {
                 <Text style={styles.dateText}>
                   {owner.showAdditionalDetails ? 'Hide additional owner details' : 'Additional owner details'}
                 </Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
               {owner.showAdditionalDetails && (
                 <>
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`dob_${index}`] && styles.errorLabel,
@@ -1600,7 +1601,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                   >
                     Date of Birth
                   </Text>
-                  <TouchableOpacity
+                  <CopyableTouchableOpacity
                     style={[
                       styles.dateInput,
                       error[`dob_${index}`] && styles.errorInput,
@@ -1610,12 +1611,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     <Text style={styles.dateText}>
                       {owner.dob || 'Select Date of Birth'}
                     </Text>
-                  </TouchableOpacity>
+                  </CopyableTouchableOpacity>
                   {error[`dob_${index}`] && (
-                    <Text style={styles.errorText}>{error[`dob_${index}`]}</Text>
+                    <Text selectable style={styles.errorText}>{error[`dob_${index}`]}</Text>
                   )}
 
-                  <Text style={styles.label}>Aadhaar Number</Text>
+                  <Text selectable style={styles.label}>Aadhaar Number</Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Enter Aadhaar Number"
@@ -1627,7 +1628,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                     maxLength={12}
                   />
 
-                  <Text style={styles.label}>PAN Number</Text>
+                  <Text selectable style={styles.label}>PAN Number</Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Enter PAN Number"
@@ -1636,7 +1637,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                     maxLength={10}
                   />
 
-                  <Text style={styles.label}>Email</Text>
+                  <Text selectable style={styles.label}>Email</Text>
                   <TextInput
                     style={styles.input}
                     placeholder="Enter Email"
@@ -1645,7 +1646,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                     onChangeText={value => updateOwnerDetail(index, 'email', value)}
                   />
 
-                  <Text style={styles.label}>Armed Forces</Text>
+                  <Text selectable style={styles.label}>Armed Forces</Text>
                   <Dropdown
                     style={styles.dropdown}
                     data={yesNoOptions}
@@ -1658,7 +1659,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
 
-                  <Text style={styles.label}>Specially Abled</Text>
+                  <Text selectable style={styles.label}>Specially Abled</Text>
                   <Dropdown
                     style={styles.dropdown}
                     data={yesNoOptions}
@@ -1675,9 +1676,9 @@ const ApplyAssessment = ({ navigation, route }) => {
             </View>
           ))}
 
-          <TouchableOpacity style={styles.addBtn} onPress={addOwner}>
+          <CopyableTouchableOpacity style={styles.addBtn} onPress={addOwner}>
             <Text style={styles.addBtnText}>Add Owner</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
 
         {ownerDatePicker.show && (
@@ -1691,7 +1692,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         )}
 
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Property Details</Text>
+          <Text selectable style={styles.cardTitle}>Property Details</Text>
           <View style={styles.card}>
             <PropertyDetails
               counterFieldsOnly
@@ -1731,7 +1732,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         </View>
 
         <View style={styles.cardContainer}>
-          <Text style={styles.cardTitle}>Property Address</Text>
+          <Text selectable style={styles.cardTitle}>Property Address</Text>
           <View style={styles.card}>
             <AddressSection
               address={propertyAddress}
@@ -1756,7 +1757,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         </View>
 
         <View style={styles.cardContainer}>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.checkboxContainer}
             onPress={handleCheckboxToggle}
           >
@@ -1764,7 +1765,7 @@ const ApplyAssessment = ({ navigation, route }) => {
             <Text style={styles.checkboxLabel}>
               If Corresponding Address Different from Property Address
             </Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {isChecked && (
             <View style={styles.card}>
               <AddressSection
@@ -1788,22 +1789,22 @@ const ApplyAssessment = ({ navigation, route }) => {
         <View style={styles.cardContainer}>
           {propertyTypeLabel !== 'VACANT LAND' && (
             <>
-              <Text style={styles.cardTitle}>Floor Details</Text>
+              <Text selectable style={styles.cardTitle}>Floor Details</Text>
               {floorDetails.map((floor, index) => (
                 <View key={index} style={styles.card}>
                   <View style={styles.floorHeader}>
-                    <Text style={styles.floorTitle}>Floor {index + 1}</Text>
+                    <Text selectable style={styles.floorTitle}>Floor {index + 1}</Text>
                     {floorDetails.length > 1 && (
-                      <TouchableOpacity
+                      <CopyableTouchableOpacity
                         style={styles.removeBtn}
                         onPress={() => removeFloor(index)}
                       >
                         <Text style={styles.removeBtnText}>Remove Floor</Text>
-                      </TouchableOpacity>
+                      </CopyableTouchableOpacity>
                     )}
                   </View>
 
-                  <Text style={styles.label}>Floor Zone *</Text>
+                  <Text selectable style={styles.label}>Floor Zone *</Text>
                   <Dropdown
                     style={styles.dropdown}
                     data={zoneType}
@@ -1813,7 +1814,7 @@ const ApplyAssessment = ({ navigation, route }) => {
                     value={floor.zoneMstrId || zone}
                     onChange={item => updateFloorDetail(index, 'zoneMstrId', item.value)}
                   />
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`floor_${index}_floorName`] && styles.errorLabel,
@@ -1837,12 +1838,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
                   {error[`floor_${index}_floorName`] && (
-                    <Text style={styles.errorText}>
+                    <Text selectable style={styles.errorText}>
                       {error[`floor_${index}_floorName`]}
                     </Text>
                   )}
 
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`floor_${index}_usageType`] && styles.errorLabel,
@@ -1866,12 +1867,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
                   {error[`floor_${index}_usageType`] && (
-                    <Text style={styles.errorText}>
+                    <Text selectable style={styles.errorText}>
                       {error[`floor_${index}_usageType`]}
                     </Text>
                   )}
 
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`floor_${index}_occupancyType`] &&
@@ -1897,12 +1898,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
                   {error[`floor_${index}_occupancyType`] && (
-                    <Text style={styles.errorText}>
+                    <Text selectable style={styles.errorText}>
                       {error[`floor_${index}_occupancyType`]}
                     </Text>
                   )}
 
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`floor_${index}_constructionType`] &&
@@ -1928,12 +1929,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
                   {error[`floor_${index}_constructionType`] && (
-                    <Text style={styles.errorText}>
+                    <Text selectable style={styles.errorText}>
                       {error[`floor_${index}_constructionType`]}
                     </Text>
                   )}
 
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`floor_${index}_builtUpArea`] && styles.errorLabel,
@@ -1955,12 +1956,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
                   {error[`floor_${index}_builtUpArea`] && (
-                    <Text style={styles.errorText}>
+                    <Text selectable style={styles.errorText}>
                       {error[`floor_${index}_builtUpArea`]}
                     </Text>
                   )}
 
-                  <Text
+                  <Text selectable
                     style={[
                       styles.label,
                       error[`floor_${index}_fromDate`] && styles.errorLabel,
@@ -1985,12 +1986,12 @@ const ApplyAssessment = ({ navigation, route }) => {
                     }
                   />
                   {error[`floor_${index}_fromDate`] && (
-                    <Text style={styles.errorText}>
+                    <Text selectable style={styles.errorText}>
                       {error[`floor_${index}_fromDate`]}
                     </Text>
                   )}
 
-                  <Text style={styles.label}>Up to Date </Text>
+                  <Text selectable style={styles.label}>Up to Date </Text>
                   <Dropdown
                     style={[
                       styles.dropdown,
@@ -2010,9 +2011,9 @@ const ApplyAssessment = ({ navigation, route }) => {
                 </View>
               ))}
 
-              <TouchableOpacity style={styles.addBtn} onPress={addFloor}>
+              <CopyableTouchableOpacity style={styles.addBtn} onPress={addFloor}>
                 <Text style={styles.addBtnText}>Add Floor</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </>
           )}
         </View>
@@ -2024,7 +2025,7 @@ const ApplyAssessment = ({ navigation, route }) => {
 
           return (
             <View key={key} style={styles.assessmentOption}>
-              <Text style={styles.assessmentOptionLabel}>{label}</Text>
+              <Text selectable style={styles.assessmentOptionLabel}>{label}</Text>
               <Switch
                 accessibilityLabel={label}
                 value={assessmentOptions[key]}
@@ -2045,14 +2046,14 @@ const ApplyAssessment = ({ navigation, route }) => {
           />
         )}
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.button}
           onPress={handleSubmit}
           disabled={previewing}
           accessibilityState={{ busy: previewing, disabled: previewing }}
         >
           <Text style={styles.buttonText}>Submit</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </ScrollView>
     </View>
   );

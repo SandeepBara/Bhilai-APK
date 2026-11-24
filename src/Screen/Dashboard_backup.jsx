@@ -6,6 +6,7 @@ import Header from './Header';
 import HeaderNavigation from '../Components/HeaderNavigation';
 import LogoutButton from '../Components/LogoutButton';
 import MenuTree from '../Components/MenuTree';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const DashBoard = ({ navigation }) => {
   const [menuItems, setMenuItems] = useState([]);
@@ -72,7 +73,7 @@ const DashBoard = ({ navigation }) => {
 
   const renderMenuItems = () => {
     return menuItems.map((item, index) => (
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         key={index}
         style={styles.box}
         onPress={() => handleMenuPress(item)}
@@ -81,7 +82,7 @@ const DashBoard = ({ navigation }) => {
           <Icon name={getIconName(item.icon)} size={40} color="#4A90E2" />
         </View>
         <Text style={styles.boxText}>{item.name}</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     ));
   };
 
@@ -89,7 +90,7 @@ const DashBoard = ({ navigation }) => {
     return (
       <View style={styles.mainDashboard}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text selectable style={styles.loadingText}>Loading...</Text>
         </View>
       </View>
     );
@@ -100,7 +101,7 @@ const DashBoard = ({ navigation }) => {
       <View style={styles.mainDashboard}>
         <Header navigation={navigation} />
         <View style={styles.loadingContainer}>
-          <Text style={styles.errorText}>{error}</Text>
+          <Text selectable style={styles.errorText}>{error}</Text>
         </View>
       </View>
     );
@@ -133,7 +134,7 @@ const DashBoard = ({ navigation }) => {
 
       <LogoutButton />
       <View style={styles.footer}>
-        <Text style={styles.footerText}>End of Dashboard</Text>
+        <Text selectable style={styles.footerText}>End of Dashboard</Text>
       </View>
     </View>
   );

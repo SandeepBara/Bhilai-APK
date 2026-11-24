@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../Constants/Colors';
+import { CopyableTouchableOpacity } from './CopyableControl';
 const ActionButton = ({ name, label, color = "#007AFF", onPress = () => { }, show = true }) => {
     if (!show)
         return null;
     return (
         <View style={styles.buttonWrapper}>
-            <TouchableOpacity
+            <CopyableTouchableOpacity
                 style={[styles.button, ]} 
                 onPress={onPress}
             >
@@ -17,7 +18,7 @@ const ActionButton = ({ name, label, color = "#007AFF", onPress = () => { }, sho
                     color={color} 
                 />
                 <Text style={[styles.label, { color, marginTop: 4 }]}>{label}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
         </View>
     );
 };

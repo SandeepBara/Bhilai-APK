@@ -4,70 +4,70 @@ import { View, Text, StyleSheet } from 'react-native';
 const FloorDetailsTable = ({ floor, floorPrefix, previewData }) => {
   return (
     <View style={styles.tableContainer}>
-      <Text style={styles.tableTitle}>{floorPrefix} Details</Text>
+      <Text selectable style={styles.tableTitle}>{floorPrefix} Details</Text>
       <View style={styles.table}>
         <View style={styles.tableHeader}>
-          <Text style={styles.tableHeaderText}>Field</Text>
-          <Text style={styles.tableHeaderText}>Current Value</Text>
-          <Text style={styles.tableHeaderText}>Verified Value</Text>
+          <Text selectable style={styles.tableHeaderText}>Field</Text>
+          <Text selectable style={styles.tableHeaderText}>Current Value</Text>
+          <Text selectable style={styles.tableHeaderText}>Verified Value</Text>
         </View>
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCellLabel}>Usage Type</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Usage Type</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Usage Type (${floorPrefix} Current)`] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Verified_Usage${floorPrefix}`] || 'N/A'}
           </Text>
         </View>
 
         <View style={[styles.tableRow, styles.tableRowAlternate]}>
-          <Text style={styles.tableCellLabel}>Occupancy Type</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Occupancy Type</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Occupancy Type (${floorPrefix} Current)`] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Verified_Occupancy${floorPrefix}`] || 'N/A'}
           </Text>
         </View>
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCellLabel}>Construction Type</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Construction Type</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Construction Type (${floorPrefix} Current)`] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Verified_Construction${floorPrefix}`] || 'N/A'}
           </Text>
         </View>
 
         <View style={[styles.tableRow, styles.tableRowAlternate]}>
-          <Text style={styles.tableCellLabel}>Built-up Area</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Built-up Area</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Built-up Area (${floorPrefix} Current)`] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Verified_BuiltUp${floorPrefix}`] || 'N/A'}
           </Text>
         </View>
 
         <View style={styles.tableRow}>
-          <Text style={styles.tableCellLabel}>Date From</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Date From</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Date From (${floorPrefix} Current)`] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Verified_DateFrom${floorPrefix}`] || 'N/A'}
           </Text>
         </View>
 
         <View style={[styles.tableRow, styles.tableRowAlternate]}>
-          <Text style={styles.tableCellLabel}>Date To</Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCellLabel}>Date To</Text>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Date To (${floorPrefix} Current)`] || 'N/A'}
           </Text>
-          <Text style={styles.tableCell}>
+          <Text selectable style={styles.tableCell}>
             {previewData[`Verified_DateTo${floorPrefix}`] || 'N/A'}
           </Text>
         </View>

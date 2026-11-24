@@ -16,6 +16,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { getToken } from '../../../utils/auth';
 import { CUSTOMER_API } from '../../../api/apiRoutes';
 import axios from 'axios';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
   const [state, setState] = useState({
@@ -137,10 +138,10 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
           <View style={styles.modalContent}>
             {/* Header */}
             <View style={styles.header}>
-              <Text style={styles.headerTitle}>Generate Demand</Text>
-              <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+              <Text selectable style={styles.headerTitle}>Generate Demand</Text>
+              <CopyableTouchableOpacity style={styles.closeButton} onPress={onClose}>
                 <Text style={styles.closeButtonText}>✕</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
 
             <ScrollView
@@ -149,7 +150,7 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
             >
               {/* Type of Connection */}
               <View style={styles.inputGroup}>
-                <Text style={styles.label}>Type of Connection</Text>
+                <Text selectable style={styles.label}>Type of Connection</Text>
                 <TextInput
                   style={styles.textInput}
                   value={state.typeOfConnection}
@@ -159,7 +160,7 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
 
               {/* Meter No */}
               <View style={styles.inputGroup}>
-                <Text style={styles.label}>Meter No.</Text>
+                <Text selectable style={styles.label}>Meter No.</Text>
                 <TextInput
                   style={styles.textInput}
                   value={state.meterNo}
@@ -169,7 +170,7 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
 
               {/* Connection Date */}
               <View style={styles.inputGroup}>
-                <Text style={styles.label}>Connection Date</Text>
+                <Text selectable style={styles.label}>Connection Date</Text>
                 <TextInput
                   style={styles.textInput}
                   value={state.connectionDate}
@@ -179,10 +180,10 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
 
               {/* Demand Upto Date */}
               <View style={styles.inputGroup}>
-                <Text style={styles.labelRequired}>
+                <Text selectable style={styles.labelRequired}>
                   Demand Upto Date <Text style={styles.asterisk}>*</Text>
                 </Text>
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={styles.dateInputContainer}
                   onPress={() => handleInputChange('showDatePicker', true)}
                 >
@@ -194,12 +195,12 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
                   <View style={styles.calendarIcon}>
                     <Text style={styles.calendarIconText}>📅</Text>
                   </View>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
 
               {/* Current Meter Reading */}
               <View style={styles.inputGroup}>
-                <Text style={styles.labelRequired}>
+                <Text selectable style={styles.labelRequired}>
                   Current Meter Reading <Text style={styles.asterisk}>*</Text>
                 </Text>
                 <TextInput
@@ -214,7 +215,7 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
               </View>
 
               {/* Meter Img */}
-              <Text style={styles.labelRequired}>
+              <Text selectable style={styles.labelRequired}>
                 Upload / Capture Image <Text style={styles.asterisk}>*</Text>
               </Text>
               <View style={styles.photoContainer}>
@@ -224,28 +225,28 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
                       source={{ uri: state.meterPhoto.uri }}
                       style={styles.photoImage}
                     />
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       style={styles.photoDeleteButton}
                       onPress={() => handleInputChange('meterPhoto', null)}
                     >
                       <Text style={styles.photoDeleteText}>✕</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   </View>
                 ) : (
                   <View style={styles.photoOptions}>
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       style={styles.captureButton}
                       onPress={capturePhoto}
                     >
                       <Text style={styles.captureButtonText}>📷 Capture</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
 
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       style={styles.uploadButton}
                       onPress={pickPhotoFromGallery}
                     >
                       <Text style={styles.uploadButtonText}>🖼️ Upload</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   </View>
                 )}
               </View>
@@ -253,18 +254,18 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
 
             {/* Action Buttons */}
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={styles.submitButton}
                 onPress={handleSubmit}
               >
                 <Text style={styles.submitButtonText}>Submit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </CopyableTouchableOpacity>
+              <CopyableTouchableOpacity
                 style={styles.cancelButton}
                 onPress={handleCancel}
               >
                 <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
 

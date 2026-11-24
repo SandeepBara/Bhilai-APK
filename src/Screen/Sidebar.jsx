@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import Colors from '../Module/Constants/Colors';
 import LogoutButton from '../Components/LogoutButton';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const { width } = Dimensions.get('window');
 
@@ -65,8 +66,8 @@ const Sidebar = ({ children, menuItems, navigation }) => {
               style={styles.profileImage}
             />
             <View>
-              <Text style={styles.username}>Welcome</Text>
-              <Text style={styles.email}>Muncipal </Text>
+              <Text selectable style={styles.username}>Welcome</Text>
+              <Text selectable style={styles.email}>Muncipal </Text>
             </View>
           </View>
           <TouchableOpacity onPress={toggleSidebar}>
@@ -78,30 +79,30 @@ const Sidebar = ({ children, menuItems, navigation }) => {
 
         {/* 📦 Sidebar Menu */}
         <View style={styles.sidebarContent}>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.menuItem}
             onPress={() => handleNavigate('DashBoard')}
           >
             <Icon name="home" size={22} color="#fff" />
             <Text style={styles.menuText}>Home</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.menuItem}
             onPress={() => handleNavigate('ProfilePage')}
           >
             <Icon name="user" size={22} color="#fff" />
             <Text style={styles.menuText}>Profile</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem}>
             <Icon name="file-text" size={22} color="#fff" />
-            <Text style={styles.menuText}>Reports</Text>
+            <Text selectable style={styles.menuText}>Reports</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.menuItem}>
             <Icon name="settings" size={22} color="#fff" />
-            <Text style={styles.menuText}>Settings</Text>
+            <Text selectable style={styles.menuText}>Settings</Text>
           </TouchableOpacity>
 
           {/* custom children menu (optional) */}
@@ -110,7 +111,7 @@ const Sidebar = ({ children, menuItems, navigation }) => {
 
         <View style={styles.sidebarFooter}>
           <LogoutButton />
-          <Text style={styles.footerCopyright}>
+          <Text selectable style={styles.footerCopyright}>
             © 2025 Bhilai Municipal Corporation
           </Text>
         </View>

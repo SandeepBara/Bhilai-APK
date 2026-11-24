@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const PayNowModal = ({
   visible,
@@ -65,10 +66,10 @@ export const PayNowModal = ({
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>💳 Make Payment</Text>
+          <Text selectable style={styles.modalTitle}>💳 Make Payment</Text>
 
           {/* Payment Type Dropdown */}
-          <Text style={styles.label}>Payment Type *</Text>
+          <Text selectable style={styles.label}>Payment Type *</Text>
           <Dropdown
             style={styles.dropdown}
             data={paymentTypeData}
@@ -80,7 +81,7 @@ export const PayNowModal = ({
           />
 
           {/* Payment Mode Dropdown */}
-          <Text style={styles.label}>Payment Mode *</Text>
+          <Text selectable style={styles.label}>Payment Mode *</Text>
           <Dropdown
             style={styles.dropdown}
             data={paymentModeData}
@@ -94,7 +95,7 @@ export const PayNowModal = ({
           {paymentMode && paymentMode !== 'Cash' && (
             <>
               {/* Cheque/DD/Ref No */}
-              <Text style={styles.label}>Cheque/DD/Ref No *</Text>
+              <Text selectable style={styles.label}>Cheque/DD/Ref No *</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter Cheque/DD/Ref No"
@@ -103,8 +104,8 @@ export const PayNowModal = ({
               />
 
               {/* Cheque/DD Date */}
-              <Text style={styles.label}>Cheque/DD Date *</Text>
-              <TouchableOpacity
+              <Text selectable style={styles.label}>Cheque/DD Date *</Text>
+              <CopyableTouchableOpacity
                 onPress={() => setShowDatePicker(true)}
                 style={styles.input}
               >
@@ -120,7 +121,7 @@ export const PayNowModal = ({
                         .slice(-2)}`
                     : 'Select Cheque/DD Date'}
                 </Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
               {showDatePicker && (
                 <DateTimePicker
@@ -135,7 +136,7 @@ export const PayNowModal = ({
               )}
 
               {/* Bank Name */}
-              <Text style={styles.label}>Bank Name *</Text>
+              <Text selectable style={styles.label}>Bank Name *</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter Bank Name"
@@ -144,7 +145,7 @@ export const PayNowModal = ({
               />
 
               {/* Branch Name */}
-              <Text style={styles.label}>Branch Name *</Text>
+              <Text selectable style={styles.label}>Branch Name *</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter Branch Name"
@@ -154,7 +155,7 @@ export const PayNowModal = ({
             </>
           )}
           {/* Amount Input */}
-          <Text style={styles.label}>Amount *</Text>
+          <Text selectable style={styles.label}>Amount *</Text>
           <TextInput
             style={styles.input}
             value={amount}
@@ -165,16 +166,16 @@ export const PayNowModal = ({
 
           {/* Buttons */}
           <View style={styles.modalButtons}>
-            <TouchableOpacity onPress={onClose} style={styles.cancelButton}>
+            <CopyableTouchableOpacity onPress={onClose} style={styles.cancelButton}>
               <Text>Cancel</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               onPress={handleProceed}
               style={styles.confirmButton}
             >
               <Text>Proceed</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </View>

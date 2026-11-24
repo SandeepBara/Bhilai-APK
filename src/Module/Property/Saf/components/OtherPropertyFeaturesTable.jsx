@@ -18,27 +18,27 @@ const OtherPropertyFeaturesTable = ({
 }) => {
   return (
     <View style={styles.tableContainer}>
-      <Text style={styles.tableTitle}>Other Property Features</Text>
+      <Text selectable style={styles.tableTitle}>Other Property Features</Text>
       <View style={styles.table}>
         <View style={styles.tableHeader}>
-          <Text style={styles.tableHeaderText}>Field</Text>
-          <Text style={styles.tableHeaderText}>Value</Text>
+          <Text selectable style={styles.tableHeaderText}>Field</Text>
+          <Text selectable style={styles.tableHeaderText}>Value</Text>
         </View>
 
         {/* Mobile Tower */}
         <View style={styles.tableRow}>
-          <Text style={styles.tableCellLabel}>Mobile Tower</Text>
-          <Text style={styles.tableCell}>{mobileTower || 'N/A'}</Text>
+          <Text selectable style={styles.tableCellLabel}>Mobile Tower</Text>
+          <Text selectable style={styles.tableCell}>{mobileTower || 'N/A'}</Text>
         </View>
         {mobileTower === 'yes' && (
           <>
             <View style={[styles.tableRow, styles.tableRowAlternate]}>
-              <Text style={styles.tableCellLabel}>Tower Area</Text>
-              <Text style={styles.tableCell}>{towerArea || 'N/A'}</Text>
+              <Text selectable style={styles.tableCellLabel}>Tower Area</Text>
+              <Text selectable style={styles.tableCell}>{towerArea || 'N/A'}</Text>
             </View>
             <View style={styles.tableRow}>
-              <Text style={styles.tableCellLabel}>Installation Date</Text>
-              <Text style={styles.tableCell}>
+              <Text selectable style={styles.tableCellLabel}>Installation Date</Text>
+              <Text selectable style={styles.tableCell}>
                 {installationDate ? formatDate(installationDate) : 'N/A'}
               </Text>
             </View>
@@ -47,18 +47,18 @@ const OtherPropertyFeaturesTable = ({
 
         {/* Hoarding */}
         <View style={[styles.tableRow, styles.tableRowAlternate]}>
-          <Text style={styles.tableCellLabel}>Hoarding</Text>
-          <Text style={styles.tableCell}>{hoarding || 'N/A'}</Text>
+          <Text selectable style={styles.tableCellLabel}>Hoarding</Text>
+          <Text selectable style={styles.tableCell}>{hoarding || 'N/A'}</Text>
         </View>
         {hoarding === 'yes' && (
           <>
             <View style={styles.tableRow}>
-              <Text style={styles.tableCellLabel}>Hoarding Area</Text>
-              <Text style={styles.tableCell}>{hoardingArea || 'N/A'}</Text>
+              <Text selectable style={styles.tableCellLabel}>Hoarding Area</Text>
+              <Text selectable style={styles.tableCell}>{hoardingArea || 'N/A'}</Text>
             </View>
             <View style={[styles.tableRow, styles.tableRowAlternate]}>
-              <Text style={styles.tableCellLabel}>Installation Date</Text>
-              <Text style={styles.tableCell}>
+              <Text selectable style={styles.tableCellLabel}>Installation Date</Text>
+              <Text selectable style={styles.tableCell}>
                 {hoardingInstallationDate ? formatDate(hoardingInstallationDate) : 'N/A'}
               </Text>
             </View>
@@ -68,18 +68,18 @@ const OtherPropertyFeaturesTable = ({
         {selectedPropertyLabel !== 'VACANT LAND' && (
           <>
             <View style={styles.tableRow}>
-              <Text style={styles.tableCellLabel}>Petrol Pump</Text>
-              <Text style={styles.tableCell}>{petrolPump || 'N/A'}</Text>
+              <Text selectable style={styles.tableCellLabel}>Petrol Pump</Text>
+              <Text selectable style={styles.tableCell}>{petrolPump || 'N/A'}</Text>
             </View>
             {petrolPump === 'yes' && (
               <>
                 <View style={[styles.tableRow, styles.tableRowAlternate]}>
-                  <Text style={styles.tableCellLabel}>Pump Area</Text>
-                  <Text style={styles.tableCell}>{pumpArea || 'N/A'}</Text>
+                  <Text selectable style={styles.tableCellLabel}>Pump Area</Text>
+                  <Text selectable style={styles.tableCell}>{pumpArea || 'N/A'}</Text>
                 </View>
                 <View style={styles.tableRow}>
-                  <Text style={styles.tableCellLabel}>Installation Date</Text>
-                  <Text style={styles.tableCell}>
+                  <Text selectable style={styles.tableCellLabel}>Installation Date</Text>
+                  <Text selectable style={styles.tableCell}>
                     {pumpInstallationDate ? formatDate(pumpInstallationDate) : 'N/A'}
                   </Text>
                 </View>
@@ -88,13 +88,13 @@ const OtherPropertyFeaturesTable = ({
 
             {/* Rainwater Harvesting */}
             <View style={[styles.tableRow, styles.tableRowAlternate]}>
-              <Text style={styles.tableCellLabel}>Rainwater Harvesting</Text>
-              <Text style={styles.tableCell}>{rainHarvesting || 'N/A'}</Text>
+              <Text selectable style={styles.tableCellLabel}>Rainwater Harvesting</Text>
+              <Text selectable style={styles.tableCell}>{rainHarvesting || 'N/A'}</Text>
             </View>
             {rainHarvesting === 'yes' && (
               <View style={styles.tableRow}>
-                <Text style={styles.tableCellLabel}>Completion Date</Text>
-                <Text style={styles.tableCell}>
+                <Text selectable style={styles.tableCellLabel}>Completion Date</Text>
+                <Text selectable style={styles.tableCell}>
                   {completionDate
                     ? new Date(completionDate).toISOString().split('T')[0]
                     : 'N/A'}

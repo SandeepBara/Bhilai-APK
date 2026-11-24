@@ -9,6 +9,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { useBluetoothPrinter } from './BluetoothService';
 import { Printer, Style, Align, InMemory } from '@linvix-sistemas/react-native-escpos-buffer';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 /**
  * EXAMPLE 1: Simple Receipt Printer Component
@@ -53,9 +54,9 @@ export const SimpleReceiptExample = ({ receiptData }) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={printSimpleReceipt} disabled={printing}>
+      <CopyableTouchableOpacity onPress={printSimpleReceipt} disabled={printing}>
         <Text>{printing ? 'Printing...' : 'Print Receipt'}</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 };
@@ -91,42 +92,42 @@ export const PrinterSelectionExample = () => {
       {/* Show connected printer */}
       {connectedDevice && (
         <View>
-          <Text>Connected: {connectedDevice.name}</Text>
-          <TouchableOpacity onPress={disconnectPrinter}>
+          <Text selectable>Connected: {connectedDevice.name}</Text>
+          <CopyableTouchableOpacity onPress={disconnectPrinter}>
             <Text>Disconnect</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       )}
 
       {/* Scan button */}
-      <TouchableOpacity onPress={handleScan} disabled={scanning}>
+      <CopyableTouchableOpacity onPress={handleScan} disabled={scanning}>
         <Text>{scanning ? 'Scanning...' : 'Scan for Printers'}</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
 
       {/* List paired devices */}
-      <Text>Paired Devices:</Text>
+      <Text selectable>Paired Devices:</Text>
       {pairedDevices.map((device, index) => (
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           key={`paired-${index}`}
           onPress={() => connectToPrinter(device)}
           disabled={connecting}
         >
           <Text>{device.name || 'Unknown Device'}</Text>
           <Text>{device.address}</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       ))}
 
       {/* List scanned devices */}
-      <Text>Available Devices:</Text>
+      <Text selectable>Available Devices:</Text>
       {bluetoothDevices.map((device, index) => (
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           key={`scanned-${index}`}
           onPress={() => connectToPrinter(device)}
           disabled={connecting}
         >
           <Text>{device.name || 'Unknown Device'}</Text>
           <Text>{device.address}</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       ))}
     </View>
   );
@@ -181,9 +182,9 @@ export const TaxReceiptExample = ({ taxData }) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={printTaxReceipt} disabled={printing}>
+      <CopyableTouchableOpacity onPress={printTaxReceipt} disabled={printing}>
         <Text>{connectedDevice ? 'Print Tax Receipt' : 'Connect Printer'}</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 };

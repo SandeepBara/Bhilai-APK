@@ -7,6 +7,7 @@ import {
   Modal,
   TouchableOpacity,
 } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const PropertyTaxNoticeModal = ({ visible, onClose }) => {
   return (
@@ -15,31 +16,31 @@ const PropertyTaxNoticeModal = ({ visible, onClose }) => {
         <View style={styles.modalBox}>
           <ScrollView style={styles.scrollArea}>
             {/* Header */}
-            <Text style={styles.title}>Ranchi Municipal Corporation</Text>
-            <Text style={styles.subtitle}>
+            <Text selectable style={styles.title}>Ranchi Municipal Corporation</Text>
+            <Text selectable style={styles.subtitle}>
               Notice of property tax customized under section 152(3) of
               Jharkhand Municipal Act-2011
             </Text>
 
             <View style={styles.memoBlock}>
-              <Text>Memo No.: SAM/234/2025-2026</Text>
-              <Text>Date: 17/11/2025</Text>
-              <Text>Effective: 2025-2026/1</Text>
+              <Text selectable>Memo No.: SAM/234/2025-2026</Text>
+              <Text selectable>Date: 17/11/2025</Text>
+              <Text selectable>Effective: 2025-2026/1</Text>
             </View>
 
             {/* Owner Info */}
             <View style={styles.section}>
-              <Text style={styles.bold}>
+              <Text selectable style={styles.bold}>
                 Mr/Mrs/Ms: MITHLESH S/O MY FULL NAME
               </Text>
-              <Text>Address: DEGHIJH</Text>
-              <Text style={styles.normal}>
+              <Text selectable>Address: DEGHIJH</Text>
+              <Text selectable style={styles.normal}>
                 You are hereby informed that your New Holding Number -{' '}
                 <Text style={styles.bold}>02000000300087</Text> in Ward No - 2,
                 New Ward No - 1 has been done, on the basis of your
                 self-assessment declaration form.
               </Text>
-              <Text style={styles.normal}>
+              <Text selectable style={styles.normal}>
                 The annual rental price has been fixed at Rs{' '}
                 <Text style={styles.bold}>1788/-</Text> based on your
                 self-assessment declaration.
@@ -49,9 +50,9 @@ const PropertyTaxNoticeModal = ({ visible, onClose }) => {
             {/* Tax Table */}
             <View style={styles.table}>
               <View style={[styles.tableRow, styles.tableHeader]}>
-                <Text style={[styles.tableCell, styles.bold]}>Sl. No.</Text>
-                <Text style={[styles.tableCell, styles.bold]}>Particulars</Text>
-                <Text style={[styles.tableCell, styles.bold]}>
+                <Text selectable style={[styles.tableCell, styles.bold]}>Sl. No.</Text>
+                <Text selectable style={[styles.tableCell, styles.bold]}>Particulars</Text>
+                <Text selectable style={[styles.tableCell, styles.bold]}>
                   Amount (in Rs.)
                 </Text>
               </View>
@@ -65,62 +66,62 @@ const PropertyTaxNoticeModal = ({ visible, onClose }) => {
                 { no: '6', name: 'Health Cess', amt: '0.00' },
               ].map((item, index) => (
                 <View key={index} style={styles.tableRow}>
-                  <Text style={styles.tableCell}>{item.no}</Text>
-                  <Text style={styles.tableCell}>{item.name}</Text>
-                  <Text style={styles.tableCell}>{item.amt}</Text>
+                  <Text selectable style={styles.tableCell}>{item.no}</Text>
+                  <Text selectable style={styles.tableCell}>{item.name}</Text>
+                  <Text selectable style={styles.tableCell}>{item.amt}</Text>
                 </View>
               ))}
 
               <View style={[styles.tableRow, styles.totalRow]}>
-                <Text style={styles.tableCell}></Text>
-                <Text style={[styles.tableCell, styles.bold]}>
+                <Text selectable style={styles.tableCell}></Text>
+                <Text selectable style={[styles.tableCell, styles.bold]}>
                   Total Amount (per quarter)
                 </Text>
-                <Text style={[styles.tableCell, styles.bold]}>53.64</Text>
+                <Text selectable style={[styles.tableCell, styles.bold]}>53.64</Text>
               </View>
             </View>
 
             {/* Signature */}
-            <Text style={styles.signature}>To be signed by the Applicant</Text>
+            <Text selectable style={styles.signature}>To be signed by the Applicant</Text>
 
             {/* Notes */}
-            <Text style={styles.notesTitle}>Notes:</Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.notesTitle}>Notes:</Text>
+            <Text selectable style={styles.note}>
               1. The tax assessment list is displayed on the website of Ranchi
               Municipal Corporation.
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               2. Additional house tax will be levied if...
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               3. Property tax will be paid quarterly...
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               4. If the entire yearly tax is paid...
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               5. Simple interest will be payable...
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               6. This tax assessment is binding...
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               7. Property tax is collected by Ranchi Municipal Corporation...
             </Text>
-            <Text style={styles.note}>
+            <Text selectable style={styles.note}>
               8. In case listed govt holding number...
             </Text>
 
             {/* Footer */}
-            <Text style={styles.footer}>
+            <Text selectable style={styles.footer}>
               NOTE: This is a computer-generated receipt. This receipt does not
               require physical signature.
             </Text>
 
             {/* Close Button */}
-            <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+            <CopyableTouchableOpacity onPress={onClose} style={styles.closeBtn}>
               <Text style={{ color: '#fff', fontWeight: 'bold' }}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </ScrollView>
         </View>
       </View>

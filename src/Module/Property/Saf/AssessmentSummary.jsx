@@ -17,11 +17,12 @@ import { SAF_API_ROUTES } from '../../../api/apiRoutes'; // make sure this is yo
 import { getToken } from '../../../utils/auth';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 // OR for newer versions:
 
 const Section = ({ title, children }) => (
   <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text selectable style={styles.sectionTitle}>{title}</Text>
     {children}
   </View>
 );
@@ -36,8 +37,8 @@ function Fields({ fields }) {
           styles.field,
           (width < 360 || String(value ?? '').length > 40) && styles.fullField,
         ]}>
-          <Text style={styles.fieldLabel}>{label}</Text>
-          <Text style={styles.fieldValue}>{value == null || value === '' ? '—' : value}</Text>
+          <Text selectable style={styles.fieldLabel}>{label}</Text>
+          <Text selectable style={styles.fieldValue}>{value == null || value === '' ? '—' : value}</Text>
         </View>
       ))}
     </View>
@@ -45,7 +46,7 @@ function Fields({ fields }) {
 }
 
 function PreviewTable({ columns, rows, emptyMessage }) {
-  if (!rows.length) return emptyMessage ? <Text>{emptyMessage}</Text> : null;
+  if (!rows.length) return emptyMessage ? <Text selectable>{emptyMessage}</Text> : null;
 
   return (
     <ScrollView horizontal style={styles.table} showsHorizontalScrollIndicator>
@@ -53,7 +54,7 @@ function PreviewTable({ columns, rows, emptyMessage }) {
         {[columns, ...rows].map((row, index) => (
           <View key={index} style={[styles.tableRow, index % 2 === 1 && styles.tableStripe]}>
             {row.map((value, column) => (
-              <Text key={columns[column]} style={[
+              <Text selectable key={columns[column]} style={[
                 styles.tableCell,
                 columns[column] === 'SL' && styles.numberCell,
                 column === row.length - 1 && styles.lastCell,
@@ -139,7 +140,7 @@ function PreviewDetails({ data, masters, apartments }) {
         ]} />
         {checked(data.isCorrAddDiffer) && (
           <>
-            <Text style={styles.subheading}>Correspondence Address</Text>
+            <Text selectable style={styles.subheading}>Correspondence Address</Text>
             <Fields fields={[
               ['Correspondence Address', data.corrAddress], ['City', data.corrCity],
               ['District', data.corrDist], ['State', data.corrState],
@@ -183,13 +184,13 @@ function TaxHistory({ tax }) {
     String(a.effectiveFromFyear ?? '').localeCompare(String(b.effectiveFromFyear ?? '')),
   );
 
-  if (!eras.length) return <Text>No tax details available.</Text>;
+  if (!eras.length) return <Text selectable>No tax details available.</Text>;
 
   return eras.map((era, index) => (
     <View key={index} style={styles.taxEra}>
       {era.floors?.length > 0 && (
         <>
-          <Text style={styles.subheading}>
+          <Text selectable style={styles.subheading}>
             Annual Rental Value as per the rate of {era.effectiveFromFyear}
           </Text>
           <PreviewTable
@@ -320,30 +321,30 @@ const AssessmentSummary = ({ route, navigation }) => {
     <>
       <HeaderNavigation />
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-        <Text accessibilityRole="header" style={styles.title}>Assessment Preview</Text>
+        <Text selectable accessibilityRole="header" style={styles.title}>Assessment Preview</Text>
         {data ? (
           <>
             <PreviewDetails data={data} masters={masters} apartments={apartments} />
             <Section title="Tax Details">
               {taxLoading && <ActivityIndicator color={Colors.headignColor} />}
-              {taxError ? <Text style={styles.error} accessibilityRole="alert">{taxError}</Text> : null}
+              {taxError ? <Text selectable style={styles.error} accessibilityRole="alert">{taxError}</Text> : null}
               {!taxLoading && !taxError && <TaxHistory tax={tax} />}
             </Section>
           </>
-        ) : <Text style={styles.empty}>No data to preview.</Text>}
+        ) : <Text selectable style={styles.empty}>No data to preview.</Text>}
 
       </ScrollView>
 
       <View style={[styles.actions, { paddingBottom: 12 + bottom }]}>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           accessibilityRole="button"
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
           <Text style={styles.backText}>Back</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
         {data && (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             accessibilityRole="button"
             accessibilityState={{ disabled: loading || Boolean(savedSafId), busy: loading }}
             disabled={loading || Boolean(savedSafId)}
@@ -360,7 +361,7 @@ const AssessmentSummary = ({ route, navigation }) => {
             ) : (
               <Text style={styles.submitText}>Submit</Text>
             )}
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         )}
       </View>
 
@@ -372,11 +373,11 @@ const AssessmentSummary = ({ route, navigation }) => {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Copied!</Text>
-              <Text style={styles.modalText}>SAF No: {copiedSafNo}</Text>
-              <TouchableOpacity style={styles.okButton} onPress={handleOk}>
+              <Text selectable style={styles.modalTitle}>Copied!</Text>
+              <Text selectable style={styles.modalText}>SAF No: {copiedSafNo}</Text>
+              <CopyableTouchableOpacity style={styles.okButton} onPress={handleOk}>
                 <Text style={styles.okText}>OK</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </Modal>

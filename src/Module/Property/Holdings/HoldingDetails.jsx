@@ -32,19 +32,20 @@ import {
 } from './Model/Model';
 import { getToken } from '../../../utils/auth';
 import { HOLDIGN_API_ROUTES } from '../../../api/apiRoutes';
+import { CopyableText, CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 const yesNo = value => [true, 1, '1', 'true'].includes(value) ? 'Yes' : 'No';
 
 function HoldingFields({ title, fields, notice }) {
   return (
     <View style={styles.card}>
-      <Text style={styles.heading}>{title}</Text>
-      {notice ? <Text accessibilityRole="alert" style={styles.assessmentNotice}>{notice}</Text> : null}
+      <Text selectable style={styles.heading}>{title}</Text>
+      {notice ? <Text selectable accessibilityRole="alert" style={styles.assessmentNotice}>{notice}</Text> : null}
       {fields.map(([label, value, onPress]) => (
         <View key={label} style={styles.row}>
-          <Text style={styles.labelFixed}>{label}</Text>
-          <Text onPress={onPress} style={[styles.value, onPress && styles.fieldLink]}>
+          <Text selectable style={styles.labelFixed}>{label}</Text>
+          <CopyableText onPress={onPress} style={[styles.value, onPress && styles.fieldLink]}>
             {value ?? 'NA'}
-          </Text>
+          </CopyableText>
         </View>
       ))}
     </View>
@@ -54,26 +55,26 @@ function HoldingFields({ title, fields, notice }) {
 function HoldingTable({ title, columns, rows, note }) {
   return (
     <View style={styles.card}>
-      <Text style={styles.heading}>{title}</Text>
-      {note ? <Text style={styles.value}>{note}</Text> : null}
+      <Text selectable style={styles.heading}>{title}</Text>
+      {note ? <Text selectable style={styles.value}>{note}</Text> : null}
       {rows.length > 0 ? (
         <ScrollView horizontal>
           <View>
             <View style={[styles.tableRow, styles.tableHeader]}>
               {columns.map(column => (
-                <Text key={column} style={[styles.tableCell, styles.headerText]}>{column}</Text>
+                <Text selectable key={column} style={[styles.tableCell, styles.headerText]}>{column}</Text>
               ))}
             </View>
             {rows.map((row, index) => (
               <View key={index} style={styles.tableRow}>
                 {row.map((value, column) => (
-                  <Text key={columns[column]} style={styles.tableCell}>{value ?? 'NA'}</Text>
+                  <Text selectable key={columns[column]} style={styles.tableCell}>{value ?? 'NA'}</Text>
                 ))}
               </View>
             ))}
           </View>
         </ScrollView>
-      ) : <Text style={styles.value}>No records available.</Text>}
+      ) : <Text selectable style={styles.value}>No records available.</Text>}
     </View>
   );
 }
@@ -386,7 +387,7 @@ const HoldingDetails = ({ route, navigation }) => {
         }}
       >
         <ActivityIndicator size="large" color={Colors.headignColor} />
-        <Text
+        <Text selectable
           style={{ marginTop: 10, fontSize: 16, color: Colors.headignColor }}
         >
           Loading...
@@ -483,13 +484,13 @@ const HoldingDetails = ({ route, navigation }) => {
             columns={['SL', 'Document Name', 'File']}
             rows={safData.additionalDoc.map((doc, index) => [
               index + 1, doc.documentName, doc.docPath ? (
-                <Text
+                <CopyableText
                   accessibilityRole="link"
                   style={{ color: '#1d4ed8' }}
                   onPress={() => Linking.openURL(doc.docPath).catch(() =>
                     Alert.alert('Unable to open document'),
                   )}
-                >View</Text>
+                >View</CopyableText>
               ) : 'No file',
             ])}
           />
@@ -504,32 +505,32 @@ const HoldingDetails = ({ route, navigation }) => {
         />
         {transDtls.length > 0 && (
           <View style={styles.card}>
-            <Text style={styles.heading}>Payment Details</Text>
+            <Text selectable style={styles.heading}>Payment Details</Text>
 
             <ScrollView horizontal>
               <View>
                 {/* Table Header */}
                 <View style={[styles.tableRow, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, styles.headerText]}>SL</Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>SL</Text>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Transaction No
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Payment Mode
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Date
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     From Qtr / Year
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Upto Qtr / Year
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     Amount
                   </Text>
-                  <Text style={[styles.tableCell, styles.headerText]}>
+                  <Text selectable style={[styles.tableCell, styles.headerText]}>
                     View
                   </Text>
                 </View>
@@ -537,33 +538,33 @@ const HoldingDetails = ({ route, navigation }) => {
                 {/* Table Body */}
                 {transDtls.map((item, index) => (
                   <View style={styles.tableRow} key={index}>
-                    <Text style={styles.tableCell}>{index + 1}</Text>
-                    <Text style={styles.tableCell}>{item?.tranNo ?? 'NA'}</Text>
-                    <Text style={styles.tableCell}>
+                    <Text selectable style={styles.tableCell}>{index + 1}</Text>
+                    <Text selectable style={styles.tableCell}>{item?.tranNo ?? 'NA'}</Text>
+                    <Text selectable style={styles.tableCell}>
                       {item?.paymentMode ?? 'NA'}
                     </Text>
-                    <Text style={styles.tableCell}>
+                    <Text selectable style={styles.tableCell}>
                       {item?.tranDate
                         ? new Date(item.tranDate).toLocaleDateString('en-GB')
                         : 'NA'}
                     </Text>
-                    <Text style={styles.tableCell}>
+                    <Text selectable style={styles.tableCell}>
                       {item?.fromQtr ?? 'NA'} / {item?.fromFyear ?? 'NA'}
                     </Text>
-                    <Text style={styles.tableCell}>
+                    <Text selectable style={styles.tableCell}>
                       {item?.uptoQtr ?? 'NA'} / {item?.uptoFyear ?? 'NA'}
                     </Text>
-                    <Text style={styles.tableCell}>
+                    <Text selectable style={styles.tableCell}>
                       {item?.payableAmt ?? 'NA'}
                     </Text>
 
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       onPress={() => handleViewReceipt(item.id)}
                     >
                       <Text style={[styles.tableCell, { color: 'blue' }]}>
                         View
                       </Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   </View>
                 ))}
               </View>
@@ -581,32 +582,32 @@ const HoldingDetails = ({ route, navigation }) => {
         )}
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           accessibilityRole="button"
           disabled={isLocked}
           style={[styles.actionBtn, isLocked && styles.disabledButton]}
           onPress={() => openDemand(false)}
         >
           <Text style={styles.actionBtnText}>View Demand</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
         {yesNo(safData?.userPermission?.canTakePayment) === 'Yes' && (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             accessibilityRole="button"
             disabled={isLocked}
             style={[styles.actionBtn, isLocked && styles.disabledButton]}
             onPress={() => openDemand(true)}
           >
             <Text style={styles.actionBtnText}>Proceed Payment</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         )}
         {safData?.safDetailId != null && (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             accessibilityRole="button"
             style={styles.actionBtn}
             onPress={() => navigation.navigate('SafDetails', { id: safData.safDetailId })}
           >
             <Text style={styles.actionBtnText}>View SAF</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         )}
         {yesNo(safData?.userPermission?.canAdd) === 'Yes' && (
           <>
@@ -614,7 +615,7 @@ const HoldingDetails = ({ route, navigation }) => {
               ['Reassessment', 'Reassessment'],
               ['Mutation', 'Mutation'],
             ].map(([label, mode]) => (
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 key={label}
                 accessibilityRole="button"
                 disabled={isLocked}
@@ -625,7 +626,7 @@ const HoldingDetails = ({ route, navigation }) => {
                 })}
               >
                 <Text style={styles.actionBtnText}>{label}</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             ))}
           </>
         )}

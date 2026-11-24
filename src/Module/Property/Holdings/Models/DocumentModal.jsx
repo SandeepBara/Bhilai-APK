@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { styles } from './sharedStyles';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const DocumentModal = ({
   visible,
@@ -22,35 +23,35 @@ export const DocumentModal = ({
   >
     <View style={styles.docModalContainer}>
       <View style={styles.docModalContent}>
-        <Text style={styles.docModalTitle}>📑 Document View</Text>
+        <Text selectable style={styles.docModalTitle}>📑 Document View</Text>
 
         <View style={styles.docTableHeader}>
-          <Text style={styles.docCellHeader}>#</Text>
-          <Text style={styles.docCellHeader}>Document Name</Text>
-          <Text style={styles.docCellHeader}>File</Text>
-          <Text style={styles.docCellHeader}>Status</Text>
+          <Text selectable style={styles.docCellHeader}>#</Text>
+          <Text selectable style={styles.docCellHeader}>Document Name</Text>
+          <Text selectable style={styles.docCellHeader}>File</Text>
+          <Text selectable style={styles.docCellHeader}>Status</Text>
         </View>
 
         <ScrollView>
           {uploadedDocs?.map((doc, index) => (
             <View key={doc.id} style={styles.docTableRow}>
-              <Text style={styles.docCell}>{index + 1}</Text>
-              <Text style={styles.docCell}>{doc.docName}</Text>
-              <TouchableOpacity onPress={() => onDocumentPress(doc)}>
+              <Text selectable style={styles.docCell}>{index + 1}</Text>
+              <Text selectable style={styles.docCell}>{doc.docName}</Text>
+              <CopyableTouchableOpacity onPress={() => onDocumentPress(doc)}>
                 <Text style={[styles.docCell, styles.docFileLink]}>
                   View File
                 </Text>
-              </TouchableOpacity>
-              <Text style={styles.docCell}>
+              </CopyableTouchableOpacity>
+              <Text selectable style={styles.docCell}>
                 {doc.verifiedStatus === 1 ? 'Pending' : 'Verified'}
               </Text>
             </View>
           ))}
         </ScrollView>
 
-        <TouchableOpacity style={styles.docCloseButton} onPress={onClose}>
+        <CopyableTouchableOpacity style={styles.docCloseButton} onPress={onClose}>
           <Text style={styles.docCloseButtonText}>Close</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
     </View>
   </Modal>

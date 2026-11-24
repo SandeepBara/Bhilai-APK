@@ -24,6 +24,7 @@ import { useWaterMasterData } from './BackendData/FieldVerificarionData';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { fetchFieldVerificationData } from './BackendData/fetchFieldVerificationData';
 import { getUserDetails } from '../../../utils/auth';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const WaterSurvey = () => {
   const route = useRoute();
@@ -503,10 +504,10 @@ const WaterSurvey = () => {
       >
         {/* Info Bar */}
         <View style={styles.infoBar}>
-          <Text style={styles.infoText}>
+          <Text selectable style={styles.infoText}>
             {data?.applicationNo || 'Application No: N/A'}
           </Text>
-          <Text style={styles.infoText}>Applied Date: 31-Jan-2025</Text>
+          <Text selectable style={styles.infoText}>Applied Date: 31-Jan-2025</Text>
         </View>
 
         {/* Verification Fields */}
@@ -597,7 +598,7 @@ const WaterSurvey = () => {
 
         {/* Pipeline Size */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>
+          <Text selectable style={styles.sectionHeader}>
             Disturbation Pipeline Size (in MM)
           </Text>
           <TextInput
@@ -610,13 +611,13 @@ const WaterSurvey = () => {
             showError={showError} // pass boolean
           />
           {errors.pinelineSize && (
-            <Text style={{ color: 'red' }}>{errors.pinelineSize}</Text>
+            <Text selectable style={{ color: 'red' }}>{errors.pinelineSize}</Text>
           )}
         </View>
 
         {/* Ferule Size */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Permissible Ferule Size</Text>
+          <Text selectable style={styles.sectionHeader}>Permissible Ferule Size</Text>
           <Dropdown
             style={styles.dropdown}
             data={ferruleType}
@@ -627,13 +628,13 @@ const WaterSurvey = () => {
             onChange={item => setfealureSize(item.value)}
           />
           {errors.pinelineSize && (
-            <Text style={{ color: 'red' }}>{errors.fealureSize}</Text>
+            <Text selectable style={{ color: 'red' }}>{errors.fealureSize}</Text>
           )}
         </View>
 
         {/* More Dropdowns */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Pipeline Disturbation Type</Text>
+          <Text selectable style={styles.sectionHeader}>Pipeline Disturbation Type</Text>
           <Dropdown
             style={styles.dropdown}
             data={distributedPipelineTypeOptions}
@@ -645,12 +646,12 @@ const WaterSurvey = () => {
             disable={roleId === 15}
           />
           {errors.pinelineSize && (
-            <Text style={{ color: 'red' }}>{errors.selectedPipelineType}</Text>
+            <Text selectable style={{ color: 'red' }}>{errors.selectedPipelineType}</Text>
           )}
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Permissible Pipe Delimeter</Text>
+          <Text selectable style={styles.sectionHeader}>Permissible Pipe Delimeter</Text>
           <Dropdown
             style={styles.dropdown}
             data={permittedPipeDiameterOptions}
@@ -661,12 +662,12 @@ const WaterSurvey = () => {
             onChange={item => setSelectedPipeDelimeter(item.value)}
           />
           {errors.pinelineSize && (
-            <Text style={{ color: 'red' }}>{errors.selectedPipelineType}</Text>
+            <Text selectable style={{ color: 'red' }}>{errors.selectedPipelineType}</Text>
           )}
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Permissible Pipe Quality</Text>
+          <Text selectable style={styles.sectionHeader}>Permissible Pipe Quality</Text>
           <Dropdown
             style={styles.dropdown}
             data={permittedPipeQualityOptions}
@@ -678,12 +679,12 @@ const WaterSurvey = () => {
             disable={roleId === 15}
           />
           {errors.pinelineSize && (
-            <Text style={{ color: 'red' }}>{errors.selectedPipeQuality}</Text>
+            <Text selectable style={{ color: 'red' }}>{errors.selectedPipeQuality}</Text>
           )}
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Road Type</Text>
+          <Text selectable style={styles.sectionHeader}>Road Type</Text>
           <Dropdown
             style={styles.dropdown}
             data={roadTypeOptions}
@@ -695,7 +696,7 @@ const WaterSurvey = () => {
             disable={roleId === 15}
           />
           {errors.pinelineSize && (
-            <Text style={{ color: 'red' }}>{errors.selectedRoadType}</Text>
+            <Text selectable style={{ color: 'red' }}>{errors.selectedRoadType}</Text>
           )}
         </View>
 
@@ -703,7 +704,7 @@ const WaterSurvey = () => {
           <>
             {/* Water Meter Chamber */}
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>Water Meter Chamber</Text>
+              <Text selectable style={styles.sectionHeader}>Water Meter Chamber</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter Water Meter Chamber"
@@ -717,13 +718,13 @@ const WaterSurvey = () => {
                 keyboardType="default"
               />
               {errors.waterMeterChamber && (
-                <Text style={{ color: 'red' }}>{errors.waterMeterChamber}</Text>
+                <Text selectable style={{ color: 'red' }}>{errors.waterMeterChamber}</Text>
               )}
             </View>
 
             {/* Camber */}
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>Camber</Text>
+              <Text selectable style={styles.sectionHeader}>Camber</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Enter Camber"
@@ -737,21 +738,21 @@ const WaterSurvey = () => {
                 keyboardType="default"
               />
               {errors.camberValue && (
-                <Text style={{ color: 'red' }}>{errors.camberValue}</Text>
+                <Text selectable style={{ color: 'red' }}>{errors.camberValue}</Text>
               )}
             </View>
           </>
         )}
 
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Select TS Map</Text>
+          <Text selectable style={styles.sectionHeader}>Select TS Map</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             style={{ marginVertical: 10 }}
           >
             {tsMapOptions.map(item => (
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 key={item.value}
                 style={[
                   styles.tsMapCard,
@@ -765,16 +766,16 @@ const WaterSurvey = () => {
                   resizeMode="cover"
                 />
                 <Text style={styles.tsMapLabel}>{item.label}</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             ))}
           </ScrollView>
         </View>
 
         {/* Button */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addButton} onPress={handleAddNewWard}>
+          <CopyableTouchableOpacity style={styles.addButton} onPress={handleAddNewWard}>
             <Text style={styles.addButtonText}>Preview Data</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </ScrollView>
 
@@ -787,7 +788,7 @@ const WaterSurvey = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>{modalTitle}</Text>
+            <Text selectable style={styles.modalTitle}>{modalTitle}</Text>
 
             <ScrollView
               style={{ maxHeight: responsiveHeight(50), marginBottom: 10 }}
@@ -800,10 +801,10 @@ const WaterSurvey = () => {
                   borderBottomColor: '#000',
                 }}
               >
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Field</Text>
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Self</Text>
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Verified</Text>
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Status</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Field</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Self</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Verified</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Status</Text>
               </View>
 
               {modalContent.map((item, index) => (
@@ -816,10 +817,10 @@ const WaterSurvey = () => {
                     borderBottomColor: '#ccc',
                   }}
                 >
-                  <Text style={{ flex: 1 }}>{item.label}</Text>
-                  <Text style={{ flex: 1 }}>{item.self || '-'}</Text>
-                  <Text style={{ flex: 1 }}>{item.verified || '-'}</Text>
-                  <Text
+                  <Text selectable style={{ flex: 1 }}>{item.label}</Text>
+                  <Text selectable style={{ flex: 1 }}>{item.self || '-'}</Text>
+                  <Text selectable style={{ flex: 1 }}>{item.verified || '-'}</Text>
+                  <Text selectable
                     style={{
                       flex: 1,
                       color:
@@ -837,14 +838,14 @@ const WaterSurvey = () => {
             </ScrollView>
 
             <View style={styles.modalButtons}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.modalButton, { backgroundColor: '#ccc' }]}
                 onPress={() => setIsModalVisible(false)}
               >
                 <Text>Cancel</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.modalButton, { backgroundColor: '#0891b2' }]}
                 onPress={() => {
                   console.log('Form Submitted:', modalContent);
@@ -856,7 +857,7 @@ const WaterSurvey = () => {
                 }}
               >
                 <Text style={{ color: 'white' }}>Save</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

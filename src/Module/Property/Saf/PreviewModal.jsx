@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const PreviewModal = ({ visible, onClose, previewData }) => {
   return (
@@ -18,18 +19,18 @@ const PreviewModal = ({ visible, onClose, previewData }) => {
     >
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Preview Details</Text>
+          <Text selectable style={styles.modalTitle}>Preview Details</Text>
           <ScrollView style={styles.modalContent}>
             {Object.entries(previewData || {}).map(([key, value]) => (
               <View key={key} style={styles.previewRow}>
-                <Text style={styles.previewLabel}>{key}:</Text>
-                <Text style={styles.previewValue}>{value || 'N/A'}</Text>
+                <Text selectable style={styles.previewLabel}>{key}:</Text>
+                <Text selectable style={styles.previewValue}>{value || 'N/A'}</Text>
               </View>
             ))}
           </ScrollView>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <CopyableTouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </View>
     </Modal>

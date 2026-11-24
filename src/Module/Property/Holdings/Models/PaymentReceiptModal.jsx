@@ -6,6 +6,7 @@ import ImageResizer from 'react-native-image-resizer';
 import { Buffer } from 'buffer';
 import { PNG } from 'pngjs/browser';
 import { useBluetoothPrinter } from '../../../../utils/BluetoothService';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const bhilaiLogo = require('../../../../assets/bhilai_logo.png');
 const WIDTH = 32;
@@ -202,10 +203,10 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
     <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
       <SafeAreaView style={styles.screen}>
         <ScrollView contentContainerStyle={styles.content}>
-          <Text accessibilityRole="header" style={styles.title}>Payment Receipt aaaa</Text>
+          <Text selectable accessibilityRole="header" style={styles.title}>Payment Receipt aaaa</Text>
           <Image source={bhilaiLogo} style={styles.logo} resizeMode="contain" />
           <Text selectable style={styles.receipt}>{receipt}</Text>
-          <Text>{connectedDevice ? 'Printer: ' + (connectedDevice.name || connectedDevice.address) : 'Select a Bluetooth printer'}</Text>
+          <Text selectable>{connectedDevice ? 'Printer: ' + (connectedDevice.name || connectedDevice.address) : 'Select a Bluetooth printer'}</Text>
           <Button
             title="Find Bluetooth Printers"
             disabled={connecting || printing || preparing}
@@ -230,15 +231,15 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
       >
         <SafeAreaView style={styles.pickerOverlay}>
           <View style={styles.picker}>
-            <Text accessibilityRole="header" style={styles.pickerTitle}>Bluetooth Printers</Text>
-            {scanning && <Text accessibilityLiveRegion="polite">Searching for devices…</Text>}
+            <Text selectable accessibilityRole="header" style={styles.pickerTitle}>Bluetooth Printers</Text>
+            {scanning && <Text selectable accessibilityLiveRegion="polite">Searching for devices…</Text>}
             {bluetoothWasOff && (
-              <Text accessibilityLiveRegion="polite">
+              <Text selectable accessibilityLiveRegion="polite">
                 Turn on Bluetooth in Settings, then tap Scan Again.
               </Text>
             )}
             {!scanning && !bluetoothWasOff && printerMap.size === 0 && (
-              <Text accessibilityLiveRegion="polite">No Bluetooth printers found.</Text>
+              <Text selectable accessibilityLiveRegion="polite">No Bluetooth printers found.</Text>
             )}
             <ScrollView style={styles.printerList}>
               {[...printerMap].map(([address, device]) => {
@@ -246,12 +247,12 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                 const busy = connecting || bluetoothWasOff || unpairing;
                 return (
                   <View key={address} style={styles.printerRow}>
-                    <Text style={styles.printerName}>{device.name || address}</Text>
-                    <Text style={styles.printerAddress}>
+                    <Text selectable style={styles.printerName}>{device.name || address}</Text>
+                    <Text selectable style={styles.printerAddress}>
                       {paired ? 'Paired' : 'Available'}{device.name ? ' · ' + address : ''}
                     </Text>
                     <View style={styles.printerActions}>
-                      <TouchableOpacity
+                      <CopyableTouchableOpacity
                         accessibilityRole="button"
                         accessibilityState={{ disabled: busy }}
                         disabled={busy}
@@ -261,9 +262,9 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                         style={styles.printerAction}
                       >
                         <Text style={styles.printerActionText}>{paired ? 'Connect' : 'Pair and Connect'}</Text>
-                      </TouchableOpacity>
+                      </CopyableTouchableOpacity>
                       {paired && (
-                        <TouchableOpacity
+                        <CopyableTouchableOpacity
                           accessibilityRole="button"
                           accessibilityState={{ disabled: busy || scanning }}
                           disabled={busy || scanning}
@@ -271,7 +272,7 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                           style={styles.printerAction}
                         >
                           <Text style={styles.printerActionText}>Unpair</Text>
-                        </TouchableOpacity>
+                        </CopyableTouchableOpacity>
                       )}
                     </View>
                   </View>

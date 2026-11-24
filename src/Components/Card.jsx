@@ -6,6 +6,7 @@ import {
   responsiveFontSize as rf,
 } from 'react-native-responsive-dimensions';
 import Colors from '../Module/Constants/Colors';
+import { CopyableTouchableOpacity } from './CopyableControl';
 const Card = ({
   applicationNo,
   wardNo,
@@ -34,9 +35,9 @@ const Card = ({
         <Row label="Nature of Business:" value={natureOfBusinessDisplay} />
       )}
 
-      <TouchableOpacity onPress={onPress} style={styles.button}>
+      <CopyableTouchableOpacity onPress={onPress} style={styles.button}>
         <Text style={styles.buttonText}>View</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 };
@@ -44,8 +45,8 @@ const Card = ({
 // Reusable row component for label + value
 const Row = ({ label, value }) => (
   <View style={styles.row}>
-    <Text style={styles.label}>{label}</Text>
-    <Text style={styles.value}>{value}</Text>
+    <Text selectable style={styles.label}>{label}</Text>
+    <Text selectable style={styles.value}>{value}</Text>
   </View>
 );
 

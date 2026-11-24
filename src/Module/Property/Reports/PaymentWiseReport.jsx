@@ -20,6 +20,7 @@ import { PROPERTY_REPORTS_API } from '../../../api/apiRoutes';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
 import { useMasterData } from '../../../Context/MasterDataContext';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const PaymentWiseReport = () => {
   const [wardOptions, setWardOptions] = useState([]);
@@ -139,17 +140,17 @@ const PaymentWiseReport = () => {
 
     return (
       <View style={styles.tableCard}>
-        <Text style={styles.tableTitle}>{title}</Text>
+        <Text selectable style={styles.tableTitle}>{title}</Text>
 
         {/* Table Header */}
         <View style={styles.tableHeader}>
-          <Text style={[styles.tableHeaderText, styles.paymentModeColumn]}>
+          <Text selectable style={[styles.tableHeaderText, styles.paymentModeColumn]}>
             Payment Mode
           </Text>
-          <Text style={[styles.tableHeaderText, styles.countColumn]}>
+          <Text selectable style={[styles.tableHeaderText, styles.countColumn]}>
             Count
           </Text>
-          <Text style={[styles.tableHeaderText, styles.amountColumn]}>
+          <Text selectable style={[styles.tableHeaderText, styles.amountColumn]}>
             Amount
           </Text>
         </View>
@@ -157,13 +158,13 @@ const PaymentWiseReport = () => {
         {/* Table Rows */}
         {data.map((item, index) => (
           <View key={index} style={styles.tableRow}>
-            <Text style={[styles.tableCell, styles.paymentModeColumn]}>
+            <Text selectable style={[styles.tableCell, styles.paymentModeColumn]}>
               {item.paymentMode}
             </Text>
-            <Text style={[styles.tableCell, styles.countColumn]}>
+            <Text selectable style={[styles.tableCell, styles.countColumn]}>
               {item.count}
             </Text>
-            <Text style={[styles.tableCell, styles.amountColumn]}>
+            <Text selectable style={[styles.tableCell, styles.amountColumn]}>
               {item.amount}
             </Text>
           </View>
@@ -193,13 +194,13 @@ const PaymentWiseReport = () => {
       <View style={styles.searchCard}>
         <View style={styles.row}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>From Date</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.label}>From Date</Text>
+            <CopyableTouchableOpacity
               style={styles.input}
               onPress={() => setShowFromPicker(true)}
             >
               <Text>{fromDate.toLocaleDateString()}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             {showFromPicker && (
               <DateTimePicker
                 value={fromDate}
@@ -214,13 +215,13 @@ const PaymentWiseReport = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>To Date</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.label}>To Date</Text>
+            <CopyableTouchableOpacity
               style={styles.input}
               onPress={() => setShowToPicker(true)}
             >
               <Text>{toDate.toLocaleDateString()}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             {showToPicker && (
               <DateTimePicker
                 value={toDate}
@@ -237,7 +238,7 @@ const PaymentWiseReport = () => {
 
         <View style={styles.row}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Collector</Text>
+            <Text selectable style={styles.label}>Collector</Text>
             <Dropdown
               data={collectorOptions}
               labelField="label"
@@ -250,7 +251,7 @@ const PaymentWiseReport = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Ward</Text>
+            <Text selectable style={styles.label}>Ward</Text>
             <Dropdown
               data={wardOptions}
               labelField="label"
@@ -265,7 +266,7 @@ const PaymentWiseReport = () => {
 
         <View style={styles.row}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Payment Mode</Text>
+            <Text selectable style={styles.label}>Payment Mode</Text>
             <Dropdown
               data={paymentModeOptions}
               labelField="label"
@@ -278,12 +279,12 @@ const PaymentWiseReport = () => {
           </View>
         </View>
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.cardSearchButton}
           onPress={handleSearch}
         >
           <Text style={styles.cardSearchText}>Search</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
 
       {/* Summary Cards */}
@@ -305,30 +306,30 @@ const PaymentWiseReport = () => {
           )}
           {datas?.netCollection && (
             <View style={styles.tableCard}>
-              <Text style={styles.tableTitle}>Net Collection</Text>
+              <Text selectable style={styles.tableTitle}>Net Collection</Text>
 
               <View style={styles.tableHeader}>
-                <Text
+                <Text selectable
                   style={[styles.tableHeaderText, styles.paymentModeColumn]}
                 >
                   Payment Mode
                 </Text>
-                <Text style={[styles.tableHeaderText, styles.countColumn]}>
+                <Text selectable style={[styles.tableHeaderText, styles.countColumn]}>
                   Count
                 </Text>
-                <Text style={[styles.tableHeaderText, styles.amountColumn]}>
+                <Text selectable style={[styles.tableHeaderText, styles.amountColumn]}>
                   Amount
                 </Text>
               </View>
 
               <View style={styles.tableRow}>
-                <Text style={[styles.tableCell, styles.paymentModeColumn]}>
+                <Text selectable style={[styles.tableCell, styles.paymentModeColumn]}>
                   Net Collection
                 </Text>
-                <Text style={[styles.tableCell, styles.countColumn]}>
+                <Text selectable style={[styles.tableCell, styles.countColumn]}>
                   {datas.netCollection.count}
                 </Text>
-                <Text style={[styles.tableCell, styles.amountColumn]}>
+                <Text selectable style={[styles.tableCell, styles.amountColumn]}>
                   {datas.netCollection.amount}
                 </Text>
               </View>

@@ -5,6 +5,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 import Colors from '../Module/Constants/Colors';
 import { showToast } from '../utils/toast';
 import Icon from 'react-native-vector-icons/Feather';
+import { CopyableTouchableOpacity } from './CopyableControl';
 
 const LogoutButton = () => {
   const navigation = useNavigation();
@@ -26,14 +27,14 @@ const LogoutButton = () => {
 
   return (
     <>
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.button}
         onPress={() => setShowConfirm(true)}
       >
         <Icon name="log-out" size={20} color={Colors.primary} />
 
         <Text style={styles.icon}>Logout</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
 
       {/* Confirmation Modal */}
       <Modal
@@ -44,18 +45,18 @@ const LogoutButton = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>Logout</Text>
-            <Text style={styles.modalMessage}>
+            <Text selectable style={styles.modalTitle}>Logout</Text>
+            <Text selectable style={styles.modalMessage}>
               Are you sure you want to logout?
             </Text>
             <View style={styles.modalActions}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.modalButton, styles.cancelButton]}
                 onPress={() => setShowConfirm(false)}
               >
                 <Text style={styles.cancelText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </CopyableTouchableOpacity>
+              <CopyableTouchableOpacity
                 style={[styles.modalButton, styles.logoutButton]}
                 onPress={() => {
                   setShowConfirm(false);
@@ -63,7 +64,7 @@ const LogoutButton = () => {
                 }}
               >
                 <Text style={styles.logoutText}>Logout</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

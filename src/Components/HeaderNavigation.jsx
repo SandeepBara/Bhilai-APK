@@ -44,12 +44,12 @@ const HeaderNavigation = ({ title, showBack = true, customBackAction }) => {
       <Sidebar navigation={navigation} />
 
       <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
+        <Text selectable style={styles.title}>{title}</Text>
 
         {ulbData && (
           <View style={styles.ulbColumn}>
-            <Text style={styles.subTitle1}>{ulbData?.hindiUlbName}</Text>
-            <Text style={styles.subTitle}>{ulbData?.ulbName}</Text>
+            <Text selectable style={styles.subTitle1}>{ulbData?.hindiUlbName}</Text>
+            <Text selectable style={styles.subTitle}>{ulbData?.ulbName}</Text>
           </View>
         )}
       </View>

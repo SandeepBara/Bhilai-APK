@@ -12,6 +12,7 @@ import {
 // Replaced with a more modern Icon library if desired, but sticking to MaterialIcons
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import { Picker } from '@react-native-picker/picker';
+import { CopyableTouchableOpacity } from './CopyableControl';
 
 // --- Mock Export Functions ---
 const mockExportToExcel = async (title, headers, data) => {
@@ -132,9 +133,9 @@ export default function DataTable({
 
     return uniquePages.map((page, idx) =>
       page === '...' ? (
-        <Text key={`ellipsis-${idx}`} style={styles.paginationEllipsis}>...</Text>
+        <Text selectable key={`ellipsis-${idx}`} style={styles.paginationEllipsis}>...</Text>
       ) : (
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           key={page}
           onPress={() => handlePageChange(page)}
           style={[
@@ -145,7 +146,7 @@ export default function DataTable({
           <Text style={currentPage === page ? styles.textWhite : styles.textDark}>
             {page}
           </Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       ),
     );
   };
@@ -162,7 +163,7 @@ export default function DataTable({
       
       {/* Title and Action Button */}
       <View style={styles.header}>
-        <Text style={styles.titleText}>{title}</Text>
+        <Text selectable style={styles.titleText}>{title}</Text>
         {actionButton}
       </View>
 
@@ -170,7 +171,7 @@ export default function DataTable({
       <View style={styles.controlsContainer}>
         {/* Export Buttons */}
         <View style={styles.exportButtons}>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={[styles.button, styles.buttonExcel]}
             onPress={exportToExcel}
             disabled={isExcelExporting}
@@ -180,9 +181,9 @@ export default function DataTable({
             ) : (
               <Text style={styles.textWhite}>Excel</Text>
             )}
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={[styles.button, styles.buttonPDF]}
             onPress={exportToPDF}
             disabled={isPDFExporting}
@@ -192,7 +193,7 @@ export default function DataTable({
             ) : (
               <Text style={styles.textWhite}>PDF</Text>
             )}
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
 
         {filterComponent && <View style={styles.filterContainer}>{filterComponent}</View>}
@@ -210,19 +211,19 @@ export default function DataTable({
               returnKeyType="search"
             />
           )}
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             onPress={handleSearchClick}
             style={[styles.button, styles.buttonSearch]}
           >
             <Text style={styles.textWhite}>Search</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </View>
 
       {/* Items per page Selector */}
       <View style={styles.itemsPerPageContainer}>
         <View style={styles.pickerWrapper}>
-          <Text style={styles.textSmall}>Show</Text>
+          <Text selectable style={styles.textSmall}>Show</Text>
           <View style={styles.pickerBox}>
             <Picker
               selectedValue={currentItemsPerPage}
@@ -240,7 +241,7 @@ export default function DataTable({
               <Picker.Item label="All" value="-1" />
             </Picker>
           </View>
-          <Text style={styles.textSmall}>items per page</Text>
+          <Text selectable style={styles.textSmall}>items per page</Text>
         </View>
         {links}
       </View>
@@ -252,7 +253,7 @@ export default function DataTable({
             filteredData.map((item, index) => renderRow(item, index, currentPage, itemsPerPage))
           ) : (
             <View style={styles.noRecordsRow}>
-              <Text style={styles.noRecordsText}>No records found.</Text>
+              <Text selectable style={styles.noRecordsText}>No records found.</Text>
             </View>
           )}
           {footerRow}
@@ -261,7 +262,7 @@ export default function DataTable({
 
       {/* Pagination */}
       <View style={styles.paginationContainer}>
-        <Text style={styles.paginationInfo}>
+        <Text selectable style={styles.paginationInfo}>
           Page {currentPage} of {totalPages}
         </Text>
         <View style={styles.paginationButtonsContainer}>

@@ -22,28 +22,28 @@ const Assessment = ({ navigation }) => {
         <View style={styles.gridContainer}>
           <TouchableOpacity style={styles.box}>
             <Icon name="assessment" size={40} color="#4A90E2" />
-            <Text style={styles.boxText}>New Assessment</Text>
+            <Text selectable style={styles.boxText}>New Assessment</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
             <Icon name="list-alt" size={40} color="#7B61FF" />
-            <Text style={styles.boxText}>Assessment List</Text>
+            <Text selectable style={styles.boxText}>Assessment List</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
             <Icon name="pending" size={40} color="#50E3C2" />
-            <Text style={styles.boxText}>Pending Assessment</Text>
+            <Text selectable style={styles.boxText}>Pending Assessment</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
             <Icon name="check-circle" size={40} color="#F5A623" />
-            <Text style={styles.boxText}>Completed Assessment</Text>
+            <Text selectable style={styles.boxText}>Completed Assessment</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Assessment Module</Text>
+        <Text selectable style={styles.footerText}>Assessment Module</Text>
       </View>
     </View>
   );

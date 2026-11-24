@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../Constants/Colors';
+import { CopyableTouchableOpacity } from './CopyableControl';
 
 function DetailCard({ title, note, data = [] }) {
   const hasData = data && data.length > 0;
@@ -25,22 +26,22 @@ function DetailCard({ title, note, data = [] }) {
       {/* ... (Heading component remains the same) ... */}
       {title && (
         <View style={styles.headingWrapper}>
-          <Text style={styles.headingText}>{title}</Text>
+          <Text selectable style={styles.headingText}>{title}</Text>
         </View>
       )}
 
       <View style={styles.card}>
-        {note && <Text style={styles.note}>{note}</Text>}
+        {note && <Text selectable style={styles.note}>{note}</Text>}
 
         {!hasData && (
-          <Text style={styles.noDataText}>No details available.</Text>
+          <Text selectable style={styles.noDataText}>No details available.</Text>
         )}
 
         {hasData &&
           data.map((item, index) => (
             <View key={index} style={styles.row}>
               <View style={styles.labelContainer}>
-                <Text style={styles.label}>{item?.label} :</Text>
+                <Text selectable style={styles.label}>{item?.label} :</Text>
                 {/* Check for item.info and render the icon */}
                 {item.info && (
                   <TouchableOpacity
@@ -71,16 +72,16 @@ function DetailCard({ title, note, data = [] }) {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
+            <Text selectable style={styles.modalTitle}>
               {modalContent.title} Information
             </Text>
-            <Text style={styles.modalInfo}>{modalContent.info}</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.modalInfo}>{modalContent.info}</Text>
+            <CopyableTouchableOpacity
               style={styles.modalCloseButton}
               onPress={() => setModalVisible(false)}
             >
               <Text style={styles.modalCloseButtonText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </Modal>

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const OwnerDetailsSection = ({
   ownerName,
@@ -45,7 +46,7 @@ const OwnerDetailsSection = ({
   return (
     <View style={{ marginBottom: 20 }}>
       {/* Owner Name */}
-      <Text style={styles.label}>Owner Name *</Text>
+      <Text selectable style={styles.label}>Owner Name *</Text>
       <TextInput
         style={styles.input}
         placeholder="Owner Name"
@@ -56,7 +57,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Gender */}
-      <Text style={styles.label}>Gender *</Text>
+      <Text selectable style={styles.label}>Gender *</Text>
       <Dropdown
         style={styles.dropdown}
         data={genderOptions}
@@ -69,15 +70,15 @@ const OwnerDetailsSection = ({
       />
 
       {/* DOB */}
-      <Text style={styles.label}>Date of Birth *</Text>
-      <TouchableOpacity
+      <Text selectable style={styles.label}>Date of Birth *</Text>
+      <CopyableTouchableOpacity
         style={styles.input}
         onPress={() => !isOwnerDisabled && setShowDobPicker(true)}
       >
         <Text style={{ color: dob ? '#000' : '#999' }}>
           {dob ? new Date(dob).toLocaleDateString('en-GB') : 'DOB *'}
         </Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
       {showDobPicker && !isOwnerDisabled && (
         <DateTimePicker
           value={dob ? new Date(dob) : new Date()}
@@ -93,7 +94,7 @@ const OwnerDetailsSection = ({
       )}
 
       {/* Guardian */}
-      <Text style={styles.label}>Guardian Name</Text>
+      <Text selectable style={styles.label}>Guardian Name</Text>
       <TextInput
         style={styles.input}
         placeholder="Guardian Name"
@@ -104,7 +105,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Relation */}
-      <Text style={styles.label}>Relation *</Text>
+      <Text selectable style={styles.label}>Relation *</Text>
       <Dropdown
         style={styles.dropdown}
         data={selectRelation}
@@ -117,7 +118,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Mobile */}
-      <Text style={styles.label}>Mobile Number *</Text>
+      <Text selectable style={styles.label}>Mobile Number *</Text>
       <TextInput
         style={styles.input}
         keyboardType="numeric"
@@ -130,7 +131,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Aadhaar */}
-      <Text style={styles.label}>Aadhaar Number *</Text>
+      <Text selectable style={styles.label}>Aadhaar Number *</Text>
       <TextInput
         style={styles.input}
         keyboardType="numeric"
@@ -143,7 +144,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* PAN */}
-      <Text style={styles.label}>PAN Number *</Text>
+      <Text selectable style={styles.label}>PAN Number *</Text>
       <TextInput
         style={styles.input}
         autoCapitalize="characters"
@@ -156,7 +157,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Email */}
-      <Text style={styles.label}>Email Address *</Text>
+      <Text selectable style={styles.label}>Email Address *</Text>
       <TextInput
         style={styles.input}
         keyboardType="email-address"
@@ -168,7 +169,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Armed Forces */}
-      <Text style={styles.label}>Member of Armed Forces?</Text>
+      <Text selectable style={styles.label}>Member of Armed Forces?</Text>
       <Dropdown
         style={styles.dropdown}
         data={yesNoOptions}
@@ -181,7 +182,7 @@ const OwnerDetailsSection = ({
       />
 
       {/* Specially Abled */}
-      <Text style={styles.label}>Specially Abled?</Text>
+      <Text selectable style={styles.label}>Specially Abled?</Text>
       <Dropdown
         style={styles.dropdown}
         data={yesNoOptions}

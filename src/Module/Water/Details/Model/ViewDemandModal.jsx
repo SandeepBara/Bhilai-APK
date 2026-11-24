@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const ViewDemandModal = ({ visible, onClose, tradeDetails }) => (
   <Modal visible={visible} transparent animationType="slide">
@@ -14,50 +15,50 @@ export const ViewDemandModal = ({ visible, onClose, tradeDetails }) => (
       <View style={styles.modalContent}>
         <ScrollView>
           {/* Close Button */}
-          <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+          <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
             <Text style={styles.closeText}>×</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
           {/* Title */}
-          <Text style={styles.mainTitle}>View Demand</Text>
+          <Text selectable style={styles.mainTitle}>View Demand</Text>
 
           {/* Table Header */}
           <View style={styles.tableHeader}>
-            <Text style={[styles.tableHeaderText, { flex: 1 }]}>#</Text>
-            <Text style={[styles.tableHeaderText, { flex: 3 }]}>
+            <Text selectable style={[styles.tableHeaderText, { flex: 1 }]}>#</Text>
+            <Text selectable style={[styles.tableHeaderText, { flex: 3 }]}>
               Charge Type
             </Text>
-            <Text style={[styles.tableHeaderText, { flex: 2 }]}>
+            <Text selectable style={[styles.tableHeaderText, { flex: 2 }]}>
               Connection Fee
             </Text>
-            <Text style={[styles.tableHeaderText, { flex: 2 }]}>Penalty</Text>
-            <Text style={[styles.tableHeaderText, { flex: 2 }]}>Total</Text>
+            <Text selectable style={[styles.tableHeaderText, { flex: 2 }]}>Penalty</Text>
+            <Text selectable style={[styles.tableHeaderText, { flex: 2 }]}>Total</Text>
           </View>
 
           {/* Table Row (from demandList[0]) */}
           {tradeDetails?.demandList?.map((item, index) => (
             <View style={styles.tableRow} key={item.id || index}>
-              <Text style={[styles.tableCell, { flex: 1 }]}>{index + 1}</Text>
-              <Text style={[styles.tableCell, { flex: 3 }]}>
+              <Text selectable style={[styles.tableCell, { flex: 1 }]}>{index + 1}</Text>
+              <Text selectable style={[styles.tableCell, { flex: 3 }]}>
                 {item.chargeFor}
               </Text>
-              <Text style={[styles.tableCell, { flex: 2 }]}>
+              <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                 {item.connFee}
               </Text>
-              <Text style={[styles.tableCell, { flex: 2 }]}>
+              <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                 {item.penalty}
               </Text>
-              <Text style={[styles.tableCell, { flex: 2 }]}>{item.amount}</Text>
+              <Text selectable style={[styles.tableCell, { flex: 2 }]}>{item.amount}</Text>
             </View>
           ))}
 
           {/* Main Demand */}
-          <Text style={styles.sectionTitle}>Main Demand</Text>
+          <Text selectable style={styles.sectionTitle}>Main Demand</Text>
           <View style={styles.demandBox}>
-            <Text style={styles.demandText}>
+            <Text selectable style={styles.demandText}>
               Demand: {tradeDetails?.demandAmount || '0.00'}
             </Text>
-            <Text style={styles.penaltyText}>
+            <Text selectable style={styles.penaltyText}>
               Penalty: {tradeDetails?.realizationPenalty || '0.00'} [
               {tradeDetails?.description}]
             </Text>
@@ -65,7 +66,7 @@ export const ViewDemandModal = ({ visible, onClose, tradeDetails }) => (
 
           {/* Total */}
           <View style={styles.totalBox}>
-            <Text style={styles.totalText}>
+            <Text selectable style={styles.totalText}>
               Total Payable Amount: {tradeDetails?.payableAmount || '0.00'}
             </Text>
           </View>

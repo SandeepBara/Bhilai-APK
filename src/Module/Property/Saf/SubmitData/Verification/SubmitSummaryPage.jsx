@@ -4,7 +4,7 @@ import HeaderNavigation from '../../../../../Components/HeaderNavigation';
 
 const Card = ({ title, children }) => (
   <View style={styles.card}>
-    {title && <Text style={styles.cardTitle}>{title}</Text>}
+    {title && <Text selectable style={styles.cardTitle}>{title}</Text>}
     {children}
   </View>
 );
@@ -21,56 +21,56 @@ const SubmitSummaryPage = ({ route }) => {
       <ScrollView contentContainerStyle={styles.container}>
         {/* ✅ Submission Info */}
         <Card title="Submission Summary">
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Submission ID:</Text> {id}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Status:</Text> {status}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Remarks:</Text> {remarks || '-'}
           </Text>
         </Card>
 
         {/* ✅ Property Details */}
         <Card title="Property Details">
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Ward No:</Text>{' '}
             {submissionData?.['Ward No']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Ward:</Text>{' '}
             {submissionData?.Verified_Ward}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>New Ward No:</Text>{' '}
             {submissionData?.['New Ward No (Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified New Ward:</Text>{' '}
             {submissionData?.Verified_NewWard}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Zone:</Text>{' '}
             {submissionData?.['Zone (Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Zone:</Text>{' '}
             {submissionData?.Verified_Zone}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Property Type:</Text>{' '}
             {submissionData?.['Property Type (Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Property Type:</Text>{' '}
             {submissionData?.Verified_PropertyType}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Area of Plot:</Text>{' '}
             {submissionData?.areaOfPlot}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Road Width:</Text>{' '}
             {submissionData?.roadWidth}
           </Text>
@@ -78,51 +78,51 @@ const SubmitSummaryPage = ({ route }) => {
 
         {/* ✅ 1st Floor Example */}
         <Card title="1st Floor Details">
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Usage Type:</Text>{' '}
             {submissionData?.['Usage Type (1st Floor Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Usage:</Text>{' '}
             {submissionData?.['Verified_Usage1st Floor']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Occupancy:</Text>{' '}
             {submissionData?.['Occupancy Type (1st Floor Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Occupancy:</Text>{' '}
             {submissionData?.['Verified_Occupancy1st Floor']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Construction:</Text>{' '}
             {submissionData?.['Construction Type (1st Floor Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Construction:</Text>{' '}
             {submissionData?.['Verified_Construction1st Floor']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Built-up Area:</Text>{' '}
             {submissionData?.['Built-up Area (1st Floor Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Built-up:</Text>{' '}
             {submissionData?.['Verified_BuiltUp1st Floor']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Date From:</Text>{' '}
             {submissionData?.['Date From (1st Floor Current)']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Date From:</Text>{' '}
             {submissionData?.['Verified_DateFrom1st Floor']}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Date To:</Text>{' '}
             {submissionData?.['Date To (1st Floor Current)'] || '-'}
           </Text>
-          <Text>
+          <Text selectable>
             <Text style={styles.label}>Verified Date To:</Text>{' '}
             {submissionData?.['Verified_DateTo1st Floor']}
           </Text>
@@ -132,16 +132,16 @@ const SubmitSummaryPage = ({ route }) => {
         <Card title="Location">
           {location ? (
             <>
-              <Text>
+              <Text selectable>
                 <Text style={styles.label}>Latitude:</Text> {location.latitude}
               </Text>
-              <Text>
+              <Text selectable>
                 <Text style={styles.label}>Longitude:</Text>{' '}
                 {location.longitude}
               </Text>
             </>
           ) : (
-            <Text>No location data</Text>
+            <Text selectable>No location data</Text>
           )}
         </Card>
 
@@ -151,15 +151,15 @@ const SubmitSummaryPage = ({ route }) => {
             photos.map((photo, idx) =>
               photo?.uri ? (
                 <View key={idx} style={styles.photoBox}>
-                  <Text style={styles.label}>{photo.label}</Text>
+                  <Text selectable style={styles.label}>{photo.label}</Text>
                   <Image source={{ uri: photo.uri }} style={styles.image} />
                 </View>
               ) : (
-                <Text key={idx}>{photo.label} not captured</Text>
+                <Text selectable key={idx}>{photo.label} not captured</Text>
               ),
             )
           ) : (
-            <Text>No photos available</Text>
+            <Text selectable>No photos available</Text>
           )}
         </Card>
       </ScrollView>

@@ -35,6 +35,7 @@ import { PROPERTY_API } from '../../../api/apiRoutes';
 import { useRef } from 'react';
 import { validateExtraChargesDates } from '../../../Validation/validation.';
 import { showToast } from '../../../utils/toast';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const yesNoOptions = [
   { label: 'Yes', value: 'yes' },
@@ -794,7 +795,7 @@ const SurveyPage = ({ route, navigation }) => {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color="#007AFF" />
-        <Text style={styles.loadingText}>Loading survey data...</Text>
+        <Text selectable style={styles.loadingText}>Loading survey data...</Text>
       </View>
     );
   }
@@ -851,20 +852,20 @@ const SurveyPage = ({ route, navigation }) => {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
           >
-            <Text style={styles.title}>Self Assessment - Field Survey</Text>
+            <Text selectable style={styles.title}>Self Assessment - Field Survey</Text>
           </LinearGradient>
         </View>
         {data && (
           <View style={styles.card}>
-            <Text style={styles.label}>
+            <Text selectable style={styles.label}>
               Your Application No.:{' '}
               <Text style={styles.value}>{data.safNo}</Text>
             </Text>
-            <Text style={styles.label}>
+            <Text selectable style={styles.label}>
               Application Type:{' '}
               <Text style={styles.value}>{data.assessmentType}</Text>
             </Text>
-            <Text style={styles.label}>
+            <Text selectable style={styles.label}>
               Applied Date: <Text style={styles.value}>{data.applyDate}</Text>
             </Text>
           </View>
@@ -951,12 +952,12 @@ const SurveyPage = ({ route, navigation }) => {
             <View>
               {/* Date Picker */}
               {/* Date Picker */}
-              <Text
+              <Text selectable
                 style={[styles.label, error.ownershipType && styles.errorLabel]}
               >
                 Flat Registry Date *
               </Text>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 onPress={() => setShowDatePicker(true)}
                 style={{
                   padding: 12,
@@ -969,7 +970,7 @@ const SurveyPage = ({ route, navigation }) => {
                 <Text>
                   {selectedDate ? formatDate1(selectedDate) : 'Select Date'}
                 </Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
               {showDatePicker && (
                 // <DateTimePicker
@@ -1006,7 +1007,7 @@ const SurveyPage = ({ route, navigation }) => {
               )}
 
               {/* Apartment Details Dropdown */}
-              <Text
+              <Text selectable
                 style={[styles.label, error.ownershipType && styles.errorLabel]}
               >
                 Appartment Datails *
@@ -1039,7 +1040,7 @@ const SurveyPage = ({ route, navigation }) => {
               >
                 {floorIds.map((floor, index) => (
                   <View key={floor.id} style={{ marginBottom: 20 }}>
-                    <Text
+                    <Text selectable
                       style={{
                         marginTop: 10,
                         marginBottom: 5,
@@ -1279,7 +1280,7 @@ const SurveyPage = ({ route, navigation }) => {
                 <View>
                   <View style={styles.extraFloorContainer}>
                     <View style={styles.row}>
-                      <Text style={styles.labelCheckbox}>
+                      <Text selectable style={styles.labelCheckbox}>
                         Do You Want To Add Extra Floor?
                       </Text>
                       <TouchableOpacity
@@ -1312,12 +1313,12 @@ const SurveyPage = ({ route, navigation }) => {
                             style={styles.card}
                           >
                             <View style={styles.rowlabel}>
-                              <Text style={{ color: 'white' }}>
+                              <Text selectable style={{ color: 'white' }}>
                                 Extra Floor {index + 1}
                               </Text>
                             </View>
                             <View>
-                              <Text style={styles.label}>Floor Name</Text>
+                              <Text selectable style={styles.label}>Floor Name</Text>
                               <Dropdown
                                 style={styles.dropdown}
                                 placeholderStyle={styles.placeholder}
@@ -1332,7 +1333,7 @@ const SurveyPage = ({ route, navigation }) => {
                                 }
                               />
 
-                              <Text style={styles.label}>
+                              <Text selectable style={styles.label}>
                                 Construction Type
                               </Text>
                               <Dropdown
@@ -1353,7 +1354,7 @@ const SurveyPage = ({ route, navigation }) => {
                                 }
                               />
 
-                              <Text style={styles.label}>Occupancy Type</Text>
+                              <Text selectable style={styles.label}>Occupancy Type</Text>
                               <Dropdown
                                 style={styles.dropdown}
                                 placeholderStyle={styles.placeholder}
@@ -1372,7 +1373,7 @@ const SurveyPage = ({ route, navigation }) => {
                                 }
                               />
 
-                              <Text style={styles.label}>Usage Type</Text>
+                              <Text selectable style={styles.label}>Usage Type</Text>
                               <Dropdown
                                 style={styles.dropdown}
                                 placeholderStyle={styles.placeholder}
@@ -1387,7 +1388,7 @@ const SurveyPage = ({ route, navigation }) => {
                                 }
                               />
 
-                              <Text style={styles.label}>Built-up Area</Text>
+                              <Text selectable style={styles.label}>Built-up Area</Text>
                               <TextInput
                                 style={styles.input}
                                 placeholder="Enter built-up area"
@@ -1399,8 +1400,8 @@ const SurveyPage = ({ route, navigation }) => {
                               />
                             </View>
 
-                            <Text style={styles.label}>Date From</Text>
-                            <TouchableOpacity
+                            <Text selectable style={styles.label}>Date From</Text>
+                            <CopyableTouchableOpacity
                               style={styles.dateBox}
                               onPress={() =>
                                 updateFloor(index, 'showFromPicker', true)
@@ -1411,7 +1412,7 @@ const SurveyPage = ({ route, navigation }) => {
                                   ? formatDate(floor.fromDate)
                                   : 'Select Date'}
                               </Text>
-                            </TouchableOpacity>
+                            </CopyableTouchableOpacity>
                             {floor.showFromPicker && (
                               <MonthYearPicker
                                 onChange={(event, newDate) => {
@@ -1424,8 +1425,8 @@ const SurveyPage = ({ route, navigation }) => {
                               />
                             )}
 
-                            <Text style={styles.label}>Date Upto</Text>
-                            <TouchableOpacity
+                            <Text selectable style={styles.label}>Date Upto</Text>
+                            <CopyableTouchableOpacity
                               style={styles.dateBox}
                               onPress={() =>
                                 updateFloor(index, 'showToPicker', true)
@@ -1436,7 +1437,7 @@ const SurveyPage = ({ route, navigation }) => {
                                   ? formatDate(floor.toDate)
                                   : 'Select Date'}
                               </Text>
-                            </TouchableOpacity>
+                            </CopyableTouchableOpacity>
                             {floor.showToPicker && (
                               <MonthYearPicker
                                 onChange={(event, newDate) => {
@@ -1449,26 +1450,26 @@ const SurveyPage = ({ route, navigation }) => {
                               />
                             )}
 
-                            <Text style={styles.cardText}></Text>
+                            <Text selectable style={styles.cardText}></Text>
                           </LinearGradient>
                         ))}
 
                         <View style={styles.buttonRow}>
-                          <TouchableOpacity
+                          <CopyableTouchableOpacity
                             onPress={addFloor}
                             style={styles.addButton}
                           >
                             <Text style={styles.buttonText}>Add Floor</Text>
-                          </TouchableOpacity>
+                          </CopyableTouchableOpacity>
                           {floors.length > 0 && (
-                            <TouchableOpacity
+                            <CopyableTouchableOpacity
                               onPress={removeFloor}
                               style={styles.removeButton}
                             >
                               <Text style={styles.buttonText}>
                                 Remove Floor
                               </Text>
-                            </TouchableOpacity>
+                            </CopyableTouchableOpacity>
                           )}
                         </View>
                       </>
@@ -1540,7 +1541,7 @@ const SurveyPage = ({ route, navigation }) => {
             isMutation={false}
           />
         </View>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.previewButton}
           onPress={() => {
             // Validation can be added here if needed
@@ -1696,7 +1697,7 @@ const SurveyPage = ({ route, navigation }) => {
           }}
         >
           <Text style={styles.previewButtonText}>Preview</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
         <Modal
           visible={isPreviewVisible}
           animationType="slide"
@@ -1705,63 +1706,63 @@ const SurveyPage = ({ route, navigation }) => {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Preview Details</Text>
+              <Text selectable style={styles.modalTitle}>Preview Details</Text>
               <ScrollView style={styles.modalContent}>
                 {/* Property Details Table */}
                 <View style={styles.tableContainer}>
-                  <Text style={styles.tableTitle}>Property Details</Text>
+                  <Text selectable style={styles.tableTitle}>Property Details</Text>
                   <View style={styles.table}>
                     <View style={styles.tableHeader}>
-                      <Text style={styles.tableHeaderText}>Field</Text>
-                      <Text style={styles.tableHeaderText}>Current Value</Text>
-                      <Text style={styles.tableHeaderText}>Verified Value</Text>
+                      <Text selectable style={styles.tableHeaderText}>Field</Text>
+                      <Text selectable style={styles.tableHeaderText}>Current Value</Text>
+                      <Text selectable style={styles.tableHeaderText}>Verified Value</Text>
                     </View>
                     {data?.assessmentType === 'Mutation' && (
                       <View style={styles.tableRow}>
-                        <Text style={styles.tableCellLabel}>
+                        <Text selectable style={styles.tableCellLabel}>
                           Percentage of Property Transfer
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {previewData['Percentage_Transfer'] || 'N/A'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {previewData['Verified_Percentage'] || 'N/A'}
                         </Text>
                       </View>
                     )}
                     <View style={styles.tableRow}>
-                      <Text style={styles.tableCellLabel}>Ward No</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCellLabel}>Ward No</Text>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Ward No'] || 'N/A'}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Verified_Ward'] || 'N/A'}
                       </Text>
                     </View>
                     <View style={[styles.tableRow, styles.tableRowAlternate]}>
-                      <Text style={styles.tableCellLabel}>New Ward No</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCellLabel}>New Ward No</Text>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['New Ward No (Current)'] || 'N/A'}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Verified_NewWard'] || 'N/A'}
                       </Text>
                     </View>
                     <View style={styles.tableRow}>
-                      <Text style={styles.tableCellLabel}>Zone</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCellLabel}>Zone</Text>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Zone (Current)'] || 'N/A'}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Verified_Zone'] || 'N/A'}
                       </Text>
                     </View>
                     <View style={[styles.tableRow, styles.tableRowAlternate]}>
-                      <Text style={styles.tableCellLabel}>Property Type</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCellLabel}>Property Type</Text>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Property Type (Current)'] || 'N/A'}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {previewData['Verified_PropertyType'] || 'N/A'}
                       </Text>
                     </View>
@@ -1769,13 +1770,13 @@ const SurveyPage = ({ route, navigation }) => {
                       'FLATS / UNIT IN MULTI STORIED BUILDING' && (
                       <>
                         <View style={styles.tableRow}>
-                          <Text style={styles.tableCellLabel}>
+                          <Text selectable style={styles.tableCellLabel}>
                             Selected Date
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {previewData.selectedDate}
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {' '}
                             {/* Optional verified value */}{' '}
                           </Text>
@@ -1784,13 +1785,13 @@ const SurveyPage = ({ route, navigation }) => {
                         <View
                           style={[styles.tableRow, styles.tableRowAlternate]}
                         >
-                          <Text style={styles.tableCellLabel}>
+                          <Text selectable style={styles.tableCellLabel}>
                             Apartment Detail
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {previewData.apartmentDetail || 'N/A'}
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {' '}
                             {/* Optional verified value */}{' '}
                           </Text>
@@ -1826,31 +1827,31 @@ const SurveyPage = ({ route, navigation }) => {
 
                         return (
                           <View key={floorId} style={styles.tableContainer}>
-                            <Text style={styles.tableTitle}>
+                            <Text selectable style={styles.tableTitle}>
                               {floorPrefix} Details
                             </Text>
                             <View style={styles.table}>
                               <View style={styles.tableHeader}>
-                                <Text style={styles.tableHeaderText}>
+                                <Text selectable style={styles.tableHeaderText}>
                                   Field
                                 </Text>
-                                <Text style={styles.tableHeaderText}>
+                                <Text selectable style={styles.tableHeaderText}>
                                   Current Value
                                 </Text>
-                                <Text style={styles.tableHeaderText}>
+                                <Text selectable style={styles.tableHeaderText}>
                                   Verified Value
                                 </Text>
                               </View>
                               <View style={styles.tableRow}>
-                                <Text style={styles.tableCellLabel}>
+                                <Text selectable style={styles.tableCellLabel}>
                                   Usage Type
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Usage Type (${floorPrefix} Current)`
                                   ] || 'N/A'}
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Verified_Usage${floorPrefix}`
                                   ] || 'N/A'}
@@ -1862,30 +1863,30 @@ const SurveyPage = ({ route, navigation }) => {
                                   styles.tableRowAlternate,
                                 ]}
                               >
-                                <Text style={styles.tableCellLabel}>
+                                <Text selectable style={styles.tableCellLabel}>
                                   Occupancy Type
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Occupancy Type (${floorPrefix} Current)`
                                   ] || 'N/A'}
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Verified_Occupancy${floorPrefix}`
                                   ] || 'N/A'}
                                 </Text>
                               </View>
                               <View style={styles.tableRow}>
-                                <Text style={styles.tableCellLabel}>
+                                <Text selectable style={styles.tableCellLabel}>
                                   Construction Type
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Construction Type (${floorPrefix} Current)`
                                   ] || 'N/A'}
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Verified_Construction${floorPrefix}`
                                   ] || 'N/A'}
@@ -1897,30 +1898,30 @@ const SurveyPage = ({ route, navigation }) => {
                                   styles.tableRowAlternate,
                                 ]}
                               >
-                                <Text style={styles.tableCellLabel}>
+                                <Text selectable style={styles.tableCellLabel}>
                                   Built-up Area
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Built-up Area (${floorPrefix} Current)`
                                   ] || 'N/A'}
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Verified_BuiltUp${floorPrefix}`
                                   ] || 'N/A'}
                                 </Text>
                               </View>
                               <View style={styles.tableRow}>
-                                <Text style={styles.tableCellLabel}>
+                                <Text selectable style={styles.tableCellLabel}>
                                   Date From
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Date From (${floorPrefix} Current)`
                                   ] || 'N/A'}
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Verified_DateFrom${floorPrefix}`
                                   ] || 'N/A'}
@@ -1932,15 +1933,15 @@ const SurveyPage = ({ route, navigation }) => {
                                   styles.tableRowAlternate,
                                 ]}
                               >
-                                <Text style={styles.tableCellLabel}>
+                                <Text selectable style={styles.tableCellLabel}>
                                   Date To
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Date To (${floorPrefix} Current)`
                                   ] || 'N/A'}
                                 </Text>
-                                <Text style={styles.tableCell}>
+                                <Text selectable style={styles.tableCell}>
                                   {previewData[
                                     `Verified_DateTo${floorPrefix}`
                                   ] || 'N/A'}
@@ -1956,7 +1957,7 @@ const SurveyPage = ({ route, navigation }) => {
                         floors.length > 0 &&
                         floors.map((floor, floorIndex) => (
                           <View key={floorIndex} style={styles.cardContainer}>
-                            <Text style={styles.cardTitle}>
+                            <Text selectable style={styles.cardTitle}>
                               Extra Floor {floorIndex + 1} Details
                             </Text>
 
@@ -2011,10 +2012,10 @@ const SurveyPage = ({ route, navigation }) => {
                               },
                             ].map((item, idx) => (
                               <View key={idx} style={styles.cardRow}>
-                                <Text style={styles.cardLabel}>
+                                <Text selectable style={styles.cardLabel}>
                                   {item.label}
                                 </Text>
-                                <Text style={styles.cardValue}>
+                                <Text selectable style={styles.cardValue}>
                                   {item.value}
                                 </Text>
                               </View>
@@ -2025,9 +2026,9 @@ const SurveyPage = ({ route, navigation }) => {
                       {/* Remarks Section */}
                       {(remarks || previewData['Remarks (Preview)']) && (
                         <View style={styles.remarksContainer}>
-                          <Text style={styles.tableTitle}>Remarks</Text>
+                          <Text selectable style={styles.tableTitle}>Remarks</Text>
                           <View style={styles.remarksBox}>
-                            <Text style={styles.remarksText}>
+                            <Text selectable style={styles.remarksText}>
                               {remarks ||
                                 previewData['Remarks (Preview)'] ||
                                 'No remarks'}
@@ -2041,17 +2042,17 @@ const SurveyPage = ({ route, navigation }) => {
                 {/* Other Property Features Section */}
 
                 <View style={styles.tableContainer}>
-                  <Text style={styles.tableTitle}>Other Property Features</Text>
+                  <Text selectable style={styles.tableTitle}>Other Property Features</Text>
                   <View style={styles.table}>
                     <View style={styles.tableHeader}>
-                      <Text style={styles.tableHeaderText}>Field</Text>
-                      <Text style={styles.tableHeaderText}>Value</Text>
+                      <Text selectable style={styles.tableHeaderText}>Field</Text>
+                      <Text selectable style={styles.tableHeaderText}>Value</Text>
                     </View>
 
                     {/* Mobile Tower */}
                     <View style={styles.tableRow}>
-                      <Text style={styles.tableCellLabel}>Mobile Tower</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCellLabel}>Mobile Tower</Text>
+                      <Text selectable style={styles.tableCell}>
                         {mobileTower || 'N/A'}
                       </Text>
                     </View>
@@ -2060,16 +2061,16 @@ const SurveyPage = ({ route, navigation }) => {
                         <View
                           style={[styles.tableRow, styles.tableRowAlternate]}
                         >
-                          <Text style={styles.tableCellLabel}>Tower Area</Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCellLabel}>Tower Area</Text>
+                          <Text selectable style={styles.tableCell}>
                             {towerArea || 'N/A'}
                           </Text>
                         </View>
                         <View style={styles.tableRow}>
-                          <Text style={styles.tableCellLabel}>
+                          <Text selectable style={styles.tableCellLabel}>
                             Installation Date
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {installationDate
                               ? formatDate(installationDate)
                               : 'N/A'}
@@ -2081,26 +2082,26 @@ const SurveyPage = ({ route, navigation }) => {
                     {/* Hoarding */}
                     <></>
                     <View style={[styles.tableRow, styles.tableRowAlternate]}>
-                      <Text style={styles.tableCellLabel}>Hoarding</Text>
-                      <Text style={styles.tableCell}>{hoarding || 'N/A'}</Text>
+                      <Text selectable style={styles.tableCellLabel}>Hoarding</Text>
+                      <Text selectable style={styles.tableCell}>{hoarding || 'N/A'}</Text>
                     </View>
                     {hoarding === 'yes' && (
                       <>
                         <View style={styles.tableRow}>
-                          <Text style={styles.tableCellLabel}>
+                          <Text selectable style={styles.tableCellLabel}>
                             Hoarding Area
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {hoardingArea || 'N/A'}
                           </Text>
                         </View>
                         <View
                           style={[styles.tableRow, styles.tableRowAlternate]}
                         >
-                          <Text style={styles.tableCellLabel}>
+                          <Text selectable style={styles.tableCellLabel}>
                             Installation Date
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {hoardingInstallationDate
                               ? formatDate(hoardingInstallationDate)
                               : 'N/A'}
@@ -2112,8 +2113,8 @@ const SurveyPage = ({ route, navigation }) => {
                     {selectedPropertyLabel !== 'VACANT LAND' && (
                       <>
                         <View style={styles.tableRow}>
-                          <Text style={styles.tableCellLabel}>Petrol Pump</Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCellLabel}>Petrol Pump</Text>
+                          <Text selectable style={styles.tableCell}>
                             {petrolPump || 'N/A'}
                           </Text>
                         </View>
@@ -2125,18 +2126,18 @@ const SurveyPage = ({ route, navigation }) => {
                                 styles.tableRowAlternate,
                               ]}
                             >
-                              <Text style={styles.tableCellLabel}>
+                              <Text selectable style={styles.tableCellLabel}>
                                 Pump Area
                               </Text>
-                              <Text style={styles.tableCell}>
+                              <Text selectable style={styles.tableCell}>
                                 {pumpArea || 'N/A'}
                               </Text>
                             </View>
                             <View style={styles.tableRow}>
-                              <Text style={styles.tableCellLabel}>
+                              <Text selectable style={styles.tableCellLabel}>
                                 Installation Date
                               </Text>
-                              <Text style={styles.tableCell}>
+                              <Text selectable style={styles.tableCell}>
                                 {pumpInstallationDate
                                   ? formatDate(pumpInstallationDate)
                                   : 'N/A'}
@@ -2149,19 +2150,19 @@ const SurveyPage = ({ route, navigation }) => {
                         <View
                           style={[styles.tableRow, styles.tableRowAlternate]}
                         >
-                          <Text style={styles.tableCellLabel}>
+                          <Text selectable style={styles.tableCellLabel}>
                             Rainwater Harvesting
                           </Text>
-                          <Text style={styles.tableCell}>
+                          <Text selectable style={styles.tableCell}>
                             {rainHarvesting || 'N/A'}
                           </Text>
                         </View>
                         {rainHarvesting === 'yes' && (
                           <View style={styles.tableRow}>
-                            <Text style={styles.tableCellLabel}>
+                            <Text selectable style={styles.tableCellLabel}>
                               Completion Date
                             </Text>
-                            <Text style={styles.tableCell}>
+                            <Text selectable style={styles.tableCell}>
                               {completionDate
                                 ? new Date(completionDate)
                                     .toISOString()
@@ -2178,19 +2179,19 @@ const SurveyPage = ({ route, navigation }) => {
               </ScrollView>
 
               <View style={styles.modalButtonContainer}>
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={[styles.modalButton, styles.closeButton]}
                   onPress={() => setIsPreviewVisible(false)}
                 >
                   <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
 
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={[styles.modalButton, styles.submitButton]}
                   onPress={handleSubmitPreview}
                 >
                   <Text style={styles.submitButtonText}>Submit</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
             </View>
           </View>

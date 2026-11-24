@@ -7,19 +7,20 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 // Reusable InfoRow Component
 const InfoRow = ({ label, value, fullWidth = false }) => (
   <View style={[styles.infoRow, fullWidth && styles.fullWidth]}>
-    <Text style={styles.label}>{label}:</Text>
-    <Text style={styles.value}>{value || '-'}</Text>
+    <Text selectable style={styles.label}>{label}:</Text>
+    <Text selectable style={styles.value}>{value || '-'}</Text>
   </View>
 );
 
 // Reusable Section Component
 const Section = ({ title, children, isTable = false }) => (
   <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text selectable style={styles.sectionTitle}>{title}</Text>
     <View style={styles.sectionDivider} />
     <View style={isTable ? styles.sectionContentTable : styles.sectionContent}>
       {children}
@@ -35,7 +36,7 @@ const CheckIcon = ({ isChecked }) => (
       isChecked ? styles.checkSuccess : styles.checkError,
     ]}
   >
-    <Text style={styles.checkText}>{isChecked ? '✓' : '✗'}</Text>
+    <Text selectable style={styles.checkText}>{isChecked ? '✓' : '✗'}</Text>
   </View>
 );
 
@@ -43,12 +44,12 @@ const CheckIcon = ({ isChecked }) => (
 const ComparisonTable = ({ data }) => (
   <View style={styles.table}>
     <View style={styles.tableHeader}>
-      <Text style={[styles.tableHeaderText, styles.colField]}>Field</Text>
-      <Text style={[styles.tableHeaderText, styles.colApp]}>Application</Text>
-      <Text style={[styles.tableHeaderText, styles.colVerify]}>
+      <Text selectable style={[styles.tableHeaderText, styles.colField]}>Field</Text>
+      <Text selectable style={[styles.tableHeaderText, styles.colApp]}>Application</Text>
+      <Text selectable style={[styles.tableHeaderText, styles.colVerify]}>
         Verification
       </Text>
-      <Text style={[styles.tableHeaderText, styles.colCheck]}>Check</Text>
+      <Text selectable style={[styles.tableHeaderText, styles.colCheck]}>Check</Text>
     </View>
 
     {data.map((row, index) => (
@@ -56,9 +57,9 @@ const ComparisonTable = ({ data }) => (
         key={index}
         style={[styles.tableRow, index % 2 === 0 && styles.tableRowEven]}
       >
-        <Text style={[styles.tableCell, styles.colField]}>{row.field}</Text>
-        <Text style={[styles.tableCell, styles.colApp]}>{row.application}</Text>
-        <Text style={[styles.tableCell, styles.colVerify]}>
+        <Text selectable style={[styles.tableCell, styles.colField]}>{row.field}</Text>
+        <Text selectable style={[styles.tableCell, styles.colApp]}>{row.application}</Text>
+        <Text selectable style={[styles.tableCell, styles.colVerify]}>
           {row.verification}
         </Text>
         <View style={styles.colCheck}>
@@ -105,10 +106,10 @@ const FieldVerificationModal = ({ visible, onClose, verifiedData }) => {
         <View style={styles.modalContainer}>
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Field Verification Details</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <Text selectable style={styles.headerTitle}>Field Verification Details</Text>
+            <CopyableTouchableOpacity onPress={onClose} style={styles.closeButton}>
               <Text style={styles.closeButtonText}>✕</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
 
           <ScrollView
@@ -157,7 +158,7 @@ const FieldVerificationModal = ({ visible, onClose, verifiedData }) => {
               {formattedCompTable.length > 0 ? (
                 <ComparisonTable data={formattedCompTable} />
               ) : (
-                <Text>No comparison data available</Text>
+                <Text selectable>No comparison data available</Text>
               )}
             </Section>
           </ScrollView>

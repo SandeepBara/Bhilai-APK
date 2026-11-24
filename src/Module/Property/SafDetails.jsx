@@ -16,6 +16,7 @@ import TcVerificationDtlModal from "./component/TcVerificationDtlModal";
 import SAMModal from "./component/SAMModal";
 import PaymentReceiptModal from "./component/PaymentReceiptModal";
 import DocViewModal from "./component/DocViewModal"
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
 function SafDetails() {
     const route = useRoute();
@@ -132,7 +133,7 @@ function SafDetails() {
                 {isLoading ? (
                     <View style={styles.loaderContainer}>
                         <ActivityIndicator size="large" color={Colors.primary} />
-                        <Text style={styles.loadingText}>Loading survey data...</Text>
+                        <Text selectable style={styles.loadingText}>Loading survey data...</Text>
                     </View>
                 ) : (
                     <>
@@ -440,7 +441,7 @@ function SafDetails() {
                                     `${item?.uptoQtr ?? 'NA'} / ${item?.uptoFyear ?? 'NA'}`,
                                     item?.payableAmt ?? 'N/A',
                                     (
-                                    <TouchableOpacity
+                                    <CopyableTouchableOpacity
                                             key={`view-button-${item?.id || index}`} 
                                             style={styles.button} // Ensure this style has a background and padding
                                             onPress={() => {
@@ -449,7 +450,7 @@ function SafDetails() {
                                             }}
                                         >
                                             <Text style={styles.buttonText}>View</Text>
-                                        </TouchableOpacity>
+                                        </CopyableTouchableOpacity>
                                     )
                                     ,
                                 ],
@@ -465,13 +466,13 @@ function SafDetails() {
                             data={safData?.tcVerifications?.map((item, index) => ({
                                 cells: [
                                     (index + 1).toString(), 
-                                    (<Text> 
+                                    (<Text selectable>
                                         {item.verifiedBy ?? 'NA'}
                                         <Text style={{color: "#aac8e9ff"}}> ({item?.userName??"NA"})</Text>
                                     </Text>),
                                     formatLocalDateTime(item?.createdAt),                                    
                                     (
-                                        <TouchableOpacity
+                                        <CopyableTouchableOpacity
                                             key={`view-button-${item?.id || index}`} 
                                             style={styles.button} // Ensure this style has a background and padding
                                             onPress={() => {
@@ -480,7 +481,7 @@ function SafDetails() {
                                             }}
                                         >
                                             <Text style={styles.buttonText}>View</Text>
-                                        </TouchableOpacity>
+                                        </CopyableTouchableOpacity>
                                     )
                                     ,
                                 ],
@@ -506,7 +507,7 @@ function SafDetails() {
                                     item?.memoType,
                                     item?.holdingNo,
                                     (
-                                        <TouchableOpacity
+                                        <CopyableTouchableOpacity
                                             key={`view-button-${item?.id || index}`} 
                                             style={styles.button} // Ensure this style has a background and padding
                                             onPress={() => {
@@ -519,7 +520,7 @@ function SafDetails() {
                                             }}
                                         >
                                             <Text style={styles.buttonText}>View</Text>
-                                        </TouchableOpacity>
+                                        </CopyableTouchableOpacity>
                                     )
                                     ,
                                 ],

@@ -27,6 +27,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import styles from '../../../style/DetailsStyle';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const Details = ({ route }) => {
   const [showModal, setShowModal] = useState(false);
@@ -188,7 +189,7 @@ const Details = ({ route }) => {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color={Colors.primary} />
-        <Text style={{ marginTop: 10 }}>Loading data...</Text>
+        <Text selectable style={{ marginTop: 10 }}>Loading data...</Text>
       </View>
     );
   }
@@ -199,13 +200,13 @@ const Details = ({ route }) => {
       <ScrollView style={styles.container}>
         {/* Banner */}
         <View style={styles.banner}>
-          <Text style={styles.bannerText}>
+          <Text selectable style={styles.bannerText}>
             Your applied application no.{' '}
             <Text style={styles.appId}>{tradeDetails?.applicationNo}</Text>. You
             can use this for future reference.
           </Text>
 
-          <Text style={styles.statusText}>
+          <Text selectable style={styles.statusText}>
             Current Status:{' '}
             <Text
               style={
@@ -261,10 +262,10 @@ const Details = ({ route }) => {
         {/* Owner Details */}
         <Section title="Owner Details">
           <View style={styles.ownerHeader}>
-            <Text style={styles.ownerCol}>Owner Name</Text>
-            <Text style={styles.ownerCol}>Guardian Name</Text>
-            <Text style={styles.ownerCol}>Mobile No</Text>
-            <Text style={styles.ownerCol}>Email Id</Text>
+            <Text selectable style={styles.ownerCol}>Owner Name</Text>
+            <Text selectable style={styles.ownerCol}>Guardian Name</Text>
+            <Text selectable style={styles.ownerCol}>Mobile No</Text>
+            <Text selectable style={styles.ownerCol}>Email Id</Text>
           </View>
           {tradeDetails?.owners?.map((owner, index) => (
             <View
@@ -274,10 +275,10 @@ const Details = ({ route }) => {
                 { backgroundColor: index % 2 === 0 ? '#fff' : '#f9f9f9' },
               ]}
             >
-              <Text style={styles.ownerCol}>{owner.ownerName}</Text>
-              <Text style={styles.ownerCol}>{owner.guardianName}</Text>
-              <Text style={styles.ownerCol}>{String(owner.mobileNo)}</Text>
-              <Text style={styles.ownerCol}>{owner.email || 'N/A'}</Text>
+              <Text selectable style={styles.ownerCol}>{owner.ownerName}</Text>
+              <Text selectable style={styles.ownerCol}>{owner.guardianName}</Text>
+              <Text selectable style={styles.ownerCol}>{String(owner.mobileNo)}</Text>
+              <Text selectable style={styles.ownerCol}>{owner.email || 'N/A'}</Text>
             </View>
           ))}
         </Section>
@@ -285,9 +286,9 @@ const Details = ({ route }) => {
         {/* Document Details */}
         <Section title="Document Details">
           <View style={styles.docHeader}>
-            <Text style={styles.docCol}>Document Name</Text>
-            <Text style={styles.docCol}>Image</Text>
-            <Text style={styles.docCol}>Status</Text>
+            <Text selectable style={styles.docCol}>Document Name</Text>
+            <Text selectable style={styles.docCol}>Image</Text>
+            <Text selectable style={styles.docCol}>Status</Text>
           </View>
 
           {Array.isArray(documents) &&
@@ -311,26 +312,26 @@ const Details = ({ route }) => {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View>
               <View style={styles.docHeader}>
-                <Text style={styles.docCol}>Processing Fee</Text>
-                <Text style={styles.docCol}>Transaction Date</Text>
-                <Text style={styles.docCol}>Payment Through</Text>
-                <Text style={styles.docCol}>Payment For</Text>
-                <Text style={styles.docCol}>View</Text>
+                <Text selectable style={styles.docCol}>Processing Fee</Text>
+                <Text selectable style={styles.docCol}>Transaction Date</Text>
+                <Text selectable style={styles.docCol}>Payment Through</Text>
+                <Text selectable style={styles.docCol}>Payment For</Text>
+                <Text selectable style={styles.docCol}>View</Text>
               </View>
               {paymentDtl && (
                 <View style={styles.paymentRow}>
-                  <Text style={styles.paymentCol}>{paymentDtl.penaltyAmt}</Text>
-                  <Text style={styles.paymentCol}>{paymentDtl.tranDate}</Text>
-                  <Text style={styles.paymentCol}>
+                  <Text selectable style={styles.paymentCol}>{paymentDtl.penaltyAmt}</Text>
+                  <Text selectable style={styles.paymentCol}>{paymentDtl.tranDate}</Text>
+                  <Text selectable style={styles.paymentCol}>
                     {paymentDtl.paymentMode}
                   </Text>
-                  <Text style={styles.paymentCol}>{paymentDtl.tranType}</Text>
-                  <TouchableOpacity
+                  <Text selectable style={styles.paymentCol}>{paymentDtl.tranType}</Text>
+                  <CopyableTouchableOpacity
                     style={styles.viewBtn}
                     onPress={() => setShowReceipt(true)}
                   >
                     <Text style={styles.viewBtnText}>View</Text>
-                  </TouchableOpacity>
+                  </CopyableTouchableOpacity>
                 </View>
               )}
             </View>
@@ -341,34 +342,34 @@ const Details = ({ route }) => {
         <Section title="Field Verification">
           {/* Table Header */}
           <View style={styles.docHeader}>
-            <Text style={styles.docCol}>SL</Text>
-            <Text style={styles.docCol}>Verified By</Text>
-            <Text style={styles.docCol}>Verification On</Text>
-            <Text style={styles.docCol}>View</Text>
+            <Text selectable style={styles.docCol}>SL</Text>
+            <Text selectable style={styles.docCol}>Verified By</Text>
+            <Text selectable style={styles.docCol}>Verification On</Text>
+            <Text selectable style={styles.docCol}>View</Text>
           </View>
 
           {/* Table Rows */}
           {tcVerification && tcVerification.length > 0 ? (
             tcVerification.map((item, index) => (
               <View key={item.id || index} style={styles.paymentRow}>
-                <Text style={styles.paymentCol}>{index + 1}</Text>
-                <Text style={styles.paymentCol}>
+                <Text selectable style={styles.paymentCol}>{index + 1}</Text>
+                <Text selectable style={styles.paymentCol}>
                   {item.verifiedBy} ({item.userName})
                 </Text>
-                <Text style={styles.paymentCol}>
+                <Text selectable style={styles.paymentCol}>
                   {new Date(item.createdAt).toLocaleString()}
                 </Text>
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={styles.viewBtn}
                   onPress={() => handleViewVerification(item.id)}
                 >
                   <Text style={styles.viewBtnText}>View</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
             ))
           ) : (
             <View style={styles.noDataContainer}>
-              <Text style={styles.noDataText}>
+              <Text selectable style={styles.noDataText}>
                 No Field Verification Available!
               </Text>
             </View>
@@ -379,10 +380,10 @@ const Details = ({ route }) => {
           {Array.isArray(levelRemarks) && levelRemarks.length > 0 ? (
             <View style={styles.remarksTableContainer}>
               <View style={styles.remarksHeader}>
-                <Text style={styles.remarksHeaderCol}>Role</Text>
-                <Text style={styles.remarksHeaderCol}>Remark</Text>
-                <Text style={styles.remarksHeaderCol}>Time</Text>
-                <Text style={styles.remarksHeaderCol}>Action</Text>
+                <Text selectable style={styles.remarksHeaderCol}>Role</Text>
+                <Text selectable style={styles.remarksHeaderCol}>Remark</Text>
+                <Text selectable style={styles.remarksHeaderCol}>Time</Text>
+                <Text selectable style={styles.remarksHeaderCol}>Action</Text>
               </View>
               {levelRemarks.map((remark, index) => (
                 <View
@@ -392,20 +393,20 @@ const Details = ({ route }) => {
                     { backgroundColor: index % 2 === 0 ? '#fff' : '#f9f9f9' },
                   ]}
                 >
-                  <Text style={styles.remarksColRole}>
+                  <Text selectable style={styles.remarksColRole}>
                     {remark.senderRole || 'N/A'}
                   </Text>
-                  <Text style={styles.remarksColRole}>
+                  <Text selectable style={styles.remarksColRole}>
                     {remark.senderRemarks || '-'}
                   </Text>
-                  <Text style={styles.remarksColRole}>
+                  <Text selectable style={styles.remarksColRole}>
                     {new Date(remark.createdAt).toLocaleTimeString([], {
                       hour: '2-digit',
                       minute: '2-digit',
                     })}{' '}
                     • {new Date(remark.createdAt).toLocaleDateString()}
                   </Text>
-                  <Text style={styles.remarksColRole}>
+                  <Text selectable style={styles.remarksColRole}>
                     {remark.actions || '-'}
                   </Text>
                 </View>
@@ -413,7 +414,7 @@ const Details = ({ route }) => {
             </View>
           ) : (
             <View style={styles.noRemarksContainer}>
-              <Text style={styles.noRemarksText}>
+              <Text selectable style={styles.noRemarksText}>
                 No level remarks available
               </Text>
             </View>
@@ -428,27 +429,27 @@ const Details = ({ route }) => {
           >
             <Text style={styles.tradeLicenseText}>View Water</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.actionBtn}
             onPress={() => setShowDemandModal(true)}
           >
             <Text style={styles.actionBtnText}>View Demand</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
           {tradeDetails?.paymentStatus === 0 && (
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.actionBtn}
               onPress={() => setShowPaymentModal(true)}
             >
               <Text style={styles.actionBtnText}>Make Payment</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           )}
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.actionBtn}
             onPress={() => setShowDocumentModal(true)}
           >
             <Text style={styles.actionBtnText}>View Documents</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </ScrollView>
 
@@ -504,15 +505,15 @@ const Details = ({ route }) => {
 // Section and Row components
 const Section = ({ title, children }) => (
   <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text selectable style={styles.sectionTitle}>{title}</Text>
     {children}
   </View>
 );
 
 const DetailRow = ({ label, value }) => (
   <View style={styles.row}>
-    <Text style={styles.label}>{label}</Text>
-    <Text style={styles.value}>{value}</Text>
+    <Text selectable style={styles.label}>{label}</Text>
+    <Text selectable style={styles.value}>{value}</Text>
   </View>
 );
 
@@ -527,9 +528,9 @@ const DocRow = ({ name, status }) => {
       : 'black';
   return (
     <View style={styles.docRow}>
-      <Text style={styles.docCol}>{name}</Text>
-      <Text style={styles.docCol}>📄</Text>
-      <Text style={[styles.docCol, { color, fontWeight: 'bold' }]}>
+      <Text selectable style={styles.docCol}>{name}</Text>
+      <Text selectable style={styles.docCol}>📄</Text>
+      <Text selectable style={[styles.docCol, { color, fontWeight: 'bold' }]}>
         {status}
       </Text>
     </View>

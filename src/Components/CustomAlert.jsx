@@ -7,16 +7,17 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { CopyableTouchableOpacity } from './CopyableControl';
 
 const CustomAlert = ({ visible, message, onClose }) => {
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
         <View style={styles.alertBox}>
-          <Text style={styles.message}>{message}</Text>
-          <TouchableOpacity onPress={onClose} style={styles.button}>
+          <Text selectable style={styles.message}>{message}</Text>
+          <CopyableTouchableOpacity onPress={onClose} style={styles.button}>
             <Text style={styles.buttonText}>OK</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </View>
     </Modal>

@@ -20,6 +20,7 @@ import { Modal, TextInput } from 'react-native'; // already imported
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { fetchFieldVerificationData } from './BackendData/fetchFieldVerificationData';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const WaterSurvey = () => {
   const route = useRoute();
@@ -304,10 +305,10 @@ const WaterSurvey = () => {
       >
         {/* Application Info Bar */}
         <View style={styles.infoBar}>
-          <Text style={styles.infoText}>
+          <Text selectable style={styles.infoText}>
             {data?.applicationNo || 'Application No: N/A'}
           </Text>
-          <Text style={styles.infoText}>Applied Date: 31-Jan-2025</Text>
+          <Text selectable style={styles.infoText}>Applied Date: 31-Jan-2025</Text>
         </View>
         {/* Ward No */}
         <VerificationCard
@@ -382,7 +383,7 @@ const WaterSurvey = () => {
           inputPlaceholder="Enter area in square feet"
         />
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>
+          <Text selectable style={styles.sectionHeader}>
             Disturbation Pipeline Size (in MM)
           </Text>
           <TextInput
@@ -394,7 +395,7 @@ const WaterSurvey = () => {
           />
         </View>
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Permissible Ferule Size </Text>
+          <Text selectable style={styles.sectionHeader}>Permissible Ferule Size </Text>
           <Dropdown
             style={styles.dropdown}
             placeholderStyle={styles.placeholderStyle}
@@ -414,7 +415,7 @@ const WaterSurvey = () => {
         <View>
           {/* Pipeline Disturbation Type */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Pipeline Disturbation Type</Text>
+            <Text selectable style={styles.sectionHeader}>Pipeline Disturbation Type</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -431,7 +432,7 @@ const WaterSurvey = () => {
 
           {/* Permissible Pipe Delimeter */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Permissible Pipe Delimeter</Text>
+            <Text selectable style={styles.sectionHeader}>Permissible Pipe Delimeter</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -448,7 +449,7 @@ const WaterSurvey = () => {
 
           {/* Permissible Pipe Quality */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Permissible Pipe Quality</Text>
+            <Text selectable style={styles.sectionHeader}>Permissible Pipe Quality</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -465,7 +466,7 @@ const WaterSurvey = () => {
 
           {/* Road Type */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Road Type</Text>
+            <Text selectable style={styles.sectionHeader}>Road Type</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.placeholderStyle}
@@ -482,7 +483,7 @@ const WaterSurvey = () => {
         </View>
         {/* Add New Ward Button */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.addButton}
             onPress={() => {
               handleAddNewWard(); // call your existing function
@@ -490,7 +491,7 @@ const WaterSurvey = () => {
             }}
           >
             <Text style={styles.addButtonText}>Preview Data</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
         {/* Bottom spacing */}
         <View style={{ height: responsiveHeight(5) }} />
@@ -504,7 +505,7 @@ const WaterSurvey = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>{modalTitle}</Text>
+            <Text selectable style={styles.modalTitle}>{modalTitle}</Text>
 
             <ScrollView
               style={{ maxHeight: responsiveHeight(50), marginBottom: 10 }}
@@ -518,12 +519,12 @@ const WaterSurvey = () => {
                   borderBottomColor: '#000',
                 }}
               >
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Field</Text>
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Field</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>
                   Self Assessed
                 </Text>
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Verified</Text>
-                <Text style={{ flex: 1, fontWeight: 'bold' }}>Status</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Verified</Text>
+                <Text selectable style={{ flex: 1, fontWeight: 'bold' }}>Status</Text>
               </View>
 
               {/* Table Rows */}
@@ -537,10 +538,10 @@ const WaterSurvey = () => {
                     borderBottomColor: '#ccc',
                   }}
                 >
-                  <Text style={{ flex: 1 }}>{item.label}</Text>
-                  <Text style={{ flex: 1 }}>{item.self ?? '-'}</Text>
-                  <Text style={{ flex: 1 }}>{item.verified ?? '-'}</Text>
-                  <Text
+                  <Text selectable style={{ flex: 1 }}>{item.label}</Text>
+                  <Text selectable style={{ flex: 1 }}>{item.self ?? '-'}</Text>
+                  <Text selectable style={{ flex: 1 }}>{item.verified ?? '-'}</Text>
+                  <Text selectable
                     style={{
                       flex: 1,
                       color:
@@ -559,14 +560,14 @@ const WaterSurvey = () => {
 
             {/* Buttons */}
             <View style={styles.modalButtons}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.modalButton, { backgroundColor: '#ccc' }]}
                 onPress={() => setIsModalVisible(false)}
               >
                 <Text>Cancel</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.modalButton, { backgroundColor: '#0891b2' }]}
                 onPress={() => {
                   console.log('Form Submitted:', modalContent);
@@ -579,7 +580,7 @@ const WaterSurvey = () => {
                 }}
               >
                 <Text style={{ color: 'white' }}>Save</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

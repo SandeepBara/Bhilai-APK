@@ -8,6 +8,7 @@ import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import Colors from '../Module/Constants/Colors';
+import { CopyablePressable } from './CopyableControl';
 
 const FormField = forwardRef(
   (
@@ -91,7 +92,7 @@ const FormField = forwardRef(
 
     const renderDate = () => (
       <>
-        <Pressable
+        <CopyablePressable
           onPress={() => {
             setOpen(true);
             if (onFocus) onFocus();
@@ -99,7 +100,7 @@ const FormField = forwardRef(
           style={styles.input}
         >
           <Text>{value ? new Date(value).toDateString() : placeholder}</Text>
-        </Pressable>
+        </CopyablePressable>
         <DatePicker
           modal
           open={open}
@@ -119,9 +120,9 @@ const FormField = forwardRef(
     );
 
     const renderButton = () => (
-      <Pressable onPress={onPressButton} style={styles.button}>
+      <CopyablePressable onPress={onPressButton} style={styles.button}>
         <Text style={styles.buttonText}>{buttonLabel}</Text>
-      </Pressable>
+      </CopyablePressable>
     );
 
     const renderMultiSelect = () => (
@@ -143,26 +144,26 @@ const FormField = forwardRef(
         selectedTextStyle={styles.selectedTextStyle}
         selectedStyle={styles.selectedStyle}
         renderSelectedItem={(item, unSelect) => (
-          <Pressable
+          <CopyablePressable
             onPress={() => unSelect && unSelect(item)}
             style={styles.selectedItem}
           >
             <Text style={styles.selectedItemText}>{item.label}</Text>
             <Text style={styles.selectedItemRemove}>×</Text>
-          </Pressable>
+          </CopyablePressable>
         )}
       />
     );
 
     return (
       <View style={styles.container}>
-        {label ? <Text style={styles.label}>{label}</Text> : null}
+        {label ? <Text selectable style={styles.label}>{label}</Text> : null}
         {type === 'input' && renderInput()}
         {type === 'dropdown' && renderDropdown()}
         {type === 'multiselect' && renderMultiSelect()}
         {type === 'date' && renderDate()}
         {type === 'button' && renderButton()}
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        {error ? <Text selectable style={styles.errorText}>{error}</Text> : null}
       </View>
     );
   },

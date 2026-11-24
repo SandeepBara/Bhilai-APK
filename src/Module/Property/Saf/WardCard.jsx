@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const WardCard = ({
   title = 'Ward No',
@@ -22,20 +23,20 @@ const WardCard = ({
 }) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>{title}</Text>
+      <Text selectable style={styles.title}>{title}</Text>
 
       {showSelfAssessed && (
         <View style={styles.row}>
-          <Text style={styles.label}>{labels.selfAssessed}:</Text>
-          <Text style={styles.value}>{selfAssessed}</Text>
+          <Text selectable style={styles.label}>{labels.selfAssessed}:</Text>
+          <Text selectable style={styles.value}>{selfAssessed}</Text>
         </View>
       )}
 
       {showRadioGroup && (
         <View style={styles.radioGroup}>
-          <Text style={styles.label}>{labels.check}</Text>
+          <Text selectable style={styles.label}>{labels.check}</Text>
           {radioOptions.map(option => (
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               key={option}
               style={styles.radioItem}
               onPress={() => setSelectedOption(option)}
@@ -46,14 +47,14 @@ const WardCard = ({
                 )}
               </View>
               <Text style={styles.radioLabel}>{option}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           ))}
         </View>
       )}
 
       {showDropdown && (
         <>
-          <Text style={styles.label}>{labels.verification}</Text>
+          <Text selectable style={styles.label}>{labels.verification}</Text>
           <Dropdown
             style={styles.dropdown}
             data={dropdownData}
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
 export default WardCard;
 const FieldSection = ({ title, children }) => (
   <View style={styles.fieldSection}>
-    {title && <Text style={styles.sectionTitle}>{title}</Text>}
+    {title && <Text selectable style={styles.sectionTitle}>{title}</Text>}
     {children}
   </View>
 );

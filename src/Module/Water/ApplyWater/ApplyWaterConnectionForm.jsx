@@ -28,6 +28,7 @@ import { scrollToInput, handleValidation } from './validation';
 import { WATER_API_ROUTES } from '../../../api/apiRoutes';
 import { callTestRequest } from './applyTestRequest';
 import { showToast } from '../../../utils/toast';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const ApplyWaterConnectionForm = () => {
   const [focusedField, setFocusedField] = useState(null);
@@ -380,10 +381,10 @@ const ApplyWaterConnectionForm = () => {
         <ScrollView contentContainerStyle={styles.containe} ref={scrollViewRef}>
           {/* Type of Connection & Connection Through */}
           <View style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>Apply Water Connection Form</Text>
+            <Text selectable style={styles.sectionTitle}>Apply Water Connection Form</Text>
             <View style={styles.fullWidthInputContainer}>
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Type of Connection *</Text>
+                <Text selectable style={styles.label}>Type of Connection *</Text>
                 <View ref={typeOfConnectionWrapperRef}>
                   <Dropdown
                     ref={typeOfConnectionRef}
@@ -404,12 +405,12 @@ const ApplyWaterConnectionForm = () => {
                   />
                 </View>
                 {error.typeOfConnection && (
-                  <Text style={{ color: 'red' }}>{error.typeOfConnection}</Text>
+                  <Text selectable style={{ color: 'red' }}>{error.typeOfConnection}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Connection Through *</Text>
+                <Text selectable style={styles.label}>Connection Through *</Text>
                 <View ref={connectionThroughWrapperRef}>
                   <Dropdown
                     ref={connectionThroughRef}
@@ -430,7 +431,7 @@ const ApplyWaterConnectionForm = () => {
                   />
                 </View>
                 {error.connectionThrough && (
-                  <Text style={{ color: 'red' }}>
+                  <Text selectable style={{ color: 'red' }}>
                     {error.connectionThrough}
                   </Text>
                 )}
@@ -440,7 +441,7 @@ const ApplyWaterConnectionForm = () => {
             {/* Property Type & Owner Type */}
             <View style={styles.fullWidthInputContainer}>
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Property Type *</Text>
+                <Text selectable style={styles.label}>Property Type *</Text>
                 <View ref={propertyTypeWrapperRef}>
                   <Dropdown
                     ref={propertyTypeRef}
@@ -458,12 +459,12 @@ const ApplyWaterConnectionForm = () => {
                   />
                 </View>
                 {error.propertyType && (
-                  <Text style={{ color: 'red' }}>{error.propertyType}</Text>
+                  <Text selectable style={{ color: 'red' }}>{error.propertyType}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Owner Type *</Text>
+                <Text selectable style={styles.label}>Owner Type *</Text>
                 <View ref={ownerTypeWrapperRef}>
                   <Dropdown
                     ref={ownerTypeRef}
@@ -481,14 +482,14 @@ const ApplyWaterConnectionForm = () => {
                   />
                 </View>
                 {error.ownerType && (
-                  <Text style={{ color: 'red' }}>{error.ownerType}</Text>
+                  <Text selectable style={{ color: 'red' }}>{error.ownerType}</Text>
                 )}
               </View>
             </View>
 
             <View style={styles.fullWidthInputContainer}>
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Category Type</Text>
+                <Text selectable style={styles.label}>Category Type</Text>
                 <Dropdown
                   style={[
                     styles.dropdown,
@@ -504,7 +505,7 @@ const ApplyWaterConnectionForm = () => {
               </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Pipeline Type</Text>
+                <Text selectable style={styles.label}>Pipeline Type</Text>
                 <Dropdown
                   style={[
                     styles.dropdown,
@@ -525,7 +526,7 @@ const ApplyWaterConnectionForm = () => {
             <View style={styles.fullWidthInputContainer}>
               {selectedConnectionThrougn === 'SAF' && (
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>SAF No</Text>
+                  <Text selectable style={styles.label}>SAF No</Text>
                   <TextInput
                     style={[
                       styles.input,
@@ -542,7 +543,7 @@ const ApplyWaterConnectionForm = () => {
 
               {selectedConnectionThrougn === 'Holding Proof' && (
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Holding No</Text>
+                  <Text selectable style={styles.label}>Holding No</Text>
                   <TextInput
                     useRef={holdingNoRef}
                     style={[
@@ -556,7 +557,7 @@ const ApplyWaterConnectionForm = () => {
                     onBlur={() => setFocusedField(null)}
                   />
                   {error.holdingNo && (
-                    <Text style={{ color: 'red' }}>{error.holdingNo}</Text>
+                    <Text selectable style={{ color: 'red' }}>{error.holdingNo}</Text>
                   )}
                 </View>
               )}
@@ -565,10 +566,10 @@ const ApplyWaterConnectionForm = () => {
 
           {/* Ward Details */}
           <View style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>Applicant Property Details</Text>
+            <Text selectable style={styles.sectionTitle}>Applicant Property Details</Text>
             <View style={styles.fullWidthInputContainer}>
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Ward No. *</Text>
+                <Text selectable style={styles.label}>Ward No. *</Text>
                 <View ref={wardNoWrapperRef}>
                   <Dropdown
                     ref={wardNoRef}
@@ -586,7 +587,7 @@ const ApplyWaterConnectionForm = () => {
                   />
                 </View>
                 {error.wardNo && (
-                  <Text style={{ color: 'red' }}>{error.wardNo}</Text>
+                  <Text selectable style={{ color: 'red' }}>{error.wardNo}</Text>
                 )}
               </View>
 
@@ -617,7 +618,7 @@ const ApplyWaterConnectionForm = () => {
             {/* Total Area, Landmark, Pin & Address */}
             <View style={styles.fullWidthInputContainer}>
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Area (in Sq. Ft) *</Text>
+                <Text selectable style={styles.label}>Area (in Sq. Ft) *</Text>
                 <TextInput
                   ref={totalAreaRef}
                   style={[
@@ -633,12 +634,12 @@ const ApplyWaterConnectionForm = () => {
                   keyboardType="numeric"
                 />
                 {error.totalArea && (
-                  <Text style={{ color: 'red' }}>{error.totalArea}</Text>
+                  <Text selectable style={{ color: 'red' }}>{error.totalArea}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Landmark *</Text>
+                <Text selectable style={styles.label}>Landmark *</Text>
                 <TextInput
                   ref={landmarRef}
                   style={[
@@ -653,12 +654,12 @@ const ApplyWaterConnectionForm = () => {
                   onBlur={() => setFocusedField(null)}
                 />
                 {error.landmark && (
-                  <Text style={{ color: 'red' }}>{error.landmark}</Text>
+                  <Text selectable style={{ color: 'red' }}>{error.landmark}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Pin *</Text>
+                <Text selectable style={styles.label}>Pin *</Text>
                 <TextInput
                   ref={pincodeRef}
                   style={[
@@ -674,12 +675,12 @@ const ApplyWaterConnectionForm = () => {
                   keyboardType="numeric"
                   maxLength={6}
                 />
-                {error.pin && <Text style={{ color: 'red' }}>{error.pin}</Text>}
+                {error.pin && <Text selectable style={{ color: 'red' }}>{error.pin}</Text>}
               </View>
             </View>
 
             <View style={styles.fullWidthInputContainer}>
-              <Text style={styles.label}>Address *</Text>
+              <Text selectable style={styles.label}>Address *</Text>
               <TextInput
                 ref={addressRef}
                 style={[
@@ -694,20 +695,20 @@ const ApplyWaterConnectionForm = () => {
                 onBlur={() => setFocusedField(null)}
               />
               {error.address && (
-                <Text style={{ color: 'red' }}>{error.address}</Text>
+                <Text selectable style={{ color: 'red' }}>{error.address}</Text>
               )}
             </View>
           </View>
 
           {/* Applicants */}
-          <Text style={styles.sectionTitle}>Applicant Details</Text>
+          <Text selectable style={styles.sectionTitle}>Applicant Details</Text>
           {applicants.map((applicant, index) => (
             <View key={index} style={styles.sectionCard}>
-              <Text style={styles.applicantTitle}>Applicant {index + 1}</Text>
+              <Text selectable style={styles.applicantTitle}>Applicant {index + 1}</Text>
 
               <View style={styles.fullWidthInputContainer}>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Owner Name *</Text>
+                  <Text selectable style={styles.label}>Owner Name *</Text>
                   <TextInput
                     ref={el => (applicantRefs.current[index * 3] = el)}
                     style={[
@@ -724,14 +725,14 @@ const ApplyWaterConnectionForm = () => {
                     onBlur={() => setFocusedField(null)}
                   />
                   {error[`ownerName-${index}`] && (
-                    <Text style={{ color: 'red' }}>
+                    <Text selectable style={{ color: 'red' }}>
                       {error[`ownerName-${index}`]}
                     </Text>
                   )}
                 </View>
 
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Guardian Name</Text>
+                  <Text selectable style={styles.label}>Guardian Name</Text>
                   <TextInput
                     style={[
                       styles.input,
@@ -751,7 +752,7 @@ const ApplyWaterConnectionForm = () => {
 
               <View style={styles.fullWidthInputContainer}>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Mobile No. *</Text>
+                  <Text selectable style={styles.label}>Mobile No. *</Text>
                   <TextInput
                     ref={el => (applicantRefs.current[index * 3 + 1] = el)}
                     style={[
@@ -769,14 +770,14 @@ const ApplyWaterConnectionForm = () => {
                     keyboardType="numeric"
                   />
                   {error[`mobileNo-${index}`] && (
-                    <Text style={{ color: 'red' }}>
+                    <Text selectable style={{ color: 'red' }}>
                       {error[`mobileNo-${index}`]}
                     </Text>
                   )}
                 </View>
 
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Email ID</Text>
+                  <Text selectable style={styles.label}>Email ID</Text>
                   <TextInput
                     style={[
                       styles.input,
@@ -797,8 +798,8 @@ const ApplyWaterConnectionForm = () => {
               {/* New DOB Field */}
               <View style={styles.row}>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Date of Birth</Text>
-                  <TouchableOpacity
+                  <Text selectable style={styles.label}>Date of Birth</Text>
+                  <CopyableTouchableOpacity
                     style={styles.input}
                     onPress={() => {
                       setSelectedApplicantIndex(index);
@@ -806,7 +807,7 @@ const ApplyWaterConnectionForm = () => {
                     }}
                   >
                     <Text>{applicant.dob ? applicant.dob : 'Select Date'}</Text>
-                  </TouchableOpacity>
+                  </CopyableTouchableOpacity>
 
                   {showDatePicker && selectedApplicantIndex === index && (
                     <DateTimePicker
@@ -833,7 +834,7 @@ const ApplyWaterConnectionForm = () => {
                     />
                   )}
                   {error[`dob-${index}`] && (
-                    <Text style={{ color: 'red' }}>
+                    <Text selectable style={{ color: 'red' }}>
                       {error[`dob-${index}`]}
                     </Text>
                   )}
@@ -841,23 +842,23 @@ const ApplyWaterConnectionForm = () => {
               </View>
 
               {applicants.length > 1 && (
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={styles.removeButton}
                   onPress={() => removeApplicant(index)}
                 >
                   <Text style={styles.removeButtonText}>Remove</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               )}
             </View>
           ))}
 
-          <TouchableOpacity style={styles.addButton} onPress={addApplicant}>
+          <CopyableTouchableOpacity style={styles.addButton} onPress={addApplicant}>
             <Text style={styles.addButtonText}>+ Add Applicant</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
             <Text style={styles.submitButtonText}>SUBMIT</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

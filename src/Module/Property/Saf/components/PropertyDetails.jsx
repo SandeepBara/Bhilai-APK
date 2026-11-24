@@ -4,7 +4,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 // Error Display Component
 const ErrorText = ({ error }) => {
   if (!error) return null;
-  return <Text style={styles.errorText}>{error}</Text>;
+  return <Text selectable style={styles.errorText}>{error}</Text>;
 };
 
 const PropertyDetails = ({
@@ -33,10 +33,10 @@ const PropertyDetails = ({
 }) => {
   return (
     <View style={styles.section}>
-      {!counterFieldsOnly && <Text style={styles.label}>Property Details</Text>}
+      {!counterFieldsOnly && <Text selectable style={styles.label}>Property Details</Text>}
 
       {/* Khata No */}
-      <Text style={styles.label}>Khata No.{!counterFieldsOnly && ' *'}</Text>
+      <Text selectable style={styles.label}>Khata No.{!counterFieldsOnly && ' *'}</Text>
       <TextInput
         ref={khataNoRef}
         style={[styles.input, errors.khataNo && styles.inputError]}
@@ -46,10 +46,10 @@ const PropertyDetails = ({
         onChangeText={setKhataNo}
         editable={isEditable}
       />
-      {errors.khataNo && <Text style={styles.errorText}>{errors.khataNo}</Text>}
+      {errors.khataNo && <Text selectable style={styles.errorText}>{errors.khataNo}</Text>}
 
       {/* Plot No */}
-      <Text style={styles.label}>{counterFieldsOnly ? 'Plot No/Khasra No.' : 'Plot No. *'}</Text>
+      <Text selectable style={styles.label}>{counterFieldsOnly ? 'Plot No/Khasra No.' : 'Plot No. *'}</Text>
       <TextInput
         ref={plotNoRef}
         style={[styles.input, errors.plotNo && styles.inputError]}
@@ -59,10 +59,10 @@ const PropertyDetails = ({
         onChangeText={setPlotNo}
         editable={isEditable}
       />
-      {errors.plotNo && <Text style={styles.errorText}>{errors.plotNo}</Text>}
+      {errors.plotNo && <Text selectable style={styles.errorText}>{errors.plotNo}</Text>}
 
       {/* Village Name */}
-      <Text style={styles.label}>Village/Mauja Name</Text>
+      <Text selectable style={styles.label}>Village/Mauja Name</Text>
       <TextInput
         ref={villageNameRef}
         style={[styles.input, errors.villageName && styles.inputError]}
@@ -73,11 +73,11 @@ const PropertyDetails = ({
         editable={isEditable}
       />
       {errors.villageName && (
-        <Text style={styles.errorText}>{errors.villageName}</Text>
+        <Text selectable style={styles.errorText}>{errors.villageName}</Text>
       )}
 
       {/* Plot Area */}
-      <Text style={styles.label}>Area of Plot (in Decimal) *</Text>
+      <Text selectable style={styles.label}>Area of Plot (in Decimal) *</Text>
       <TextInput
         ref={plotAreaRef}
         style={[styles.input, errors.plotArea && styles.inputError]}
@@ -89,13 +89,13 @@ const PropertyDetails = ({
         editable={isEditable}
       />
       {errors.plotArea && (
-        <Text style={styles.errorText}>{errors.plotArea}</Text>
+        <Text selectable style={styles.errorText}>{errors.plotArea}</Text>
       )}
 
       {!counterFieldsOnly && (
         <>
           {/* Built-up Area */}
-          <Text style={styles.label}>Built-up Area *</Text>
+          <Text selectable style={styles.label}>Built-up Area *</Text>
           <TextInput
             ref={plotAreaRef}
             style={[styles.input, errors.buildArea && styles.inputError]}
@@ -107,11 +107,11 @@ const PropertyDetails = ({
             editable={isEditable}
           />
           {errors.buildArea && (
-            <Text style={styles.errorText}>{errors.buildArea}</Text>
+            <Text selectable style={styles.errorText}>{errors.buildArea}</Text>
           )}
 
           {/* Road Width */}
-          <Text style={styles.label}>Road Width (in ft) *</Text>
+          <Text selectable style={styles.label}>Road Width (in ft) *</Text>
           <TextInput
             ref={roadWidthRef}
             style={[styles.input, errors.roadWidth && styles.inputError]}
@@ -123,10 +123,10 @@ const PropertyDetails = ({
             editable={isEditable}
           />
           {errors.roadWidth && (
-            <Text style={styles.errorText}>{errors.roadWidth}</Text>
+            <Text selectable style={styles.errorText}>{errors.roadWidth}</Text>
           )}
 
-          <Text style={styles.label}>
+          <Text selectable style={styles.label}>
             In Case of No Road Enter "0" (For Vacant Land Only)
           </Text>
           <ErrorText error={errors.noRoad} />

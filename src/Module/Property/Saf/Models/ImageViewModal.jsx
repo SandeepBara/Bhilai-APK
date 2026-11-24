@@ -12,6 +12,7 @@ import {
   Alert,
   Linking,
 } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const ImageViewModal = ({
   visible,
@@ -28,14 +29,14 @@ export const ImageViewModal = ({
       onRequestClose={onClose}
     >
       <View style={styles.fullScreenModalContainer}>
-        <TouchableOpacity style={styles.closeFullScreenButton} onPress={onClose}>
+        <CopyableTouchableOpacity style={styles.closeFullScreenButton} onPress={onClose}>
           <Text style={styles.closeFullScreenButtonText}>✕ Close</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         {imageLoading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#fff" />
-            <Text style={styles.loadingText}>Loading document...</Text>
+            <Text selectable style={styles.loadingText}>Loading document...</Text>
           </View>
         )}
 

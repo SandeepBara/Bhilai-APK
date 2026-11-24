@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Colors from '../../Constants/Colors';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const { height } = Dimensions.get('window');
 
@@ -16,8 +17,8 @@ export const GenerateDemandModal = ({ visible, onClose }) => (
   <Modal visible={visible} transparent animationType="slide">
     <View style={styles.overlay}>
       <View style={styles.modalContent}>
-        <Text style={styles.modalHeader}>Generate Demand</Text>
-        <Text style={styles.modalText}>Here you can generate demand...</Text>
+        <Text selectable style={styles.modalHeader}>Generate Demand</Text>
+        <Text selectable style={styles.modalText}>Here you can generate demand...</Text>
 
         {/* ✅ ScrollView with flexGrow fix */}
         <ScrollView
@@ -27,107 +28,107 @@ export const GenerateDemandModal = ({ visible, onClose }) => (
         >
           {/* Owner Basic Details */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Owner Basic Details</Text>
+            <Text selectable style={styles.sectionHeader}>Owner Basic Details</Text>
             <View style={styles.row}>
               <View style={styles.col}>
-                <Text style={styles.label}>Consumer No :</Text>
-                <Text style={styles.value}>001060700793DMT01</Text>
+                <Text selectable style={styles.label}>Consumer No :</Text>
+                <Text selectable style={styles.value}>001060700793DMT01</Text>
 
-                <Text style={styles.label}>Pipeline Type :</Text>
-                <Text style={styles.value}>Old Pipeline</Text>
+                <Text selectable style={styles.label}>Pipeline Type :</Text>
+                <Text selectable style={styles.value}>Old Pipeline</Text>
 
-                <Text style={styles.label}>Connection Type :</Text>
-                <Text style={styles.value}>New Connection</Text>
+                <Text selectable style={styles.label}>Connection Type :</Text>
+                <Text selectable style={styles.value}>New Connection</Text>
 
-                <Text style={styles.label}>Category :</Text>
-                <Text style={styles.value}>APL</Text>
+                <Text selectable style={styles.label}>Category :</Text>
+                <Text selectable style={styles.value}>APL</Text>
 
-                <Text style={styles.label}>Owner Name :</Text>
-                <Text style={styles.value}>MRS. GIRJA DEVI</Text>
+                <Text selectable style={styles.label}>Owner Name :</Text>
+                <Text selectable style={styles.value}>MRS. GIRJA DEVI</Text>
               </View>
 
               <View style={styles.col}>
-                <Text style={styles.label}>Application No :</Text>
-                <Text style={styles.value}>12000004</Text>
+                <Text selectable style={styles.label}>Application No :</Text>
+                <Text selectable style={styles.value}>12000004</Text>
 
-                <Text style={styles.label}>Property Type :</Text>
-                <Text style={styles.value}>Residential</Text>
+                <Text selectable style={styles.label}>Property Type :</Text>
+                <Text selectable style={styles.value}>Residential</Text>
 
-                <Text style={styles.label}>Connection Through :</Text>
-                <Text style={styles.value}>N/A</Text>
+                <Text selectable style={styles.label}>Connection Through :</Text>
+                <Text selectable style={styles.value}>N/A</Text>
 
-                <Text style={styles.label}>Area in Sqft :</Text>
-                <Text style={styles.value}>1347.98</Text>
+                <Text selectable style={styles.label}>Area in Sqft :</Text>
+                <Text selectable style={styles.value}>1347.98</Text>
 
-                <Text style={styles.label}>Mobile No :</Text>
-                <Text style={styles.value}>9431594215</Text>
+                <Text selectable style={styles.label}>Mobile No :</Text>
+                <Text selectable style={styles.value}>9431594215</Text>
               </View>
             </View>
           </View>
 
           {/* Demand Details */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>Demand Details</Text>
+            <Text selectable style={styles.sectionHeader}>Demand Details</Text>
             <View style={styles.row}>
               <View style={styles.col}>
-                <Text style={styles.label}>Due From</Text>
-                <Text style={styles.value}>March / 2024</Text>
+                <Text selectable style={styles.label}>Due From</Text>
+                <Text selectable style={styles.value}>March / 2024</Text>
 
-                <Text style={styles.label}>Arrear Demand</Text>
-                <Text style={[styles.value, styles.highlight]}>3775.34</Text>
+                <Text selectable style={styles.label}>Arrear Demand</Text>
+                <Text selectable style={[styles.value, styles.highlight]}>3775.34</Text>
               </View>
               <View style={styles.col}>
-                <Text style={styles.label}>Due Upto</Text>
-                <Text style={styles.value}>May / 2025</Text>
+                <Text selectable style={styles.label}>Due Upto</Text>
+                <Text selectable style={styles.value}>May / 2025</Text>
 
-                <Text style={styles.label}>Current Demand</Text>
-                <Text style={[styles.value, styles.highlight]}>0</Text>
+                <Text selectable style={styles.label}>Current Demand</Text>
+                <Text selectable style={[styles.value, styles.highlight]}>0</Text>
               </View>
             </View>
           </View>
 
           {/* Consumer Connection Details */}
           <View style={styles.section}>
-            <Text style={styles.sectionHeader}>
+            <Text selectable style={styles.sectionHeader}>
               Consumer Connection Details
             </Text>
             <View style={styles.row}>
               <View style={styles.col}>
-                <Text style={styles.label}>Connection Type</Text>
-                <Text style={[styles.value, styles.bold]}>Meter</Text>
+                <Text selectable style={styles.label}>Connection Type</Text>
+                <Text selectable style={[styles.value, styles.bold]}>Meter</Text>
 
-                <Text style={styles.label}>Meter No.</Text>
-                <Text style={[styles.value, styles.bold]}>6341</Text>
+                <Text selectable style={styles.label}>Meter No.</Text>
+                <Text selectable style={[styles.value, styles.bold]}>6341</Text>
 
-                <Text style={styles.label}>Last Meter Reading</Text>
-                <Text style={[styles.value, styles.bold]}>720.00</Text>
+                <Text selectable style={styles.label}>Last Meter Reading</Text>
+                <Text selectable style={[styles.value, styles.bold]}>720.00</Text>
               </View>
 
               <View style={styles.col}>
-                <Text style={styles.label}>Connection Date</Text>
-                <Text style={[styles.value, styles.bold]}>02-04-2007</Text>
+                <Text selectable style={styles.label}>Connection Date</Text>
+                <Text selectable style={[styles.value, styles.bold]}>02-04-2007</Text>
 
-                <Text style={styles.label}>Final Meter Reading</Text>
+                <Text selectable style={styles.label}>Final Meter Reading</Text>
                 <View style={styles.inputBox} />
               </View>
             </View>
 
-            <Text style={styles.label}>Meter Image</Text>
+            <Text selectable style={styles.label}>Meter Image</Text>
             <View style={styles.uploadBox}>
-              <Text>Choose File</Text>
-              <Text>No file chosen</Text>
+              <Text selectable>Choose File</Text>
+              <Text selectable>No file chosen</Text>
             </View>
           </View>
         </ScrollView>
 
         {/* ✅ Sticky Button */}
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Generate Demand</Text>
+          <Text selectable style={styles.buttonText}>Generate Demand</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+        <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
           <Text style={styles.closeText}>Close</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
     </View>
   </Modal>
@@ -211,7 +212,7 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
     <Modal visible={visible} transparent animationType="slide">
       <View style={styles.overlay}>
         <View style={styles.paymentModalContent}>
-          <Text style={styles.modalHeader}>Proceed to Pay</Text>
+          <Text selectable style={styles.modalHeader}>Proceed to Pay</Text>
 
           <ScrollView
             style={styles.scrollArea}
@@ -219,40 +220,40 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
             showsVerticalScrollIndicator={true}
           >
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>Owner Basic Details</Text>
+              <Text selectable style={styles.sectionHeader}>Owner Basic Details</Text>
               <View style={styles.row}>
                 <View style={styles.col}>
-                  <Text style={styles.label}>Consumer No :</Text>
-                  <Text style={styles.value}>001060700793DMT01</Text>
+                  <Text selectable style={styles.label}>Consumer No :</Text>
+                  <Text selectable style={styles.value}>001060700793DMT01</Text>
 
-                  <Text style={styles.label}>Pipeline Type :</Text>
-                  <Text style={styles.value}>Old Pipeline</Text>
+                  <Text selectable style={styles.label}>Pipeline Type :</Text>
+                  <Text selectable style={styles.value}>Old Pipeline</Text>
 
-                  <Text style={styles.label}>Connection Type :</Text>
-                  <Text style={styles.value}>New Connection</Text>
+                  <Text selectable style={styles.label}>Connection Type :</Text>
+                  <Text selectable style={styles.value}>New Connection</Text>
 
-                  <Text style={styles.label}>Category :</Text>
-                  <Text style={styles.value}>APL</Text>
+                  <Text selectable style={styles.label}>Category :</Text>
+                  <Text selectable style={styles.value}>APL</Text>
 
-                  <Text style={styles.label}>Owner Name :</Text>
-                  <Text style={styles.value}>MRS. GIRJA DEVI</Text>
+                  <Text selectable style={styles.label}>Owner Name :</Text>
+                  <Text selectable style={styles.value}>MRS. GIRJA DEVI</Text>
                 </View>
 
                 <View style={styles.col}>
-                  <Text style={styles.label}>Application No :</Text>
-                  <Text style={styles.value}>12000004</Text>
+                  <Text selectable style={styles.label}>Application No :</Text>
+                  <Text selectable style={styles.value}>12000004</Text>
 
-                  <Text style={styles.label}>Property Type :</Text>
-                  <Text style={styles.value}>Residential</Text>
+                  <Text selectable style={styles.label}>Property Type :</Text>
+                  <Text selectable style={styles.value}>Residential</Text>
 
-                  <Text style={styles.label}>Connection Through :</Text>
-                  <Text style={styles.value}>N/A</Text>
+                  <Text selectable style={styles.label}>Connection Through :</Text>
+                  <Text selectable style={styles.value}>N/A</Text>
 
-                  <Text style={styles.label}>Area in Sqft :</Text>
-                  <Text style={styles.value}>1347.98</Text>
+                  <Text selectable style={styles.label}>Area in Sqft :</Text>
+                  <Text selectable style={styles.value}>1347.98</Text>
 
-                  <Text style={styles.label}>Mobile No :</Text>
-                  <Text style={styles.value}>9431594215</Text>
+                  <Text selectable style={styles.label}>Mobile No :</Text>
+                  <Text selectable style={styles.value}>9431594215</Text>
                 </View>
               </View>
             </View>
@@ -260,11 +261,11 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
             <View style={styles.tableContainer}>
               {/* Table Header */}
               <View style={styles.tableHeader}>
-                <Text style={styles.tableHeaderText}>Demand Month</Text>
-                <Text style={styles.tableHeaderText}>Connection Type</Text>
-                <Text style={styles.tableHeaderText}>Amount</Text>
-                <Text style={styles.tableHeaderText}>Penalty</Text>
-                <Text style={styles.tableHeaderText}>Total Demand</Text>
+                <Text selectable style={styles.tableHeaderText}>Demand Month</Text>
+                <Text selectable style={styles.tableHeaderText}>Connection Type</Text>
+                <Text selectable style={styles.tableHeaderText}>Amount</Text>
+                <Text selectable style={styles.tableHeaderText}>Penalty</Text>
+                <Text selectable style={styles.tableHeaderText}>Total Demand</Text>
               </View>
 
               {/* Table Rows */}
@@ -276,34 +277,34 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
                     index % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd,
                   ]}
                 >
-                  <Text style={styles.tableCellText}>{item.month}</Text>
-                  <Text style={styles.tableCellText}>{item.type}</Text>
-                  <Text style={styles.tableCellText}>{item.amount}</Text>
-                  <Text style={styles.tableCellText}>{item.penalty}</Text>
-                  <Text style={styles.tableCellText}>{item.total}</Text>
+                  <Text selectable style={styles.tableCellText}>{item.month}</Text>
+                  <Text selectable style={styles.tableCellText}>{item.type}</Text>
+                  <Text selectable style={styles.tableCellText}>{item.amount}</Text>
+                  <Text selectable style={styles.tableCellText}>{item.penalty}</Text>
+                  <Text selectable style={styles.tableCellText}>{item.total}</Text>
                 </View>
               ))}
             </View>
 
             {/* Payment Section */}
             <View style={styles.paymentSection}>
-              <Text style={styles.paymentSectionTitle}>Proceed Payment</Text>
+              <Text selectable style={styles.paymentSectionTitle}>Proceed Payment</Text>
 
               {/* Payment Form */}
               <View style={styles.paymentForm}>
                 {/* Row 1: Select Month and Amount */}
                 <View style={styles.paymentRow}>
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Select Month</Text>
+                    <Text selectable style={styles.paymentLabel}>Select Month</Text>
                     <View style={styles.paymentDropdown}>
-                      <Text style={styles.paymentInputText}>Mar/2024</Text>
+                      <Text selectable style={styles.paymentInputText}>Mar/2024</Text>
                     </View>
                   </View>
 
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Amount</Text>
+                    <Text selectable style={styles.paymentLabel}>Amount</Text>
                     <View style={styles.paymentInput}>
-                      <Text style={styles.paymentInputText}>558</Text>
+                      <Text selectable style={styles.paymentInputText}>558</Text>
                     </View>
                   </View>
                 </View>
@@ -311,16 +312,16 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
                 {/* Row 2: Penalty and Other Penalty */}
                 <View style={styles.paymentRow}>
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Penalty</Text>
+                    <Text selectable style={styles.paymentLabel}>Penalty</Text>
                     <View style={styles.paymentInput}>
-                      <Text style={styles.paymentInputText}>184</Text>
+                      <Text selectable style={styles.paymentInputText}>184</Text>
                     </View>
                   </View>
 
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Other Penalty</Text>
+                    <Text selectable style={styles.paymentLabel}>Other Penalty</Text>
                     <View style={styles.paymentInput}>
-                      <Text style={styles.paymentInputText}>0</Text>
+                      <Text selectable style={styles.paymentInputText}>0</Text>
                     </View>
                   </View>
                 </View>
@@ -328,16 +329,16 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
                 {/* Row 3: Rebate and Advance */}
                 <View style={styles.paymentRow}>
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Rebate</Text>
+                    <Text selectable style={styles.paymentLabel}>Rebate</Text>
                     <View style={styles.paymentInput}>
-                      <Text style={styles.paymentInputText}>0</Text>
+                      <Text selectable style={styles.paymentInputText}>0</Text>
                     </View>
                   </View>
 
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Advance</Text>
+                    <Text selectable style={styles.paymentLabel}>Advance</Text>
                     <View style={styles.paymentInput}>
-                      <Text style={styles.paymentInputText}>0</Text>
+                      <Text selectable style={styles.paymentInputText}>0</Text>
                     </View>
                   </View>
                 </View>
@@ -345,20 +346,20 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
                 {/* Row 4: Remain Advance and Payable Amount */}
                 <View style={styles.paymentRow}>
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>
+                    <Text selectable style={styles.paymentLabel}>
                       Remain Advance (in Rs.)
                     </Text>
                     <View style={styles.paymentAmountDisplay}>
-                      <Text style={styles.paymentAmountText}>0.00</Text>
+                      <Text selectable style={styles.paymentAmountText}>0.00</Text>
                     </View>
                   </View>
 
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>
+                    <Text selectable style={styles.paymentLabel}>
                       Payable Amount (in Rs.)
                     </Text>
                     <View style={styles.paymentAmountDisplayGreen}>
-                      <Text style={styles.paymentAmountTextGreen}>742</Text>
+                      <Text selectable style={styles.paymentAmountTextGreen}>742</Text>
                     </View>
                   </View>
                 </View>
@@ -366,9 +367,9 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
                 {/* Row 5: Payment Mode */}
                 <View style={styles.paymentRow}>
                   <View style={styles.paymentField}>
-                    <Text style={styles.paymentLabel}>Payment Mode</Text>
+                    <Text selectable style={styles.paymentLabel}>Payment Mode</Text>
                     <View style={styles.paymentDropdown}>
-                      <Text style={styles.paymentInputText}>Select</Text>
+                      <Text selectable style={styles.paymentInputText}>Select</Text>
                     </View>
                   </View>
                   <View style={styles.paymentField}></View>
@@ -376,18 +377,18 @@ export const ProceedToPayModal = ({ visible, onClose }) => {
 
                 {/* Row 6: Remarks */}
                 <View style={styles.paymentField}>
-                  <Text style={styles.paymentLabel}>Remarks</Text>
+                  <Text selectable style={styles.paymentLabel}>Remarks</Text>
                   <View style={styles.paymentTextArea}>
-                    <Text style={styles.paymentInputText}></Text>
+                    <Text selectable style={styles.paymentInputText}></Text>
                   </View>
                 </View>
               </View>
             </View>
           </ScrollView>
 
-          <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+          <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
             <Text style={styles.closeText}>Close</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -398,7 +399,7 @@ export const LastPaymentReceiptModal = ({ visible, onClose }) => (
   <Modal visible={visible} transparent animationType="slide">
     <View style={styles.overlay}>
       <View style={styles.receiptModalContent}>
-        <Text style={styles.modalHeader}>Payment Receipt</Text>
+        <Text selectable style={styles.modalHeader}>Payment Receipt</Text>
 
         <ScrollView
           style={styles.scrollArea}
@@ -407,10 +408,10 @@ export const LastPaymentReceiptModal = ({ visible, onClose }) => (
         >
           {/* Receipt Header */}
           <View style={styles.receiptHeader}>
-            <Text style={styles.receiptTitle}>
+            <Text selectable style={styles.receiptTitle}>
               Ranchi Municipal Corporation
             </Text>
-            <Text style={styles.receiptSubtitle}>
+            <Text selectable style={styles.receiptSubtitle}>
               WATER USER CHARGE PAYMENT RECEIPT
             </Text>
             <View style={styles.receiptDivider} />
@@ -419,65 +420,65 @@ export const LastPaymentReceiptModal = ({ visible, onClose }) => (
           {/* Customer Details */}
           <View style={styles.receiptSection}>
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Date</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>02-03-2024</Text>
+              <Text selectable style={styles.receiptLabel}>Date</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>02-03-2024</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>TC Name</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>SANJEEVAN</Text>
+              <Text selectable style={styles.receiptLabel}>TC Name</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>SANJEEVAN</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>TC Mobile No.</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>720874287</Text>
+              <Text selectable style={styles.receiptLabel}>TC Mobile No.</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>720874287</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Consumer No.</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>001060700638DMT01</Text>
+              <Text selectable style={styles.receiptLabel}>Consumer No.</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>001060700638DMT01</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Ward No.</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>32</Text>
+              <Text selectable style={styles.receiptLabel}>Ward No.</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>32</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Holding No.</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>032000181700A61</Text>
+              <Text selectable style={styles.receiptLabel}>Holding No.</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>032000181700A61</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Citizen Name</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>SMT. SARSWATI DEVI</Text>
+              <Text selectable style={styles.receiptLabel}>Citizen Name</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>SMT. SARSWATI DEVI</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Guardian Name</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>
+              <Text selectable style={styles.receiptLabel}>Guardian Name</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>
                 LATE MR. MUNESHWAR PRASAD GUPTA
               </Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Citizen Mobile No</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>9470130342</Text>
+              <Text selectable style={styles.receiptLabel}>Citizen Mobile No</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>9470130342</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Address</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}></Text>
+              <Text selectable style={styles.receiptLabel}>Address</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}></Text>
             </View>
           </View>
 
@@ -486,70 +487,70 @@ export const LastPaymentReceiptModal = ({ visible, onClose }) => (
           {/* Transaction Details */}
           <View style={styles.receiptSection}>
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Transaction No.</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>WTRAN361284020324021259</Text>
+              <Text selectable style={styles.receiptLabel}>Transaction No.</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>WTRAN361284020324021259</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Period</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>
+              <Text selectable style={styles.receiptLabel}>Period</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>
                 December / 2023 to March / 2024
               </Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Total Amount</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>90.00</Text>
+              <Text selectable style={styles.receiptLabel}>Total Amount</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>90.00</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Penalty</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>0.00</Text>
+              <Text selectable style={styles.receiptLabel}>Penalty</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>0.00</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Rebate</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>0.00</Text>
+              <Text selectable style={styles.receiptLabel}>Rebate</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>0.00</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Paid Amount</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>90.00</Text>
+              <Text selectable style={styles.receiptLabel}>Paid Amount</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>90.00</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Meter Payment</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>
+              <Text selectable style={styles.receiptLabel}>Meter Payment</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>
                 (1625.00 - 1643.00) : 90.00
               </Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Due Amount</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>0.00</Text>
+              <Text selectable style={styles.receiptLabel}>Due Amount</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>0.00</Text>
             </View>
 
             <View style={styles.receiptRow}>
-              <Text style={styles.receiptLabel}>Payment Mode</Text>
-              <Text style={styles.receiptColon}>:</Text>
-              <Text style={styles.receiptValue}>CASH</Text>
+              <Text selectable style={styles.receiptLabel}>Payment Mode</Text>
+              <Text selectable style={styles.receiptColon}>:</Text>
+              <Text selectable style={styles.receiptValue}>CASH</Text>
             </View>
           </View>
 
           <View style={styles.receiptDivider} />
         </ScrollView>
 
-        <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+        <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
           <Text style={styles.closeText}>Close</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
     </View>
   </Modal>
@@ -559,11 +560,11 @@ export const TotalDemandReceiptModal = ({ visible, onClose }) => (
   <Modal visible={visible} transparent animationType="slide">
     <View style={styles.overlay}>
       <View style={styles.modalContent}>
-        <Text style={styles.modalHeader}>Total Demand Receipt</Text>
-        <Text style={styles.modalText}>Demand receipt details...</Text>
-        <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+        <Text selectable style={styles.modalHeader}>Total Demand Receipt</Text>
+        <Text selectable style={styles.modalText}>Demand receipt details...</Text>
+        <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
           <Text style={styles.closeText}>Close</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
     </View>
   </Modal>

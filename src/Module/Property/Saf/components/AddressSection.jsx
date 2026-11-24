@@ -25,9 +25,9 @@ const AddressSection = ({
 
   return (
     <View style={styles.section}>
-      {title && <Text style={styles.header}>{title}</Text>}
+      {title && <Text selectable style={styles.header}>{title}</Text>}
 
-      <Text style={styles.label}>Property Address *</Text>
+      <Text selectable style={styles.label}>Property Address *</Text>
       <TextInput
         style={getInputStyle('address')}
         placeholder="Property Address *"
@@ -36,9 +36,9 @@ const AddressSection = ({
         onChangeText={setAddress}
         editable={!isDisabled}
       />
-      {errors.address && <Text style={styles.errorText}>{errors.address}</Text>}
+      {errors.address && <Text selectable style={styles.errorText}>{errors.address}</Text>}
 
-      <Text style={styles.label}>City *</Text>
+      <Text selectable style={styles.label}>City *</Text>
       <TextInput
         style={getInputStyle('city')}
         placeholder="City *"
@@ -47,9 +47,9 @@ const AddressSection = ({
         onChangeText={setCity}
         editable={!isDisabled}
       />
-      {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
+      {errors.city && <Text selectable style={styles.errorText}>{errors.city}</Text>}
 
-      <Text style={styles.label}>District *</Text>
+      <Text selectable style={styles.label}>District *</Text>
       <TextInput
         style={getInputStyle('district')}
         placeholder="District *"
@@ -59,10 +59,10 @@ const AddressSection = ({
         editable={!isDisabled}
       />
       {errors.district && (
-        <Text style={styles.errorText}>{errors.district}</Text>
+        <Text selectable style={styles.errorText}>{errors.district}</Text>
       )}
 
-      <Text style={styles.label}>State *</Text>
+      <Text selectable style={styles.label}>State *</Text>
       <TextInput
         style={getInputStyle('stateValue')}
         placeholder="State *"
@@ -72,10 +72,10 @@ const AddressSection = ({
         editable={!isDisabled}
       />
       {errors.stateValue && (
-        <Text style={styles.errorText}>{errors.stateValue}</Text>
+        <Text selectable style={styles.errorText}>{errors.stateValue}</Text>
       )}
 
-      <Text style={styles.label}>Pincode *</Text>
+      <Text selectable style={styles.label}>Pincode *</Text>
       <TextInput
         style={getInputStyle('pincode')}
         placeholder="Pincode *"
@@ -85,7 +85,7 @@ const AddressSection = ({
         keyboardType="numeric"
         editable={!isDisabled}
       />
-      {errors.pincode && <Text style={styles.errorText}>{errors.pincode}</Text>}
+      {errors.pincode && <Text selectable style={styles.errorText}>{errors.pincode}</Text>}
     </View>
   );
 };

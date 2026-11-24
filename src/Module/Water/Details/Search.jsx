@@ -23,6 +23,7 @@ import { getToken } from '../../../utils/auth';
 import { WATER_API_ROUTES, PROPERTY_API } from '../../../api/apiRoutes';
 import Pagination from '../../../Components/Pagination';
 import styles from '../../../style/SearchStyles';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 const Search = ({ navigation }) => {
   const [value, setValue] = useState(null);
   const [keyword, setKeyword] = useState('');
@@ -125,40 +126,40 @@ const Search = ({ navigation }) => {
   const renderItem = ({ item, index }) => (
     <View style={styles.resultCard}>
       <View style={styles.row}>
-        <Text style={styles.label}>Apply Date:</Text>
-        <Text style={styles.value}>{item.applyDate}</Text>
+        <Text selectable style={styles.label}>Apply Date:</Text>
+        <Text selectable style={styles.value}>{item.applyDate}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Status:</Text>
-        <Text style={styles.value}>{item.appStatus}</Text>
+        <Text selectable style={styles.label}>Status:</Text>
+        <Text selectable style={styles.value}>{item.appStatus}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>SL No:</Text>
-        <Text style={styles.value}>{index + 1}</Text>
+        <Text selectable style={styles.label}>SL No:</Text>
+        <Text selectable style={styles.value}>{index + 1}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Ward No:</Text>
-        <Text style={styles.value}>{item.wardNo}</Text>
+        <Text selectable style={styles.label}>Ward No:</Text>
+        <Text selectable style={styles.value}>{item.wardNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>New Ward No:</Text>
-        <Text style={styles.value}>{item.newWardNo}</Text>
+        <Text selectable style={styles.label}>New Ward No:</Text>
+        <Text selectable style={styles.value}>{item.newWardNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Application No:</Text>
-        <Text style={styles.value}>{item.applicationNo}</Text>
+        <Text selectable style={styles.label}>Application No:</Text>
+        <Text selectable style={styles.value}>{item.applicationNo}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Owner Name:</Text>
-        <Text style={styles.value}>{item.ownerName}</Text>
+        <Text selectable style={styles.label}>Owner Name:</Text>
+        <Text selectable style={styles.value}>{item.ownerName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Guardian Name:</Text>
-        <Text style={styles.value}>{item.guardianName}</Text>
+        <Text selectable style={styles.label}>Guardian Name:</Text>
+        <Text selectable style={styles.value}>{item.guardianName}</Text>
       </View>
       <View style={styles.row}>
-        <Text style={styles.label}>Address:</Text>
-        <Text
+        <Text selectable style={styles.label}>Address:</Text>
+        <Text selectable
           style={[styles.value, { flex: 1, textAlign: 'right' }]}
           numberOfLines={2}
         >
@@ -166,23 +167,23 @@ const Search = ({ navigation }) => {
         </Text>
       </View>
       <View style={[styles.row, { borderBottomWidth: 0 }]}>
-        <Text style={styles.label}>Mobile:</Text>
-        <Text style={styles.value}>{item.mobileNo}</Text>
+        <Text selectable style={styles.label}>Mobile:</Text>
+        <Text selectable style={styles.value}>{item.mobileNo}</Text>
       </View>
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.viewButton}
         onPress={() => handleViewPress(item)}
       >
         <Text style={styles.viewButtonText}>View</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
   const renderHeader = () => (
     <View style={styles.seacrhCont}>
       <View style={styles.searchhead}>
-        <Text style={styles.text}>Search Application</Text>
+        <Text selectable style={styles.text}>Search Application</Text>
       </View>
 
       <View style={styles.selectWardKey}>
@@ -205,11 +206,11 @@ const Search = ({ navigation }) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => search(1)}>
+      <CopyableTouchableOpacity style={styles.button} onPress={() => search(1)}>
         <Text style={styles.buttonText}>
           {loadingSearch ? 'Searching...' : 'Search'}
         </Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 

@@ -26,6 +26,7 @@ import Colors from '../Module/Constants/Colors';
 
 import back_11 from '../assets/back_11.jpg';
 import LOGO from '../assets/bhilai_logo.png';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const LoginScreen = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -124,11 +125,11 @@ const LoginScreen = ({ navigation }) => {
               />
             </View>
 
-            <Text style={styles.login}>Login</Text>
+            <Text selectable style={styles.login}>Login</Text>
 
             {/* Email / Username Selection */}
             <View style={styles.emailuser}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={styles.optionRow}
                 onPress={() => setSelected('email')}
               >
@@ -139,9 +140,9 @@ const LoginScreen = ({ navigation }) => {
                   ]}
                 />
                 <Text style={styles.label}>Email</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.optionRow, { marginLeft: 30 }]}
                 onPress={() => setSelected('username')}
               >
@@ -152,12 +153,12 @@ const LoginScreen = ({ navigation }) => {
                   ]}
                 />
                 <Text style={styles.label}>Username</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
 
             {/* Email or Username Input */}
             <View style={styles.emailContainer}>
-              <Text>{selected === 'email' ? 'Email' : 'Username'}</Text>
+              <Text selectable>{selected === 'email' ? 'Email' : 'Username'}</Text>
               <TextInput
                 style={styles.input}
                 placeholder={`Enter your ${selected}`}
@@ -174,7 +175,7 @@ const LoginScreen = ({ navigation }) => {
 
             {/* Password Field with Eye */}
             <View style={styles.emailContainer}>
-              <Text>Password</Text>
+              <Text selectable>Password</Text>
               <View style={styles.passwordContainer}>
                 <TextInput
                   style={styles.passwordInput}
@@ -184,38 +185,38 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
                 />
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={styles.eyeIcon}
                   onPress={() => setShowPassword(!showPassword)}
                 >
                   <Text style={{ fontSize: 18 }}>
                     {showPassword ? '🙈' : '👁️'}
                   </Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
             </View>
 
             {/* Remember Me and Forgot Password */}
             <View style={styles.remfogpass}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={[styles.checkbox, checked && styles.checked]}
                 onPress={() => setChecked(!checked)}
               >
                 {checked && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-              <Text>Remember Me</Text>
-              <TouchableOpacity
+              </CopyableTouchableOpacity>
+              <Text selectable>Remember Me</Text>
+              <CopyableTouchableOpacity
                 onPress={() => navigation.navigate('ForgotPassword')}
               >
                 <Text style={styles.forgotText}>Forgot Password?</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
 
             {/* Login Button */}
             <View style={styles.emailContainer}>
-              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <CopyableTouchableOpacity style={styles.button} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Login</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </ScrollView>

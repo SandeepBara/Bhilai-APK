@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import { CopyablePressable } from '../../../Components/CopyableControl';
 
 const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
   return (
@@ -21,34 +22,34 @@ const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
       <View style={styles.modalBackdrop}>
         <View style={styles.modalWrapper}>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.modalTitle}>Payment Receipt</Text>
+            <Text selectable style={styles.modalTitle}>Payment Receipt</Text>
 
             {paymentDtls ? (
               <>
-                <Text style={styles.itemText}>
+                <Text selectable style={styles.itemText}>
                   <Text style={styles.label}>Transaction No: </Text>
                   {paymentDtls.tranNo}
                 </Text>
-                <Text style={styles.itemText}>
+                <Text selectable style={styles.itemText}>
                   <Text style={styles.label}>Date: </Text>
                   {paymentDtls.tranDate}
                 </Text>
-                <Text style={styles.itemText}>
+                <Text selectable style={styles.itemText}>
                   <Text style={styles.label}>Mode: </Text>
                   {paymentDtls.paymentMode}
                 </Text>
-                <Text style={styles.itemText}>
+                <Text selectable style={styles.itemText}>
                   <Text style={styles.label}>Amount: </Text>₹{' '}
                   {paymentDtls.payableAmt}
                 </Text>
               </>
             ) : (
-              <Text style={styles.itemText}>Loading...</Text>
+              <Text selectable style={styles.itemText}>Loading...</Text>
             )}
 
-            <Pressable onPress={onClose} style={styles.closeButton}>
+            <CopyablePressable onPress={onClose} style={styles.closeButton}>
               <Text style={styles.closeButtonText}>Close</Text>
-            </Pressable>
+            </CopyablePressable>
           </ScrollView>
         </View>
       </View>

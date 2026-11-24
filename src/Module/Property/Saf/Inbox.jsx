@@ -22,28 +22,28 @@ const Inbox = ({ navigation }) => {
         <View style={styles.gridContainer}>
           <TouchableOpacity style={styles.box}>
             <Icon name="inbox" size={40} color="#4A90E2" />
-            <Text style={styles.boxText}>All Messages</Text>
+            <Text selectable style={styles.boxText}>All Messages</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
             <Icon name="mark-email-unread" size={40} color="#7B61FF" />
-            <Text style={styles.boxText}>Unread Messages</Text>
+            <Text selectable style={styles.boxText}>Unread Messages</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
             <Icon name="mark-email-read" size={40} color="#50E3C2" />
-            <Text style={styles.boxText}>Read Messages</Text>
+            <Text selectable style={styles.boxText}>Read Messages</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
             <Icon name="delete" size={40} color="#F5A623" />
-            <Text style={styles.boxText}>Trash</Text>
+            <Text selectable style={styles.boxText}>Trash</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Inbox Module</Text>
+        <Text selectable style={styles.footerText}>Inbox Module</Text>
       </View>
     </View>
   );

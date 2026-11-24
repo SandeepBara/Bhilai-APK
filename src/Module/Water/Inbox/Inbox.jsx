@@ -21,6 +21,7 @@ import { WATER_API_ROUTES } from '../.././../api/apiRoutes';
 import Colors from '../../Constants/Colors';
 import { showToast } from '../../../utils/toast';
 import { getToken } from '../../../utils/auth';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const Inbox = ({ navigation }) => {
   const wardData = [
@@ -73,33 +74,33 @@ const Inbox = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Application No.:</Text>
-        <Text style={styles.value}>{item?.applicationNo || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Application No.:</Text>
+        <Text selectable style={styles.value}>{item?.applicationNo || '-'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Apply Date:</Text>
-        <Text style={styles.value}>{item?.applyDate || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Apply Date:</Text>
+        <Text selectable style={styles.value}>{item?.applyDate || '-'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Forward Date:</Text>
-        <Text style={styles.value}>{item?.receivingDate || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Forward Date:</Text>
+        <Text selectable style={styles.value}>{item?.receivingDate || '-'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Ward No.:</Text>
-        <Text style={styles.value}>{item?.wardNo || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Ward No.:</Text>
+        <Text selectable style={styles.value}>{item?.wardNo || '-'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>New Ward No.:</Text>
-        <Text style={styles.value}>{item?.newWardNo || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>New Ward No.:</Text>
+        <Text selectable style={styles.value}>{item?.newWardNo || '-'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Applicant Name:</Text>
-        <Text style={styles.value}>{item?.ownerName || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Applicant Name:</Text>
+        <Text selectable style={styles.value}>{item?.ownerName || '-'}</Text>
       </View>
 
       {/* <View style={styles.row}>
@@ -108,8 +109,8 @@ const Inbox = ({ navigation }) => {
       </View> */}
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Mobile No.:</Text>
-        <Text style={styles.value}>{item?.mobileNo || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Mobile No.:</Text>
+        <Text selectable style={styles.value}>{item?.mobileNo || '-'}</Text>
       </View>
 
       {/* <View style={styles.row}>
@@ -124,8 +125,8 @@ const Inbox = ({ navigation }) => {
       </View> */}
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Address:</Text>
-        <Text style={styles.value}>{item?.address || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Address:</Text>
+        <Text selectable style={styles.value}>{item?.address || '-'}</Text>
       </View>
 
       {/* <View style={styles.row}>
@@ -134,33 +135,33 @@ const Inbox = ({ navigation }) => {
       </View> */}
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Payment Status:</Text>
-        <Text style={styles.value}>
+        <Text selectable style={styles.cardLabel}>Payment Status:</Text>
+        <Text selectable style={styles.value}>
           {item?.paymentStatus === 1 ? 'Paid' : 'Unpaid'}
         </Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Is BTC:</Text>
-        <Text style={styles.value}>{item?.isBtc ? 'Yes' : 'No'}</Text>
+        <Text selectable style={styles.cardLabel}>Is BTC:</Text>
+        <Text selectable style={styles.value}>{item?.isBtc ? 'Yes' : 'No'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Is Document Uploaded:</Text>
-        <Text style={styles.value}>{item?.isDocUpload ? 'Yes' : 'No'}</Text>
+        <Text selectable style={styles.cardLabel}>Is Document Uploaded:</Text>
+        <Text selectable style={styles.value}>{item?.isDocUpload ? 'Yes' : 'No'}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.cardLabel}>Current Role ID:</Text>
-        <Text style={styles.value}>{item?.currentRoleId || '-'}</Text>
+        <Text selectable style={styles.cardLabel}>Current Role ID:</Text>
+        <Text selectable style={styles.value}>{item?.currentRoleId || '-'}</Text>
       </View>
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={styles.button1}
         onPress={() => navigation.navigate('WaterSurvey', { id: item?.id })}
       >
         <Text style={styles.surveyButtonText}>Survey</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
 
@@ -203,13 +204,13 @@ const Inbox = ({ navigation }) => {
 
       {/* FlatList for Application List */}
       <View style={styles.applicationList}>
-        <Text style={styles.title}>Water Application List</Text>
+        <Text selectable style={styles.title}>Water Application List</Text>
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderItem}
           ListEmptyComponent={
-            <Text
+            <Text selectable
               style={{
                 textAlign: 'center',
                 marginTop: responsiveHeight(2),

@@ -12,6 +12,7 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderNavigation from '../../Components/HeaderNavigation';
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
 const Property = ({ navigation }) => {
   const [propertyChildren, setPropertyChildren] = useState([]);
@@ -68,7 +69,7 @@ const Property = ({ navigation }) => {
       <View style={styles.maindashbaord}>
         <Header navigation={navigation} />
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text selectable style={styles.loadingText}>Loading...</Text>
         </View>
       </View>
     );
@@ -85,20 +86,20 @@ const Property = ({ navigation }) => {
         contentContainerStyle={styles.scrollContainer}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         renderItem={({ item }) => (
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.box}
             onPress={() => handleMenuPress(item)}
           >
             <Icon name={getIconName(item.icon)} size={40} color="#4A90E2" />
             <Text style={styles.boxText}>{item.name}</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         )}
       />
-      <TouchableOpacity onPress={() => navigation.navigate('ApplyAssessment')}>
+      <CopyableTouchableOpacity onPress={() => navigation.navigate('ApplyAssessment')}>
         <Text>AssesmetApply</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
       <View style={styles.footer}>
-        <Text style={styles.footerText}>End of Property</Text>
+        <Text selectable style={styles.footerText}>End of Property</Text>
       </View>
     </View>
   );

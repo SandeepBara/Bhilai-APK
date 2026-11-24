@@ -16,6 +16,7 @@ import {
   InMemory,
 } from '@linvix-sistemas/react-native-escpos-buffer';
 import { useBluetoothPrinter } from '../../../../utils/BluetoothService';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
   // Local modal state
@@ -265,20 +266,20 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
     >
       <ScrollView style={styles.modalContainer}>
         {/* Header */}
-        <Text style={styles.header}>View Receipt</Text>
+        <Text selectable style={styles.header}>View Receipt</Text>
 
         {/* Logo */}
         <View style={styles.logoWrapper}>
-          <Text style={styles.logoCircle}>🏛️</Text>
+          <Text selectable style={styles.logoCircle}>🏛️</Text>
         </View>
 
         {/* Corporation Name */}
-        <Text style={styles.corpName}>
+        <Text selectable style={styles.corpName}>
           {paymentDtls?.ulbDtl?.ulbName || 'Ranchi Municipal Corporation'}
         </Text>
 
         {/* Subheading */}
-        <Text style={styles.receiptType}>
+        <Text selectable style={styles.receiptType}>
           {paymentDtls?.description || 'HOLDING TAX RECEIPT'}
         </Text>
 
@@ -288,31 +289,31 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
         {/* Meta Info Section */}
         <View style={styles.metaRow}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               Receipt No.:{' '}
               <Text style={styles.bold}>{paymentDtls?.tranNo}</Text>
             </Text>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               Department:{' '}
               <Text style={styles.bold}>{paymentDtls?.department}</Text>
             </Text>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               Account:{' '}
               <Text style={styles.bold}>{paymentDtls?.accountDescription}</Text>
             </Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               Date: <Text style={styles.bold}>{paymentDtls?.tranDate}</Text>
             </Text>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               Ward No: <Text style={styles.bold}>{paymentDtls?.wardNo}</Text>
             </Text>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               New Ward No:{' '}
               <Text style={styles.bold}>{paymentDtls?.newWardNo}</Text>
             </Text>
-            <Text style={styles.labelFixed}>
+            <Text selectable style={styles.labelFixed}>
               SAF No: <Text style={styles.bold}>{paymentDtls?.safNo}</Text>
             </Text>
           </View>
@@ -320,21 +321,21 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
 
         {/* Owner Info */}
         <View style={{ marginTop: 10 }}>
-          <Text style={styles.labelFixed}>
+          <Text selectable style={styles.labelFixed}>
             Received From:{' '}
             <Text style={styles.bold}>{paymentDtls?.ownerName}</Text>
           </Text>
-          <Text style={styles.labelFixed}>
+          <Text selectable style={styles.labelFixed}>
             Address: <Text style={styles.bold}>{paymentDtls?.address}</Text>
           </Text>
-          <Text style={styles.labelFixed}>
+          <Text selectable style={styles.labelFixed}>
             A Sum of Rs.: <Text style={styles.bold}>{paymentDtls?.amount}</Text>
           </Text>
-          <Text style={styles.labelFixed}>
+          <Text selectable style={styles.labelFixed}>
             (In words):{' '}
             <Text style={styles.bold}>{paymentDtls?.amountInWords}</Text>
           </Text>
-          <Text style={styles.labelFixed}>
+          <Text selectable style={styles.labelFixed}>
             Towards:{' '}
             <Text style={styles.bold}>{paymentDtls?.accountDescription}</Text>{' '}
             Vide: <Text style={styles.bold}>{paymentDtls?.paymentMode}</Text>
@@ -344,61 +345,61 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
         {/* Tax Table */}
         <View style={styles.tableWrapper}>
           <View style={styles.tableHeaderRow}>
-            <Text style={[styles.col, { flex: 2 }]}>Description</Text>
-            <Text style={styles.col}>From QTR</Text>
-            <Text style={styles.col}>From FY</Text>
-            <Text style={styles.col}>To QTR</Text>
-            <Text style={styles.col}>To FY</Text>
-            <Text style={[styles.col, { flex: 1 }]}>Amount</Text>
+            <Text selectable style={[styles.col, { flex: 2 }]}>Description</Text>
+            <Text selectable style={styles.col}>From QTR</Text>
+            <Text selectable style={styles.col}>From FY</Text>
+            <Text selectable style={styles.col}>To QTR</Text>
+            <Text selectable style={styles.col}>To FY</Text>
+            <Text selectable style={[styles.col, { flex: 1 }]}>Amount</Text>
           </View>
 
           {/* Holding Tax */}
           <View style={styles.tableRowModal}>
-            <Text style={[styles.col, { flex: 2 }]}>Holding Tax</Text>
-            <Text style={styles.col}>{paymentDtls?.fromQtr}</Text>
-            <Text style={styles.col}>{paymentDtls?.fromFyear}</Text>
-            <Text style={styles.col}>{paymentDtls?.uptoQtr}</Text>
-            <Text style={styles.col}>{paymentDtls?.uptoFyear}</Text>
-            <Text style={[styles.col, { flex: 1 }]}>
+            <Text selectable style={[styles.col, { flex: 2 }]}>Holding Tax</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.fromQtr}</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.fromFyear}</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.uptoQtr}</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.uptoFyear}</Text>
+            <Text selectable style={[styles.col, { flex: 1 }]}>
               {paymentDtls?.holdingTax}
             </Text>
           </View>
 
           {/* RWH */}
           <View style={styles.tableRowModal}>
-            <Text style={[styles.col, { flex: 2 }]}>RWH</Text>
-            <Text style={styles.col}>{paymentDtls?.fromQtr}</Text>
-            <Text style={styles.col}>{paymentDtls?.fromFyear}</Text>
-            <Text style={styles.col}>{paymentDtls?.uptoQtr}</Text>
-            <Text style={styles.col}>{paymentDtls?.uptoFyear}</Text>
-            <Text style={[styles.col, { flex: 1 }]}>{paymentDtls?.rwhTax}</Text>
+            <Text selectable style={[styles.col, { flex: 2 }]}>RWH</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.fromQtr}</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.fromFyear}</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.uptoQtr}</Text>
+            <Text selectable style={styles.col}>{paymentDtls?.uptoFyear}</Text>
+            <Text selectable style={[styles.col, { flex: 1 }]}>{paymentDtls?.rwhTax}</Text>
           </View>
 
           {/* JSK Rebate (if exists) */}
           {paymentDtls?.fineRebate?.length > 0 &&
             paymentDtls.fineRebate.map((item, index) => (
               <View key={index} style={styles.tableRowModal}>
-                <Text style={[styles.col, { flex: 2 }]}>{item.headName}</Text>
-                <Text style={styles.col}>-</Text>
-                <Text style={styles.col}>-</Text>
-                <Text style={styles.col}>-</Text>
-                <Text style={styles.col}>-</Text>
-                <Text style={[styles.col, { flex: 1 }]}>{item.amount}</Text>
+                <Text selectable style={[styles.col, { flex: 2 }]}>{item.headName}</Text>
+                <Text selectable style={styles.col}>-</Text>
+                <Text selectable style={styles.col}>-</Text>
+                <Text selectable style={styles.col}>-</Text>
+                <Text selectable style={styles.col}>-</Text>
+                <Text selectable style={[styles.col, { flex: 1 }]}>{item.amount}</Text>
               </View>
             ))}
 
           {/* Totals */}
           <View style={styles.tableRowModal}>
-            <Text style={[styles.col, { flex: 5, fontWeight: 'bold' }]}>
+            <Text selectable style={[styles.col, { flex: 5, fontWeight: 'bold' }]}>
               Total Amount
             </Text>
-            <Text style={[styles.col, { flex: 1 }]}>{paymentDtls?.amount}</Text>
+            <Text selectable style={[styles.col, { flex: 1 }]}>{paymentDtls?.amount}</Text>
           </View>
           <View style={styles.tableRowModal}>
-            <Text style={[styles.col, { flex: 5, fontWeight: 'bold' }]}>
+            <Text selectable style={[styles.col, { flex: 5, fontWeight: 'bold' }]}>
               Total Paid Amount
             </Text>
-            <Text style={[styles.col, { flex: 1 }]}>{paymentDtls?.amount}</Text>
+            <Text selectable style={[styles.col, { flex: 1 }]}>{paymentDtls?.amount}</Text>
           </View>
         </View>
 
@@ -408,14 +409,14 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
             <View style={styles.qrBox} />
           </View>
           <View style={{ flex: 2 }}>
-            <Text style={styles.footerText}>Visit:</Text>
-            <Text style={styles.footerText}>Call: 8002158818</Text>
-            <Text style={styles.footerText}>In collaboration with</Text>
-            <Text style={styles.footerText}>Uinfo Technology PVT LTD.</Text>
+            <Text selectable style={styles.footerText}>Visit:</Text>
+            <Text selectable style={styles.footerText}>Call: 8002158818</Text>
+            <Text selectable style={styles.footerText}>In collaboration with</Text>
+            <Text selectable style={styles.footerText}>Uinfo Technology PVT LTD.</Text>
           </View>
         </View>
 
-        <Text style={styles.generatedNote}>
+        <Text selectable style={styles.generatedNote}>
           ** This is a computer-generated receipt and does not require
           signature. **
         </Text>
@@ -423,11 +424,11 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
         {/* Print Buttons */}
         <View style={styles.buttonContainer}>
           {connectedDevice && (
-            <Text style={styles.connectedText}>
+            <Text selectable style={styles.connectedText}>
               Connected: {connectedDevice.name}
             </Text>
           )}
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.printBtn}
             onPress={printReceipt}
             disabled={printing}
@@ -439,9 +440,9 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                 {connectedDevice ? 'Print Receipt' : 'Connect & Print'}
               </Text>
             )}
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <TouchableOpacity
+          <CopyableTouchableOpacity
             style={styles.scanBtn}
             onPress={handleScanForDevices}
             disabled={scanning}
@@ -453,12 +454,12 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                 {connectedDevice ? 'Change Printer' : 'Scan for Printers'}
               </Text>
             )}
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+        <CopyableTouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Text style={{ color: 'white', fontWeight: 'bold' }}>Close</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </ScrollView>
 
       {/* Printer Selection Modal */}
@@ -471,24 +472,24 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
         <View style={styles.overlay}>
           <View style={styles.printerModalContent}>
             <View style={styles.printerModalHeader}>
-              <Text style={styles.printerModalTitle}>
+              <Text selectable style={styles.printerModalTitle}>
                 Select Bluetooth Printer
               </Text>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 onPress={() => setShowPrinterModal(false)}
                 style={styles.closeIconBtn}
               >
                 <Text style={styles.closeText}>Close</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
 
             <ScrollView style={styles.printerList}>
               {/* Paired Devices */}
               {pairedDevices && (
                 <>
-                  <Text style={styles.sectionTitle}>Paired Devices</Text>
+                  <Text selectable style={styles.sectionTitle}>Paired Devices</Text>
                   {pairedDevices.map((device, index) => (
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       key={`paired-${index}`}
                       style={[
                         styles.deviceItem,
@@ -511,7 +512,7 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                       ) : connectedDevice?.address === device.address ? (
                         <Text style={styles.connectedTag}>Connected</Text>
                       ) : null}
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   ))}
                 </>
               )}
@@ -519,9 +520,9 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
               {/* Scanned Devices */}
               {bluetoothDevices.length > 0 && (
                 <>
-                  <Text style={styles.sectionTitle}>Available Devices</Text>
+                  <Text selectable style={styles.sectionTitle}>Available Devices</Text>
                   {bluetoothDevices.map((device, index) => (
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       key={`scanned-${index}`}
                       style={styles.deviceItem}
                       onPress={() => handleConnectToPrinter(device)}
@@ -538,24 +539,24 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
                       {connecting && (
                         <ActivityIndicator size="small" color="#1E40AF" />
                       )}
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   ))}
                 </>
               )}
 
               {pairedDevices.length === 0 && bluetoothDevices.length === 0 && (
                 <View style={styles.emptyState}>
-                  <Text style={styles.emptyText}>
+                  <Text selectable style={styles.emptyText}>
                     No Bluetooth devices found.
                   </Text>
-                  <Text style={styles.emptySubtext}>
+                  <Text selectable style={styles.emptySubtext}>
                     Make sure your printer is turned on and paired.
                   </Text>
                 </View>
               )}
             </ScrollView>
 
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.rescanBtn}
               onPress={handleScanForDevices}
               disabled={scanning}
@@ -565,7 +566,7 @@ export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
               ) : (
                 <Text style={styles.rescanText}>Rescan Devices</Text>
               )}
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </Modal>

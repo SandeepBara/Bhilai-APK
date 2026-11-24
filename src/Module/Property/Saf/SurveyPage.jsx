@@ -48,6 +48,7 @@ import {
 } from './utils/helpers';
 import { validatePreviewForm } from './utils/validation';
 import { yesNoOptions, zoneDropdownOptions } from './constants';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const SurveyPage = ({ route, navigation }) => {
   const { id } = route.params;
@@ -593,7 +594,7 @@ const SurveyPage = ({ route, navigation }) => {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color="#007AFF" />
-        <Text style={styles.loadingText}>Loading survey data...</Text>
+        <Text selectable style={styles.loadingText}>Loading survey data...</Text>
       </View>
     );
   }
@@ -613,7 +614,7 @@ const SurveyPage = ({ route, navigation }) => {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
           >
-            <Text style={styles.title}>Self Assessment - Field Survey</Text>
+            <Text selectable style={styles.title}>Self Assessment - Field Survey</Text>
           </LinearGradient>
         </View>
 
@@ -752,7 +753,7 @@ const SurveyPage = ({ route, navigation }) => {
                 <View>
                   <View style={styles.extraFloorContainer}>
                     <View style={styles.row}>
-                      <Text style={styles.labelCheckbox}>
+                      <Text selectable style={styles.labelCheckbox}>
                         Do You Want To Add Extra Floor?
                       </Text>
                       <TouchableOpacity
@@ -812,9 +813,9 @@ const SurveyPage = ({ route, navigation }) => {
         </View>
 
         {/* Preview Button */}
-        <TouchableOpacity style={styles.previewButton} onPress={handlePreview}>
+        <CopyableTouchableOpacity style={styles.previewButton} onPress={handlePreview}>
           <Text style={styles.previewButtonText}>Preview</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         {/* Preview Modal */}
         <PreviewModal

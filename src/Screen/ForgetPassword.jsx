@@ -15,6 +15,7 @@ import {
   OTP_VERIFY_API,
   CHANGE_PASS_API,
 } from '../api/apiRoutes';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -123,7 +124,7 @@ const ForgotPassword = () => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>Forgot Password</Text>
+        <Text selectable style={styles.title}>Forgot Password</Text>
 
         <TextInput
           placeholder="Enter your email"
@@ -134,7 +135,7 @@ const ForgotPassword = () => {
           autoCapitalize="none"
         />
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={[styles.button, loading && { opacity: 0.6 }]}
           onPress={handleForgotPassword}
           disabled={loading}
@@ -144,14 +145,14 @@ const ForgotPassword = () => {
           ) : (
             <Text style={styles.buttonText}>Send OTP</Text>
           )}
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
 
       {/* OTP Modal */}
       <Modal transparent visible={otpModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Enter OTP</Text>
+            <Text selectable style={styles.modalTitle}>Enter OTP</Text>
             <TextInput
               placeholder="OTP"
               style={styles.input}
@@ -159,20 +160,20 @@ const ForgotPassword = () => {
               onChangeText={setOtp}
               keyboardType="number-pad"
             />
-            <TouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
+            <CopyableTouchableOpacity style={styles.button} onPress={handleVerifyOtp}>
               {loading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
                 <Text style={styles.buttonText}>Verify OTP</Text>
               )}
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setOtpModalVisible(false)}>
+            </CopyableTouchableOpacity>
+            <CopyableTouchableOpacity onPress={() => setOtpModalVisible(false)}>
               <Text
                 style={{ marginTop: 10, color: 'red', textAlign: 'center' }}
               >
                 Cancel
               </Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -181,7 +182,7 @@ const ForgotPassword = () => {
       <Modal transparent visible={changePassModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Enter New Password</Text>
+            <Text selectable style={styles.modalTitle}>Enter New Password</Text>
             <TextInput
               placeholder="New Password"
               style={styles.input}
@@ -196,7 +197,7 @@ const ForgotPassword = () => {
               onChangeText={setConfirmPassword}
               secureTextEntry
             />
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.button}
               onPress={handleChangePassword}
             >
@@ -205,14 +206,14 @@ const ForgotPassword = () => {
               ) : (
                 <Text style={styles.buttonText}>Change Password</Text>
               )}
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setChangePassModalVisible(false)}>
+            </CopyableTouchableOpacity>
+            <CopyableTouchableOpacity onPress={() => setChangePassModalVisible(false)}>
               <Text
                 style={{ marginTop: 10, color: 'red', textAlign: 'center' }}
               >
                 Cancel
               </Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </Modal>

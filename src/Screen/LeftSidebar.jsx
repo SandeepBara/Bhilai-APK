@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const LeftSidebar = () => {
   const [screen, setScreen] = useState('Dashboard');
@@ -10,9 +11,9 @@ const LeftSidebar = () => {
   const renderScreen = () => {
     switch (screen) {
       case 'Dashboard':
-        return <Text style={styles.contentText}>📊 Dashboard Screen</Text>;
+        return <Text selectable style={styles.contentText}>📊 Dashboard Screen</Text>;
       case 'Profile':
-        return <Text style={styles.contentText}>👤 Profile Screen</Text>;
+        return <Text selectable style={styles.contentText}>👤 Profile Screen</Text>;
       default:
         return null;
     }
@@ -28,31 +29,31 @@ const LeftSidebar = () => {
     <View style={styles.container}>
       {/* Left Sidebar */}
       <View style={styles.sidebar}>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.menuItem}
           onPress={() => setScreen('Dashboard')}
         >
           <Icon name="dashboard" size={24} color="#000" />
           <Text style={styles.menuText}>Dashboard</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.menuItem}
           onPress={() => setScreen('Profile')}
         >
           <Icon name="person" size={24} color="#000" />
           <Text style={styles.menuText}>Profile</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         <View style={styles.spacer} />
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.menuItem}
           onPress={() => setShowModal(true)}
         >
           <Icon name="logout" size={24} color="#000" />
           <Text style={styles.menuText}>Logout</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
 
       {/* Main Content */}
@@ -67,20 +68,20 @@ const LeftSidebar = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>Confirm Logout?</Text>
+            <Text selectable style={styles.modalTitle}>Confirm Logout?</Text>
             <View style={styles.modalActions}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 onPress={() => setShowModal(false)}
                 style={styles.cancelButton}
               >
                 <Text>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
+              </CopyableTouchableOpacity>
+              <CopyableTouchableOpacity
                 onPress={handleLogout}
                 style={styles.confirmButton}
               >
                 <Text style={{ color: 'white' }}>Logout</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>

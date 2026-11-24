@@ -13,6 +13,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import Colors from '../Module/Constants/Colors';
+import { CopyableTouchableOpacity } from './CopyableControl';
 
 const Pagination = ({
   page,
@@ -48,19 +49,19 @@ const Pagination = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.pageInfo}>
+      <Text selectable style={styles.pageInfo}>
         Page {page} of {lastPage}
       </Text>
 
       <View style={styles.paginationWrapper}>
         {/* Previous Button */}
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={[styles.arrowBtn, page === 1 && styles.disabledBtn]}
           onPress={onPrev}
           disabled={page === 1}
         >
           <Text style={styles.arrowText}>{'<'}</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
         {/* Scrollable Page Numbers */}
         <ScrollView
@@ -69,7 +70,7 @@ const Pagination = ({
           contentContainerStyle={styles.scrollContainer}
         >
           {pageNumbers.map((num, index) => (
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               key={index}
               disabled={num === '...'}
               onPress={() => num !== '...' && onPageChange(num)}
@@ -87,18 +88,18 @@ const Pagination = ({
               >
                 {num}
               </Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           ))}
         </ScrollView>
 
         {/* Next Button */}
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={[styles.arrowBtn, page === lastPage && styles.disabledBtn]}
           onPress={onNext}
           disabled={page === lastPage}
         >
           <Text style={styles.arrowText}>{'>'}</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
     </View>
   );

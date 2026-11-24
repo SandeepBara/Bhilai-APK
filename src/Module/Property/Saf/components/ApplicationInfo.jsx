@@ -10,15 +10,15 @@ const ApplicationInfo = ({ data }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.label}>
+      <Text selectable style={styles.label}>
         Your Application No.:{' '}
         <Text style={styles.value}>{data.safNo}</Text>
       </Text>
-      <Text style={styles.label}>
+      <Text selectable style={styles.label}>
         Application Type:{' '}
         <Text style={styles.value}>{data.assessmentType}</Text>
       </Text>
-      <Text style={styles.label}>
+      <Text selectable style={styles.label}>
         Applied Date: <Text style={styles.value}>{data.applyDate}</Text>
       </Text>
     </View>

@@ -15,14 +15,14 @@ import MessageModal from '../../../../utils/MessageModal';
 
 const Row = ({ label, value }) => (
   <View style={styles.row}>
-    <Text style={styles.label}>{label}</Text>
-    <Text style={styles.value}>{value}</Text>
+    <Text selectable style={styles.label}>{label}</Text>
+    <Text selectable style={styles.value}>{value}</Text>
   </View>
 );
 
 const Section = ({ title, children }) => (
   <View style={styles.section}>
-    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text selectable style={styles.sectionTitle}>{title}</Text>
     {children}
   </View>
 );
@@ -341,7 +341,7 @@ const RessesmentSummry = ({ route, navigation }) => {
         <Section title="Floor Details">
           {data.floors.map((floor, index) => (
             <View key={index} style={{ marginBottom: 10 }}>
-              <Text style={{ fontWeight: '600', marginBottom: 4 }}>
+              <Text selectable style={{ fontWeight: '600', marginBottom: 4 }}>
                 Floor {index + 1}
               </Text>
               <Row label="Floor Name" value={floor.floorName} />

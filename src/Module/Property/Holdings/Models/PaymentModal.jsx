@@ -9,6 +9,7 @@ import {
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { styles } from './sharedStyles';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const PaymentModal = ({
   visible,
@@ -41,9 +42,9 @@ export const PaymentModal = ({
   >
     <View style={styles.modalOverlay}>
       <View style={styles.modalContent}>
-        <Text style={styles.modalTitle}>💳 Make Payment</Text>
+        <Text selectable style={styles.modalTitle}>💳 Make Payment</Text>
 
-        <Text style={styles.label}>Payment Type *</Text>
+        <Text selectable style={styles.label}>Payment Type *</Text>
         <Dropdown
           style={styles.dropdown}
           data={paymentTypeData}
@@ -54,7 +55,7 @@ export const PaymentModal = ({
           onChange={item => setPaymentType(item.value)}
         />
 
-        <Text style={styles.label}>Payment Mode *</Text>
+        <Text selectable style={styles.label}>Payment Mode *</Text>
         <Dropdown
           style={styles.dropdown}
           data={paymentModeData}
@@ -67,7 +68,7 @@ export const PaymentModal = ({
 
         {paymentMode && paymentMode !== 'Cash' && (
           <>
-            <Text style={styles.label}>Cheque/DD/Ref No *</Text>
+            <Text selectable style={styles.label}>Cheque/DD/Ref No *</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter Cheque/DD/Ref No"
@@ -75,8 +76,8 @@ export const PaymentModal = ({
               onChangeText={setRefNo}
             />
 
-            <Text style={styles.label}>Cheque/DD Date *</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.label}>Cheque/DD Date *</Text>
+            <CopyableTouchableOpacity
               onPress={() => setShowDatePicker(true)}
               style={styles.input}
             >
@@ -92,7 +93,7 @@ export const PaymentModal = ({
                       .slice(-2)}`
                   : 'Select Cheque/DD Date'}
               </Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
             {showDatePicker && (
               <DateTimePicker
@@ -106,7 +107,7 @@ export const PaymentModal = ({
               />
             )}
 
-            <Text style={styles.label}>Bank Name *</Text>
+            <Text selectable style={styles.label}>Bank Name *</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter Bank Name"
@@ -114,7 +115,7 @@ export const PaymentModal = ({
               onChangeText={setBankName}
             />
 
-            <Text style={styles.label}>Branch Name *</Text>
+            <Text selectable style={styles.label}>Branch Name *</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter Branch Name"
@@ -124,7 +125,7 @@ export const PaymentModal = ({
           </>
         )}
 
-        <Text style={styles.label}>Amount *</Text>
+        <Text selectable style={styles.label}>Amount *</Text>
         <TextInput
           style={styles.input}
           value={amount}
@@ -134,12 +135,12 @@ export const PaymentModal = ({
         />
 
         <View style={styles.modalButtons}>
-          <TouchableOpacity onPress={onClose} style={styles.cancelButton}>
+          <CopyableTouchableOpacity onPress={onClose} style={styles.cancelButton}>
             <Text>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onProceed} style={styles.confirmButton}>
+          </CopyableTouchableOpacity>
+          <CopyableTouchableOpacity onPress={onProceed} style={styles.confirmButton}>
             <Text>Proceed</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </View>
     </View>

@@ -15,6 +15,7 @@ import MonthPicker from 'react-native-month-year-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { formatLocalDate } from "../../../utils/common";
 import VerificationPreviewModal from "./component/VerificationPreviewModal";
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
 
 function SurveyPage() {
@@ -388,20 +389,20 @@ console.log("isPreviewModal",formData)
         {isLoading ? (
           <View style={styles.loaderContainer}>
             <ActivityIndicator size="large" color={Colors.primary} />
-            <Text style={styles.loadingText}>Loading survey data...</Text>
+            <Text selectable style={styles.loadingText}>Loading survey data...</Text>
           </View>
         ) : (
           <>
             <View style={styles.card}>
-              <Text style={styles.label}>
+              <Text selectable style={styles.label}>
                 Your Application No.:{' '}
                 <Text style={styles.value}>{safData.safNo}</Text>
               </Text>
-              <Text style={styles.label}>
+              <Text selectable style={styles.label}>
                 Application Type:{' '}
                 <Text style={styles.value}>{safData.assessmentType}</Text>
               </Text>
-              <Text style={styles.label}>
+              <Text selectable style={styles.label}>
                 Applied Date: <Text style={styles.value}>{safData.applyDate}</Text>
               </Text>
             </View>
@@ -513,7 +514,7 @@ console.log("isPreviewModal",formData)
                     >
                       <View key={item.id+index} style={{ marginBottom: 20 }}>
                         {/* Floor Name Header */}
-                        <Text
+                        <Text selectable
                           style={{
                             marginTop: 10,
                             marginBottom: 5,
@@ -629,7 +630,7 @@ console.log("isPreviewModal",formData)
                   <View>
                     <View style={styles.extraFloorContainer}>
                       <View style={styles.row}>
-                        <Text style={styles.labelCheckbox}>
+                        <Text selectable style={styles.labelCheckbox}>
                           Do You Want To Add Extra Floor?
                         </Text>
                         <TouchableOpacity
@@ -664,20 +665,20 @@ console.log("isPreviewModal",formData)
                                 style={styles.card}
                               >
                                 <View style={styles.rowlabel}>
-                                  <Text style={{ color: 'white' }}>
+                                  <Text selectable style={{ color: 'white' }}>
                                     Extra Floor {index + 1}
                                   </Text>
                                   {/* Remove button for extra floor */}
-                                  <TouchableOpacity
+                                  <CopyableTouchableOpacity
                                     style={styles.removeBtn}
                                     // Pass the unique `floor.index` to the handler
                                     onPress={() => handleRemoveFloor(floor.index)}
                                   >
                                     <Text style={styles.removeBtnText}>Remove</Text>
-                                  </TouchableOpacity>
+                                  </CopyableTouchableOpacity>
                                 </View>
                                 <View>
-                                  <Text style={styles.label}>Floor Name</Text>
+                                  <Text selectable style={styles.label}>Floor Name</Text>
                                   <Dropdown
                                     style={[styles.dropdown, extraFloorErrors?.floorMasterId && styles.errorBorder]}
                                     placeholderStyle={styles.placeholder}
@@ -695,9 +696,9 @@ console.log("isPreviewModal",formData)
                                       handleExtraFloorChange(floor.index, 'floorMasterId', item.value)
                                     }
                                   />
-                                  {extraFloorErrors?.floorMasterId && <Text style={styles.errorText}>{extraFloorErrors.floorMasterId}</Text>}
+                                  {extraFloorErrors?.floorMasterId && <Text selectable style={styles.errorText}>{extraFloorErrors.floorMasterId}</Text>}
 
-                                  <Text style={styles.label}>
+                                  <Text selectable style={styles.label}>
                                     Construction Type
                                   </Text>
                                   <Dropdown
@@ -721,9 +722,9 @@ console.log("isPreviewModal",formData)
                                       )
                                     }
                                   />
-                                  {extraFloorErrors?.constructionTypeMasterId && <Text style={styles.errorText}>{extraFloorErrors.constructionTypeMasterId}</Text>}
+                                  {extraFloorErrors?.constructionTypeMasterId && <Text selectable style={styles.errorText}>{extraFloorErrors.constructionTypeMasterId}</Text>}
 
-                                  <Text style={styles.label}>Occupancy Type</Text>
+                                  <Text selectable style={styles.label}>Occupancy Type</Text>
                                   <Dropdown
                                     style={[styles.dropdown, extraFloorErrors?.occupancyTypeMasterId && styles.errorBorder]}
                                     placeholderStyle={styles.placeholder}
@@ -745,9 +746,9 @@ console.log("isPreviewModal",formData)
                                       )
                                     }
                                   />
-                                  {extraFloorErrors?.occupancyTypeMasterId && <Text style={styles.errorText}>{extraFloorErrors.occupancyTypeMasterId}</Text>}
+                                  {extraFloorErrors?.occupancyTypeMasterId && <Text selectable style={styles.errorText}>{extraFloorErrors.occupancyTypeMasterId}</Text>}
 
-                                  <Text style={styles.label}>Usage Type</Text>
+                                  <Text selectable style={styles.label}>Usage Type</Text>
                                   <Dropdown
                                     style={[styles.dropdown, extraFloorErrors?.usageTypeMasterId && styles.errorBorder]}
                                     placeholderStyle={styles.placeholder}
@@ -765,9 +766,9 @@ console.log("isPreviewModal",formData)
                                       handleExtraFloorChange(floor.index, 'usageTypeMasterId', item.value)
                                     }
                                   />
-                                  {extraFloorErrors?.usageTypeMasterId && <Text style={styles.errorText}>{extraFloorErrors.usageTypeMasterId}</Text>}
+                                  {extraFloorErrors?.usageTypeMasterId && <Text selectable style={styles.errorText}>{extraFloorErrors.usageTypeMasterId}</Text>}
 
-                                  <Text style={styles.label}>Built-up Area</Text>
+                                  <Text selectable style={styles.label}>Built-up Area</Text>
                                   <TextInput
                                     style={[styles.input,extraFloorErrors?.builtupArea && styles.errorBorder]}
                                     placeholder="Enter built-up area"
@@ -778,14 +779,14 @@ console.log("isPreviewModal",formData)
                                     }
                                     keyboardType="numeric"
                                   />
-                                  {extraFloorErrors?.builtupArea && <Text style={styles.errorText}>{extraFloorErrors.builtupArea}</Text>}
+                                  {extraFloorErrors?.builtupArea && <Text selectable style={styles.errorText}>{extraFloorErrors.builtupArea}</Text>}
                                 </View>
 
                                 <View style={styles.inputContainer}>
-                                  <Text style={styles.staticValueLabel}>Date From:</Text>
+                                  <Text selectable style={styles.staticValueLabel}>Date From:</Text>
                                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     {/* Touchable area to open picker */}
-                                    <TouchableOpacity
+                                    <CopyableTouchableOpacity
                                       style={[styles.input, { flex: 1 },extraFloorErrors?.dateFrom && styles.errorBorder]}
                                       // Use floor.index for identification
                                       onPress={() => handleExtraFloorChange(floor.index, 'showFromPicker', true)}
@@ -798,20 +799,20 @@ console.log("isPreviewModal",formData)
                                           })
                                           : 'Select Date'}
                                       </Text>
-                                    </TouchableOpacity>
+                                    </CopyableTouchableOpacity>
 
                                     {/* ❌ Clear button — only show if date selected */}
                                     {floor.dateFrom ? (
-                                      <TouchableOpacity
+                                      <CopyableTouchableOpacity
                                         // Use floor.index for identification
                                         onPress={() => handleExtraFloorChange(floor.index, 'dateFrom', null)}
                                         style={styles.clearBtn}
                                       >
                                         <Text style={styles.clearBtnText}>✕</Text>
-                                      </TouchableOpacity>
+                                      </CopyableTouchableOpacity>
                                     ) : null}
                                   </View>
-                                  {extraFloorErrors?.dateFrom && <Text style={styles.errorText}>{extraFloorErrors.dateFrom}</Text>}
+                                  {extraFloorErrors?.dateFrom && <Text selectable style={styles.errorText}>{extraFloorErrors.dateFrom}</Text>}
                                   {floor.showFromPicker && (
 
                                     <MonthPicker
@@ -830,10 +831,10 @@ console.log("isPreviewModal",formData)
                                 </View>
 
                                 <View style={styles.inputContainer}>
-                                  <Text style={styles.staticValueLabel}>Date Upto:</Text>
+                                  <Text selectable style={styles.staticValueLabel}>Date Upto:</Text>
                                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     {/* Touchable area to open picker */}
-                                    <TouchableOpacity
+                                    <CopyableTouchableOpacity
                                       style={[styles.input, { flex: 1 },extraFloorErrors?.dateUpto && styles.errorBorder]}
                                       // Use floor.index for identification
                                       onPress={() => handleExtraFloorChange(floor.index, 'showUptoPicker', true)}
@@ -846,20 +847,20 @@ console.log("isPreviewModal",formData)
                                           })
                                           : 'Select Date'}
                                       </Text>
-                                    </TouchableOpacity>
+                                    </CopyableTouchableOpacity>
 
                                     {/* ❌ Clear button — only show if date selected */}
                                     {floor.dateUpto ? (
-                                      <TouchableOpacity
+                                      <CopyableTouchableOpacity
                                         // Use floor.index for identification
                                         onPress={() => handleExtraFloorChange(floor.index, 'dateUpto', null)}
                                         style={styles.clearBtn}
                                       >
                                         <Text style={styles.clearBtnText}>✕</Text>
-                                      </TouchableOpacity>
+                                      </CopyableTouchableOpacity>
                                     ) : null}
                                   </View>
-                                  {extraFloorErrors?.dateUpto && <Text style={styles.errorText}>{extraFloorErrors.dateUpto}</Text>}
+                                  {extraFloorErrors?.dateUpto && <Text selectable style={styles.errorText}>{extraFloorErrors.dateUpto}</Text>}
                                   {floor.showUptoPicker && (
 
                                     <MonthPicker
@@ -881,12 +882,12 @@ console.log("isPreviewModal",formData)
                           )}
 
                           {/* Add Floor Button */}
-                          <TouchableOpacity
+                          <CopyableTouchableOpacity
                             style={styles.addButton}
                             onPress={addFloor}
                           >
                             <Text style={styles.addButtonText}>+ Add Another Floor</Text>
-                          </TouchableOpacity>
+                          </CopyableTouchableOpacity>
                         </>
                       )}
                     </View>
@@ -1096,12 +1097,12 @@ console.log("isPreviewModal",formData)
             )}
 
             <View style={styles.buttonRow}>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                   style={styles.button1} 
                   onPress={() => {validateData()}}
               >
                   <Text style={styles.surveyButtonText}>Preview</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
           </View>
           </>

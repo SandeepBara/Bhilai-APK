@@ -17,6 +17,7 @@ import {
   InMemory,
 } from '@linvix-sistemas/react-native-escpos-buffer';
 import { useBluetoothPrinter } from '../../../../utils/BluetoothService';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
   console.log('reciept data', receiptData);
@@ -247,77 +248,77 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
         <View style={styles.modalContent}>
           <ScrollView nestedScrollEnabled>
             {/* Close Button */}
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
               <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             {/* Title */}
-            <Text style={styles.mainTitle}>Payment Receipt</Text>
-            <Text style={styles.modalTitle}>
+            <Text selectable style={styles.mainTitle}>Payment Receipt</Text>
+            <Text selectable style={styles.modalTitle}>
               {receiptData?.ulbDtl?.ulbName || 'Municipal Corporation'}
             </Text>
 
             <View style={styles.receiptContainer}>
-              <Text style={styles.receiptTitle}>
+              <Text selectable style={styles.receiptTitle}>
                 Water Connection Charge Payment Receipt
               </Text>
 
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Receipt No:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Receipt No:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.tranNo || 'N/A'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Date:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Date:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.tranDate || 'N/A'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Ward No:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Ward No:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.wardNo || 'N/A'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>New Ward No:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>New Ward No:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.newWardNo || 'N/A'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Received From:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Received From:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.ownerName || 'N/A'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Address:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Address:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.address || 'N/A'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Amount:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Amount:</Text>
+                <Text selectable style={styles.infoValue}>
                   ₹ {receiptData?.amount || '0.00'}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>In Words:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>In Words:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.amountInWords || ''}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Towards:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Towards:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.accountDescription || ''}
                 </Text>
               </View>
               <View style={styles.infoRow}>
-                <Text style={styles.infoLabel}>Via:</Text>
-                <Text style={styles.infoValue}>
+                <Text selectable style={styles.infoLabel}>Via:</Text>
+                <Text selectable style={styles.infoValue}>
                   {receiptData?.paymentMode || 'Cash'}
                 </Text>
               </View>
@@ -326,19 +327,19 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
               <View style={styles.receiptTable}>
                 {/* Table Header */}
                 <View style={styles.receiptTableHeader}>
-                  <Text style={styles.receiptTableHeaderText}>Description</Text>
+                  <Text selectable style={styles.receiptTableHeaderText}>Description</Text>
 
-                  <Text style={styles.receiptTableHeaderText}>Amount</Text>
+                  <Text selectable style={styles.receiptTableHeaderText}>Amount</Text>
                 </View>
 
                 {/* Collection Details */}
                 {(receiptData?.collection || []).map((item, index) => (
                   <View style={styles.receiptTableRow} key={`col-${index}`}>
-                    <Text style={styles.receiptTableCell}>
+                    <Text selectable style={styles.receiptTableCell}>
                       {item?.demand?.chargeFor || 'N/A'}
                     </Text>
 
-                    <Text style={styles.receiptTableCell}>
+                    <Text selectable style={styles.receiptTableCell}>
                       ₹ {item?.amount}
                     </Text>
                   </View>
@@ -353,11 +354,11 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                     ]}
                     key={`fine-${index}`}
                   >
-                    <Text style={styles.receiptTableCell}>
+                    <Text selectable style={styles.receiptTableCell}>
                       {fine?.headName}
                     </Text>
 
-                    <Text
+                    <Text selectable
                       style={[
                         styles.receiptTableCell,
                         { color: fine?.isRebate ? 'green' : 'red' },
@@ -367,7 +368,7 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                     </Text>
                   </View>
                 ))}
-                <Text style={styles.receiptTotal}>
+                <Text selectable style={styles.receiptTotal}>
                   Total Paid Amount: ₹ {receiptData?.amount || '0.00'}
                 </Text>
               </View>
@@ -382,7 +383,7 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                 </View>
               )}
 
-              <Text style={styles.receiptNote}>
+              <Text selectable style={styles.receiptNote}>
                 ** This is a computer-generated receipt and does not require
                 signature. **
               </Text>
@@ -390,11 +391,11 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
             {/* Download / Print Button */}
             <View style={styles.buttonContainer}>
               {connectedDevice && (
-                <Text style={styles.connectedText}>
+                <Text selectable style={styles.connectedText}>
                   Connected: {connectedDevice.name}
                 </Text>
               )}
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={styles.printBtn}
                 onPress={printReceipt}
                 disabled={printing}
@@ -406,9 +407,9 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                     {connectedDevice ? 'Print Receipt' : 'Connect & Print'}
                   </Text>
                 )}
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={styles.scanBtn}
                 onPress={handleScanForDevices}
                 disabled={scanning}
@@ -420,7 +421,7 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                     {connectedDevice ? 'Change Printer' : 'Scan for Printers'}
                   </Text>
                 )}
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </ScrollView>
         </View>
@@ -436,24 +437,24 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
         <View style={styles.overlay}>
           <View style={styles.printerModalContent}>
             <View style={styles.printerModalHeader}>
-              <Text style={styles.printerModalTitle}>
+              <Text selectable style={styles.printerModalTitle}>
                 Select Bluetooth Printer
               </Text>
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 onPress={() => setShowPrinterModal(false)}
                 style={styles.closeIconBtn}
               >
                 <Text style={styles.closeText}>Close</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
 
             <ScrollView style={styles.printerList}>
               {/* Paired Devices */}
               {pairedDevices && (
                 <>
-                  <Text style={styles.sectionTitle}>Paired Devices</Text>
+                  <Text selectable style={styles.sectionTitle}>Paired Devices</Text>
                   {pairedDevices.map((device, index) => (
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       key={`paired-${index}`}
                       style={[
                         styles.deviceItem,
@@ -476,7 +477,7 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                       ) : connectedDevice?.address === device.address ? (
                         <Text style={styles.connectedTag}>Connected</Text>
                       ) : null}
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   ))}
                 </>
               )}
@@ -484,9 +485,9 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
               {/* Scanned Devices */}
               {bluetoothDevices.length > 0 && (
                 <>
-                  <Text style={styles.sectionTitle}>Available Devices</Text>
+                  <Text selectable style={styles.sectionTitle}>Available Devices</Text>
                   {bluetoothDevices.map((device, index) => (
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       key={`scanned-${index}`}
                       style={styles.deviceItem}
                       onPress={() => handleConnectToPrinter(device)}
@@ -503,24 +504,24 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                       {connecting && (
                         <ActivityIndicator size="small" color="#1E40AF" />
                       )}
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                   ))}
                 </>
               )}
 
               {pairedDevices.length === 0 && bluetoothDevices.length === 0 && (
                 <View style={styles.emptyState}>
-                  <Text style={styles.emptyText}>
+                  <Text selectable style={styles.emptyText}>
                     No Bluetooth devices found.
                   </Text>
-                  <Text style={styles.emptySubtext}>
+                  <Text selectable style={styles.emptySubtext}>
                     Make sure your printer is turned on and paired.
                   </Text>
                 </View>
               )}
             </ScrollView>
 
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.rescanBtn}
               onPress={handleScanForDevices}
               disabled={scanning}
@@ -530,7 +531,7 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
               ) : (
                 <Text style={styles.rescanText}>Rescan Devices</Text>
               )}
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         </View>
       </Modal>

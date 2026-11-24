@@ -18,6 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../config';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const DashBoard = ({ navigation }) => {
   const [data, setData] = useState(null);
@@ -108,7 +109,7 @@ const DashBoard = ({ navigation }) => {
   const renderMenuItems = () => {
     console.log('Rendering menu items:', menuItems);
     return menuItems.map((item, index) => (
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         key={index}
         style={styles.box}
         onPress={() => handleMenuPress(item)}
@@ -119,7 +120,7 @@ const DashBoard = ({ navigation }) => {
           color="#4A90E2" 
         />
         <Text style={styles.boxText}>{item.name}</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     ));
   };
 
@@ -128,7 +129,7 @@ const DashBoard = ({ navigation }) => {
       <View style={styles.maindashbaord}>
         <Header />
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text selectable style={styles.loadingText}>Loading...</Text>
         </View>
       </View>
     );
@@ -145,7 +146,7 @@ const DashBoard = ({ navigation }) => {
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>End of Dashboard</Text>
+        <Text selectable style={styles.footerText}>End of Dashboard</Text>
       </View>
     </View>
   );

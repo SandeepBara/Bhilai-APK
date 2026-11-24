@@ -17,6 +17,7 @@ import PrintButton from '../../../../Components/PrintButton';
 import Toast from 'react-native-toast-message';
 import { showToast } from '../../../../utils/toast';
 import { toastConfig } from '../../../../utils/toastConfig';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const { width, height } = Dimensions.get('window');
 
@@ -83,14 +84,14 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
             />
 
             {/* Download Button */}
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.downloadBtn}
               onPress={() => downloadPDF(item.docPath)}
             >
               <Text style={styles.downloadText}>Download PDF</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             <View style={{ padding: 20 }}>
-              <Text style={{}}>Documents</Text>
+              <Text selectable style={{}}>Documents</Text>
               <PrintButton fileUrl={item.docPath} title="Print" />
             </View>
           </View>
@@ -116,36 +117,36 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
         {/* Document List Modal */}
         <View style={styles.modalContent}>
           <ScrollView>
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
               <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <Text style={styles.mainTitle}>Uploaded Documents</Text>
+            <Text selectable style={styles.mainTitle}>Uploaded Documents</Text>
 
             <View style={styles.sectionContainer}>
               {documents?.length > 0 ? (
                 documents.map((doc, index) => (
                   <View key={index} style={styles.documentItem}>
                     <View style={{ flex: 1 }}>
-                      <Text style={styles.documentName}>
+                      <Text selectable style={styles.documentName}>
                         {doc.docName} ({doc.ownerName || 'N/A'})
                       </Text>
-                      <Text style={styles.documentDate}>
+                      <Text selectable style={styles.documentDate}>
                         Uploaded By: {doc.uploadedBy || 'N/A'}
                       </Text>
-                      <Text style={styles.documentDate}>
+                      <Text selectable style={styles.documentDate}>
                         Owner: {doc.ownerName || 'N/A'}
                       </Text>
-                      <Text style={styles.documentDate}>
+                      <Text selectable style={styles.documentDate}>
                         Uploaded At: {doc.createdAt?.split('T')[0] || 'N/A'}
                       </Text>
                       {doc.verifiedAt && (
-                        <Text style={styles.documentDate}>
+                        <Text selectable style={styles.documentDate}>
                           Verified At: {doc.verifiedAt}
                         </Text>
                       )}
 
-                      <Text
+                      <Text selectable
                         style={[
                           styles.documentStatus,
                           {
@@ -166,17 +167,17 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
                       </Text>
 
                       {/* View Button */}
-                      <TouchableOpacity
+                      <CopyableTouchableOpacity
                         style={styles.viewBtn}
                         onPress={() => openPreview(index)}
                       >
                         <Text style={styles.viewBtnText}>View</Text>
-                      </TouchableOpacity>
+                      </CopyableTouchableOpacity>
                     </View>
                   </View>
                 ))
               ) : (
-                <Text style={{ textAlign: 'center', color: '#666' }}>
+                <Text selectable style={{ textAlign: 'center', color: '#666' }}>
                   No Documents Uploaded
                 </Text>
               )}
@@ -192,12 +193,12 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
           presentationStyle="overFullScreen"
         >
           <View style={styles.previewOverlay}>
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.previewCloseBtn}
               onPress={() => setPreviewVisible(false)}
             >
               <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
             <FlatList
               ref={flatListRef}

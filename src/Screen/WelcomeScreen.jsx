@@ -51,8 +51,8 @@ const WelcomeScreen = ({ navigation }) => {
 
         {/* BOTTOM - WELCOME TEXT */}
         <View style={styles.footerSection}>
-          <Text style={styles.title}>Welcome to</Text>
-          <Text style={styles.appName}>Bhilai Municipal App</Text>
+          <Text selectable style={styles.title}>Welcome to</Text>
+          <Text selectable style={styles.appName}>Bhilai Municipal App</Text>
         </View>
       </Animated.View>
     </ImageBackground>

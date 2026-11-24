@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const MessageModal = ({ visible, type, message, onClose }) => {
   return (
@@ -16,13 +17,13 @@ const MessageModal = ({ visible, type, message, onClose }) => {
             type === 'success' ? styles.success : styles.error,
           ]}
         >
-          <Text style={styles.title}>
+          <Text selectable style={styles.title}>
             {type === 'success' ? 'Success' : 'Error'}
           </Text>
-          <Text style={styles.message}>{message}</Text>
-          <TouchableOpacity style={styles.button} onPress={onClose}>
+          <Text selectable style={styles.message}>{message}</Text>
+          <CopyableTouchableOpacity style={styles.button} onPress={onClose}>
             <Text style={styles.buttonText}>OK</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
         </View>
       </View>
     </Modal>

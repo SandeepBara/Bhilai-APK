@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native'; // ✅ Import navigation hook
 import Colors from '../Module/Constants/Colors';
+import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 
 const FooterSection = () => {
   const navigation = useNavigation(); // ✅ Initialize navigation
@@ -11,29 +12,29 @@ const FooterSection = () => {
     <View style={styles.footerContainer}>
       {/* Navigation Icons */}
       <View style={styles.iconRow}>
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           onPress={() => navigation.navigate('DashBoard')} // 👈 navigate to Home
           style={styles.iconButton}
         >
           <Icon name="home" size={24} color="#E8F5E9" />
           <Text style={styles.iconLabel}>Home</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           onPress={() => navigation.navigate('ProfilePage')} // 👈 navigate to Profile
           style={styles.iconButton}
         >
           <Icon name="user" size={24} color="#E8F5E9" />
           <Text style={styles.iconLabel}>Profile</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           onPress={() => navigation.navigate('Report')} // 👈 navigate to Report
           style={styles.iconButton}
         >
           <Icon name="file-text" size={24} color="#E8F5E9" />
           <Text style={styles.iconLabel}>Report</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
     </View>
   );

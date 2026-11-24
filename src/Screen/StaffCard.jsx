@@ -79,11 +79,11 @@ const staffData = [
 const StaffCard = ({ item }) => (
   <View style={styles.card}>
     <View>
-      <Text style={styles.name}>Owner: {item.owner}</Text>
-      <Text style={styles.detail}>Staff No: {item.wardNo}</Text>
-      <Text style={styles.detail}>Ward No: {item.wardNo}</Text>
-      <Text style={styles.detail}>Graduation: {item.grad}</Text>
-      <Text style={styles.detail}>Address: {item.address}</Text>
+      <Text selectable style={styles.name}>Owner: {item.owner}</Text>
+      <Text selectable style={styles.detail}>Staff No: {item.wardNo}</Text>
+      <Text selectable style={styles.detail}>Ward No: {item.wardNo}</Text>
+      <Text selectable style={styles.detail}>Graduation: {item.grad}</Text>
+      <Text selectable style={styles.detail}>Address: {item.address}</Text>
     </View>
     <TouchableOpacity
       style={styles.iconButton}

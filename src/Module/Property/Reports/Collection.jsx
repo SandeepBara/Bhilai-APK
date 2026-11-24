@@ -23,6 +23,7 @@ import { getToken } from '../../../utils/auth';
 import { useMasterData } from '../../../Context/MasterDataContext';
 import Pagination from '../../../Components/Pagination';
 import PaymentReceiptModal from '../Saf/PaymentReceiptModal';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 const CollectionReport = () => {
   const [wardOptions, setWardOptions] = useState([]);
 
@@ -132,33 +133,33 @@ const CollectionReport = () => {
 
   const TableHeader = () => (
     <View style={styles.tableHeader}>
-      <Text style={[styles.tableHeaderCell, { width: 100 }]}>SAF No</Text>
-      <Text style={[styles.tableHeaderCell, { width: 120 }]}>Owner</Text>
-      <Text style={[styles.tableHeaderCell, { width: 100 }]}>Mobile</Text>
-      <Text style={[styles.tableHeaderCell, { width: 60 }]}>Ward</Text>
-      <Text style={[styles.tableHeaderCell, { width: 100 }]}>Payment Mode</Text>
-      <Text style={[styles.tableHeaderCell, { width: 80 }]}>Demand</Text>
-      <Text style={[styles.tableHeaderCell, { width: 80 }]}>Payable</Text>
-      <Text style={[styles.tableHeaderCell, { width: 120 }]}>Tran No</Text>
-      <Text style={[styles.tableHeaderCell, { width: 100 }]}>Date</Text>
-      <Text style={[styles.tableHeaderCell, { width: 120 }]}>Collected By</Text>
-      <Text style={[styles.tableHeaderCell, { width: 70 }]}>Action</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 100 }]}>SAF No</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 120 }]}>Owner</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 100 }]}>Mobile</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 60 }]}>Ward</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 100 }]}>Payment Mode</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 80 }]}>Demand</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 80 }]}>Payable</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 120 }]}>Tran No</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 100 }]}>Date</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 120 }]}>Collected By</Text>
+      <Text selectable style={[styles.tableHeaderCell, { width: 70 }]}>Action</Text>
     </View>
   );
 
   const renderItem = ({ item }) => (
     <View style={styles.tableRow}>
-      <Text style={[styles.tableCell, { width: 100 }]}>{item.safNo}</Text>
-      <Text style={[styles.tableCell, { width: 120 }]}>{item.ownerName}</Text>
-      <Text style={[styles.tableCell, { width: 100 }]}>{item.mobileNo}</Text>
-      <Text style={[styles.tableCell, { width: 60 }]}>{item.wardNo}</Text>
-      <Text style={[styles.tableCell, { width: 100 }]}>{item.paymentMode}</Text>
-      <Text style={[styles.tableCell, { width: 80 }]}>{item.demandAmt}</Text>
-      <Text style={[styles.tableCell, { width: 80 }]}>{item.payableAmt}</Text>
-      <Text style={[styles.tableCell, { width: 120 }]}>{item.tranNo}</Text>
-      <Text style={[styles.tableCell, { width: 100 }]}>{item.tranDate}</Text>
-      <Text style={[styles.tableCell, { width: 120 }]}>{item.userName}</Text>
-      <TouchableOpacity
+      <Text selectable style={[styles.tableCell, { width: 100 }]}>{item.safNo}</Text>
+      <Text selectable style={[styles.tableCell, { width: 120 }]}>{item.ownerName}</Text>
+      <Text selectable style={[styles.tableCell, { width: 100 }]}>{item.mobileNo}</Text>
+      <Text selectable style={[styles.tableCell, { width: 60 }]}>{item.wardNo}</Text>
+      <Text selectable style={[styles.tableCell, { width: 100 }]}>{item.paymentMode}</Text>
+      <Text selectable style={[styles.tableCell, { width: 80 }]}>{item.demandAmt}</Text>
+      <Text selectable style={[styles.tableCell, { width: 80 }]}>{item.payableAmt}</Text>
+      <Text selectable style={[styles.tableCell, { width: 120 }]}>{item.tranNo}</Text>
+      <Text selectable style={[styles.tableCell, { width: 100 }]}>{item.tranDate}</Text>
+      <Text selectable style={[styles.tableCell, { width: 120 }]}>{item.userName}</Text>
+      <CopyableTouchableOpacity
         style={{
           width: 70,
           backgroundColor: '#a1a3edff',
@@ -170,7 +171,7 @@ const CollectionReport = () => {
         onPress={() => apShowReceipt(item)}
       >
         <Text style={styles.tableCell}>View</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
     </View>
   );
   return (
@@ -181,13 +182,13 @@ const CollectionReport = () => {
       <View style={styles.searchCard}>
         <View style={styles.row}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>From Date</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.label}>From Date</Text>
+            <CopyableTouchableOpacity
               style={styles.input}
               onPress={() => setShowFromPicker(true)}
             >
               <Text>{fromDate.toLocaleDateString()}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             {showFromPicker && (
               <DateTimePicker
                 value={fromDate}
@@ -202,13 +203,13 @@ const CollectionReport = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>To Date</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.label}>To Date</Text>
+            <CopyableTouchableOpacity
               style={styles.input}
               onPress={() => setShowToPicker(true)}
             >
               <Text>{toDate.toLocaleDateString()}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             {showToPicker && (
               <DateTimePicker
                 value={toDate}
@@ -225,7 +226,7 @@ const CollectionReport = () => {
 
         <View style={styles.row}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Collector</Text>
+            <Text selectable style={styles.label}>Collector</Text>
             <Dropdown
               data={collectorOptions}
               labelField="label"
@@ -238,7 +239,7 @@ const CollectionReport = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Ward</Text>
+            <Text selectable style={styles.label}>Ward</Text>
             <Dropdown
               data={wardOptions}
               labelField="label"
@@ -253,7 +254,7 @@ const CollectionReport = () => {
 
         <View style={styles.row}>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Payment Mode</Text>
+            <Text selectable style={styles.label}>Payment Mode</Text>
             <Dropdown
               data={paymentModeOptions}
               labelField="label"
@@ -266,12 +267,12 @@ const CollectionReport = () => {
           </View>
         </View>
 
-        <TouchableOpacity
+        <CopyableTouchableOpacity
           style={styles.cardSearchButton}
           onPress={handleSearch}
         >
           <Text style={styles.cardSearchText}>Search</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       </View>
 
       {/* Table List */}

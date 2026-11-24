@@ -25,6 +25,7 @@ import {
   submitGeotaggedImages,
   sendToLevel,
 } from '../Holdings/Surveysubmission/submissionApi';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const VerifiedStatus = ({ route }) => {
   const [isULBUser, setIsULBUser] = useState(false);
@@ -239,7 +240,7 @@ const VerifiedStatus = ({ route }) => {
     if (!submissionData?.extraFloors) return null;
     return submissionData.extraFloors.map((floor, idx) => (
       <View key={idx} style={styles.extraFloorCard}>
-        <Text style={styles.extraFloorTitle}>
+        <Text selectable style={styles.extraFloorTitle}>
           Extra Floor {idx + 1} Details
         </Text>
         {[
@@ -252,10 +253,10 @@ const VerifiedStatus = ({ route }) => {
           'dateUpto',
         ].map(field => (
           <View style={styles.floorRow} key={field}>
-            <Text style={styles.floorLabel}>
+            <Text selectable style={styles.floorLabel}>
               {field.replace(/([A-Z])/g, ' $1')}:
             </Text>
-            <Text style={styles.floorValue}>
+            <Text selectable style={styles.floorValue}>
               {field.includes('Date')
                 ? parseDate(floor[field])
                 : floor[field] || 'N/A'}
@@ -269,7 +270,7 @@ const VerifiedStatus = ({ route }) => {
   return (
     <ScrollView style={styles.container}>
       <HeaderNavigation />
-      <Text style={styles.title}>Preview Details</Text>
+      <Text selectable style={styles.title}>Preview Details</Text>
 
       {submissionData ? (
         <>
@@ -325,7 +326,7 @@ const VerifiedStatus = ({ route }) => {
           />
           {submissionData?.propTypeMstrId != 4 && floorIds?.length > 0 && (
             <>
-              <Text style={styles.sectionTitle}>Floor Details</Text>
+              <Text selectable style={styles.sectionTitle}>Floor Details</Text>
               {floorIds.map((floor, index) => (
                 <SubmissionCard
                   key={index}
@@ -454,9 +455,9 @@ const VerifiedStatus = ({ route }) => {
               {(submissionData['Remarks'] ||
                 submissionData['Remarks (Preview)']) && (
                 <View style={styles.remarksContainer}>
-                  <Text style={styles.remarksTitle}>Remarks</Text>
+                  <Text selectable style={styles.remarksTitle}>Remarks</Text>
                   <View style={styles.remarksBox}>
-                    <Text style={styles.remarksText}>
+                    <Text selectable style={styles.remarksText}>
                       {submissionData['Remarks'] ||
                         submissionData['Remarks (Preview)'] ||
                         'No remarks'}
@@ -467,12 +468,12 @@ const VerifiedStatus = ({ route }) => {
 
               {/* Location & Photos */}
               <View style={styles.locationPhotoCard}>
-                <Text style={styles.locationPhotoTitle}>Photo & Location</Text>
+                <Text selectable style={styles.locationPhotoTitle}>Photo & Location</Text>
                 {loadingLocation ? (
                   <ActivityIndicator size="large" color="#007AFF" />
                 ) : !location ? (
                   <>
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                       style={styles.getLocationButton}
                       onPress={() => {
                         getLocationPermission().then(granted => {
@@ -505,26 +506,26 @@ const VerifiedStatus = ({ route }) => {
                       <Text style={styles.getLocationButtonText}>
                         📍 Get Current Location
                       </Text>
-                    </TouchableOpacity>
-                    <Text style={styles.locationHelpText}>
+                    </CopyableTouchableOpacity>
+                    <Text selectable style={styles.locationHelpText}>
                       * Location is required before capturing photos
                     </Text>
                   </>
                 ) : (
                   <View style={styles.locationInfo}>
-                    <Text style={styles.locationLabel}>
+                    <Text selectable style={styles.locationLabel}>
                       📍 Location Captured
                     </Text>
                     <View style={styles.coordinatesBox}>
                       <View style={styles.coordinateRow}>
-                        <Text style={styles.coordinateLabel}>Latitude:</Text>
-                        <Text style={styles.coordinateValue}>
+                        <Text selectable style={styles.coordinateLabel}>Latitude:</Text>
+                        <Text selectable style={styles.coordinateValue}>
                           {location.latitude.toFixed(6)}
                         </Text>
                       </View>
                       <View style={styles.coordinateRow}>
-                        <Text style={styles.coordinateLabel}>Longitude:</Text>
-                        <Text style={styles.coordinateValue}>
+                        <Text selectable style={styles.coordinateLabel}>Longitude:</Text>
+                        <Text selectable style={styles.coordinateValue}>
                           {location.longitude.toFixed(6)}
                         </Text>
                       </View>
@@ -546,7 +547,7 @@ const VerifiedStatus = ({ route }) => {
                             : setFront;
                         return (
                           <View key={side} style={styles.photoItem}>
-                            <Text style={styles.photoLabel}>
+                            <Text selectable style={styles.photoLabel}>
                               {side.charAt(0).toUpperCase() + side.slice(1)}
                             </Text>
                             {photo ? (
@@ -555,15 +556,15 @@ const VerifiedStatus = ({ route }) => {
                                   source={{ uri: photo.uri }}
                                   style={styles.photoImage}
                                 />
-                                <TouchableOpacity
+                                <CopyableTouchableOpacity
                                   style={styles.photoDeleteButton}
                                   onPress={() => setPhoto(null)}
                                 >
                                   <Text style={styles.photoDeleteText}>✕</Text>
-                                </TouchableOpacity>
+                                </CopyableTouchableOpacity>
                               </View>
                             ) : (
-                              <TouchableOpacity
+                              <CopyableTouchableOpacity
                                 style={styles.captureButton}
                                 onPress={() => capturePhoto(side)}
                               >
@@ -571,7 +572,7 @@ const VerifiedStatus = ({ route }) => {
                                 <Text style={styles.captureButtonText}>
                                   Capture
                                 </Text>
-                              </TouchableOpacity>
+                              </CopyableTouchableOpacity>
                             )}
                           </View>
                         );
@@ -584,10 +585,10 @@ const VerifiedStatus = ({ route }) => {
           )}
         </>
       ) : (
-        <Text>No submission data.</Text>
+        <Text selectable>No submission data.</Text>
       )}
 
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={[styles.button, isSubmitting && styles.disabledButton]}
         onPress={handleSubmit}
         disabled={isSubmitting}
@@ -597,7 +598,7 @@ const VerifiedStatus = ({ route }) => {
         ) : (
           <Text style={styles.buttonText}>Submit</Text>
         )}
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
 
       <SubmissionModal
         visible={showModal}
@@ -614,13 +615,13 @@ const VerifiedStatus = ({ route }) => {
 
 const SubmissionCard = ({ title, rows, isHide = false }) => (
   <View style={styles.tableCard}>
-    <Text style={styles.tableTitle}>{title}</Text>
+    <Text selectable style={styles.tableTitle}>{title}</Text>
     <View style={[styles.tableRow, styles.tableHeader]}>
-      <Text style={[styles.tableCellLabel, styles.tableHeaderText]}>Field</Text>
-      <Text style={[styles.tableCellValue, styles.tableHeaderText]}>
+      <Text selectable style={[styles.tableCellLabel, styles.tableHeaderText]}>Field</Text>
+      <Text selectable style={[styles.tableCellValue, styles.tableHeaderText]}>
         Current Value
       </Text>
-      <Text style={[styles.tableCellValue, styles.tableHeaderText]}>
+      <Text selectable style={[styles.tableCellValue, styles.tableHeaderText]}>
         Verified Value
       </Text>
     </View>
@@ -632,9 +633,9 @@ const SubmissionCard = ({ title, rows, isHide = false }) => (
           index % 2 === 0 ? styles.tableRowEven : styles.tableRowOdd,
         ]}
       >
-        <Text style={styles.tableCellLabel}>{row.label}</Text>
+        <Text selectable style={styles.tableCellLabel}>{row.label}</Text>
         {isHide == false && (
-          <Text style={styles.tableCellValue}>
+          <Text selectable style={styles.tableCellValue}>
             {String(row.verifiedValue || 'N/A')}
           </Text>
         )}
@@ -644,7 +645,7 @@ const SubmissionCard = ({ title, rows, isHide = false }) => (
           {String(row.verifiedValue || 'N/A')}
         </Text> */}
 
-        <Text style={styles.tableCellValue}>{String(row.value || 'N/A')}</Text>
+        <Text selectable style={styles.tableCellValue}>{String(row.value || 'N/A')}</Text>
       </View>
     ))}
   </View>

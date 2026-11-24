@@ -22,9 +22,9 @@ export default function App() {
       />
 
       {state.error ? (
-        <Text style={styles.error}>{state.error}</Text>
+        <Text selectable style={styles.error}>{state.error}</Text>
       ) : (
-        <Text>{state.focused ? "Focused" : "Blurred"}</Text>
+        <Text selectable>{state.focused ? "Focused" : "Blurred"}</Text>
       )}
     </View>
   );

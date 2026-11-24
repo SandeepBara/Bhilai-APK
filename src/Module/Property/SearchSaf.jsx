@@ -10,6 +10,7 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import Colors from '../../../Constants/Colors';
 import { safSearchApi } from '../../../api/endpoint';
 import { statusColor } from '../../../utils/common';
+import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
 function SearchSaf() {
     const navigation = useNavigation();
@@ -69,62 +70,62 @@ function SearchSaf() {
     const renderItem = (item, index) => (
         <View key={index} style={styles.card}>
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Status:</Text>
-                <Text style={[styles.value,{fontWeight:'bold'},statusColor(item?.appStatus)]}>{item?.appStatus}</Text>
+                <Text selectable style={styles.cardLabel}>Status:</Text>
+                <Text selectable style={[styles.value,{fontWeight:'bold'},statusColor(item?.appStatus)]}>{item?.appStatus}</Text>
             </View>
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Ward No.:</Text>
-                <Text style={styles.value}>{item?.wardNo}</Text>
-            </View>
-
-            <View style={styles.row}>
-                <Text style={styles.cardLabel}>Assessment Type:</Text>
-                <Text style={styles.value}>{item?.assessmentType}</Text>
+                <Text selectable style={styles.cardLabel}>Ward No.:</Text>
+                <Text selectable style={styles.value}>{item?.wardNo}</Text>
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Property Type:</Text>
-                <Text style={styles.value}>{item?.propertyType}</Text>
+                <Text selectable style={styles.cardLabel}>Assessment Type:</Text>
+                <Text selectable style={styles.value}>{item?.assessmentType}</Text>
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Applicant Name:</Text>
-                <Text style={styles.value}>{item?.ownerName}</Text>
+                <Text selectable style={styles.cardLabel}>Property Type:</Text>
+                <Text selectable style={styles.value}>{item?.propertyType}</Text>
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Mobile No.:</Text>
-                <Text style={styles.value}>{item?.mobileNo}</Text>
+                <Text selectable style={styles.cardLabel}>Applicant Name:</Text>
+                <Text selectable style={styles.value}>{item?.ownerName}</Text>
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>SAF No.:</Text>
+                <Text selectable style={styles.cardLabel}>Mobile No.:</Text>
+                <Text selectable style={styles.value}>{item?.mobileNo}</Text>
+            </View>
+
+            <View style={styles.row}>
+                <Text selectable style={styles.cardLabel}>SAF No.:</Text>
                 <View style={styles.safRow}>
-                    <TouchableOpacity
+                    <CopyableTouchableOpacity
                         onPress={() => copyToClipboard(item?.safNo)}
                         style={styles.value}
                     >
                         <Text style={{ textDecorationLine: "underline" }} >{item?.safNo}</Text>
-                    </TouchableOpacity>
+                    </CopyableTouchableOpacity>
                 </View>
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Property Address:</Text>
-                <Text style={styles.value}>{item?.propAddress}</Text>
+                <Text selectable style={styles.cardLabel}>Property Address:</Text>
+                <Text selectable style={styles.value}>{item?.propAddress}</Text>
             </View>
 
             <View style={styles.row}>
-                <Text style={styles.cardLabel}>Apply Date:</Text>
-                <Text style={styles.value}>{item?.applyDate}</Text>
+                <Text selectable style={styles.cardLabel}>Apply Date:</Text>
+                <Text selectable style={styles.value}>{item?.applyDate}</Text>
             </View>
             <View style={styles.buttonRow}>
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                     style={styles.button1}
                     onPress={() => navigation.navigate('SafDetails', { id: item.id })}
                 >
                     <Text style={styles.surveyButtonText}>View</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
 
             </View>
         </View>
@@ -139,7 +140,7 @@ function SearchSaf() {
                 {isLoading ? (
                     <View style={styles.loaderContainer}>
                         <ActivityIndicator size="large" color={Colors.primary} />
-                        <Text style={styles.loadingText}>Loading survey data...</Text>
+                        <Text selectable style={styles.loadingText}>Loading survey data...</Text>
                     </View>
                 ) : (
                     <View style={styles.applicationList}>

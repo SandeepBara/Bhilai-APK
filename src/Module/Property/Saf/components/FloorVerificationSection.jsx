@@ -26,7 +26,7 @@ const FloorVerificationSection = ({
     >
       {floorIds.map((floor, index) => (
         <View key={floor.id} style={{ marginBottom: 20 }}>
-          <Text style={styles.floorTitle}>
+          <Text selectable style={styles.floorTitle}>
             {floor.floorName.toUpperCase()}
           </Text>
 

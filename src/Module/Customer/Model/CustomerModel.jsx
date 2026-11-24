@@ -25,6 +25,7 @@ import { CUSTOMER_API } from '../../../api/apiRoutes';
 import Colors from '../../Constants/Colors';
 import { getToken } from '../../../utils/auth';
 import axios from 'axios';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 export const ViewDemandModal = ({
   visible,
   onClose,
@@ -38,21 +39,21 @@ export const ViewDemandModal = ({
         index % 2 === 0 ? styles.rowEven : styles.rowOdd,
       ]}
     >
-      <Text style={[styles.tableCell, { flex: 1 }]}>{index + 1}</Text>
-      <Text style={[styles.tableCell, { flex: 2 }]}>{item.demandFrom}</Text>
-      <Text style={[styles.tableCell, { flex: 2 }]}>{item.demandUpto}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.amount}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>{index + 1}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 2 }]}>{item.demandFrom}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 2 }]}>{item.demandUpto}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.amount}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>
         ₹ {item.totalTax || 0}
       </Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.balance}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>{item.fromReading}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.balance}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>{item.fromReading}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>
         {item.currentMeterReading}
       </Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.unitAmount}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.latePenalty}</Text>
-      <Text
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.unitAmount}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.latePenalty}</Text>
+      <Text selectable
         style={[
           styles.tableCell,
           { flex: 1, color: item.paidStatus ? 'green' : 'red' },
@@ -68,38 +69,38 @@ export const ViewDemandModal = ({
       <View style={styles.overlay}>
         <View style={styles.modalContent}>
           <ScrollView>
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
               <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <Text style={styles.mainTitle}>Demand Details</Text>
+            <Text selectable style={styles.mainTitle}>Demand Details</Text>
 
             {/* Table Section */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <View style={{ minWidth: 700 }}>
                 {/* Table Header */}
                 <View style={[styles.rowContainer, styles.tableHeader]}>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>#</Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>#</Text>
+                  <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                     Demand From
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 2 }]}>Demand To</Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>Amount</Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>Tax</Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>Balance</Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 2 }]}>Demand To</Text>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>Amount</Text>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>Tax</Text>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>Balance</Text>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                     From Reading
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                     Current Reading
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                     Unit Amount
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                     Late Penalty
                   </Text>
-                  <Text style={[styles.tableCell, { flex: 1 }]}>Paid</Text>
+                  <Text selectable style={[styles.tableCell, { flex: 1 }]}>Paid</Text>
                 </View>
 
                 {/* Table Data */}
@@ -113,54 +114,54 @@ export const ViewDemandModal = ({
             </ScrollView>
 
             <View style={styles.paymentSummarySection}>
-              <Text style={styles.paymentTitle}>Main Demand</Text>
+              <Text selectable style={styles.paymentTitle}>Main Demand</Text>
 
               <View style={styles.paymentDetailsContainer}>
                 <View style={styles.paymentRow}>
                   <View style={styles.paymentItem}>
-                    <Text style={styles.paymentLabel}>Demand:</Text>
-                    <Text style={styles.paymentValue}>
+                    <Text selectable style={styles.paymentLabel}>Demand:</Text>
+                    <Text selectable style={styles.paymentValue}>
                       ₹{customerDeuDetails?.demandAmount || '0.00'}
                     </Text>
                   </View>
 
                   <View style={styles.paymentItem}>
-                    <Text style={[styles.paymentLabel, styles.penaltyText]}>
+                    <Text selectable style={[styles.paymentLabel, styles.penaltyText]}>
                       Penalty:
                     </Text>
-                    <Text style={[styles.paymentValue, styles.penaltyText]}>
+                    <Text selectable style={[styles.paymentValue, styles.penaltyText]}>
                       ₹{customerDeuDetails?.penaltyAmount || '0.00'}
                     </Text>
                   </View>
 
                   <View style={styles.paymentItem}>
-                    <Text style={[styles.paymentLabel, styles.penaltyText]}>
+                    <Text selectable style={[styles.paymentLabel, styles.penaltyText]}>
                       Other Penalty:
                     </Text>
-                    <Text style={[styles.paymentValue, styles.penaltyText]}>
+                    <Text selectable style={[styles.paymentValue, styles.penaltyText]}>
                       ₹{customerDeuDetails?.otherPenalty || '0.00'}
                     </Text>
                   </View>
 
                   <View style={styles.paymentItem}>
-                    <Text style={[styles.paymentLabel, styles.advanceText]}>
+                    <Text selectable style={[styles.paymentLabel, styles.advanceText]}>
                       Advance:
                     </Text>
-                    <Text style={[styles.paymentValue, styles.advanceText]}>
+                    <Text selectable style={[styles.paymentValue, styles.advanceText]}>
                       ₹{customerDeuDetails?.advanceAmount || '0.00'}
                     </Text>
                   </View>
                 </View>
 
                 <View style={styles.totalSection}>
-                  <Text style={styles.totalSectionText}>Total</Text>
+                  <Text selectable style={styles.totalSectionText}>Total</Text>
                 </View>
 
                 <View style={styles.totalPayableContainer}>
-                  <Text style={styles.totalPayableLabel}>
+                  <Text selectable style={styles.totalPayableLabel}>
                     Total Payable Amount:
                   </Text>
-                  <Text style={styles.totalPayableValue}>
+                  <Text selectable style={styles.totalPayableValue}>
                     ₹{customerDeuDetails.payableAmount || '0.00'}
                   </Text>
                 </View>
@@ -206,7 +207,7 @@ export const PaymentModal = ({
     setShowDropdown,
   }) => (
     <View style={{ position: 'relative', zIndex: showDropdown ? 1000 : 1 }}>
-      <TouchableOpacity
+      <CopyableTouchableOpacity
         style={{
           borderWidth: 1,
           borderColor: '#ccc',
@@ -218,7 +219,7 @@ export const PaymentModal = ({
         onPress={() => setShowDropdown(!showDropdown)}
       >
         <Text>{selectedValue || placeholder}</Text>
-      </TouchableOpacity>
+      </CopyableTouchableOpacity>
 
       {showDropdown && (
         <View
@@ -237,7 +238,7 @@ export const PaymentModal = ({
           }}
         >
           {options.map((option, index) => (
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               key={index}
               style={{
                 padding: 12,
@@ -250,7 +251,7 @@ export const PaymentModal = ({
               }}
             >
               <Text>{option}</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           ))}
         </View>
       )}
@@ -318,21 +319,21 @@ export const PaymentModal = ({
         index % 2 === 0 ? styles.rowEven : styles.rowOdd,
       ]}
     >
-      <Text style={[styles.tableCell, { flex: 1 }]}>{index + 1}</Text>
-      <Text style={[styles.tableCell, { flex: 2 }]}>{item.demandFrom}</Text>
-      <Text style={[styles.tableCell, { flex: 2 }]}>{item.demandUpto}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.amount}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>{index + 1}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 2 }]}>{item.demandFrom}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 2 }]}>{item.demandUpto}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.amount}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>
         ₹ {item.totalTax || 0}
       </Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.balance}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>{item.fromReading}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.balance}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>{item.fromReading}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>
         {item.currentMeterReading}
       </Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.unitAmount}</Text>
-      <Text style={[styles.tableCell, { flex: 1 }]}>₹ {item.latePenalty}</Text>
-      <Text
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.unitAmount}</Text>
+      <Text selectable style={[styles.tableCell, { flex: 1 }]}>₹ {item.latePenalty}</Text>
+      <Text selectable
         style={[
           styles.tableCell,
           { flex: 1, color: item.paidStatus ? 'green' : 'red' },
@@ -349,40 +350,40 @@ export const PaymentModal = ({
         <View style={styles.overlay}>
           <View style={styles.modalContent}>
             <ScrollView>
-              <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+              <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
                 <Text style={styles.closeText}>Close</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <Text style={styles.mainTitle}>Demand Details</Text>
+              <Text selectable style={styles.mainTitle}>Demand Details</Text>
 
               {/* Table Section */}
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={{ minWidth: 700 }}>
                   {/* Table Header */}
                   <View style={[styles.rowContainer, styles.tableHeader]}>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>#</Text>
-                    <Text style={[styles.tableCell, { flex: 2 }]}>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>#</Text>
+                    <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                       Demand From
                     </Text>
-                    <Text style={[styles.tableCell, { flex: 2 }]}>
+                    <Text selectable style={[styles.tableCell, { flex: 2 }]}>
                       Demand To
                     </Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>Amount</Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>Tax</Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>Balance</Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>Amount</Text>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>Tax</Text>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>Balance</Text>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                       From Reading
                     </Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                       Current Reading
                     </Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                       Unit Amount
                     </Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>
                       Late Penalty
                     </Text>
-                    <Text style={[styles.tableCell, { flex: 1 }]}>Paid</Text>
+                    <Text selectable style={[styles.tableCell, { flex: 1 }]}>Paid</Text>
                   </View>
 
                   {/* Table Data */}
@@ -396,60 +397,60 @@ export const PaymentModal = ({
               </ScrollView>
 
               <View style={styles.paymentSummarySection}>
-                <Text style={styles.paymentTitle}>Main Demand</Text>
+                <Text selectable style={styles.paymentTitle}>Main Demand</Text>
 
                 <View style={styles.paymentDetailsContainer}>
                   <View style={styles.paymentRow}>
                     <View style={styles.paymentItem}>
-                      <Text style={styles.paymentLabel}>Demand:</Text>
-                      <Text style={styles.paymentValue}>
+                      <Text selectable style={styles.paymentLabel}>Demand:</Text>
+                      <Text selectable style={styles.paymentValue}>
                         ₹{customerDeuDetails?.demandAmount || '0.00'}
                       </Text>
                     </View>
 
                     <View style={styles.paymentItem}>
-                      <Text style={[styles.paymentLabel, styles.penaltyText]}>
+                      <Text selectable style={[styles.paymentLabel, styles.penaltyText]}>
                         Penalty:
                       </Text>
-                      <Text style={[styles.paymentValue, styles.penaltyText]}>
+                      <Text selectable style={[styles.paymentValue, styles.penaltyText]}>
                         ₹{customerDeuDetails?.penaltyAmount || '0.00'}
                       </Text>
                     </View>
 
                     <View style={styles.paymentItem}>
-                      <Text style={[styles.paymentLabel, styles.penaltyText]}>
+                      <Text selectable style={[styles.paymentLabel, styles.penaltyText]}>
                         Other Penalty:
                       </Text>
-                      <Text style={[styles.paymentValue, styles.penaltyText]}>
+                      <Text selectable style={[styles.paymentValue, styles.penaltyText]}>
                         ₹{customerDeuDetails?.otherPenalty || '0.00'}
                       </Text>
                     </View>
 
                     <View style={styles.paymentItem}>
-                      <Text style={[styles.paymentLabel, styles.advanceText]}>
+                      <Text selectable style={[styles.paymentLabel, styles.advanceText]}>
                         Advance:
                       </Text>
-                      <Text style={[styles.paymentValue, styles.advanceText]}>
+                      <Text selectable style={[styles.paymentValue, styles.advanceText]}>
                         ₹{customerDeuDetails?.advanceAmount || '0.00'}
                       </Text>
                     </View>
                   </View>
 
                   <View style={styles.totalSection}>
-                    <Text style={styles.totalSectionText}>Total</Text>
+                    <Text selectable style={styles.totalSectionText}>Total</Text>
                   </View>
 
                   <View style={styles.totalPayableContainer}>
-                    <Text style={styles.totalPayableLabel}>
+                    <Text selectable style={styles.totalPayableLabel}>
                       Total Payable Amount:
                     </Text>
-                    <Text style={styles.totalPayableValue}>
+                    <Text selectable style={styles.totalPayableValue}>
                       ₹{customerDeuDetails.payableAmount || '0.00'}
                     </Text>
                   </View>
                 </View>
 
-                <TouchableOpacity
+                <CopyableTouchableOpacity
                   style={{
                     marginTop: 20,
                     backgroundColor: '#28a745',
@@ -462,7 +463,7 @@ export const PaymentModal = ({
                   <Text style={{ color: '#fff', fontWeight: 'bold' }}>
                     Pay Now
                   </Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
             </ScrollView>
           </View>
@@ -486,14 +487,14 @@ export const PaymentModal = ({
               borderRadius: 8,
             }}
           >
-            <Text
+            <Text selectable
               style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}
             >
               Process Payment
             </Text>
 
             <View style={styles.fieldContainer}>
-              <Text style={styles.label}>Payment Type</Text>
+              <Text selectable style={styles.label}>Payment Type</Text>
               <CustomDropdown
                 options={paymentTypeOptions}
                 selectedValue={paymentType}
@@ -505,7 +506,7 @@ export const PaymentModal = ({
             </View>
 
             <View style={styles.fieldContainer}>
-              <Text style={styles.label}>Payment Mode</Text>
+              <Text selectable style={styles.label}>Payment Mode</Text>
               <CustomDropdown
                 options={paymentModeOptions}
                 selectedValue={paymentMode}
@@ -516,7 +517,7 @@ export const PaymentModal = ({
               />
             </View>
 
-            <Text>Amount:</Text>
+            <Text selectable>Amount:</Text>
             <TextInput
               keyboardType="numeric"
               style={{ borderWidth: 1, padding: 8, marginBottom: 15 }}
@@ -527,7 +528,7 @@ export const PaymentModal = ({
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={{
                   backgroundColor: '#ccc',
                   padding: 12,
@@ -536,9 +537,9 @@ export const PaymentModal = ({
                 onPress={() => setPaymentModalVisible(false)}
               >
                 <Text>Cancel</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
 
-              <TouchableOpacity
+              <CopyableTouchableOpacity
                 style={{
                   backgroundColor: '#28a745',
                   padding: 12,
@@ -547,7 +548,7 @@ export const PaymentModal = ({
                 onPress={handleProceedPayment}
               >
                 <Text style={{ color: '#fff' }}>Proceed</Text>
-              </TouchableOpacity>
+              </CopyableTouchableOpacity>
             </View>
           </View>
         </View>
@@ -886,14 +887,14 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
             />
 
             {/* Download Button */}
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.downloadBtn}
               onPress={() => downloadPDF(item.docPath)}
             >
               <Text style={styles.downloadText}>Download PDF</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
             <View style={{ padding: 20 }}>
-              <Text style={{}}>Documents</Text>
+              <Text selectable style={{}}>Documents</Text>
               <PrintButton fileUrl={item.docPath} title="Print" />
             </View>
           </View>
@@ -919,38 +920,38 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
         {/* Document List Modal */}
         <View style={styles.modalContent}>
           <ScrollView>
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
               <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
-            <Text style={styles.mainTitle}>Uploaded Documents</Text>
+            <Text selectable style={styles.mainTitle}>Uploaded Documents</Text>
 
             <View style={styles.sectionContainer}>
               {documents?.length > 0 ? (
                 documents.map((doc, index) => (
                   <View key={index} style={styles.documentItem}>
                     <View style={{ flex: 1 }}>
-                      <Text style={styles.documentName}>
+                      <Text selectable style={styles.documentName}>
                         {doc.docName} ({doc.ownerName || 'N/A'})
                       </Text>
-                      <Text style={styles.documentDate}>
+                      <Text selectable style={styles.documentDate}>
                         Uploaded By: {doc.uploadedBy || 'N/A'}
                       </Text>
-                      <Text style={styles.documentDate}>
+                      <Text selectable style={styles.documentDate}>
                         Owner: {doc.ownerName || 'N/A'}
                       </Text>
-                      <Text style={styles.documentDate}>
+                      <Text selectable style={styles.documentDate}>
                         Uploaded At: {doc.createdAt?.split('T')[0] || 'N/A'}
                       </Text>
                       {doc.verifiedAt && (
-                        <Text style={styles.documentDate}>
+                        <Text selectable style={styles.documentDate}>
                           Verified At: {doc.verifiedAt}
                         </Text>
                       )}
                     </View>
 
                     <View style={{ alignItems: 'flex-end' }}>
-                      <Text
+                      <Text selectable
                         style={[
                           styles.documentStatus,
                           {
@@ -971,17 +972,17 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
                       </Text>
 
                       {/* View Button */}
-                      <TouchableOpacity
+                      <CopyableTouchableOpacity
                         style={styles.viewBtn}
                         onPress={() => openPreview(index)}
                       >
                         <Text style={styles.viewBtnText}>View</Text>
-                      </TouchableOpacity>
+                      </CopyableTouchableOpacity>
                     </View>
                   </View>
                 ))
               ) : (
-                <Text style={{ textAlign: 'center', color: '#666' }}>
+                <Text selectable style={{ textAlign: 'center', color: '#666' }}>
                   No Documents Uploaded
                 </Text>
               )}
@@ -997,12 +998,12 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
           presentationStyle="overFullScreen"
         >
           <View style={styles.previewOverlay}>
-            <TouchableOpacity
+            <CopyableTouchableOpacity
               style={styles.previewCloseBtn}
               onPress={() => setPreviewVisible(false)}
             >
               <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
 
             <FlatList
               ref={flatListRef}
@@ -1042,45 +1043,45 @@ export const PaymentReceiptModal1 = ({ visible, onClose, receiptData }) => (
     <View style={styles.overlay}>
       <View style={styles.modalContent}>
         <ScrollView nestedScrollEnabled>
-          <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+          <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
             <Text style={styles.closeText}>Close</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <Text style={styles.mainTitle}>Payment Receipt</Text>
-          <Text style={styles.subTitle}>
+          <Text selectable style={styles.mainTitle}>Payment Receipt</Text>
+          <Text selectable style={styles.subTitle}>
             {receiptData?.ulbDtl?.ulbName || 'Municipal Corporation'}
           </Text>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Receipt Info</Text>
+            <Text selectable style={styles.sectionTitle}>Receipt Info</Text>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Receipt No:</Text>
-              <Text style={styles.value}>{receiptData?.tranNo || 'N/A'}</Text>
+              <Text selectable style={styles.label}>Receipt No:</Text>
+              <Text selectable style={styles.value}>{receiptData?.tranNo || 'N/A'}</Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Date:</Text>
-              <Text style={styles.value}>{receiptData?.tranDate || 'N/A'}</Text>
+              <Text selectable style={styles.label}>Date:</Text>
+              <Text selectable style={styles.value}>{receiptData?.tranDate || 'N/A'}</Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Application No:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Application No:</Text>
+              <Text selectable style={styles.value}>
                 {receiptData?.applicationNo || 'N/A'}
               </Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Account:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Account:</Text>
+              <Text selectable style={styles.value}>
                 {receiptData?.accountDescription || 'N/A'}
               </Text>
             </View>
           </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Owner Details</Text>
+            <Text selectable style={styles.sectionTitle}>Owner Details</Text>
             {receiptData?.ownerDtl?.map((o, i) => (
               <View style={styles.rowContainer} key={i}>
-                <Text style={styles.label}>Owner {i + 1}:</Text>
-                <Text style={styles.value}>
+                <Text selectable style={styles.label}>Owner {i + 1}:</Text>
+                <Text selectable style={styles.value}>
                   {o.ownerName} ({o.mobileNo})
                 </Text>
               </View>
@@ -1088,16 +1089,16 @@ export const PaymentReceiptModal1 = ({ visible, onClose, receiptData }) => (
           </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Payment Details</Text>
+            <Text selectable style={styles.sectionTitle}>Payment Details</Text>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Mode:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Mode:</Text>
+              <Text selectable style={styles.value}>
                 {receiptData?.paymentMode || 'N/A'}
               </Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Status:</Text>
-              <Text
+              <Text selectable style={styles.label}>Status:</Text>
+              <Text selectable
                 style={[
                   styles.value,
                   {
@@ -1110,36 +1111,36 @@ export const PaymentReceiptModal1 = ({ visible, onClose, receiptData }) => (
               </Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Amount:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Amount:</Text>
+              <Text selectable style={styles.value}>
                 ₹ {receiptData?.amount || '0.00'}
               </Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>In Words:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>In Words:</Text>
+              <Text selectable style={styles.value}>
                 {receiptData?.amountInWords || ''}
               </Text>
             </View>
           </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Transaction</Text>
+            <Text selectable style={styles.sectionTitle}>Transaction</Text>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Payable Amount:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Payable Amount:</Text>
+              <Text selectable style={styles.value}>
                 ₹ {receiptData?.tranDtl?.payableAmt || '0.00'}
               </Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Demand Amount:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Demand Amount:</Text>
+              <Text selectable style={styles.value}>
                 ₹ {receiptData?.tranDtl?.demandAmt || '0.00'}
               </Text>
             </View>
             <View style={styles.rowContainer}>
-              <Text style={styles.label}>Penalty:</Text>
-              <Text style={styles.value}>
+              <Text selectable style={styles.label}>Penalty:</Text>
+              <Text selectable style={styles.value}>
                 ₹ {receiptData?.tranDtl?.penaltyAmt || '0.00'}
               </Text>
             </View>
@@ -1147,23 +1148,23 @@ export const PaymentReceiptModal1 = ({ visible, onClose, receiptData }) => (
 
           {receiptData?.fineRebate?.length > 0 && (
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Fine / Rebate</Text>
+              <Text selectable style={styles.sectionTitle}>Fine / Rebate</Text>
               {receiptData.fineRebate.map((f, i) => (
                 <View style={styles.rowContainer} key={i}>
-                  <Text style={styles.label}>{f.headName}:</Text>
-                  <Text style={styles.value}>₹ {f.amount}</Text>
+                  <Text selectable style={styles.label}>{f.headName}:</Text>
+                  <Text selectable style={styles.value}>₹ {f.amount}</Text>
                 </View>
               ))}
             </View>
           )}
 
-          <Text style={styles.note}>
+          <Text selectable style={styles.note}>
             Note: This is a computer-generated receipt. No physical signature is
             required.
           </Text>
 
           <TouchableOpacity style={styles.printBtn}>
-            <Text style={styles.printText}>Download / Print</Text>
+            <Text selectable style={styles.printText}>Download / Print</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -1202,35 +1203,35 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
           {/* Header with Close Button */}
           <View style={styles.header}>
-            <Text style={styles.title}>Payment Receipt</Text>
-            <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
+            <Text selectable style={styles.title}>Payment Receipt</Text>
+            <CopyableTouchableOpacity style={styles.closeBtn} onPress={onClose}>
               <Text style={styles.closeText}>✕</Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
 
           {/* Receipt Info */}
           <View style={styles.receiptInfo}>
-            <Text>
+            <Text selectable>
               Trans No: <Text style={styles.bold}>{data.tranNo || 'N/A'}</Text>
             </Text>
-            <Text>
+            <Text selectable>
               Received From:{' '}
               <Text style={styles.bold}>
                 {data.ownerDtl?.[0]?.ownerName || 'N/A'}
               </Text>
             </Text>
-            <Text>
+            <Text selectable>
               Address: <Text style={styles.bold}>{data.address || 'N/A'}</Text>
             </Text>
-            <Text>
+            <Text selectable>
               A Sum of Rs.:{' '}
               <Text style={styles.bold}>{data.amount || '0.00'}</Text>
             </Text>
-            <Text>
+            <Text selectable>
               In Words:{' '}
               <Text style={styles.bold}>{data.amountInWords || 'N/A'}</Text>
             </Text>
-            <Text>
+            <Text selectable>
               Towards: <Text style={styles.bold}>{purpose}</Text> Vide:{' '}
               <Text style={styles.bold}>{mode}</Text>
             </Text>
@@ -1248,7 +1249,7 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
                 'To FY',
                 'Amount',
               ].map((header, idx) => (
-                <Text
+                <Text selectable
                   key={idx}
                   style={[styles.tableCell, styles.tableHeaderCell]}
                 >
@@ -1260,36 +1261,36 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
             {/* Table Body */}
             {lineItems.map((item, index) => (
               <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.description}</Text>
-                <Text style={styles.tableCell}>{item.fromQTR}</Text>
-                <Text style={styles.tableCell}>{item.fromFY}</Text>
-                <Text style={styles.tableCell}>{item.toQTR}</Text>
-                <Text style={styles.tableCell}>{item.toFY}</Text>
-                <Text style={styles.tableCell}>₹ {item.amount}</Text>
+                <Text selectable style={styles.tableCell}>{item.description}</Text>
+                <Text selectable style={styles.tableCell}>{item.fromQTR}</Text>
+                <Text selectable style={styles.tableCell}>{item.fromFY}</Text>
+                <Text selectable style={styles.tableCell}>{item.toQTR}</Text>
+                <Text selectable style={styles.tableCell}>{item.toFY}</Text>
+                <Text selectable style={styles.tableCell}>₹ {item.amount}</Text>
               </View>
             ))}
 
             {/* Table Footer */}
             <View style={styles.tableRow}>
-              <Text style={[styles.tableCell, styles.bold]}>Total Amount</Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={[styles.tableCell, styles.bold]}>
+              <Text selectable style={[styles.tableCell, styles.bold]}>Total Amount</Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={[styles.tableCell, styles.bold]}>
                 ₹ {totalAmount}
               </Text>
             </View>
 
             <View style={styles.tableRow}>
-              <Text style={[styles.tableCell, styles.bold]}>
+              <Text selectable style={[styles.tableCell, styles.bold]}>
                 Total Paid Amount
               </Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={styles.tableCell}></Text>
-              <Text style={[styles.tableCell, styles.bold]}>₹ {totalPaid}</Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={styles.tableCell}></Text>
+              <Text selectable style={[styles.tableCell, styles.bold]}>₹ {totalPaid}</Text>
             </View>
           </View>
 
@@ -1299,13 +1300,13 @@ export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
               <Image source={{ uri: qrCodeUrl }} style={styles.qrImage} />
             )}
             <View style={styles.contactInfo}>
-              <Text>Visit:</Text>
-              <Text>Call: 8002158818</Text>
-              <Text>In collaboration with Uinfo Technology PVT LTD.</Text>
+              <Text selectable>Visit:</Text>
+              <Text selectable>Call: 8002158818</Text>
+              <Text selectable>In collaboration with Uinfo Technology PVT LTD.</Text>
             </View>
           </View>
 
-          <Text style={styles.footerNote}>
+          <Text selectable style={styles.footerNote}>
             ** This is a computer-generated receipt and does not require
             signature. **
           </Text>

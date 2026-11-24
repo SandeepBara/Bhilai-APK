@@ -8,6 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import Colors from '../../../Constants/Colors';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const ViewDemandModal = ({
   visible,
@@ -27,7 +28,7 @@ export const ViewDemandModal = ({
       <ScrollView>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.title}>📄 View Demand</Text>
+            <Text selectable style={styles.title}>📄 View Demand</Text>
 
             {console.log('Modal render - demandlist:', demandlist)}
             {console.log(
@@ -50,16 +51,16 @@ export const ViewDemandModal = ({
                   <View style={styles.table}>
                     {/* Table Header */}
                     <View style={[styles.tableRow, styles.tableHeader]}>
-                      <Text style={[styles.tableCell, styles.headerText]}>
+                      <Text selectable style={[styles.tableCell, styles.headerText]}>
                         #
                       </Text>
-                      <Text style={[styles.tableCell, styles.headerText]}>
+                      <Text selectable style={[styles.tableCell, styles.headerText]}>
                         Fyear/Qtr
                       </Text>
-                      <Text style={[styles.tableCell, styles.headerText]}>
+                      <Text selectable style={[styles.tableCell, styles.headerText]}>
                         Due Date
                       </Text>
-                      <Text
+                      <Text selectable
                         style={[
                           styles.tableCell,
                           styles.headerText,
@@ -68,7 +69,7 @@ export const ViewDemandModal = ({
                       >
                         Tax
                       </Text>
-                      <Text
+                      <Text selectable
                         style={[
                           styles.tableCell,
                           styles.headerText,
@@ -77,114 +78,114 @@ export const ViewDemandModal = ({
                       >
                         Due
                       </Text>
-                      <Text style={[styles.tableCell, styles.headerText]}>
+                      <Text selectable style={[styles.tableCell, styles.headerText]}>
                         Month Deference
                       </Text>
-                      <Text style={[styles.tableCell, styles.headerText]}>
+                      <Text selectable style={[styles.tableCell, styles.headerText]}>
                         Penalty
                       </Text>
-                      <Text style={[styles.tableCell, styles.headerText]}>
+                      <Text selectable style={[styles.tableCell, styles.headerText]}>
                         Total Due
                       </Text>
                     </View>
 
                     {/* Sub-header for Tax and Due columns */}
                     <View style={[styles.tableRow, styles.tableSubHeader]}>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}>Holding Tax</Text>
-                      <Text style={styles.tableCell}>Latrine Tax</Text>
-                      <Text style={styles.tableCell}>Water Tax</Text>
-                      <Text style={styles.tableCell}>HealthCess Tax</Text>
-                      <Text style={styles.tableCell}>EducationCess Tax</Text>
-                      <Text style={styles.tableCell}>RWH Tax</Text>
-                      <Text style={styles.tableCell}>Total Tax</Text>
-                      <Text style={styles.tableCell}>Holding Tax</Text>
-                      <Text style={styles.tableCell}>Latrine Tax</Text>
-                      <Text style={styles.tableCell}>Water Tax</Text>
-                      <Text style={styles.tableCell}>HealthCess Tax</Text>
-                      <Text style={styles.tableCell}>EducationCess Tax</Text>
-                      <Text style={styles.tableCell}>RWH Tax</Text>
-                      <Text style={styles.tableCell}>Total Tax</Text>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}>Holding Tax</Text>
+                      <Text selectable style={styles.tableCell}>Latrine Tax</Text>
+                      <Text selectable style={styles.tableCell}>Water Tax</Text>
+                      <Text selectable style={styles.tableCell}>HealthCess Tax</Text>
+                      <Text selectable style={styles.tableCell}>EducationCess Tax</Text>
+                      <Text selectable style={styles.tableCell}>RWH Tax</Text>
+                      <Text selectable style={styles.tableCell}>Total Tax</Text>
+                      <Text selectable style={styles.tableCell}>Holding Tax</Text>
+                      <Text selectable style={styles.tableCell}>Latrine Tax</Text>
+                      <Text selectable style={styles.tableCell}>Water Tax</Text>
+                      <Text selectable style={styles.tableCell}>HealthCess Tax</Text>
+                      <Text selectable style={styles.tableCell}>EducationCess Tax</Text>
+                      <Text selectable style={styles.tableCell}>RWH Tax</Text>
+                      <Text selectable style={styles.tableCell}>Total Tax</Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}></Text>
                     </View>
 
                     {demandlist?.map((item, index) => (
                       <View key={index} style={styles.tableRow}>
-                        <Text style={styles.tableCell}>{index + 1}</Text>
-                        <Text style={styles.tableCell}>{item.fyear || ''}</Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>{index + 1}</Text>
+                        <Text selectable style={styles.tableCell}>{item.fyear || ''}</Text>
+                        <Text selectable style={styles.tableCell}>
                           {item.dueDate || ''}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.holdingTax === 'object'
                             ? JSON.stringify(item.holdingTax)
                             : item.holdingTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.latrineTax === 'object'
                             ? JSON.stringify(item.latrineTax)
                             : item.latrineTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.waterTax === 'object'
                             ? JSON.stringify(item.waterTax)
                             : item.waterTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.healthCessTax === 'object'
                             ? JSON.stringify(item.healthCessTax)
                             : item.healthCessTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.educationCessTax === 'object'
                             ? JSON.stringify(item.educationCessTax)
                             : item.educationCessTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.rwhTax === 'object'
                             ? JSON.stringify(item.rwhTax)
                             : item.rwhTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.totalTax === 'object'
                             ? JSON.stringify(item.totalTax)
                             : item.totalTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.dueHoldingTax === 'object'
                             ? JSON.stringify(item.dueHoldingTax)
                             : item.dueHoldingTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.dueLatrineTax === 'object'
                             ? JSON.stringify(item.dueLatrineTax)
                             : item.dueLatrineTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.dueWaterTax === 'object'
                             ? JSON.stringify(item.dueWaterTax)
                             : item.dueWaterTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.dueHealthCessTax === 'object'
                             ? JSON.stringify(item.dueHealthCessTax)
                             : item.dueHealthCessTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.dueEducationCessTax === 'object'
                             ? JSON.stringify(item.dueEducationCessTax)
                             : item.dueEducationCessTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {typeof item.dueRwhTax === 'object'
                             ? JSON.stringify(item.dueRwhTax)
                             : item.dueRwhTax || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {(() => {
                             const dueTotalTax =
                               parseFloat(item.dueHoldingTax || 0) +
@@ -196,13 +197,13 @@ export const ViewDemandModal = ({
                             return dueTotalTax.toFixed(2);
                           })()}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {item.monthDiff || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {item.monthlyPenalty || '0'}
                         </Text>
-                        <Text style={styles.tableCell}>
+                        <Text selectable style={styles.tableCell}>
                           {(() => {
                             const totalDue =
                               parseFloat(item.dueHoldingTax || 0) +
@@ -220,10 +221,10 @@ export const ViewDemandModal = ({
 
                     {/* Table Footer */}
                     <View style={[styles.tableRow, styles.tableFooter]}>
-                      <Text style={styles.tableCell}>Total</Text>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}></Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>Total</Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}></Text>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const holdingTax =
@@ -234,11 +235,11 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const rwhTax =
@@ -249,7 +250,7 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const totalTax =
@@ -260,7 +261,7 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const dueHoldingTax =
@@ -271,11 +272,11 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>0.00</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>0.00</Text>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const dueRwhTax =
@@ -286,7 +287,7 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const dueTotalTax =
@@ -300,8 +301,8 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>-</Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>-</Text>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const monthlyPenalty = parseFloat(
@@ -311,7 +312,7 @@ export const ViewDemandModal = ({
                           }, 0)
                           .toFixed(2)}
                       </Text>
-                      <Text style={styles.tableCell}>
+                      <Text selectable style={styles.tableCell}>
                         {demandlist
                           ?.reduce((sum, item) => {
                             const totalDue =
@@ -331,56 +332,56 @@ export const ViewDemandModal = ({
                 </ScrollView>
 
                 {/* 🟩 Main Demand */}
-                <Text style={styles.sectionHeader}>Main Demand</Text>
+                <Text selectable style={styles.sectionHeader}>Main Demand</Text>
                 <View style={styles.row}>
-                  <Text style={styles.label}>Current Demand:</Text>
-                  <Text style={styles.value}>
+                  <Text selectable style={styles.label}>Current Demand:</Text>
+                  <Text selectable style={styles.value}>
                     ₹ {maindata?.currentDemandAmount || '0.00'}
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Text style={styles.label}>Arrear Demand:</Text>
-                  <Text style={styles.value}>
+                  <Text selectable style={styles.label}>Arrear Demand:</Text>
+                  <Text selectable style={styles.value}>
                     ₹ {maindata?.arrearDemandAmount || '0.00'}
                   </Text>
                 </View>
 
                 {/* 🟥 Penalties */}
-                <Text style={styles.sectionHeader}>Penalties</Text>
+                <Text selectable style={styles.sectionHeader}>Penalties</Text>
                 <View style={styles.penaltyBox}>
-                  <Text>
+                  <Text selectable>
                     Late Assessment Penalty: ₹{' '}
                     {maindata?.lateAssessmentPenalty || '0.00'}
                   </Text>
                 </View>
                 <View style={styles.penaltyBox}>
-                  <Text>
+                  <Text selectable>
                     Monthly Penalty: ₹ {maindata?.monthlyPenalty || '0.00'}
                   </Text>
                 </View>
                 <View style={styles.penaltyBox}>
-                  <Text>
+                  <Text selectable>
                     Other Penalty: ₹ {maindata?.otherPenalty || '0.00'}
                   </Text>
                 </View>
 
                 {/* 🟩 Rebates */}
-                <Text style={styles.sectionHeader}>Rebates</Text>
+                <Text selectable style={styles.sectionHeader}>Rebates</Text>
                 <View>
                   <View style={styles.rebateBox}>
-                    <Text>Special Rebate: ₹ {maindata.specialRebate}</Text>
+                    <Text selectable>Special Rebate: ₹ {maindata.specialRebate}</Text>
                   </View>
 
                   <View style={styles.rebateBox}>
-                    <Text>JSK Rebate: ₹ {maindata.jskRebate}</Text>
+                    <Text selectable>JSK Rebate: ₹ {maindata.jskRebate}</Text>
                   </View>
 
                   <View style={styles.rebateBox}>
-                    <Text>Online Rebate: ₹ {maindata.onlineRebate}</Text>
+                    <Text selectable>Online Rebate: ₹ {maindata.onlineRebate}</Text>
                   </View>
 
                   <View style={styles.rebateBox}>
-                    <Text>
+                    <Text selectable>
                       First Qtr Rebate: ₹ {maindata.firstQuatreRebate}
                     </Text>
                   </View>
@@ -388,32 +389,32 @@ export const ViewDemandModal = ({
 
                 {/* 🟨 Total Payable */}
                 <View style={styles.totalPayableBox}>
-                  <Text style={styles.totalPayableLabel}>
+                  <Text selectable style={styles.totalPayableLabel}>
                     Total Payable Amount:
                   </Text>
-                  <Text style={styles.totalPayableAmount}>
+                  <Text selectable style={styles.totalPayableAmount}>
                     ₹ {maindata?.payableAmount}
                   </Text>
                 </View>
                 {showPayNow && (
-                  <TouchableOpacity
+                  <CopyableTouchableOpacity
                     style={styles.payNowButton}
                     onPress={onPayNowPress}
                   >
                     <Text style={styles.payNowButtonText}>💳 Pay Now</Text>
-                  </TouchableOpacity>
+                  </CopyableTouchableOpacity>
                 )}
 
-                <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                <CopyableTouchableOpacity style={styles.closeButton} onPress={onClose}>
                   <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
+                </CopyableTouchableOpacity>
               </View>
             ) : (
               <View style={{ padding: 20, alignItems: 'center' }}>
-                <Text style={{ fontSize: 16, color: '#666' }}>
+                <Text selectable style={{ fontSize: 16, color: '#666' }}>
                   Loading demand data...
                 </Text>
-                <Text style={{ fontSize: 12, color: '#999', marginTop: 10 }}>
+                <Text selectable style={{ fontSize: 12, color: '#999', marginTop: 10 }}>
                   {demandlist
                     ? 'Data received but structure may be different'
                     : 'No data received'}

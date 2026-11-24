@@ -48,7 +48,7 @@ const ProfilePage = () => {
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color={Colors.primary || '#007bff'} />
-        <Text style={styles.loadingText}>Loading...</Text>
+        <Text selectable style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
@@ -56,7 +56,7 @@ const ProfilePage = () => {
   if (!userData) {
     return (
       <View style={styles.loaderContainer}>
-        <Text style={styles.noDataText}>No user data found</Text>
+        <Text selectable style={styles.noDataText}>No user data found</Text>
       </View>
     );
   }
@@ -77,8 +77,8 @@ const ProfilePage = () => {
               }}
               style={styles.profileImage}
             />
-            <Text style={styles.nameText}>{userData.name}</Text>
-            <Text style={styles.designationText}>
+            <Text selectable style={styles.nameText}>{userData.name}</Text>
+            <Text selectable style={styles.designationText}>
               {userData.designation || userData.userFor || 'Employee'}
             </Text>
           </View>
@@ -86,33 +86,33 @@ const ProfilePage = () => {
           <View style={styles.divider} />
 
           <View style={styles.infoRow}>
-            <Text style={styles.label}>Employee Code:</Text>
-            <Text style={styles.value}>{userData.employeeCode || 'N/A'}</Text>
+            <Text selectable style={styles.label}>Employee Code:</Text>
+            <Text selectable style={styles.value}>{userData.employeeCode || 'N/A'}</Text>
           </View>
 
           <View style={styles.infoRow}>
-            <Text style={styles.label}>Email:</Text>
-            <Text style={styles.value}>{userData.email || 'N/A'}</Text>
+            <Text selectable style={styles.label}>Email:</Text>
+            <Text selectable style={styles.value}>{userData.email || 'N/A'}</Text>
           </View>
 
           <View style={styles.infoRow}>
-            <Text style={styles.label}>Username:</Text>
-            <Text style={styles.value}>{userData.userName || 'N/A'}</Text>
+            <Text selectable style={styles.label}>Username:</Text>
+            <Text selectable style={styles.value}>{userData.userName || 'N/A'}</Text>
           </View>
 
           <View style={styles.infoRow}>
-            <Text style={styles.label}>Ulb ID:</Text>
-            <Text style={styles.value}>{userData.ulbId || 'N/A'}</Text>
+            <Text selectable style={styles.label}>Ulb ID:</Text>
+            <Text selectable style={styles.value}>{userData.ulbId || 'N/A'}</Text>
           </View>
 
           <View style={styles.infoRow}>
-            <Text style={styles.label}>roleName:</Text>
-            <Text style={styles.value}>{userData.roles.roleName || 'N/A'}</Text>
+            <Text selectable style={styles.label}>roleName:</Text>
+            <Text selectable style={styles.value}>{userData.roles.roleName || 'N/A'}</Text>
           </View>
 
           <View style={styles.infoRow}>
-            <Text style={styles.label}>Account Created:</Text>
-            <Text style={styles.value}>
+            <Text selectable style={styles.label}>Account Created:</Text>
+            <Text selectable style={styles.value}>
               {new Date(userData.createdAt).toLocaleDateString()}
             </Text>
           </View>

@@ -9,6 +9,7 @@ import {
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const FloorDetailsSection = ({
   propertyTypeLabel,
@@ -32,8 +33,8 @@ const FloorDetailsSection = ({
       {propertyTypeLabel !== 'VACANT LAND' &&
         floorDetails.map((floor, index) => (
           <View key={index} style={styles.floorContainer}>
-            <Text style={styles.floorTitle}>Floor {index + 1}</Text>
-            <Text style={styles.labelText}>Floor Name *</Text>
+            <Text selectable style={styles.floorTitle}>Floor {index + 1}</Text>
+            <Text selectable style={styles.labelText}>Floor Name *</Text>
             <Dropdown
               style={styles.dropdownStyle}
               data={floorNameOptions}
@@ -47,7 +48,7 @@ const FloorDetailsSection = ({
               }
               disable={isDisabled}
             />
-            <Text style={styles.labelText}>Usage Type *</Text>
+            <Text selectable style={styles.labelText}>Usage Type *</Text>
             <Dropdown
               style={styles.dropdownStyle}
               data={usageTypeOptions}
@@ -60,7 +61,7 @@ const FloorDetailsSection = ({
               }
               disable={isDisabled}
             />
-            <Text style={styles.labelText}>Occupancy Type *</Text>
+            <Text selectable style={styles.labelText}>Occupancy Type *</Text>
             <Dropdown
               style={styles.dropdownStyle}
               data={occupancyTypeOptions}
@@ -74,7 +75,7 @@ const FloorDetailsSection = ({
               }
               disable={isDisabled}
             />
-            <Text style={styles.labelText}>Construction Type *</Text>
+            <Text selectable style={styles.labelText}>Construction Type *</Text>
             <Dropdown
               style={styles.dropdownStyle}
               data={constructionTypeOptions}
@@ -88,7 +89,7 @@ const FloorDetailsSection = ({
               }
               disable={isDisabled}
             />
-            <Text style={styles.labelText}>Built Up Area (in Sq. Ft) *</Text>
+            <Text selectable style={styles.labelText}>Built Up Area (in Sq. Ft) *</Text>
             <TextInput
               style={styles.textInputStyle}
               placeholder="Built Up Area (in Sq. Ft)"
@@ -100,8 +101,8 @@ const FloorDetailsSection = ({
               }
               editable={!isDisabled}
             />
-            <Text style={styles.labelText}>From Date (MM/YYYY) *</Text>
-            <TouchableOpacity
+            <Text selectable style={styles.labelText}>From Date (MM/YYYY) *</Text>
+            <CopyableTouchableOpacity
               style={styles.dateButton}
               onPress={() =>
                 !isDisabled &&
@@ -112,9 +113,9 @@ const FloorDetailsSection = ({
               <Text style={styles.dateButtonText}>
                 {floor.fromDate || 'Select From Date (MM-YYYY)'}
               </Text>
-            </TouchableOpacity>
-            <Text style={styles.labelText}>Upto Date (MM/YYYY) *</Text>
-            <TouchableOpacity
+            </CopyableTouchableOpacity>
+            <Text selectable style={styles.labelText}>Upto Date (MM/YYYY) *</Text>
+            <CopyableTouchableOpacity
               style={styles.dateButton}
               onPress={() =>
                 !isDisabled &&
@@ -125,13 +126,13 @@ const FloorDetailsSection = ({
               <Text style={styles.dateButtonText}>
                 {floor.uptoDate || 'Select Upto Date (MM-YYYY)'}
               </Text>
-            </TouchableOpacity>
+            </CopyableTouchableOpacity>
           </View>
         ))}
       {propertyTypeLabel !== 'VACANT LAND' && !isDisabled && (
-        <TouchableOpacity onPress={addFloor} style={styles.addFloorButton}>
+        <CopyableTouchableOpacity onPress={addFloor} style={styles.addFloorButton}>
           <Text style={styles.addFloorButtonText}>+ Add Floor</Text>
-        </TouchableOpacity>
+        </CopyableTouchableOpacity>
       )}
       {/* Render Date Picker only when needed */}
       {datePicker.show && !isDisabled && (

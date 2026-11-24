@@ -3,6 +3,7 @@ import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../Constants/Colors';
+import { CopyableTouchableOpacity } from './CopyableControl';
 function TableDetailCard({ title, note, headers = [], data = [] }) {
     const hasData = data && data.length > 0;
     const [modalVisible, setModalVisible] = useState(false);
@@ -26,7 +27,7 @@ function TableDetailCard({ title, note, headers = [], data = [] }) {
         if (!hasData) {
             return (
                 <View style={styles.tableBodyContainer}>
-                    <Text style={styles.noDataText}>No table data available.</Text>
+                    <Text selectable style={styles.noDataText}>No table data available.</Text>
                 </View>
             );
         }
@@ -34,7 +35,7 @@ function TableDetailCard({ title, note, headers = [], data = [] }) {
         return data.map((item, index) => (
             <View key={`val-${index}`} style={styles.tableBodyRow}>
                 {item.cells.map((cellValue, cellIndex) => (
-                    <Text key={cellIndex} style={[styles.tableCell, { width: COLUMN_WIDTH }]}>
+                    <Text selectable key={cellIndex} style={[styles.tableCell, { width: COLUMN_WIDTH }]}>
                         {cellValue ? cellValue: 'NA'}
                     </Text>
                 ))}
@@ -47,13 +48,13 @@ function TableDetailCard({ title, note, headers = [], data = [] }) {
             {/* 1. HEADING (Merged Top Section) */}
             {title && (
                 <View style={styles.headingWrapper}>
-                    <Text style={styles.headingText}>{title}</Text>
+                    <Text selectable style={styles.headingText}>{title}</Text>
                 </View>
             )}
             
             <View style={styles.card}>
                 {note && (
-                    <Text style={styles.note}>{note}</Text>
+                    <Text selectable style={styles.note}>{note}</Text>
                 )}                
 
                 <ScrollView 
@@ -75,7 +76,7 @@ function TableDetailCard({ title, note, headers = [], data = [] }) {
                         >
                             <View style={[styles.tableRow, styles.tableHeader]}>
                                 {headers?.map((headerText, index) => (
-                                    <Text key={`head-${index}`} style={[styles.tableCell, styles.headerText, { width: COLUMN_WIDTH }]}>
+                                    <Text selectable key={`head-${index}`} style={[styles.tableCell, styles.headerText, { width: COLUMN_WIDTH }]}>
                                         {headerText}
                                     </Text>
                                 ))}
@@ -108,14 +109,14 @@ function TableDetailCard({ title, note, headers = [], data = [] }) {
             >
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>{modalContent.title} Information</Text>
-                        <Text style={styles.modalInfo}>{modalContent.info}</Text>
-                        <TouchableOpacity 
+                        <Text selectable style={styles.modalTitle}>{modalContent.title} Information</Text>
+                        <Text selectable style={styles.modalInfo}>{modalContent.info}</Text>
+                        <CopyableTouchableOpacity
                             style={styles.modalCloseButton} 
                             onPress={() => setModalVisible(false)}
                         >
                             <Text style={styles.modalCloseButtonText}>Close</Text>
-                        </TouchableOpacity>
+                        </CopyableTouchableOpacity>
                     </View>
                 </View>
             </Modal>

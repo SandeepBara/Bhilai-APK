@@ -7,51 +7,52 @@ import {
   ScrollView,
 } from 'react-native';
 import { sharedStyles } from './sharedStyles';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 export const PaymentReceiptSimpleModal = ({ visible, onClose, receiptData }) => (
   <Modal visible={visible} transparent animationType="slide">
     <View style={sharedStyles.overlay}>
       <View style={sharedStyles.modalContent}>
         <ScrollView nestedScrollEnabled>
-          <TouchableOpacity style={sharedStyles.closeBtn} onPress={onClose}>
+          <CopyableTouchableOpacity style={sharedStyles.closeBtn} onPress={onClose}>
             <Text style={sharedStyles.closeText}>Close</Text>
-          </TouchableOpacity>
+          </CopyableTouchableOpacity>
 
-          <Text style={sharedStyles.mainTitle}>Payment Receipt</Text>
-          <Text style={sharedStyles.subTitle}>
+          <Text selectable style={sharedStyles.mainTitle}>Payment Receipt</Text>
+          <Text selectable style={sharedStyles.subTitle}>
             {receiptData?.ulbDtl?.ulbName || 'Municipal Corporation'}
           </Text>
 
           <View style={sharedStyles.sectionContainer}>
-            <Text style={sharedStyles.sectionTitle}>Receipt Info</Text>
+            <Text selectable style={sharedStyles.sectionTitle}>Receipt Info</Text>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Receipt No:</Text>
-              <Text style={sharedStyles.value}>{receiptData?.tranNo || 'N/A'}</Text>
+              <Text selectable style={sharedStyles.label}>Receipt No:</Text>
+              <Text selectable style={sharedStyles.value}>{receiptData?.tranNo || 'N/A'}</Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Date:</Text>
-              <Text style={sharedStyles.value}>{receiptData?.tranDate || 'N/A'}</Text>
+              <Text selectable style={sharedStyles.label}>Date:</Text>
+              <Text selectable style={sharedStyles.value}>{receiptData?.tranDate || 'N/A'}</Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Application No:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Application No:</Text>
+              <Text selectable style={sharedStyles.value}>
                 {receiptData?.applicationNo || 'N/A'}
               </Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Account:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Account:</Text>
+              <Text selectable style={sharedStyles.value}>
                 {receiptData?.accountDescription || 'N/A'}
               </Text>
             </View>
           </View>
 
           <View style={sharedStyles.sectionContainer}>
-            <Text style={sharedStyles.sectionTitle}>Owner Details</Text>
+            <Text selectable style={sharedStyles.sectionTitle}>Owner Details</Text>
             {receiptData?.ownerDtl?.map((o, i) => (
               <View style={sharedStyles.rowContainer} key={i}>
-                <Text style={sharedStyles.label}>Owner {i + 1}:</Text>
-                <Text style={sharedStyles.value}>
+                <Text selectable style={sharedStyles.label}>Owner {i + 1}:</Text>
+                <Text selectable style={sharedStyles.value}>
                   {o.ownerName} ({o.mobileNo})
                 </Text>
               </View>
@@ -59,16 +60,16 @@ export const PaymentReceiptSimpleModal = ({ visible, onClose, receiptData }) => 
           </View>
 
           <View style={sharedStyles.sectionContainer}>
-            <Text style={sharedStyles.sectionTitle}>Payment Details</Text>
+            <Text selectable style={sharedStyles.sectionTitle}>Payment Details</Text>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Mode:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Mode:</Text>
+              <Text selectable style={sharedStyles.value}>
                 {receiptData?.paymentMode || 'N/A'}
               </Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Status:</Text>
-              <Text
+              <Text selectable style={sharedStyles.label}>Status:</Text>
+              <Text selectable
                 style={[
                   sharedStyles.value,
                   {
@@ -81,36 +82,36 @@ export const PaymentReceiptSimpleModal = ({ visible, onClose, receiptData }) => 
               </Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Amount:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Amount:</Text>
+              <Text selectable style={sharedStyles.value}>
                 ₹ {receiptData?.amount || '0.00'}
               </Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>In Words:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>In Words:</Text>
+              <Text selectable style={sharedStyles.value}>
                 {receiptData?.amountInWords || ''}
               </Text>
             </View>
           </View>
 
           <View style={sharedStyles.sectionContainer}>
-            <Text style={sharedStyles.sectionTitle}>Transaction</Text>
+            <Text selectable style={sharedStyles.sectionTitle}>Transaction</Text>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Payable Amount:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Payable Amount:</Text>
+              <Text selectable style={sharedStyles.value}>
                 ₹ {receiptData?.tranDtl?.payableAmt || '0.00'}
               </Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Demand Amount:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Demand Amount:</Text>
+              <Text selectable style={sharedStyles.value}>
                 ₹ {receiptData?.tranDtl?.demandAmt || '0.00'}
               </Text>
             </View>
             <View style={sharedStyles.rowContainer}>
-              <Text style={sharedStyles.label}>Penalty:</Text>
-              <Text style={sharedStyles.value}>
+              <Text selectable style={sharedStyles.label}>Penalty:</Text>
+              <Text selectable style={sharedStyles.value}>
                 ₹ {receiptData?.tranDtl?.penaltyAmt || '0.00'}
               </Text>
             </View>
@@ -118,23 +119,23 @@ export const PaymentReceiptSimpleModal = ({ visible, onClose, receiptData }) => 
 
           {receiptData?.fineRebate?.length > 0 && (
             <View style={sharedStyles.sectionContainer}>
-              <Text style={sharedStyles.sectionTitle}>Fine / Rebate</Text>
+              <Text selectable style={sharedStyles.sectionTitle}>Fine / Rebate</Text>
               {receiptData.fineRebate.map((f, i) => (
                 <View style={sharedStyles.rowContainer} key={i}>
-                  <Text style={sharedStyles.label}>{f.headName}:</Text>
-                  <Text style={sharedStyles.value}>₹ {f.amount}</Text>
+                  <Text selectable style={sharedStyles.label}>{f.headName}:</Text>
+                  <Text selectable style={sharedStyles.value}>₹ {f.amount}</Text>
                 </View>
               ))}
             </View>
           )}
 
-          <Text style={sharedStyles.note}>
+          <Text selectable style={sharedStyles.note}>
             Note: This is a computer-generated receipt. No physical signature is
             required.
           </Text>
 
           <TouchableOpacity style={sharedStyles.printBtn}>
-            <Text style={sharedStyles.printText}>Download / Print</Text>
+            <Text selectable style={sharedStyles.printText}>Download / Print</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
