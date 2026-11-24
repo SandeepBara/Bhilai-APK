@@ -1,401 +1,91 @@
-import React, { useState } from 'react';
-import {
-  Modal,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-  Alert,
-  TextInput,
-} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
 import { CUSTOMER_API } from '../../../api/apiRoutes';
 import { getToken } from '../../../utils/auth';
-import { sharedStyles } from './sharedStyles';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
-export const PaymentModal = ({
-  visible,
-  onClose,
-  customerDue,
-  customerDeuDetails,
-  id,
-}) => {
-  const [paymentModalVisible, setPaymentModalVisible] = useState(false);
-  const [paymentType, setPaymentType] = useState('Full Payment');
-  const [paymentMode, setPaymentMode] = useState('Cash');
-  const [amount, setAmount] = useState(
-    customerDeuDetails?.payableAmount || '0.00',
-  );
-  const [demandData, setDemandData] = useState(null);
+const paymentTypes = [
+  { label: 'Full Payment', value: 'FULL' },
+  { label: 'Partial Payment', value: 'PART' },
+];
+const paymentModes = [
+  { label: 'Cash', value: 'CASH' },
+  { label: 'Credit Card', value: 'CREDIT_CARD' },
+  { label: 'Bank Transfer', value: 'BANK_TRANSFER' },
+];
 
-  // Dropdown states
-  const [showPaymentTypeDropdown, setShowPaymentTypeDropdown] = useState(false);
-  const [showPaymentModeDropdown, setShowPaymentModeDropdown] = useState(false);
-  const [recitpdata, setReceiptData] = useState('');
+export function PaymentForm({ id, payableAmount, submitting, onSubmittingChange, onCancel, onSuccess }) {
+  const [paymentType, setPaymentType] = useState('FULL');
+  const [paymentMode, setPaymentMode] = useState('CASH');
+  const [amount, setAmount] = useState(String(payableAmount ?? ''));
+  const inFlight = useRef(false);
 
-  const paymentTypeOptions = ['Full Payment', 'Partial Payment'];
-  const paymentModeOptions = ['Cash', 'Credit Card', 'Bank Transfer'];
+  const submit = async () => {
+    if (inFlight.current) return;
+    const paymentAmount = Number(amount.trim());
+    if (!Number.isFinite(paymentAmount) || paymentAmount <= 0) {
+      Alert.alert('Invalid amount', 'Enter a valid payment amount.');
+      return;
+    }
 
-  // Custom Dropdown Component
-  const CustomDropdown = ({
-    options,
-    selectedValue,
-    onSelect,
-    placeholder,
-    showDropdown,
-    setShowDropdown,
-  }) => (
-    <View style={{ position: 'relative', zIndex: showDropdown ? 1000 : 1 }}>
-      <CopyableTouchableOpacity
-        style={{
-          borderWidth: 1,
-          borderColor: '#ccc',
-          borderRadius: 4,
-          padding: 12,
-          backgroundColor: '#fff',
-          marginBottom: showDropdown ? 0 : 15,
-        }}
-        onPress={() => setShowDropdown(!showDropdown)}
-      >
-        <Text>{selectedValue || placeholder}</Text>
-      </CopyableTouchableOpacity>
-
-      {showDropdown && (
-        <View
-          style={{
-            position: 'absolute',
-            top: 45,
-            left: 0,
-            right: 0,
-            backgroundColor: '#fff',
-            borderWidth: 1,
-            borderColor: '#ccc',
-            borderTopWidth: 0,
-            borderRadius: 4,
-            marginBottom: 15,
-            zIndex: 1000,
-          }}
-        >
-          {options.map((option, index) => (
-            <CopyableTouchableOpacity
-              key={index}
-              style={{
-                padding: 12,
-                borderBottomWidth: index < options.length - 1 ? 1 : 0,
-                borderBottomColor: '#eee',
-              }}
-              onPress={() => {
-                onSelect(option);
-                setShowDropdown(false);
-              }}
-            >
-              <Text>{option}</Text>
-            </CopyableTouchableOpacity>
-          ))}
-        </View>
-      )}
-    </View>
-  );
-
-  const handleProceedPayment = async () => {
+    inFlight.current = true;
+    onSubmittingChange(true);
     try {
       const token = await getToken();
+      if (!token) throw new Error('Please sign in again.');
+      const { data } = await axios.post(CUSTOMER_API.CUSTOMER_PAY_DUE_API, {
+        id, paymentType, paymentMode, amount: paymentAmount,
+      }, { headers: { Authorization: 'Bearer ' + token } });
+      if (data?.status !== true) throw new Error(data?.message || 'Please try again.');
 
-      console.log('Customer Due ID:', customerDeuDetails?.id || 0);
-
-      const requestBody = {
-        paymentMode: paymentMode.toUpperCase().replace(' ', '_'), // e.g., "CASH"
-        paymentType: paymentType === 'Full Payment' ? 'FULL' : 'PART',
-        id: id, // Should be defined in your component state
-        amount: parseFloat(amount),
-      };
-
-      console.log('Request Body:', requestBody);
-
-      const response = await axios.post(
-        CUSTOMER_API.CUSTOMER_PAY_DUE_API,
-        requestBody,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      console.log('Response Data:', response.data);
-
-      if (response.status >= 200 && response.status < 300) {
-        setReceiptData(response.data);
-        Alert.alert('Success', response?.data?.message);
-        const updatedData = customerDue.map(item => ({
-          ...item,
-          amount: 0,
-          totalTax: 0,
-          balance: 0,
-          unitAmount: 0,
-          latePenalty: 0,
-        }));
-
-        setDemandData(updatedData);
-        // Close modals
-        setPaymentModalVisible(false);
-        onClose();
-      } else {
-        console.error('Payment failed:', response.data);
-        Alert.alert('Error', 'Payment failed. Please try again.');
-      }
+      onSuccess(data.data?.tranId);
+      Alert.alert('Success', data.message || 'Payment successful.');
     } catch (error) {
-      console.error('Payment API Exception:', error.response || error.message);
-      Alert.alert('Error', 'Something went wrong. Please try again.');
+      Alert.alert('Payment failed', error.response?.data?.message || error.message);
+    } finally {
+      inFlight.current = false;
+      onSubmittingChange(false);
     }
   };
 
-  const renderItem = ({ item, index }) => (
-    <View
-      style={[
-        sharedStyles.rowContainer,
-        index % 2 === 0 ? sharedStyles.rowEven : sharedStyles.rowOdd,
-      ]}
-    >
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>{index + 1}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 2 }]}>{item.demandFrom}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 2 }]}>{item.demandUpto}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>₹ {item.amount}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>
-        ₹ {item.totalTax || 0}
-      </Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>₹ {item.balance}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>{item.fromReading}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>
-        {item.currentMeterReading}
-      </Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>₹ {item.unitAmount}</Text>
-      <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>₹ {item.latePenalty}</Text>
-      <Text selectable
-        style={[
-          sharedStyles.tableCell,
-          { flex: 1, color: item.paidStatus ? 'green' : 'red' },
-        ]}
-      >
-        {item.paidStatus ? 'Paid' : 'Pending'}
-      </Text>
+  return (
+    <View style={styles.form}>
+      <Text selectable accessibilityRole="header" style={styles.title}>Process Payment</Text>
+      <Text selectable style={styles.label}>Payment Type</Text>
+      <Dropdown accessibilityLabel="Payment Type" style={styles.input} data={paymentTypes}
+        labelField="label" valueField="value" value={paymentType} disable={submitting}
+        onChange={item => setPaymentType(item.value)} />
+      <Text selectable style={styles.label}>Payment Mode</Text>
+      <Dropdown accessibilityLabel="Payment Mode" style={styles.input} data={paymentModes}
+        labelField="label" valueField="value" value={paymentMode} disable={submitting}
+        onChange={item => setPaymentMode(item.value)} />
+      <Text selectable style={styles.label}>Amount</Text>
+      <TextInput accessibilityLabel="Amount" style={styles.input} keyboardType="decimal-pad"
+        value={amount} onChangeText={setAmount} editable={!submitting} />
+      <View style={styles.actions}>
+        <CopyableTouchableOpacity accessibilityRole="button" disabled={submitting}
+          onPress={onCancel} style={styles.cancel}>
+          <Text>Cancel</Text>
+        </CopyableTouchableOpacity>
+        <CopyableTouchableOpacity accessibilityRole="button"
+          accessibilityState={{ disabled: submitting, busy: submitting }}
+          disabled={submitting} onPress={submit} style={styles.submit}>
+          <Text style={styles.submitLabel}>{submitting ? 'Processing…' : 'Proceed'}</Text>
+        </CopyableTouchableOpacity>
+      </View>
     </View>
   );
+}
 
-  return (
-    <>
-      <Modal visible={visible} transparent animationType="slide">
-        <View style={sharedStyles.overlay}>
-          <View style={sharedStyles.modalContent}>
-            <ScrollView>
-              <CopyableTouchableOpacity style={sharedStyles.closeBtn} onPress={onClose}>
-                <Text style={sharedStyles.closeText}>Close</Text>
-              </CopyableTouchableOpacity>
-
-              <Text selectable style={sharedStyles.mainTitle}>Demand Details</Text>
-
-              {/* Table Section */}
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View style={{ minWidth: 700 }}>
-                  {/* Table Header */}
-                  <View style={[sharedStyles.rowContainer, sharedStyles.tableHeader]}>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>#</Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 2 }]}>
-                      Demand From
-                    </Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 2 }]}>
-                      Demand To
-                    </Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>Amount</Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>Tax</Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>Balance</Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>
-                      From Reading
-                    </Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>
-                      Current Reading
-                    </Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>
-                      Unit Amount
-                    </Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>
-                      Late Penalty
-                    </Text>
-                    <Text selectable style={[sharedStyles.tableCell, { flex: 1 }]}>Paid</Text>
-                  </View>
-
-                  {/* Table Data */}
-                  <FlatList
-                    data={customerDue}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id.toString()}
-                    scrollEnabled={false}
-                  />
-                </View>
-              </ScrollView>
-
-              <View style={sharedStyles.paymentSummarySection}>
-                <Text selectable style={sharedStyles.paymentTitle}>Main Demand</Text>
-
-                <View style={sharedStyles.paymentDetailsContainer}>
-                  <View style={sharedStyles.paymentRow}>
-                    <View style={sharedStyles.paymentItem}>
-                      <Text selectable style={sharedStyles.paymentLabel}>Demand:</Text>
-                      <Text selectable style={sharedStyles.paymentValue}>
-                        ₹{customerDeuDetails?.demandAmount || '0.00'}
-                      </Text>
-                    </View>
-
-                    <View style={sharedStyles.paymentItem}>
-                      <Text selectable style={[sharedStyles.paymentLabel, sharedStyles.penaltyText]}>
-                        Penalty:
-                      </Text>
-                      <Text selectable style={[sharedStyles.paymentValue, sharedStyles.penaltyText]}>
-                        ₹{customerDeuDetails?.penaltyAmount || '0.00'}
-                      </Text>
-                    </View>
-
-                    <View style={sharedStyles.paymentItem}>
-                      <Text selectable style={[sharedStyles.paymentLabel, sharedStyles.penaltyText]}>
-                        Other Penalty:
-                      </Text>
-                      <Text selectable style={[sharedStyles.paymentValue, sharedStyles.penaltyText]}>
-                        ₹{customerDeuDetails?.otherPenalty || '0.00'}
-                      </Text>
-                    </View>
-
-                    <View style={sharedStyles.paymentItem}>
-                      <Text selectable style={[sharedStyles.paymentLabel, sharedStyles.advanceText]}>
-                        Advance:
-                      </Text>
-                      <Text selectable style={[sharedStyles.paymentValue, sharedStyles.advanceText]}>
-                        ₹{customerDeuDetails?.advanceAmount || '0.00'}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View style={sharedStyles.totalSection}>
-                    <Text selectable style={sharedStyles.totalSectionText}>Total</Text>
-                  </View>
-
-                  <View style={sharedStyles.totalPayableContainer}>
-                    <Text selectable style={sharedStyles.totalPayableLabel}>
-                      Total Payable Amount:
-                    </Text>
-                    <Text selectable style={sharedStyles.totalPayableValue}>
-                      ₹{customerDeuDetails.payableAmount || '0.00'}
-                    </Text>
-                  </View>
-                </View>
-
-                <CopyableTouchableOpacity
-                  style={{
-                    marginTop: 20,
-                    backgroundColor: '#28a745',
-                    padding: 12,
-                    borderRadius: 6,
-                    alignItems: 'center',
-                  }}
-                  onPress={() => setPaymentModalVisible(true)}
-                >
-                  <Text style={{ color: '#fff', fontWeight: 'bold' }}>
-                    Pay Now
-                  </Text>
-                </CopyableTouchableOpacity>
-              </View>
-            </ScrollView>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal visible={paymentModalVisible} transparent animationType="slide">
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: '#00000088',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              width: 300,
-              backgroundColor: '#fff',
-              padding: 20,
-              borderRadius: 8,
-            }}
-          >
-            <Text selectable
-              style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}
-            >
-              Process Payment
-            </Text>
-
-            <View style={sharedStyles.fieldContainer}>
-              <Text selectable style={sharedStyles.label}>Payment Type</Text>
-              <CustomDropdown
-                options={paymentTypeOptions}
-                selectedValue={paymentType}
-                onSelect={setPaymentType}
-                placeholder="Select Payment Type"
-                showDropdown={showPaymentTypeDropdown}
-                setShowDropdown={setShowPaymentTypeDropdown}
-              />
-            </View>
-
-            <View style={sharedStyles.fieldContainer}>
-              <Text selectable style={sharedStyles.label}>Payment Mode</Text>
-              <CustomDropdown
-                options={paymentModeOptions}
-                selectedValue={paymentMode}
-                onSelect={setPaymentMode}
-                placeholder="Select Payment Mode"
-                showDropdown={showPaymentModeDropdown}
-                setShowDropdown={setShowPaymentModeDropdown}
-              />
-            </View>
-
-            <Text selectable>Amount:</Text>
-            <TextInput
-              keyboardType="numeric"
-              style={{ borderWidth: 1, padding: 8, marginBottom: 15 }}
-              value={amount}
-              onChangeText={setAmount}
-            />
-
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
-            >
-              <CopyableTouchableOpacity
-                style={{
-                  backgroundColor: '#ccc',
-                  padding: 12,
-                  borderRadius: 6,
-                }}
-                onPress={() => setPaymentModalVisible(false)}
-              >
-                <Text>Cancel</Text>
-              </CopyableTouchableOpacity>
-
-              <CopyableTouchableOpacity
-                style={{
-                  backgroundColor: '#28a745',
-                  padding: 12,
-                  borderRadius: 6,
-                }}
-                onPress={handleProceedPayment}
-              >
-                <Text style={{ color: '#fff' }}>Proceed</Text>
-              </CopyableTouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
-    </>
-  );
-};
-
-export default PaymentModal;
+const styles = StyleSheet.create({
+  form: { gap: 8, padding: 4 },
+  title: { fontSize: 17, fontWeight: '700', color: '#10263a' },
+  label: { fontWeight: '600', color: '#334155' },
+  input: { minHeight: 44, paddingHorizontal: 10, borderRadius: 6, borderWidth: 1, borderColor: '#cbd5e1' },
+  actions: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
+  cancel: { backgroundColor: '#e2e8f0', borderRadius: 6, padding: 12 },
+  submit: { backgroundColor: '#14532d', borderRadius: 6, padding: 12 },
+  submitLabel: { color: '#fff', fontWeight: '700' },
+});

@@ -9,7 +9,7 @@ import { CUSTOMER_API } from '../../api/apiRoutes';
 import HeaderNavigation from '../../Components/HeaderNavigation';
 import { CopyableText, CopyableTouchableOpacity } from '../../Components/CopyableControl';
 import { getToken } from '../../utils/auth';
-import { PaymentModal, PaymentReceiptModal, ViewDemandModal } from './Model';
+import { PaymentReceiptModal, ViewDemandModal } from './Model';
 import GenerateDemandModal from './Model/GenerateDemandModal';
 import { cardHeader } from '../../style/cardHeader';
 
@@ -102,6 +102,7 @@ export default function Details({ route, navigation }) {
   const [revision, setRevision] = useState(0);
   const [due, setDue] = useState(null);
   const [receipt, setReceipt] = useState(null);
+  const [newTransactionId, setNewTransactionId] = useState(null);
   const [modal, setModal] = useState(null);
   const [busy, setBusy] = useState(false);
   const actionRequest = useRef(null);
@@ -126,6 +127,26 @@ export default function Details({ route, navigation }) {
       actionRequest.current = null;
     };
   }, [id, revision]);
+
+  useEffect(() => {
+    if (newTransactionId == null) return;
+    const controller = new AbortController();
+    post(CUSTOMER_API.CUSTOMER_PAYMENT_RECIPT_API, newTransactionId, controller.signal)
+      .then(data => {
+        if (controller.signal.aborted) return;
+        setReceipt(data);
+        setModal('receipt');
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) {
+          Alert.alert('Receipt unavailable', 'Open the receipt from Payment Details to try again.');
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setNewTransactionId(null);
+      });
+    return () => controller.abort();
+  }, [newTransactionId]);
 
   const connection = consumer?.connectionDtl ?? {};
   const permission = consumer?.userPermission;
@@ -256,10 +277,17 @@ export default function Details({ route, navigation }) {
         )}
       </ScrollView>
 
-      {modal === 'demand' && <ViewDemandModal visible onClose={close}
-        customerDue={list(due?.demandList)} tradeDetails1={consumer} customerDeuDetails={due} />}
-      {modal === 'payment' && canTakePayment && <PaymentModal visible onClose={close}
-        customerDue={list(due?.demandList)} tradeDetails={consumer} customerDeuDetails={due} id={id} />}
+      {(modal === 'demand' || (modal === 'payment' && canTakePayment)) && (
+        <ViewDemandModal
+          visible onClose={close} id={id}
+          showTakePayment={modal === 'payment' && canTakePayment}
+          customerDue={list(due?.demandList)} customerDeuDetails={due}
+          onPaymentSuccess={transactionId => {
+            setRevision(value => value + 1);
+            if (hasId(transactionId)) setNewTransactionId(transactionId);
+          }}
+        />
+      )}
       {modal === 'receipt' && <PaymentReceiptModal visible onClose={close} receiptData={receipt} />}
       {modal === 'generate' && canGenerateDemand && <GenerateDemandModal visible onClose={close}
         connectionDetails={connection} id={id} />}
