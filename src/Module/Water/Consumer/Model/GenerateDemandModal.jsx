@@ -13,10 +13,10 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { getToken } from '../../../utils/auth';
-import { CUSTOMER_API } from '../../../api/apiRoutes';
+import { getToken } from '../../../../utils/auth';
+import { WATER_CONSUMER_GENERATE_DEMAND_API } from '../../../../api/apiRoutes';
 import axios from 'axios';
-import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
   const [state, setState] = useState({
@@ -96,7 +96,7 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
       });
 
       const apiResponse = await axios.post(
-        CUSTOMER_API.CONSUMER_GENERATE_DEMAND_API,
+        WATER_CONSUMER_GENERATE_DEMAND_API,
         formData,
         {
           headers: {

@@ -13,7 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Colors from '../../Constants/Colors';
 import axios from 'axios';
-import { SAF_API_ROUTES } from '../../../api/apiRoutes'; // make sure this is your API route
+import { SAF_REVIEW_TAX_API, SAF_APPLY_API } from '../../../api/apiRoutes'; // make sure this is your API route
 import { getToken } from '../../../utils/auth';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -250,7 +250,7 @@ const AssessmentSummary = ({ route, navigation }) => {
       try {
         const token = await getToken();
         const { data: result } = await axios.post(
-          SAF_API_ROUTES.REVIEW_TAX,
+          SAF_REVIEW_TAX_API,
           { ...data, swmConsumer: data.swmConsumer ?? [] },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -285,7 +285,7 @@ const AssessmentSummary = ({ route, navigation }) => {
 
     try {
       const token = await getToken();
-      const response = await axios.post(SAF_API_ROUTES.APPLY_SAF, data, {
+      const response = await axios.post(SAF_APPLY_API, data, {
         headers: { Authorization: `Bearer ${token}` },
       });console.log('SAF submission response:', response.data); // ✅ log the response for debugging
       const result = response.data;

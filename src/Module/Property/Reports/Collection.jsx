@@ -17,7 +17,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import Colors from '../../Constants/Colors';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
-import { PROPERTY_REPORTS_API } from '../../../api/apiRoutes';
+import { PROPERTY_COLLECTION_REPORT_API } from '../../../api/apiRoutes';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
 import { useMasterData } from '../../../Context/MasterDataContext';
@@ -88,7 +88,7 @@ const CollectionReport = () => {
       console.log('Payload:', payload);
 
       const response = await axios.post(
-        PROPERTY_REPORTS_API.COLLECTION_REPORT_API,
+        PROPERTY_COLLECTION_REPORT_API,
         payload,
         { headers: { Authorization: `Bearer ${token}` } },
       );

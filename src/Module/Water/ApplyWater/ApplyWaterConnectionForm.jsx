@@ -20,16 +20,16 @@ import { Dropdown } from 'react-native-element-dropdown';
 import Colors from '../../Constants/Colors';
 import { useMasterData } from '../../../Context/MasterDataContext';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
-import { BASE_URL } from '../../../config';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
 import { useNavigation } from '@react-navigation/native';
 import { scrollToInput, handleValidation } from './validation';
-import { WATER_API_ROUTES } from '../../../api/apiRoutes';
+import { WATER_APPLICATION_MASTER_DATA_API } from '../../../api/apiRoutes';
 import { callTestRequest } from './applyTestRequest';
 import { showToast } from '../../../utils/toast';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { cardHeader } from '../../../style/cardHeader';
+import { NEW_WARD_BY_OLD_API } from '../../../api/apiRoutes';
 
 const ApplyWaterConnectionForm = () => {
   const [focusedField, setFocusedField] = useState(null);
@@ -105,7 +105,7 @@ const ApplyWaterConnectionForm = () => {
       try {
         const token = await getToken();
         const response = await axios.post(
-          `${BASE_URL}/api/property/get-new-ward-by-old`,
+          NEW_WARD_BY_OLD_API,
           { oldWardId: wardId },
           {
             headers: {
@@ -140,7 +140,7 @@ const ApplyWaterConnectionForm = () => {
       try {
         const token = await getToken();
         const response = await axios.post(
-          WATER_API_ROUTES.MASTER_DATA,
+          WATER_APPLICATION_MASTER_DATA_API,
           {},
           {
             headers: {

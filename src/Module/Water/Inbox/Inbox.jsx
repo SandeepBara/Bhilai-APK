@@ -17,7 +17,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import { WATER_API_ROUTES } from '../.././../api/apiRoutes';
+import { WATER_APPLICATION_INBOX_API } from '../.././../api/apiRoutes';
 import Colors from '../../Constants/Colors';
 import { showToast } from '../../../utils/toast';
 import { getToken } from '../../../utils/auth';
@@ -43,7 +43,7 @@ const Inbox = ({ navigation }) => {
         if (!token) return console.warn('No token found');
 
         const response = await axios.post(
-          WATER_API_ROUTES.INBOX,
+          WATER_APPLICATION_INBOX_API,
           {},
           {
             headers: { Authorization: `Bearer ${token}` },

@@ -15,15 +15,15 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import Colors from '../Constants/Colors';
-import HeaderNavigation from '../../Components/HeaderNavigation';
+import Colors from '../../Constants/Colors';
+import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
-import { PROPERTY_API, CUSTOMER_API } from '../../api/apiRoutes';
-import { getToken } from '../../utils/auth';
-import Pagination from '../../Components/Pagination';
-import styles from '../../style/SearchStyles';
-import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
+import { SAF_MASTER_DATA_API, WATER_CONSUMER_SEARCH_API } from '../../../api/apiRoutes';
+import { getToken } from '../../../utils/auth';
+import Pagination from '../../../Components/Pagination';
+import styles from '../../../style/SearchStyles';
+import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 
 const Search = ({ navigation }) => {
   const [value, setValue] = useState(null); // selected ward id
@@ -51,7 +51,7 @@ const Search = ({ navigation }) => {
         }
 
         const response = await axios.post(
-          PROPERTY_API.MASTER_DATA,
+          SAF_MASTER_DATA_API,
           {},
           { headers: { Authorization: `Bearer ${token}` } },
         );
@@ -96,7 +96,7 @@ const Search = ({ navigation }) => {
       };
 
       const response = await axios.post(
-        CUSTOMER_API.CUSTOMER_SEARCH_API,
+        WATER_CONSUMER_SEARCH_API,
         body,
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
-import { CUSTOMER_API } from '../../../api/apiRoutes';
-import { getToken } from '../../../utils/auth';
-import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { WATER_CONSUMER_PAY_DUE_API } from '../../../../api/apiRoutes';
+import { getToken } from '../../../../utils/auth';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const paymentTypes = [
   { label: 'Full Payment', value: 'FULL' },
@@ -35,7 +35,7 @@ export function PaymentForm({ id, payableAmount, submitting, onSubmittingChange,
     try {
       const token = await getToken();
       if (!token) throw new Error('Please sign in again.');
-      const { data } = await axios.post(CUSTOMER_API.CUSTOMER_PAY_DUE_API, {
+      const { data } = await axios.post(WATER_CONSUMER_PAY_DUE_API, {
         id, paymentType, paymentMode, amount: paymentAmount,
       }, { headers: { Authorization: 'Bearer ' + token } });
       if (data?.status !== true) throw new Error(data?.message || 'Please try again.');

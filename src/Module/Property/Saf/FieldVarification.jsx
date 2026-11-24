@@ -17,11 +17,11 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
-import { BASE_URL } from '../../../config';
 import Colors from '../../Constants/Colors';
 import { showToast } from '../../../utils/toast';
 import Pagination from '../../../Components/Pagination';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { SAF_INBOX_API } from '../../../api/apiRoutes';
 
 const FieldVarification = ({ navigation }) => {
   const [data, setData] = useState([]);
@@ -47,7 +47,7 @@ const FieldVarification = ({ navigation }) => {
       if (!token) return console.warn('No token found');
 
       const response = await axios.post(
-        `${BASE_URL}/api/property/inbox?page=${pageNo}`,
+        SAF_INBOX_API(pageNo),
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

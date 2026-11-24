@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { getToken } from '../../../../utils/auth';
-import { WATER_API_ROUTES } from '../../../../api/apiRoutes';
+import { WATER_APPLICATION_POST_NEXT_API } from '../../../../api/apiRoutes';
 import axios from 'axios';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
@@ -50,7 +50,7 @@ export const RemarksModal = ({
       console.log('Sending payload:', payload);
 
       const response = await axios.post(
-        WATER_API_ROUTES.WATER_REMARKS_API,
+        WATER_APPLICATION_POST_NEXT_API,
         payload,
         {
           headers: {

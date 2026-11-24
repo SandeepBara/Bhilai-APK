@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import * as Print from 'expo-print'; // ✅ Import print module
-import { SAF_API_ROUTES } from '../../api/apiRoutes';
+import { SAF_FIELD_VERIFICATION_DETAILS_API } from '../../api/apiRoutes';
 import { getToken } from '../../utils/auth';
 import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
 
@@ -44,7 +44,7 @@ export const TCVerificationModal = ({ visible, onClose, id }) => {
         };
 
         const response = await axios.post(
-          SAF_API_ROUTES.SAF_VARIFICATION_MODEL,
+          SAF_FIELD_VERIFICATION_DETAILS_API,
           { id },
           { headers },
         );

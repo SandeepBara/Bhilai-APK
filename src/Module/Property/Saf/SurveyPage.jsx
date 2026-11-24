@@ -20,7 +20,7 @@ import MonthYearPicker from 'react-native-month-year-picker';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import ExtraChargesSection from './components/ExtraChargesSection';
 import VerificationCard from './VerificationCard';
-import { WARD_API, PROPERTY_API } from '../../../api/apiRoutes';
+import { NEW_WARD_BY_OLD_API, APARTMENT_BY_OLD_WARD_API } from '../../../api/apiRoutes';
 import { getToken, getUserDetails } from '../../../utils/auth';
 import { showToast } from '../../../utils/toast';
 
@@ -155,7 +155,7 @@ const SurveyPage = ({ route, navigation }) => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        WARD_API.OLD_WARD_API,
+        NEW_WARD_BY_OLD_API,
         { oldWardId: oldWard },
         { headers },
       );
@@ -181,7 +181,7 @@ const SurveyPage = ({ route, navigation }) => {
       const token = await getToken();
       const body = data?.wardMstrId ? { oldWardId: data?.wardMstrId } : {};
 
-      const response = await axios.post(PROPERTY_API.APARTMENT_API, body, {
+      const response = await axios.post(APARTMENT_BY_OLD_WARD_API, body, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

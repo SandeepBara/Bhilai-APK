@@ -33,45 +33,25 @@ const date = value => typeof value === 'string'
   ? value.replace(/^(\d{4})-(\d{2})-(\d{2})(?:[T ].*)?$/, '$3-$2-$1')
   : value;
 
-function formatReceipt(receipt, kind) {
+function formatReceipt(receipt, title, getFields) {
   const field = (label, value) => {
     const prefix = label.padEnd(15) + ': ';
     const [first, ...rest] = wrap(value, WIDTH - prefix.length);
     return [prefix + first, ...rest.map(line => ' '.repeat(prefix.length) + line)];
   };
   const center = line => ' '.repeat(Math.floor((WIDTH - line.length) / 2)) + line;
-  const dues = [receipt.previousPaymentReceipt?.totalDue, receipt.currentPaymentReceipt?.totalDue]
-    .filter(value => value != null && value !== '' && Number.isFinite(Number(value)));
   const collector = receipt.userDtl;
 
   return [
     ...wrap(receipt.ulbDtl?.ulbName || 'BHILAI MUNICIPAL CORPORATION').map(center),
     center('Citizen Copy'),
-    center(kind === 'water' ? 'Water Charge Payment Receipt' : 'Holding Tax Payment Receipt'),
+    center(title),
     divider,
     ...field('Date', date(receipt.tranDate)),
     ...field('Transaction No.', receipt.tranNo),
     ...field('Payment Mode', receipt.paymentMode),
     ...field('Ward No.', receipt.wardNo),
-    ...(kind === 'water' ? [
-      ...field('Consumer No.', receipt.consumerNo ?? receipt.consumer_no),
-      ...field('Holding No.', receipt.newHoldingNo),
-      ...field('Name', receipt.ownerName),
-      ...field('Address', receipt.address),
-      ...field('Dues From', receipt.periodFrom || date(receipt.fromDate)),
-      ...field('Dues Upto', receipt.periodUpto || date(receipt.uptoDate)),
-      ...field('Water Charges', money(receipt.demandAmount)),
-      ...field('Penalty', money(receipt.penaltyAmt)),
-      ...field('Balance Due', money(receipt.dueAmount)),
-    ] : [
-      ...field('Holding No.', receipt.newHoldingNo || receipt.holdingNo),
-      ...field('Name', receipt.ownerName),
-      ...field('Address', receipt.address),
-      ...field('Dues From', receipt.fromFyear),
-      ...field('Dues Upto', receipt.uptoFyear),
-      ...field('Rain Harvest', money(receipt.rwhTax)),
-      ...field('Total Dues', money(dues.length ? dues.reduce((sum, value) => sum + Number(value), 0) : null)),
-    ]),
+    ...getFields(receipt, { money, date }).flatMap(([label, value]) => field(label, value)),
     divider,
     ...field('Amount Paid', money(receipt.amount)),
     divider,
@@ -128,7 +108,7 @@ async function imageRaster(uri, maxWidth, maxHeight) {
   }
 }
 
-export function BluetoothReceiptModal({ visible, onClose, paymentDtls, kind = 'property' }) {
+export function BluetoothReceiptModal({ visible, onClose, paymentDtls, receiptTitle, previewTitle, getFields }) {
   const {
     bluetoothDevices, pairedDevices, connectedDevice, scanning, connecting,
     printing, scanForDevices, connectToPrinter, unpairPrinter, printBuffer,
@@ -173,7 +153,7 @@ export function BluetoothReceiptModal({ visible, onClose, paymentDtls, kind = 'p
     if (address) printerMap.set(address, device);
   }
 
-  const receipt = paymentDtls?.tranNo ? formatReceipt(paymentDtls, kind) : '';
+  const receipt = paymentDtls?.tranNo ? formatReceipt(paymentDtls, receiptTitle, getFields) : '';
   const printReceipt = async () => {
     if (!receipt || requestInFlight.current) return;
     requestInFlight.current = true;
@@ -216,7 +196,7 @@ export function BluetoothReceiptModal({ visible, onClose, paymentDtls, kind = 'p
       <SafeAreaView style={styles.screen}>
         <ScrollView contentContainerStyle={styles.content}>
           <Text selectable accessibilityRole="header" style={styles.title}>
-            {kind === 'water' ? 'Water Payment Receipt' : 'Payment Receipt'}
+            {previewTitle}
           </Text>
           <Image source={bhilaiLogo} style={styles.logo} resizeMode="contain" />
           <Text selectable style={styles.receipt}>{receipt}</Text>

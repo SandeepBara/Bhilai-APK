@@ -16,7 +16,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import Colors from '../../Constants/Colors';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
-import { PROPERTY_REPORTS_API } from '../../../api/apiRoutes';
+import { PROPERTY_PAYMENT_MODE_SUMMARY_API } from '../../../api/apiRoutes';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
 import { useMasterData } from '../../../Context/MasterDataContext';
@@ -89,7 +89,7 @@ const PaymentWiseReport = () => {
       };
 
       const response = await axios.post(
-        PROPERTY_REPORTS_API.PAYMENT_MODE_WISE_REPORT_API,
+        PROPERTY_PAYMENT_MODE_SUMMARY_API,
         payload,
         { headers: { Authorization: `Bearer ${token}` } },
       );

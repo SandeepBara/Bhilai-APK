@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../../../config';
+import { SAF_FIELD_VERIFICATION_API, SAF_MASTER_DATA_API } from '../../../../api/apiRoutes';
 
 export const useSurveyData = (id) => {
   const [data, setData] = useState(null);
@@ -19,7 +19,7 @@ export const useSurveyData = (id) => {
         const token = storedToken ? JSON.parse(storedToken) : null;
 
         const response = await axios.post(
-          `${BASE_URL}/api/property/get-saf-field-verification`,
+          SAF_FIELD_VERIFICATION_API,
           { id },
           {
             headers: {
@@ -29,7 +29,7 @@ export const useSurveyData = (id) => {
         );
 
         const response1 = await axios.post(
-          `${BASE_URL}/api/property/get-saf-master-data`,
+          SAF_MASTER_DATA_API,
           { id },
           {
             headers: {

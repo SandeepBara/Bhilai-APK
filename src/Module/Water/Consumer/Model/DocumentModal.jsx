@@ -12,12 +12,12 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import RNBlobUtil from 'react-native-blob-util';
-import PrintButton from '../../../Components/PrintButton';
+import PrintButton from '../../../../Components/PrintButton';
 import Toast from 'react-native-toast-message';
-import { showToast } from '../../../utils/toast';
-import { toastConfig } from '../../../utils/toastConfig';
+import { showToast } from '../../../../utils/toast';
+import { toastConfig } from '../../../../utils/toastConfig';
 import { sharedStyles } from './sharedStyles';
-import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const { width, height } = Dimensions.get('window');
 

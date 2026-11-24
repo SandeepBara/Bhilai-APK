@@ -31,7 +31,12 @@ import {
   api,
 } from './Model/Model';
 import { getToken } from '../../../utils/auth';
-import { HOLDIGN_API_ROUTES } from '../../../api/apiRoutes';
+import {
+  HOLDING_DETAILS_API,
+  HOLDING_DEMAND_API,
+  HOLDING_PAYMENT_RECEIPT_API,
+  HOLDING_PAY_DEMAND_API,
+} from '../../../api/apiRoutes';
 import { CopyableText, CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 const yesNo = value => [true, 1, '1', 'true'].includes(value) ? 'Yes' : 'No';
 
@@ -139,7 +144,7 @@ const HoldingDetails = ({ route, navigation }) => {
         const token = await getToken();
 
         const response = await axios.post(
-          HOLDIGN_API_ROUTES.DETAILS_API,
+          HOLDING_DETAILS_API,
           { id },
           {
             headers: {
@@ -206,7 +211,7 @@ const HoldingDetails = ({ route, navigation }) => {
       const token = await getToken(); // ✅ get auth token first
 
       const response = await axios.post(
-        HOLDIGN_API_ROUTES.DEMAND_API,
+        HOLDING_DEMAND_API,
         { id }, // ✅ send id in body
         {
           headers: {
@@ -252,7 +257,7 @@ const HoldingDetails = ({ route, navigation }) => {
       setLoading(true);
       const token = await getToken();
       const { data: result } = await axios.post(
-        HOLDIGN_API_ROUTES.RECEIPT_API,
+        HOLDING_PAYMENT_RECEIPT_API,
         { id: tranDtlId },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -342,7 +347,7 @@ const HoldingDetails = ({ route, navigation }) => {
       };
 
       const response = await axios.post(
-        HOLDIGN_API_ROUTES.PAY_DEMAND_API,
+        HOLDING_PAY_DEMAND_API,
         paymentData,
         {
           headers: {

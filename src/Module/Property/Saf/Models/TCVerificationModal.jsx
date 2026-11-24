@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { SAF_API_ROUTES } from '../../../../api/apiRoutes';
+import { SAF_FIELD_VERIFICATION_DETAILS_API } from '../../../../api/apiRoutes';
 import Colors from '../../../Constants/Colors';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
@@ -45,7 +45,7 @@ export const TCVerificationModal = ({ visible, onClose, id }) => {
         };
 
         const response = await axios.post(
-          SAF_API_ROUTES.SAF_VARIFICATION_MODEL,
+          SAF_FIELD_VERIFICATION_DETAILS_API,
           { id },
           { headers },
         );

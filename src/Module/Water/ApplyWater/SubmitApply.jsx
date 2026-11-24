@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Colors from '../../Constants/Colors';
-import { WATER_API_ROUTES } from '../../../api/apiRoutes';
+import { WATER_APPLICATION_APPLY_API } from '../../../api/apiRoutes';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -122,7 +122,7 @@ const SubmitApply = ({ route }) => {
       const token = await getToken();
 
       const response = await axios.post(
-        WATER_API_ROUTES.APPLY_CONNECTION,
+        WATER_APPLICATION_APPLY_API,
         payload,
         {
           headers: {

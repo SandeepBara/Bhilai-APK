@@ -13,14 +13,13 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
-import { BASE_URL } from '../../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AddressSection from './components/AddressSection';
 import PropertyDetails from './components/PropertyDetails';
 import { getToken } from '../../../utils/auth';
-import { PROPERTY_API } from '../../../api/apiRoutes';
+import { APARTMENT_BY_OLD_WARD_API, SAF_TEST_REQUEST_API, SAF_MASTER_DATA_API } from '../../../api/apiRoutes';
 import { showToast } from '../../../utils/toast';
 import Colors from '../../Constants/Colors';
 import {
@@ -29,6 +28,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { cardHeader } from '../../../style/cardHeader';
+import { NEW_WARD_BY_OLD_API } from '../../../api/apiRoutes';
 
 const assessmentFlags = [
   ['isBpl', 'BPL category'],
@@ -514,7 +514,7 @@ const ApplyAssessment = ({ navigation, route }) => {
       try {
         const token = await getToken();
         const response = await axios.post(
-          PROPERTY_API.APARTMENT_API,
+          APARTMENT_BY_OLD_WARD_API,
           { oldWardId: oldWard },
           { headers: { Authorization: `Bearer ${token}` } },
         );
@@ -1058,7 +1058,7 @@ const ApplyAssessment = ({ navigation, route }) => {
       const token = await getToken();
       const config = { headers: { Authorization: `Bearer ${token}` } };
       const response = await axios.post(
-        PROPERTY_API.TEST_REQUEST_API,
+        SAF_TEST_REQUEST_API,
         payload,
         config,
       );
@@ -1103,7 +1103,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-saf-master-data`,
+        SAF_MASTER_DATA_API,
         {},
         { headers },
       );
@@ -1128,7 +1128,7 @@ const ApplyAssessment = ({ navigation, route }) => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-new-ward-by-old`,
+        NEW_WARD_BY_OLD_API,
         { oldWardId: wardId },
         { headers },
       );

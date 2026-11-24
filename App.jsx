@@ -10,23 +10,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { propertyRoutes } from './src/Module/Property/PropertyRoutes';
 
-// Water
-import WaterInbox from './src/Module/Water/Inbox/Inbox';
-import WaterSurvey from './src/Module/Water/Inbox/WaterSurvey';
-import SubmitSurey from './src/Module/Water/Inbox/SubmitSurey';
-import SubmitApply from './src/Module/Water/ApplyWater/SubmitApply';
-import ApplyWaterConnectionForm from './src/Module/Water/ApplyWater/ApplyWaterConnectionForm';
-import SearchWater from './src/Module/Water/Details/Search';
-import WaterDetails from './src/Module/Water/Details/Details';
-import MyInput from './src/Module/Water/ApplyWater/MyInput';
+import { waterRoutes } from './src/Module/Water/WaterRoutes';
 
 // Dashboard
 import DashBoard from './src/Screen/DashBoard';
 import StaffCard from './src/Screen/StaffCard';
-
-// Customer
-import SearchCustomer from './src/Module/Customer/Search';
-import CustomerDetails from './src/Module/Customer/Details';
 
 // Auth
 import WelcomeScreen from './src/Screen/WelcomeScreen';
@@ -88,22 +76,18 @@ const App = () => {
                 <Stack.Screen key={name} name={name} component={component} />
               ))}
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-              <Stack.Screen
-                name="ApplyWaterConnection"
-                component={ApplyWaterConnectionForm}
-              />
-              <Stack.Screen name="SearchWater" component={SearchWater} />
-              <Stack.Screen name="SubmitApply" component={SubmitApply} />
-              <Stack.Screen name="MyInput" component={MyInput} />
-              <Stack.Screen name="WaterDetails" component={WaterDetails} />
-              <Stack.Screen name="SearchCustomer" component={SearchCustomer} />
-              <Stack.Screen
-                name="CustomerDetails"
-                component={CustomerDetails}
-              />
-              <Stack.Screen name="WaterInbox" component={WaterInbox} />
-              <Stack.Screen name="WaterSurvey" component={WaterSurvey} />
-              <Stack.Screen name="SubmitSurey" component={SubmitSurey} />
+              {waterRoutes.map(({ name, component }) => (
+                <Stack.Screen key={name} name={name} component={component} />
+              ))}
+
+
+
+
+
+
+
+
+
 
               <Stack.Screen name="ProfilePage" component={ProfilePage} />
               <Stack.Screen name="Sidebar" component={Sidebar} />

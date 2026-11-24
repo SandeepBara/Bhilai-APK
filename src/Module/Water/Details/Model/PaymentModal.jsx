@@ -12,7 +12,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { getToken } from '../../../../utils/auth';
-import { WATER_API_ROUTES } from '../../../../api/apiRoutes';
+import { WATER_APPLICATION_PAY_DEMAND_API } from '../../../../api/apiRoutes';
 import axios from 'axios';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
@@ -74,7 +74,7 @@ export const PaymentModal = ({
       console.log('Processing payment:', paymentData);
 
       const response = await axios.post(
-        WATER_API_ROUTES.PAY_DEMAND,
+        WATER_APPLICATION_PAY_DEMAND_API,
         paymentData,
         {
           headers: {

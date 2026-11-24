@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { WATER_API_ROUTES } from '../../../../api/apiRoutes';
+import { WATER_APPLICATION_GET_FIELD_VERIFICATION_API } from '../../../../api/apiRoutes';
 import { getToken } from '../../../../utils/auth';
 export const fetchFieldVerificationData = async id => {
   try {
     const token = await getToken();
 
     const response = await axios.post(
-      WATER_API_ROUTES.GET_FIELD_VERIFICATION_API,
+      WATER_APPLICATION_GET_FIELD_VERIFICATION_API,
       { id }, // body payload
       {
         headers: {

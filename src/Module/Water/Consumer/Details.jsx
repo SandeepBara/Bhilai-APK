@@ -4,14 +4,18 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import axios from 'axios';
-import Colors from '../Constants/Colors';
-import { CUSTOMER_API } from '../../api/apiRoutes';
-import HeaderNavigation from '../../Components/HeaderNavigation';
-import { CopyableText, CopyableTouchableOpacity } from '../../Components/CopyableControl';
-import { getToken } from '../../utils/auth';
+import Colors from '../../Constants/Colors';
+import {
+  WATER_CONSUMER_DETAILS_API,
+  WATER_CONSUMER_PAYMENT_RECEIPT_API,
+  WATER_CONSUMER_DUE_API,
+} from '../../../api/apiRoutes';
+import HeaderNavigation from '../../../Components/HeaderNavigation';
+import { CopyableText, CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { getToken } from '../../../utils/auth';
 import { PaymentReceiptModal, ViewDemandModal } from './Model';
 import GenerateDemandModal from './Model/GenerateDemandModal';
-import { cardHeader } from '../../style/cardHeader';
+import { cardHeader } from '../../../style/cardHeader';
 
 const enabled = value => [true, 1, '1', 'true'].includes(value);
 const dateOnly = value => value?.match?.(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? value;
@@ -116,7 +120,7 @@ export default function Details({ route, navigation }) {
       setError('Consumer ID is missing.');
       return;
     }
-    post(CUSTOMER_API.CUSTOMER_DETAILS_API, id, controller.signal).then(data => {
+    post(WATER_CONSUMER_DETAILS_API, id, controller.signal).then(data => {
       if (!controller.signal.aborted) setConsumer(data);
     }).catch(failure => {
       if (!controller.signal.aborted) setError(failure.response?.data?.message || failure.message);
@@ -131,7 +135,7 @@ export default function Details({ route, navigation }) {
   useEffect(() => {
     if (newTransactionId == null) return;
     const controller = new AbortController();
-    post(CUSTOMER_API.CUSTOMER_PAYMENT_RECIPT_API, newTransactionId, controller.signal)
+    post(WATER_CONSUMER_PAYMENT_RECEIPT_API, newTransactionId, controller.signal)
       .then(data => {
         if (controller.signal.aborted) return;
         setReceipt(data);
@@ -224,7 +228,7 @@ export default function Details({ route, navigation }) {
                 payment.demandAmt, payment.penaltyAmt, payment.payableAmt, payment.balance,
                 payment.id != null ? (
                   <Action title="View" disabled={busy} onPress={() =>
-                    openAction('receipt', CUSTOMER_API.CUSTOMER_PAYMENT_RECIPT_API, payment.id)
+                    openAction('receipt', WATER_CONSUMER_PAYMENT_RECEIPT_API, payment.id)
                   } />
                 ) : null,
               ])} />
@@ -258,10 +262,10 @@ export default function Details({ route, navigation }) {
             </Section>
             <View style={styles.actions}>
               <Action propertyStyle title="View Demand" disabled={busy}
-                onPress={() => openAction('demand', CUSTOMER_API.CUSTOMER_DUE_API, id)} />
+                onPress={() => openAction('demand', WATER_CONSUMER_DUE_API, id)} />
               {canTakePayment && (
                 <Action propertyStyle title="Proceed Payment" disabled={busy}
-                  onPress={() => openAction('payment', CUSTOMER_API.CUSTOMER_DUE_API, id)} />
+                  onPress={() => openAction('payment', WATER_CONSUMER_DUE_API, id)} />
               )}
               {canGenerateDemand && (
                 <Action propertyStyle title="Generate Demand" disabled={busy} onPress={() => setModal('generate')} />

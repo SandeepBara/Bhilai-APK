@@ -27,6 +27,7 @@ import Colors from '../Module/Constants/Colors';
 import back_11 from '../assets/back_11.jpg';
 import LOGO from '../assets/bhilai_logo.png';
 import { CopyableTouchableOpacity } from '../Components/CopyableControl';
+import { LOGIN_API } from '../api/apiRoutes';
 
 const LoginScreen = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -77,7 +78,7 @@ const LoginScreen = ({ navigation }) => {
         : { userName, password, type: 'mobile' };
 
     try {
-      const response = await axios.post(`${BASE_URL}/api/login`, loginPayload);
+      const response = await axios.post(LOGIN_API, loginPayload);
       console.log('Login response:', response);
 
       if (response?.data?.data?.token) {

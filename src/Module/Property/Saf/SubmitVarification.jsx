@@ -13,7 +13,11 @@ import {
 } from 'react-native';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import axios from 'axios';
-import { PROPERTY_API, SAF_API_ROUTES } from '../../../api/apiRoutes';
+import {
+  SAF_SUBMIT_FIELD_VERIFICATION_API,
+  PROPERTY_GEOTAG_IMAGE_API,
+  SAF_POST_NEXT_API,
+} from '../../../api/apiRoutes';
 import { getToken, getUserDetails } from '../../../utils/auth';
 import { useNavigation } from '@react-navigation/native';
 import { showToast } from '../../../utils/toast';
@@ -204,7 +208,7 @@ const SubmitVarification = ({ route }) => {
       };
       console.log('fieldPayload', JSON.stringify(fieldPayload, null, 2));
       const response = await axios.post(
-        PROPERTY_API.FIELD_VARIFICATION_API,
+        SAF_SUBMIT_FIELD_VERIFICATION_API,
         fieldPayload,
         {
           headers: {
@@ -294,7 +298,7 @@ const SubmitVarification = ({ route }) => {
     // 6️⃣ Submit
     try {
       const geoRes = await axios.post(
-        PROPERTY_API.GEOTAGING_IMAGE_API,
+        PROPERTY_GEOTAG_IMAGE_API,
         formData,
         {
           headers: {
@@ -327,7 +331,7 @@ const SubmitVarification = ({ route }) => {
         status: status, // 'FORWARD' or 'BACKWARD'
       };
 
-      await axios.post(SAF_API_ROUTES.SEND_TO_LEVEL_API, payload, {
+      await axios.post(SAF_POST_NEXT_API, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

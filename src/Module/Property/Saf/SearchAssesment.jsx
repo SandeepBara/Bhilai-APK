@@ -18,11 +18,11 @@ import {
 import Colors from '../../Constants/Colors';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
-import { BASE_URL } from '../../../config';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Pagination from '../../../Components/Pagination';
 import styles from '../../../style/SearchStyles';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { SAF_MASTER_DATA_API, SAF_SEARCH_API } from '../../../api/apiRoutes';
 
 const SearchAssessment = ({ navigation }) => {
   const [value, setValue] = useState(); // ward id
@@ -42,7 +42,7 @@ const SearchAssessment = ({ navigation }) => {
         const token = storedToken ? JSON.parse(storedToken) : null;
 
         const response = await axios.post(
-          `${BASE_URL}/api/property/get-saf-master-data`,
+          SAF_MASTER_DATA_API,
           {},
           { headers: { Authorization: `Bearer ${token}` } },
         );
@@ -76,7 +76,7 @@ const SearchAssessment = ({ navigation }) => {
       };
 
       const response = await axios.post(
-        `${BASE_URL}/api/property/search-saf`,
+        SAF_SEARCH_API,
         body,
         { headers: { Authorization: `Bearer ${token}` } },
       );

@@ -28,13 +28,13 @@ import { ImageViewModal } from './Models/ImageViewModal';
 import React from 'react';
 import Header from '../../../Screen/Header';
 import Colors from '../../Constants/Colors';
-import { BASE_URL } from '../../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { getToken } from '../../../utils/auth';
 import { CopyableText, CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { SAF_DEMAND_API, SAF_DOCUMENTS_API, SAF_RECEIPT_API, SAF_DETAILS_API, SAF_PAY_DEMAND_API } from '../../../api/apiRoutes';
 const isEnabled = value => [true, 1, '1', 'true'].includes(value);
 const yesNo = value => isEnabled(value) ? 'Yes' : 'No';
 
@@ -162,7 +162,7 @@ const SafDetails = ({ route, navigation }) => {
         return Alert.alert('Error', 'Token not found');
       }
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-saf-demand`,
+        SAF_DEMAND_API,
         { id },
         {
           headers: {
@@ -194,7 +194,7 @@ const SafDetails = ({ route, navigation }) => {
       }
 
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-uploaded-doc-list`,
+        SAF_DOCUMENTS_API,
         { id }, // Send the document/property ID in body
         {
           headers: {
@@ -219,7 +219,7 @@ const SafDetails = ({ route, navigation }) => {
         return;
       }
       const response = await axios.post(
-        `${BASE_URL}/api/property/payment-receipt`,
+        SAF_RECEIPT_API,
         { id: tranDtlId },
         {
           headers: {
@@ -245,7 +245,7 @@ const SafDetails = ({ route, navigation }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-saf-dtl`,
+        SAF_DETAILS_API,
         { id },
         {
           headers: {
@@ -357,7 +357,7 @@ const SafDetails = ({ route, navigation }) => {
 
       // Make payment API call
       const response = await axios.post(
-        `${BASE_URL}/api/property/pay-saf-demand`,
+        SAF_PAY_DEMAND_API,
         paymentData,
         {
           headers: {

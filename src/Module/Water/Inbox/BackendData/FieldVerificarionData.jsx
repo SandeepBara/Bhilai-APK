@@ -2,7 +2,11 @@
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { getToken } from '../../../../utils/auth';
-import { WATER_API_ROUTES, WARD_API } from '../../../../api/apiRoutes';
+import {
+  WATER_APPLICATION_MASTER_DATA_API,
+  WATER_APPLICATION_FIELD_VERIFICATION_API,
+  NEW_WARD_BY_OLD_API,
+} from '../../../../api/apiRoutes';
 
 export const useWaterMasterData = () => {
   const [ownershipType, setOwnershipType] = useState([]);
@@ -34,7 +38,7 @@ export const useWaterMasterData = () => {
     try {
       const token = await getToken();
       const response = await axios.post(
-        WARD_API.OLD_WARD_API,
+        NEW_WARD_BY_OLD_API,
         { oldWardId },
         {
           headers: {
@@ -69,7 +73,7 @@ export const useWaterMasterData = () => {
         setLoading(true);
         const token = await getToken();
         const response = await axios.post(
-          WATER_API_ROUTES.MASTER_DATA,
+          WATER_APPLICATION_MASTER_DATA_API,
           {},
           {
             headers: {
@@ -195,7 +199,7 @@ export const useWaterMasterData = () => {
       const token = await getToken(); // Get stored auth token
 
       const response = await axios.post(
-        WATER_API_ROUTES.CONSUMER_FIELD_VERIFICATION_API, // ✅ API endpoint
+        WATER_APPLICATION_FIELD_VERIFICATION_API, // ✅ API endpoint
         { paylod }, // ✅ Request body
         {
           headers: {

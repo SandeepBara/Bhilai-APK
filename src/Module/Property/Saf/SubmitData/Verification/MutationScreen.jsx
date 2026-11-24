@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Colors from '../../../../Constants/Colors';
 import axios from 'axios';
-import { SAF_API_ROUTES } from '../../../../../api/apiRoutes'; // make sure this is your API route
+import { SAF_APPLY_API } from '../../../../../api/apiRoutes'; // make sure this is your API route
 import { getToken } from '../../../../../utils/auth';
 import HeaderNavigation from '../../../../../Components/HeaderNavigation';
 import MessageModal from '../../../../../utils/MessageModal';
@@ -220,7 +220,7 @@ const MutationScreen = ({ route, navigation }) => {
       // console.log('floor data', data.floors);
       console.log('payload', payload);
       const response = await axios.post(
-        SAF_API_ROUTES.APPLY_SAF_RESSESMENT_API,
+        SAF_APPLY_API,
         payload,
         {
           headers: {

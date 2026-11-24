@@ -7,11 +7,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Pagination from '../../../Components/Pagination';
-import { cardHeader } from '../../../style/cardHeader';
+import Pagination from '../../../../Components/Pagination';
+import { cardHeader } from '../../../../style/cardHeader';
 import { PaymentForm } from './PaymentModal';
 import { sharedStyles } from './sharedStyles';
-import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 const ROWS_PER_PAGE = 5;
 

@@ -16,16 +16,16 @@ import {
 import { Dropdown } from 'react-native-element-dropdown';
 import { WebView } from 'react-native-webview';
 import RNBlobUtil from 'react-native-blob-util';
-import PrintButton from '../../../Components/PrintButton';
+import PrintButton from '../../../../Components/PrintButton';
 import Toast from 'react-native-toast-message';
-import { showToast } from '../../../utils/toast';
-import { toastConfig } from '../../../utils/toastConfig';
-import { CUSTOMER_API } from '../../../api/apiRoutes';
+import { showToast } from '../../../../utils/toast';
+import { toastConfig } from '../../../../utils/toastConfig';
+import { WATER_CONSUMER_PAY_DUE_API } from '../../../../api/apiRoutes';
 
-import Colors from '../../Constants/Colors';
-import { getToken } from '../../../utils/auth';
+import Colors from '../../../Constants/Colors';
+import { getToken } from '../../../../utils/auth';
 import axios from 'axios';
-import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 export const ViewDemandModal = ({
   visible,
   onClose,
@@ -274,7 +274,7 @@ export const PaymentModal = ({
       console.log('Request Body:', requestBody);
 
       const response = await axios.post(
-        CUSTOMER_API.CUSTOMER_PAY_DUE_API,
+        WATER_CONSUMER_PAY_DUE_API,
         requestBody,
         {
           headers: {

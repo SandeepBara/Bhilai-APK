@@ -20,7 +20,7 @@ import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
-import { WATER_API_ROUTES, PROPERTY_API } from '../../../api/apiRoutes';
+import { WATER_APPLICATION_SEARCH_API, SAF_MASTER_DATA_API } from '../../../api/apiRoutes';
 import Pagination from '../../../Components/Pagination';
 import styles from '../../../style/SearchStyles';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
@@ -50,7 +50,7 @@ const Search = ({ navigation }) => {
         }
 
         const response = await axios.post(
-          PROPERTY_API.MASTER_DATA,
+          SAF_MASTER_DATA_API,
           {},
           { headers: { Authorization: `Bearer ${token}` } },
         );
@@ -97,7 +97,7 @@ const Search = ({ navigation }) => {
         wardId: value ? [value] : [],
       };
 
-      const response = await axios.post(WATER_API_ROUTES.WATER_SEARCH, body, {
+      const response = await axios.post(WATER_APPLICATION_SEARCH_API, body, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

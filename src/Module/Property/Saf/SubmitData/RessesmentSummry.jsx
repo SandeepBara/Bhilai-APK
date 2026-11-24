@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Colors from '../../../Constants/Colors';
 import axios from 'axios';
-import { SAF_API_ROUTES } from '../../../../api/apiRoutes';
+import { SAF_APPLY_API } from '../../../../api/apiRoutes';
 import { getToken } from '../../../../utils/auth';
 import MessageModal from '../../../../utils/MessageModal';
 
@@ -165,7 +165,7 @@ const RessesmentSummry = ({ route, navigation }) => {
       // Log as a pretty-printed string (with indentation)
       console.log(JSON.stringify(payload, null, 2));
       const response = await axios.post(
-        SAF_API_ROUTES.APPLY_SAF_RESSESMENT_API,
+        SAF_APPLY_API,
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },

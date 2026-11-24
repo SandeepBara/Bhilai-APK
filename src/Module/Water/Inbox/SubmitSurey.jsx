@@ -12,7 +12,10 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
-import { WATER_API_ROUTES } from '../../../api/apiRoutes';
+import {
+  WATER_APPLICATION_POST_NEXT_API,
+  WATER_APPLICATION_FIELD_VERIFICATION_API,
+} from '../../../api/apiRoutes';
 import { getToken } from '../../../utils/auth';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
@@ -48,7 +51,7 @@ const SubmitSurey = () => {
       };
       console.log('Sending forward with remarks:', payload);
 
-      const response = await axios.post(WATER_API_ROUTES.POST_NEXT, payload, {
+      const response = await axios.post(WATER_APPLICATION_POST_NEXT_API, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -123,7 +126,7 @@ const SubmitSurey = () => {
 
     try {
       const response = await axios.post(
-        WATER_API_ROUTES.CONSUMER_FIELD_VERIFICATION_API,
+        WATER_APPLICATION_FIELD_VERIFICATION_API,
         payload, // ✅ Correct payload
         {
           headers: {

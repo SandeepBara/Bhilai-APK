@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { sharedStyles } from './sharedStyles';
-import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
 
 export const PaymentReceiptSimpleModal = ({ visible, onClose, receiptData }) => (
   <Modal visible={visible} transparent animationType="slide">

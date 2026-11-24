@@ -20,7 +20,14 @@ import FieldVerificationModal from './Model/FieldVerificationModal';
 
 import { useNavigation } from '@react-navigation/native';
 import { getToken } from '../../../utils/auth';
-import { WATER_API_ROUTES } from '../../../api/apiRoutes';
+import {
+  WATER_APPLICATION_FIELD_VERIFICATION_DETAILS_API,
+  WATER_APPLICATION_DETAILS_API,
+  WATER_APPLICATION_DUE_API,
+  WATER_APPLICATION_PAYMENT_RECEIPT_API,
+  WATER_APPLICATION_PAY_DEMAND_API,
+  WATER_APPLICATION_DOCUMENTS_API,
+} from '../../../api/apiRoutes';
 import {
   responsiveHeight,
   responsiveFontSize,
@@ -59,7 +66,7 @@ const Details = ({ route }) => {
 
       // Fetch field verification for this specific ID
       const res = await axios.post(
-        WATER_API_ROUTES.GET_FIELD_VERIFICATION_DTLS_API,
+        WATER_APPLICATION_FIELD_VERIFICATION_DETAILS_API,
         { id: id }, // API expects an array of IDs
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -90,7 +97,7 @@ const Details = ({ route }) => {
 
       // Fetch trade details first to get workflowId
       const tradeRes = await axios.post(
-        WATER_API_ROUTES.WATER_DETAILS,
+        WATER_APPLICATION_DETAILS_API,
         { id: Number(id) },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -122,7 +129,7 @@ const Details = ({ route }) => {
         fieldverification,
       ] = await Promise.all([
         axios.post(
-          WATER_API_ROUTES.WATER_DUE,
+          WATER_APPLICATION_DUE_API,
           { id },
           { headers: { Authorization: `Bearer ${token}` } },
         ),
@@ -132,23 +139,23 @@ const Details = ({ route }) => {
           { headers: { Authorization: `Bearer ${token}` } },
         ),
         axios.post(
-          WATER_API_ROUTES.PAYMENT_RECEIPT,
+          WATER_APPLICATION_PAYMENT_RECEIPT_API,
           { id: newTradeId },
           { headers: { Authorization: `Bearer ${token}` } },
         ),
 
         axios.post(
-          WATER_API_ROUTES.PAY_DEMAND,
+          WATER_APPLICATION_PAY_DEMAND_API,
           { id },
           { headers: { Authorization: `Bearer ${token}` } },
         ),
         axios.post(
-          WATER_API_ROUTES.WATER_DOC_LIST,
+          WATER_APPLICATION_DOCUMENTS_API,
           { id },
           { headers: { Authorization: `Bearer ${token}` } },
         ),
         axios.post(
-          WATER_API_ROUTES.GET_FIELD_VERIFICATION_DTLS_API,
+          WATER_APPLICATION_FIELD_VERIFICATION_DETAILS_API,
           { id },
           { headers: { Authorization: `Bearer ${token}` } },
         ),

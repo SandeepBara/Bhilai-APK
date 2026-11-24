@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import Header from '../../../Screen/Header';
-import { BASE_URL } from '../../../config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -25,6 +24,7 @@ import PropertyDetails from './components/PropertyDetails';
 import { showToast } from '../../../utils/toast';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { SAF_MASTER_DATA_API, NEW_WARD_BY_OLD_API } from '../../../api/apiRoutes';
 
 const ApplyAssessmentComponentized = ({ navigation, route }) => {
   // Get data from route params if it's a reassessment or mutation
@@ -321,7 +321,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-saf-master-data`,
+        SAF_MASTER_DATA_API,
         {},
         { headers },
       );
@@ -345,7 +345,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
         'Content-Type': 'application/json',
       };
       const response = await axios.post(
-        `${BASE_URL}/api/property/get-new-ward-by-old`,
+        NEW_WARD_BY_OLD_API,
         { oldWardId: wardId },
         { headers },
       );

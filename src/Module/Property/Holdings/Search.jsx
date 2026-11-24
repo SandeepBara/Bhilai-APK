@@ -19,7 +19,7 @@ import Colors from '../../Constants/Colors';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
-import { HOLDIGN_API_ROUTES } from '../../../api/apiRoutes';
+import { SAF_MASTER_DATA_API, HOLDING_SEARCH_API } from '../../../api/apiRoutes';
 import { getToken } from '../../../utils/auth';
 import Pagination from '../../../Components/Pagination'; // ✅ Pagination imported
 import styles from '../../../style/SearchStyles';
@@ -41,7 +41,7 @@ const Search = ({ navigation }) => {
       try {
         const token = await getToken();
         const response = await axios.post(
-          HOLDIGN_API_ROUTES.MASTER_DATA_API,
+          SAF_MASTER_DATA_API,
           {},
           { headers: { Authorization: `Bearer ${token}` } },
         );
@@ -72,7 +72,7 @@ const Search = ({ navigation }) => {
         wardId: value ? [value] : [],
       };
 
-      const response = await axios.post(HOLDIGN_API_ROUTES.SEARCH_API, body, {
+      const response = await axios.post(HOLDING_SEARCH_API, body, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

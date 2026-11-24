@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../config';
+import { SAF_MASTER_DATA_API } from '../api/apiRoutes';
 
 const MasterDataContext = createContext();
 
@@ -31,7 +31,7 @@ export const MasterDataProvider = ({ children }) => {
         }
 
         const res = await axios.post(
-          `${BASE_URL}/api/property/get-saf-master-data`,
+          SAF_MASTER_DATA_API,
           {}, // ✅ empty body
           {
             headers: {

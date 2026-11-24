@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { PROPERTY_API, SAF_API_ROUTES } from '../../../../api/apiRoutes';
+import {
+  SAF_SUBMIT_FIELD_VERIFICATION_API,
+  PROPERTY_GEOTAG_IMAGE_API,
+  SAF_POST_NEXT_API,
+} from '../../../../api/apiRoutes';
 import { getToken } from '../../../../utils/auth';
 import ImageResizer from 'react-native-image-resizer';
 import moment from 'moment';
@@ -135,7 +139,7 @@ console.log("Api Submisison data", submissionData?.extraFloors
   };
   console.log('Field Payload:', JSON.stringify(fieldPayload, null, 2));
   const response = await axios.post(
-    PROPERTY_API.FIELD_VARIFICATION_API,
+    SAF_SUBMIT_FIELD_VERIFICATION_API,
     fieldPayload,
     {
       headers: {
@@ -215,7 +219,7 @@ export const submitGeotaggedImages = async (photos, location, id) => {
   });
 
   const response = await axios.post(
-    PROPERTY_API.GEOTAGING_IMAGE_API,
+    PROPERTY_GEOTAG_IMAGE_API,
     formData,
     {
       headers: {
@@ -237,7 +241,7 @@ export const sendToLevel = async (id, remarks, status) => {
     status: status, // 'FORWARD' or 'BACKWARD'
   };
 
-  const response = await axios.post(SAF_API_ROUTES.SEND_TO_LEVEL_API, payload, {
+  const response = await axios.post(SAF_POST_NEXT_API, payload, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
