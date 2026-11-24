@@ -30,7 +30,7 @@ export const HOLDIGN_API_ROUTES ={
   MASTER_DATA_API:`${BASE_URL}/api/property/get-saf-master-data`,
   DEMAND_API:`${BASE_URL}/api/property/get-prop-demand`,
   PAY_DEMAND_API:`${BASE_URL}/api/property/pay-prop-demand`,
-  RECEIPT_API:`${BASE_URL}/api/property/payment-receipt`
+  RECEIPT_API:`${BASE_URL}/api/property/prop-payment-receipt`
 
   
 };

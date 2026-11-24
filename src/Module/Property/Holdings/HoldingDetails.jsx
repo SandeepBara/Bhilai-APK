@@ -116,9 +116,6 @@ const HoldingDetails = ({ route, navigation }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [bankName, setBankName] = useState('');
   const [branchName, setBranchName] = useState('');
-  const [paymentReceiptVisible, setPaymentReceiptVisible] = useState(false);
-  const [paymentCompleted, setPaymentCompleted] = useState(false);
-  const [transactionId, setTransactionId] = useState(null);
 
   const paymentTypeData = [{ label: 'Full', value: 'Full' }];
 
@@ -248,34 +245,23 @@ const HoldingDetails = ({ route, navigation }) => {
     }
   };
 
-  // const handleViewReceipt = async tranDtlId => {
-  //   try {
-  //     const response = await api.getPaymentReceipt(tranDtlId);
-  //     setPaynemtDtls(response?.data);
-  //     setModalVisible(true);
-  //   } catch (error) {
-  //     console.error(
-  //       'Error fetching payment receipt:',
-  //       error?.response || error,
-  //     );
-  //   }
-  // };
   const handleViewReceipt = async tranDtlId => {
-    console.log('trans is', tranDtlId);
     try {
+      if (!tranDtlId) throw new Error('Missing transaction ID');
       setLoading(true);
-
-      const response = await axios.post(HOLDIGN_API_ROUTES.RECEIPT_API, {
-        id: tranDtlId, // sending transaction ID in body
-      });
-
-      setPaynemtDtls(response?.data.data);
-      setModalVisible(true);
-    } catch (error) {
-      console.error(
-        'Error fetching payment receipt:',
-        error?.response || error,
+      const token = await getToken();
+      const { data: result } = await axios.post(
+        HOLDIGN_API_ROUTES.RECEIPT_API,
+        { id: tranDtlId },
+        { headers: { Authorization: `Bearer ${token}` } },
       );
+      if (!result?.status || !result.data?.tranNo) {
+        throw new Error(result?.message || 'Receipt unavailable');
+      }
+      setPaynemtDtls(result.data);
+      setModalVisible(true);
+    } catch {
+      Alert.alert('Receipt unavailable', 'The official receipt could not be loaded.');
     } finally {
       setLoading(false);
     }
@@ -677,13 +663,14 @@ const HoldingDetails = ({ route, navigation }) => {
           setPayNowModalVisible(false);
           const paymentResult = await processPayment();
           if (paymentResult.success) {
-            setTransactionId(paymentResult.tranId);
-            await viewdemand(id);
-            setTimeout(() => {
-              setPaymentCompleted(true);
-              setViewDemandVisible(false);
-              setPaymentReceiptVisible(true);
-            }, 500);
+            setViewDemandVisible(false);
+            setPaymentType(null);
+            setPaymentMode(null);
+            setRefNo('');
+            setBankName('');
+            setBranchName('');
+            setChequeDate(null);
+            await handleViewReceipt(paymentResult.tranId);
           }
         }}
       />
@@ -697,11 +684,13 @@ const HoldingDetails = ({ route, navigation }) => {
         onPayNowPress={() => setPayNowModalVisible(true)}
       />
 
-      <PaymentReceiptModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        paymentDtls={paymentDtls}
-      />
+      {modalVisible && (
+        <PaymentReceiptModal
+          visible
+          onClose={() => setModalVisible(false)}
+          paymentDtls={paymentDtls}
+        />
+      )}
       <DocumentViewModal
         visible={docModalVisible}
         onClose={() => setDocModalVisible(false)}
@@ -734,28 +723,6 @@ const HoldingDetails = ({ route, navigation }) => {
         setImageLoading={setImageLoading}
       />
 
-      {/* Payment Receipt Modal */}
-      <PaymentReceiptModal
-        visible={paymentReceiptVisible}
-        onClose={() => {
-          setPaymentReceiptVisible(false);
-          setPaymentCompleted(false);
-          setTransactionId(null);
-          // Reset payment form
-          setPaymentType(null);
-          setPaymentMode(null);
-          setRefNo('');
-          setBankName('');
-          setBranchName('');
-          setChequeDate(null);
-        }}
-        paymentDtls={{
-          tranNo: transactionId ? `TXN-${transactionId}` : 'PMT-' + Date.now(),
-          tranDate: new Date().toLocaleDateString('en-GB'),
-          paymentMode: paymentMode || 'Online',
-          payableAmt: amount,
-        }}
-      />
     </ScrollView>
   );
 };

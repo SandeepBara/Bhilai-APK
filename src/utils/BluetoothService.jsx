@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   Alert,
+  NativeModules,
   PermissionsAndroid,
   Platform,
 } from 'react-native';
@@ -107,7 +108,7 @@ export const useBluetoothPrinter = () => {
   };
 
   // Scan for Bluetooth devices
-  const scanForDevices = async (onScanComplete) => {
+  const scanForDevices = async (onScanComplete, onBluetoothDisabled) => {
     const hasPermission = await requestBluetoothPermission();
     if (!hasPermission) {
       Alert.alert(
@@ -115,6 +116,18 @@ export const useBluetoothPrinter = () => {
         'Bluetooth and Location permissions are required to scan for devices.',
       );
       return;
+    }
+
+    if (onBluetoothDisabled && Platform.OS === 'android') {
+      try {
+        if (!(await BluetoothPrinter.isBluetoothEnabled())) {
+          await onBluetoothDisabled();
+          return;
+        }
+      } catch {
+        Alert.alert('Bluetooth unavailable', 'Unable to check Bluetooth or open its settings.');
+        return;
+      }
     }
 
     // Store the callback if provided
@@ -165,6 +178,23 @@ export const useBluetoothPrinter = () => {
     } catch (error) {
       console.error('Disconnect error:', error);
       Alert.alert('Disconnect Failed', 'Failed to disconnect from printer');
+      return false;
+    }
+  };
+
+  const unpairPrinter = async device => {
+    const address = device.address || device.id;
+    if (Platform.OS !== 'android' || !address) return false;
+
+    try {
+      if ((connectedDevice?.address || connectedDevice?.id) === address) {
+        await NativeModules.BluetoothPrinter.disconnect(address);
+        setConnectedDevice(null);
+      }
+      await NativeModules.BluetoothPrinter.unpair(address);
+      return true;
+    } catch {
+      Alert.alert('Unable to unpair', 'Open Bluetooth Settings to forget this printer.');
       return false;
     }
   };
@@ -225,6 +255,7 @@ export const useBluetoothPrinter = () => {
     scanForDevices,
     connectToPrinter,
     disconnectPrinter,
+    unpairPrinter,
     printBuffer,
     isConnected,
     convertBufferToBytes,
