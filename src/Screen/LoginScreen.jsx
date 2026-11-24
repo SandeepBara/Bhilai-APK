@@ -25,7 +25,7 @@ import { BASE_URL } from '../config';
 import Colors from '../Module/Constants/Colors';
 
 import back_11 from '../assets/back_11.jpg';
-import RMC_LOGO from '../assets/RMC_LOGO.png';
+import LOGO from '../assets/bhilai_logo.png';
 
 const LoginScreen = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -34,6 +34,7 @@ const LoginScreen = ({ navigation }) => {
   const [userName, setUserName] = useState('');
   const [selected, setSelected] = useState('email'); // Default to 'email'
   const [showPassword, setShowPassword] = useState(false); // Show/hide password
+  console.log('BASE_URL:', BASE_URL); // Log the BASE_URL to verify it's imported correctly
 
   const handleLogin = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -117,7 +118,7 @@ const LoginScreen = ({ navigation }) => {
           <View style={styles.loginContainer}>
             <View style={styles.topSection}>
               <Image
-                source={RMC_LOGO}
+                source={LOGO}
                 style={styles.logo}
                 resizeMode="contain"
               />

@@ -109,19 +109,9 @@ const Sidebar = ({ children, menuItems, navigation }) => {
         </View>
 
         <View style={styles.sidebarFooter}>
-          {/* <TouchableOpacity style={styles.footerItem}>
-         
-            <Icon name="log-out" size={20} color={Colors.primary} />
-            <Text
-              style={styles.footerText}
-              onPress={() => handleNavigate('Logout')}
-            >
-              Logout
-            </Text>
-          </TouchableOpacity> */}
           <LogoutButton />
           <Text style={styles.footerCopyright}>
-            © 2025 Bihar Municipal Corporation
+            © 2025 Bhilai Municipal Corporation
           </Text>
         </View>
       </Animated.View>

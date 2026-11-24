@@ -85,6 +85,13 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            variant.outputs.all { output ->
+                output.outputFileName = "BMC.apk"
+            }
+        }
+    }
     signingConfigs {
         debug {
             storeFile file('debug.keystore')

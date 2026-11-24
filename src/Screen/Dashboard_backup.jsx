@@ -114,32 +114,12 @@ const DashBoard = ({ navigation }) => {
         onPress={() => navigation.navigate('ApplyAssessmentComponentized')}
       />
       <Button
-        title="Go to ApplyLicense ApplyLicense (ApplyLicense)"
-        onPress={() => navigation.navigate('ApplyLicense')}
-      />
-      <Button
-        title="Go to Search Trade (Search)"
-        onPress={() => navigation.navigate('Search')}
-      />
-      <Button
-        title="InboxScreen (InboxScreen)"
-        onPress={() => navigation.navigate('InboxScreen')}
-      />
-      <Button
-        title="RenewLicense (RenewLicense)"
-        onPress={() => navigation.navigate('RenewLicense')}
-      />
-      <Button
         title="ApplyWaterConnection (ApplyWaterConnection)"
         onPress={() => navigation.navigate('ApplyWaterConnection')}
       />
       <Button
         title="Apply Water Connection"
         onPress={() => navigation.navigate('ApplyWaterConnection')}
-      />
-      <Button
-        title="Sulinder (License)"
-        onPress={() => navigation.navigate('SurrenderLicense')}
       />
       <Button
         title="WaterBillScreen (WaterBillScreen)"

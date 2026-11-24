@@ -20,7 +20,7 @@ import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { Dropdown } from 'react-native-element-dropdown';
 import axios from 'axios';
 import { getToken } from '../../../utils/auth';
-import { WATER_API_ROUTES, API_ROUTES } from '../../../api/apiRoutes';
+import { WATER_API_ROUTES, PROPERTY_API } from '../../../api/apiRoutes';
 import Pagination from '../../../Components/Pagination';
 import styles from '../../../style/SearchStyles';
 const Search = ({ navigation }) => {
@@ -49,7 +49,7 @@ const Search = ({ navigation }) => {
         }
 
         const response = await axios.post(
-          API_ROUTES.TRADE_MASTER_DETAILS,
+          PROPERTY_API.MASTER_DATA,
           {},
           { headers: { Authorization: `Bearer ${token}` } },
         );

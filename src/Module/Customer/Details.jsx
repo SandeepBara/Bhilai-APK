@@ -15,19 +15,17 @@ import axios from 'axios';
 import HeaderNavigation from '../../Components/HeaderNavigation';
 import {
   ViewDemandModal,
-  ViewTradeLicenseModal,
   PaymentModal,
   DocumentModal,
   PaymentReceiptModal,
 } from './Model';
 import { useNavigation } from '@react-navigation/native';
 import { getToken } from '../../utils/auth';
-import { WORK_FLOW_PERMISSION, API_ROUTES } from '../../api/apiRoutes';
+import { WORK_FLOW_PERMISSION } from '../../api/apiRoutes';
 import GenerateDemandModal from './Model/GenerateDemandModal';
 import styles from '../../style/DetailsStyle';
 const Details = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [showTradeLicenseModal, setShowTradeLicenseModal] = useState(false);
   const [showDemandModal, setShowDemandModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showDocumentModal, setShowDocumentModal] = useState(false);
@@ -100,19 +98,6 @@ const Details = ({ route }) => {
               { wfId: workflowId },
               { headers: { Authorization: `Bearer ${token}` } },
             ),
-            // axios.post(
-            //   API_ROUTES.TRADE_PAYMENT,
-            //   {
-            //     id,
-            //     paymentType: 'FULL',
-            //     paymentMode: 'CASH',
-            //     chequeNo: '',
-            //     chequeDate: '',
-            //     bankName: '',
-            //     branchName: '',
-            //   },
-            //   { headers: { Authorization: `Bearer ${token}` } },
-            // ),
             axios.post(
               CUSTOMER_API.CUSTOMER_PAYMENT_RECIPT_API,
               { id: transId },

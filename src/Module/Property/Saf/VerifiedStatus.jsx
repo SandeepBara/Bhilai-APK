@@ -19,12 +19,12 @@ import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { getUserDetails } from '../../../utils/auth';
 import { showToast } from '../../../utils/toast';
 // import SubmissionModal from './Surveysubmission/SubmissionModal';
-import SubmissionModal from '../Holding/Surveysubmission/SubmissionModal';
+import SubmissionModal from '../Holdings/Surveysubmission/SubmissionModal';
 import {
   submitFieldVerification,
   submitGeotaggedImages,
   sendToLevel,
-} from '../Holding/Surveysubmission/submissionApi';
+} from '../Holdings/Surveysubmission/submissionApi';
 
 const VerifiedStatus = ({ route }) => {
   const [isULBUser, setIsULBUser] = useState(false);

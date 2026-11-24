@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Header from '../../../Screen/Header';
 import {
   ScrollView,
   View,
@@ -14,36 +14,36 @@ import {
 } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Assessment = ({ navigation }) => {
+const Inbox = ({ navigation }) => {
   return (
     <View style={styles.maindashbaord}>
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.gridContainer}>
           <TouchableOpacity style={styles.box}>
-            <Icon name="assessment" size={40} color="#4A90E2" />
-            <Text style={styles.boxText}>New Assessment</Text>
+            <Icon name="inbox" size={40} color="#4A90E2" />
+            <Text style={styles.boxText}>All Messages</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
-            <Icon name="list-alt" size={40} color="#7B61FF" />
-            <Text style={styles.boxText}>Assessment List</Text>
+            <Icon name="mark-email-unread" size={40} color="#7B61FF" />
+            <Text style={styles.boxText}>Unread Messages</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
-            <Icon name="pending" size={40} color="#50E3C2" />
-            <Text style={styles.boxText}>Pending Assessment</Text>
+            <Icon name="mark-email-read" size={40} color="#50E3C2" />
+            <Text style={styles.boxText}>Read Messages</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.box}>
-            <Icon name="check-circle" size={40} color="#F5A623" />
-            <Text style={styles.boxText}>Completed Assessment</Text>
+            <Icon name="delete" size={40} color="#F5A623" />
+            <Text style={styles.boxText}>Trash</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Assessment Module</Text>
+        <Text style={styles.footerText}>Inbox Module</Text>
       </View>
     </View>
   );
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Assessment; 
+export default Inbox;

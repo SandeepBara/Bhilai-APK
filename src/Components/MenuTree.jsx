@@ -23,6 +23,37 @@ const getNumColumns = () => {
   return 2; // default mobile
 };
 
+const tradeRoutes = new Set([
+  'applylicense',
+  'applylicensesummary',
+  'search',
+  'inboxscreen',
+  'tradedetails',
+  'docupload',
+  'renewlicense',
+  'renewlicensepage',
+  'surrenderlicense',
+  'surrenderlicensepage',
+  'inboxdtls',
+  'amedment',
+  'amedmentsummery',
+]);
+
+const removeTradeMenuItems = items =>
+  items.flatMap(item => {
+    const url = String(item.url ?? '').trim().toLowerCase();
+    if (/\btrade\b/i.test(item.name) || tradeRoutes.has(url)) {
+      return [];
+    }
+
+    if (!item.children?.length) {
+      return [item];
+    }
+
+    const children = removeTradeMenuItems(item.children);
+    return children.length ? [{ ...item, children }] : [];
+  });
+
 const MenuTreeScreen = () => {
   const [menuStack, setMenuStack] = useState([]);
   const navigation = useNavigation();
@@ -32,7 +63,7 @@ const MenuTreeScreen = () => {
       try {
         const userDetails = await getUserDetails();
         if (userDetails && userDetails?.menuTree) {
-          setMenuStack([userDetails?.menuTree]);
+          setMenuStack([removeTradeMenuItems(userDetails.menuTree)]);
         }
       } catch (err) {
         console.log('Error fetching menu:', err);

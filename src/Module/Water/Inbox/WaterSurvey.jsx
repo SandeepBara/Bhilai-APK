@@ -17,7 +17,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import VerificationCard from '../../PropertyMenu/Saf/VerificationCard';
+import VerificationCard from '../../Property/Saf/VerificationCard';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 
 import { useWaterMasterData } from './BackendData/FieldVerificarionData';

@@ -31,7 +31,6 @@ import styles from '../../../style/DetailsStyle';
 const Details = ({ route }) => {
   const [showModal, setShowModal] = useState(false);
   const [remarks, setRemarks] = useState('');
-  const [showTradeLicenseModal, setShowTradeLicenseModal] = useState(false);
   const [showDemandModal, setShowDemandModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showDocumentModal, setShowDocumentModal] = useState(false);

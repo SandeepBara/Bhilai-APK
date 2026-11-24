@@ -1,5 +1,4 @@
 // Export all Customer modal components
-export { ViewTradeLicenseModal } from './ViewTradeLicenseModal';
 export { ViewDemandModal } from './ViewDemandModal';
 export { PaymentModal } from './PaymentModal';
 export { DocumentModal } from './DocumentModal';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Header from './Header';
+import Header from '../../Screen/Header';
 import {
   ScrollView,
   View,
@@ -11,7 +11,7 @@ import {
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import HeaderNavigation from '../Components/HeaderNavigation';
+import HeaderNavigation from '../../Components/HeaderNavigation';
 
 const Property = ({ navigation }) => {
   const [propertyChildren, setPropertyChildren] = useState([]);

@@ -90,7 +90,7 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
               <Text style={styles.downloadText}>Download PDF</Text>
             </TouchableOpacity>
             <View style={{ padding: 20 }}>
-              <Text style={{}}>Trade Documents</Text>
+              <Text style={{}}>Documents</Text>
               <PrintButton fileUrl={item.docPath} title="Print" />
             </View>
           </View>
