@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   searchhead: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.headignColor,
     paddingVertical: responsiveHeight(1),
     paddingHorizontal: responsiveWidth(1),
     marginBottom: responsiveHeight(1),

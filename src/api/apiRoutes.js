@@ -65,7 +65,7 @@ export const CUSTOMER_API ={
   CUSTOMER_DETAILS_API:`${BASE_URL}/api/water/consumer/dtl`,
   CUSTOMER_SEARCH_API:`${BASE_URL}/api/water/consumer/search`,
   CUSTOMER_DUE_API:`${BASE_URL}/api/water/consumer/due`,
-  CUSTOMER_PAYMENT_RECIPT_API:`${BASE_URL}/api/water/app/payment-receipt`,
+  CUSTOMER_PAYMENT_RECIPT_API:`${BASE_URL}/api/water/consumer/payment-receipt`,
   CUSTOMER_PAY_DUE_API:`${BASE_URL}/api/water/consumer/pay-due`,
   CONSUMER_GENERATE_DEMAND_API:`${BASE_URL}/api/water/consumer/generate-demand`,
   CONSUMER_DEMAND_HISTORY_API:`${BASE_URL}/api/water/consumer/demand-history

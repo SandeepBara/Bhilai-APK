@@ -29,6 +29,7 @@ import { WATER_API_ROUTES } from '../../../api/apiRoutes';
 import { callTestRequest } from './applyTestRequest';
 import { showToast } from '../../../utils/toast';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { cardHeader } from '../../../style/cardHeader';
 
 const ApplyWaterConnectionForm = () => {
   const [focusedField, setFocusedField] = useState(null);
@@ -867,7 +868,7 @@ const ApplyWaterConnectionForm = () => {
 
 const styles = StyleSheet.create({
   container: { padding: 16 },
-  sectionTitle: { fontSize: rf(2.2), fontWeight: 'bold', marginVertical: 10 },
+  sectionTitle: { fontSize: rf(2.2), fontWeight: 'bold', marginVertical: 10, ...cardHeader },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',

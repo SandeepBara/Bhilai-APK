@@ -139,8 +139,24 @@ const Search = ({ navigation }) => {
         <Text selectable style={styles.value}>{item.consumerNo}</Text>
       </View>
       <View style={styles.row}>
+        <Text selectable style={styles.label}>Holding No:</Text>
+        <Text selectable style={styles.value}>{item.newHoldingNo ?? '—'}</Text>
+      </View>
+      <View style={styles.row}>
         <Text selectable style={styles.label}>Owner:</Text>
         <Text selectable style={styles.value}>{item.ownerName}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text selectable style={styles.label}>Guardian Name:</Text>
+        <Text selectable style={styles.value}>{item.guardianName ?? '—'}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text selectable style={styles.label}>Mobile No:</Text>
+        <Text selectable style={styles.value}>{item.mobileNo ?? '—'}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text selectable style={styles.label}>Apply Date:</Text>
+        <Text selectable style={styles.value}>{item.applyDate ?? '—'}</Text>
       </View>
       <View style={styles.row}>
         <Text selectable style={styles.label}>Address:</Text>

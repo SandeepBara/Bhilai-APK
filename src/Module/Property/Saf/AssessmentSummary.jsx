@@ -18,6 +18,7 @@ import { getToken } from '../../../utils/auth';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { cardHeader } from '../../../style/cardHeader';
 // OR for newer versions:
 
 const Section = ({ title, children }) => (
@@ -397,7 +398,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
-  sectionTitle: { fontSize: 17, fontWeight: '700', color: '#10263a', marginBottom: 10 },
+  sectionTitle: { fontSize: 17, fontWeight: '700', color: '#10263a', marginBottom: 10, ...cardHeader },
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -5 },
   field: { width: '50%', paddingHorizontal: 5, paddingVertical: 5 },
   fullField: { width: '100%' },

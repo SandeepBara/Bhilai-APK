@@ -30,13 +30,13 @@ export default StyleSheet.create({
   active: { color: 'green', fontWeight: 'bold' },
 
   sectionTitle: {
-    backgroundColor: Colors.primary || '#007AFF',
+    backgroundColor: Colors.headignColor,
     paddingVertical: responsiveHeight(1.5),
     paddingHorizontal: responsiveWidth(4),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderWidth: 1,
-    borderColor: Colors.primary || '#007AFF',
+    borderColor: Colors.headignColor,
     borderBottomWidth: 0,
     elevation: 6,
     zIndex: 2,

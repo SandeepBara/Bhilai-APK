@@ -20,6 +20,7 @@ import { showToast } from '../../../utils/toast';
 import moment from 'moment';
 import ImageResizer from 'react-native-image-resizer';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { cardHeader } from '../../../style/cardHeader';
 
 const Card = ({ title, children }) => (
   <View style={styles.card}>
@@ -568,6 +569,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
     fontWeight: 'bold',
+    ...cardHeader,
   },
   card: {
     backgroundColor: '#fff',
@@ -585,6 +587,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
     color: '#2e86de',
+    ...cardHeader,
   },
   image: {
     width: '100%',

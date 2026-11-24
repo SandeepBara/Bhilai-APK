@@ -28,6 +28,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { cardHeader } from '../../../style/cardHeader';
 
 const assessmentFlags = [
   ['isBpl', 'BPL category'],
@@ -2090,6 +2091,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     color: '#2c3e50',
     paddingLeft: 4,
+    ...cardHeader,
   },
   header: {
     fontSize: 18,

@@ -1,496 +1,302 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-  Linking,
-  Image,
+  ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import axios from 'axios';
 import Colors from '../Constants/Colors';
 import { CUSTOMER_API } from '../../api/apiRoutes';
-import axios from 'axios';
 import HeaderNavigation from '../../Components/HeaderNavigation';
-import {
-  ViewDemandModal,
-  PaymentModal,
-  DocumentModal,
-  PaymentReceiptModal,
-} from './Model';
-import { useNavigation } from '@react-navigation/native';
+import { CopyableText, CopyableTouchableOpacity } from '../../Components/CopyableControl';
 import { getToken } from '../../utils/auth';
-import { WORK_FLOW_PERMISSION } from '../../api/apiRoutes';
+import { PaymentModal, PaymentReceiptModal, ViewDemandModal } from './Model';
 import GenerateDemandModal from './Model/GenerateDemandModal';
-import styles from '../../style/DetailsStyle';
-import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
-const Details = ({ route }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [showDemandModal, setShowDemandModal] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [showDocumentModal, setShowDocumentModal] = useState(false);
-  const [showReceipt, setShowReceipt] = useState(false);
+import { cardHeader } from '../../style/cardHeader';
 
-  const [receiptData, setTradPaymentRecipt] = useState(null);
-  const [customerDue, setCustomerDue] = useState(null);
+const enabled = value => [true, 1, '1', 'true'].includes(value);
+const dateOnly = value => value?.match?.(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? value;
+const hasId = value => /^\d+$/.test(String(value ?? '')) && /[1-9]/.test(String(value));
+const list = value => Array.isArray(value) ? value : Object.values(value ?? {});
 
-  const [tradeDetails, setTradeDetails] = useState(null);
-  const [paymentDtl, setPaymentDtl] = useState([]);
+async function post(url, id, signal) {
+  const token = await getToken();
+  if (!token) throw new Error('Please sign in again.');
+  const { data } = await axios.post(url, { id }, {
+    headers: { Authorization: 'Bearer ' + token }, signal,
+  });
+  if (!data?.status || !data.data) throw new Error(data?.message || 'Could not load details.');
+  return data.data;
+}
 
-  const [workflowData, setWorkflowData] = useState(null);
-  const [documents, setDocuments] = useState([]);
-  const [levelRemarks, setLevelRemarks] = useState([]);
-  const [connectionDtl, setConnectionDtl] = useState('');
+function Section({ title, children }) {
+  return (
+    <View style={styles.card}>
+      <Text selectable accessibilityRole="header" style={styles.heading}>{title}</Text>
+      {children}
+    </View>
+  );
+}
 
-  const [loading, setLoading] = useState(false);
-  const [customerDeuDetails, setCustomerDueDetails] = useState('');
-  const [selectedReceiptId, setSelectedReceiptId] = useState(null);
-  const [receiptDatas, setReceiptData] = useState(null);
-  const [connectionDetails, setConnectionDetails] = useState({});
-  const [meterStatusId, setMeterStatusId] = useState('');
+function Fields({ fields }) {
+  return (
+    <View style={styles.grid}>
+      {fields.map(([label, value, onPress]) => (
+        <View key={label} style={styles.field}>
+          <Text selectable style={styles.label}>{label}</Text>
+          {onPress ? (
+            <CopyableText onPress={onPress} accessibilityRole="link" style={styles.link}>
+              {value}
+            </CopyableText>
+          ) : <Text selectable style={styles.value}>{value ?? '—'}</Text>}
+        </View>
+      ))}
+    </View>
+  );
+}
 
-  const id = route?.params?.id;
-  const navigation = useNavigation();
+function Action({ title, onPress, disabled, propertyStyle = false }) {
+  return (
+    <CopyableTouchableOpacity
+      accessibilityRole="button"
+      accessibilityState={{ disabled: Boolean(disabled) }}
+      onPress={onPress}
+      disabled={disabled}
+      style={[
+        propertyStyle ? styles.propertyAction : styles.action,
+        disabled && (propertyStyle ? styles.propertyActionDisabled : styles.disabled),
+      ]}>
+      <Text style={propertyStyle ? styles.propertyActionLabel : styles.actionLabel}>{title}</Text>
+    </CopyableTouchableOpacity>
+  );
+}
+
+function Table({ columns, rows }) {
+  if (!rows.length) return <Text selectable>No records found.</Text>;
+
+  return (
+    <ScrollView horizontal>
+      <View>
+        {[columns, ...rows].map((row, index) => (
+          <View key={index} style={[styles.tableRow, index === 0 && styles.tableHeader]}>
+            {row.map((value, column) => (
+              <View key={columns[column]} style={[styles.cell, column === 0 && styles.numberCell]}>
+                {React.isValidElement(value) ? value : (
+                  <Text selectable style={index === 0 ? styles.columnTitle : styles.value}>
+                    {value ?? '—'}
+                  </Text>
+                )}
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
+
+export default function Details({ route, navigation }) {
+  const id = route.params?.id;
+  const { bottom } = useSafeAreaInsets();
+  const [consumer, setConsumer] = useState(null);
+  const [error, setError] = useState('');
+  const [revision, setRevision] = useState(0);
+  const [due, setDue] = useState(null);
+  const [receipt, setReceipt] = useState(null);
+  const [modal, setModal] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const actionRequest = useRef(null);
 
   useEffect(() => {
-    const fetchAllData = async () => {
-      if (!id) return;
-      setLoading(true);
-
-      try {
-        const token = await getToken();
-
-        const tradeRes = await axios.post(
-          CUSTOMER_API.CUSTOMER_DETAILS_API,
-          { id: Number(id) },
-          { headers: { Authorization: `Bearer ${token}` } },
-        );
-
-        setConnectionDetails(tradeRes.data.data.connectionDtl || {});
-        const paymentIds = paymentDtl.map(item => item.id);
-        console.log('Consumer Deatails', tradeRes.data.data.connectionDtl);
-
-        if (tradeRes?.data?.status && tradeRes.data.data) {
-          setTradeDetails(tradeRes.data.data);
-          setPaymentDtl(tradeRes.data.data.tranDtls || []);
-
-          setLevelRemarks(tradeRes.data.data.levelRemarks || []);
-          setConnectionDtl(tradeRes.data.data.connectionDtl);
-        }
-
-        const workflowId = tradeRes?.data?.data?.workflowId || 0;
-        const transId = tradeRes?.data?.data?.tranDtls?.[0]?.id || 0;
-        console.log('Transaction ID:', transId); // 9
-
-        const meterStatusId1 = tradeRes.data.data.meterStatusId;
-        console.log('Consumer Details', meterStatusId1);
-        setMeterStatusId(meterStatusId1);
-
-        const [customerDue, workflowRes, paymentRes, receiptRes, documentRes] =
-          await Promise.all([
-            axios.post(
-              CUSTOMER_API.CUSTOMER_DUE_API,
-              { id },
-              { headers: { Authorization: `Bearer ${token}` } },
-            ),
-            axios.post(
-              WORK_FLOW_PERMISSION,
-              { wfId: workflowId },
-              { headers: { Authorization: `Bearer ${token}` } },
-            ),
-            axios.post(
-              CUSTOMER_API.CUSTOMER_PAYMENT_RECIPT_API,
-              { id: transId },
-              { headers: { Authorization: `Bearer ${token}` } },
-            ),
-            axios.post(
-              CUSTOMER_API.CUSTOMER_DETAILS_API,
-              { id },
-              { headers: { Authorization: `Bearer ${token}` } },
-            ),
-          ]);
-
-        if (customerDue?.data?.status)
-          setCustomerDueDetails(customerDue.data.data);
-        if (customerDue?.data?.status)
-          setCustomerDue(customerDue.data.data.demandList);
-        if (workflowRes?.data?.status) setWorkflowData(workflowRes.data.data);
-        if (paymentRes?.data?.status) {
-          setTradPaymentRecipt(paymentRes.data.data);
-          console.log('Customer receiptData from API', paymentRes.data.data);
-        }
-        if (documentRes?.data?.status) setDocuments(documentRes.data.data);
-      } catch (err) {
-        console.log(
-          '❌ Error fetching data:',
-          err.response?.data || err.message,
-        );
-      } finally {
-        setLoading(false);
-      }
+    const controller = new AbortController();
+    setConsumer(null);
+    setError('');
+    setBusy(false);
+    if (id == null) {
+      setError('Consumer ID is missing.');
+      return;
+    }
+    post(CUSTOMER_API.CUSTOMER_DETAILS_API, id, controller.signal).then(data => {
+      if (!controller.signal.aborted) setConsumer(data);
+    }).catch(failure => {
+      if (!controller.signal.aborted) setError(failure.response?.data?.message || failure.message);
+    });
+    return () => {
+      controller.abort();
+      actionRequest.current?.abort();
+      actionRequest.current = null;
     };
+  }, [id, revision]);
 
-    fetchAllData();
-  }, [id]);
+  const connection = consumer?.connectionDtl ?? {};
+  const permission = consumer?.userPermission;
+  const canTakePayment = enabled(permission?.canTakePayment);
+  const canGenerateDemand = enabled(permission?.canGenerateDemand) && hasId(consumer?.meterStatusId);
+  const canViewApplication = hasId(consumer?.applicationId);
 
-  if (loading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color={Colors.primary} />
-        <Text selectable style={{ marginTop: 10 }}>Loading data...</Text>
-      </View>
-    );
+  async function openAction(type, endpoint, recordId) {
+    if (type === 'payment' && !canTakePayment) return;
+    if (actionRequest.current) return;
+    const controller = new AbortController();
+    actionRequest.current = controller;
+    setBusy(true);
+    try {
+      const data = await post(endpoint, recordId, controller.signal);
+      if (controller.signal.aborted) return;
+      if (type === 'receipt') setReceipt(data);
+      else setDue(data);
+      setModal(type);
+    } catch (failure) {
+      if (!controller.signal.aborted) {
+        Alert.alert('Unable to open details', failure.response?.data?.message || failure.message);
+      }
+    } finally {
+      if (actionRequest.current === controller) {
+        actionRequest.current = null;
+        setBusy(false);
+      }
+    }
   }
 
+  const close = () => setModal(null);
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.screen}>
       <HeaderNavigation />
-      <ScrollView style={styles.container}>
-        {/* Banner */}
-        <View style={styles.banner}>
-          {/* <Text style={styles.bannerText}>
-            Your applied application no.{' '}
-            <Text style={styles.appId}>{tradeDetails?.consumerNo}</Text>. You
-            can use this for future reference.
-          </Text> */}
-          {/* 
-          <Text style={styles.statusText}>
-            Current Status:{' '}
-            <Text
-              style={
-                tradeDetails?.appStatus?.toLowerCase().includes('expired')
-                  ? styles.expired
-                  : styles.active
-              }
-            >
-              {tradeDetails?.appStatus || 'N/A'}
-            </Text>
-          </Text> */}
-        </View>
-        {/* Basic Details */}
-        <Section title="Basic Details">
-          <View style={styles.customerCard}>
-            <DetailRow
-              label="Consumer No"
-              value={tradeDetails?.consumerNo || 'N/A'}
-            />
-            <DetailRow
-              label="Consumer Date"
-              value={
-                tradeDetails?.createdAt
-                  ? tradeDetails.createdAt.slice(0, 10)
-                  : 'N/A'
-              }
-            />
-            <DetailRow label="Ward No" value={tradeDetails?.wardNo || 'N/A'} />
-            <DetailRow
-              label="New Ward No"
-              value={tradeDetails?.newWardNo || 'N/A'}
-            />
-            <DetailRow
-              label="Property Type"
-              value={tradeDetails?.propertyType || 'N/A'}
-            />
-            <DetailRow
-              label="Ownership Type"
-              value={tradeDetails?.ownershipType || 'N/A'}
-            />
-            <DetailRow
-              label="Connection Through"
-              value={tradeDetails?.connectionThrough || 'N/A'}
-            />
-            <DetailRow
-              label="Pipeline Type"
-              value={tradeDetails?.pipelineType || 'N/A'}
-            />
-            <DetailRow
-              label="Area in Sqft"
-              value={tradeDetails?.areaSqft || 'N/A'}
-            />
-            <DetailRow label="Address" value={tradeDetails?.address || 'N/A'} />
-            <DetailRow
-              label="Landmark"
-              value={tradeDetails?.landmark || 'N/A'}
-            />
-            <DetailRow
-              label="Pin Code"
-              value={tradeDetails?.pinCode || 'N/A'}
-            />
-          </View>
-        </Section>
-
-        {/* Owner Details */}
-        <Section title="Owner Details">
-          <View style={styles.ownerHeader}>
-            <Text selectable style={styles.ownerCol}>Owner Name</Text>
-            <Text selectable style={styles.ownerCol}>Guardian Name</Text>
-            <Text selectable style={styles.ownerCol}>Mobile No</Text>
-            <Text selectable style={styles.ownerCol}>Email Id</Text>
-          </View>
-          {tradeDetails?.owners?.map((owner, index) => (
-            <View
-              key={owner.id || index}
-              style={[
-                styles.ownerRow,
-                { backgroundColor: index % 2 === 0 ? '#fff' : '#f9f9f9' },
-              ]}
-            >
-              <Text selectable style={styles.ownerCol}>{owner.ownerName}</Text>
-              <Text selectable style={styles.ownerCol}>{owner.guardianName}</Text>
-              <Text selectable style={styles.ownerCol}>{String(owner.mobileNo)}</Text>
-              <Text selectable style={styles.ownerCol}>{owner.email || 'N/A'}</Text>
-            </View>
-          ))}
-        </Section>
-
-        {/* Document Details */}
-        {/* <Section title="Document Details">
-          <View style={styles.docHeader}>
-            <Text style={styles.docCol}>Document Name</Text>
-            <Text style={styles.docCol}>Image</Text>
-            <Text style={styles.docCol}>Status</Text>
-          </View>
-
-          {Array.isArray(documents) &&
-            documents.map(doc => (
-              <DocRow
-                key={doc.id}
-                name={doc.docName}
-                status={
-                  doc.verifiedStatus === 1
-                    ? 'Verified'
-                    : doc.verifiedStatus === 0
-                    ? 'Pending'
-                    : 'Failed'
-                }
-              />
-            ))}
-        </Section> */}
-        <Section title="Payment Detail">
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View>
-              {/* Table Header */}
-              <View style={styles.docHeader}>
-                <Text selectable style={styles.docCol}>Tran No</Text>
-                <Text selectable style={styles.docCol}>Tran Date</Text>
-                <Text selectable style={styles.docCol}>Payment Mode</Text>
-                <Text selectable style={styles.docCol}>Tran Type</Text>
-                <Text selectable style={styles.docCol}>Demand From</Text>
-                <Text selectable style={styles.docCol}>Demand Upto</Text>
-                <Text selectable style={styles.docCol}>Demand Amt (Excl. Penalty)</Text>
-                <Text selectable style={styles.docCol}>Paid Demand</Text>
-                <Text selectable style={styles.docCol}>Paid Penalty</Text>
-                <Text selectable style={styles.docCol}>Total Paid Amt</Text>
-                <Text selectable style={styles.docCol}>Balance Amt</Text>
-                <Text selectable style={styles.docCol}>View</Text>
-              </View>
-
-              {/* Table Rows */}
-              {paymentDtl && paymentDtl.length > 0 ? (
-                paymentDtl.map((item, index) => (
-                  <View key={item.id || index} style={styles.paymentRow}>
-                    <Text selectable style={styles.paymentCol}>{item.tranNo}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.tranDate}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.paymentMode}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.tranType}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.fromDate}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.uptoDate}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.demandAmt}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.payableAmt}</Text>
-                    <Text selectable style={styles.paymentCol}>{item.penaltyAmt}</Text>
-                    <Text selectable style={styles.paymentCol}>
-                      {parseFloat(item.payableAmt) +
-                        parseFloat(item.penaltyAmt)}
-                    </Text>
-                    <Text selectable style={styles.paymentCol}>{item.balance}</Text>
-
-                    <CopyableTouchableOpacity
-                      style={styles.viewBtn}
-                      onPress={() => setShowReceipt(true)}
-                    >
-                      <Text style={styles.viewBtnText}>View</Text>
-                    </CopyableTouchableOpacity>
-                  </View>
-                ))
-              ) : (
-                <Text selectable>No payment details found.</Text>
+      <ScrollView contentContainerStyle={[styles.content, { paddingBottom: bottom + 12 }]}>
+        {!consumer && !error && <ActivityIndicator accessibilityLabel="Loading consumer details" />}
+        {error ? (
+          <Section title="Consumer Details">
+            <Text selectable accessibilityRole="alert">{error}</Text>
+            <Action title="Retry" onPress={() => setRevision(value => value + 1)} />
+          </Section>
+        ) : null}
+        {consumer && (
+          <>
+            <Section title="Consumer Details">
+              <Fields fields={[
+                ['Consumer No', consumer.consumerNo],
+                ...(consumer.oldConsumerNO || consumer.oldConsumerNo
+                  ? [['Old Consumer No.', consumer.oldConsumerNO || consumer.oldConsumerNo]] : []),
+                ['Consumer Date', dateOnly(consumer.connectionDate)], ['Ward No', consumer.wardNo],
+                ...(consumer.safNo ? [['SAF No.', consumer.safNo, consumer.safDetailId
+                  ? () => navigation.push('SafDetails', { id: consumer.safDetailId }) : undefined]] : []),
+                ...(consumer.newHoldingNo ? [['Holding No.', consumer.newHoldingNo, consumer.propertyDetailId
+                  ? () => navigation.push('HoldingDetails', { id: consumer.propertyDetailId }) : undefined]] : []),
+                ['Property Type', consumer.propertyType], ['Address', consumer.address],
+                ['Landmark', consumer.landmark], ['Pin Code', consumer.pinCode],
+              ]} />
+            </Section>
+            <Section title="Owner Details">
+              <Table columns={['SL', 'Owner', 'Guardian', 'Mobile']}
+                rows={list(consumer.owners).map((owner, index) => [
+                  index + 1, owner.ownerName, owner.guardianName, owner.mobileNo,
+                ])} />
+            </Section>
+            <Section title="Payment Details">
+              <Table columns={[
+                'SL', 'Transaction No', 'Payment Mode', 'Date', 'Demand From', 'Demand Upto',
+                'Demand Amount Without Penalty', 'Paid Demand', 'Paid Penalty', 'Total Paid Amount',
+                'Balance Amount', 'View',
+              ]} rows={list(consumer.tranDtls).map((payment, index) => [
+                index + 1, payment.tranNo, payment.paymentMode, dateOnly(payment.tranDate),
+                payment.fromDate, payment.uptoDate, payment.requestDemandAmount,
+                payment.demandAmt, payment.penaltyAmt, payment.payableAmt, payment.balance,
+                payment.id != null ? (
+                  <Action title="View" disabled={busy} onPress={() =>
+                    openAction('receipt', CUSTOMER_API.CUSTOMER_PAYMENT_RECIPT_API, payment.id)
+                  } />
+                ) : null,
+              ])} />
+            </Section>
+            <Section title="Connection Details">
+              <Table columns={[
+                'SL', 'Is Correct Connection', 'Property Type', 'Connection Type', 'Meter No.',
+                'Initial Reading', 'Is Meter Working', 'No. Of Connection/Room/Table',
+                'Effect Of Connection', 'Any Fix Rate',
+              ]} rows={list(consumer.allConnection).map((item, index) => [
+                index + 1, enabled(item.isCurrent) ? 'Yes' : 'No', item.propertyType,
+                item.connectionType, item.meterNo, item.initialReading,
+                enabled(item.isMeterWorking) && Number(item.meterTypeId) === 1 ? 'Yes' : 'No',
+                item.noOfRoom, dateOnly(item.connectionDate), item.fixRate,
+              ])} />
+            </Section>
+            <Section title="Consumer Connection Details">
+              <Fields fields={[
+                ['Property Type', connection.propertyType], ['Connection Type', connection.connectionType],
+                ['Connection Date', dateOnly(connection.connectionDate)], ['Meter No.', connection.meterNo],
+                ['Last Reading', connection.currentReading],
+                ['Last Reading Date', Array.isArray(connection.currentReadingDate)
+                  ? connection.currentReadingDate[0] : connection.currentReadingDate],
+                ['User Name', connection.userName],
+              ]} />
+              <Text selectable style={styles.label}>Last Reading Img</Text>
+              {connection.docPath ? (
+                <Image accessibilityLabel="Last reading image" source={{ uri: connection.docPath }}
+                  style={styles.image} resizeMode="contain" />
+              ) : <Text selectable>—</Text>}
+            </Section>
+            <View style={styles.actions}>
+              <Action propertyStyle title="View Demand" disabled={busy}
+                onPress={() => openAction('demand', CUSTOMER_API.CUSTOMER_DUE_API, id)} />
+              {canTakePayment && (
+                <Action propertyStyle title="Proceed Payment" disabled={busy}
+                  onPress={() => openAction('payment', CUSTOMER_API.CUSTOMER_DUE_API, id)} />
+              )}
+              {canGenerateDemand && (
+                <Action propertyStyle title="Generate Demand" disabled={busy} onPress={() => setModal('generate')} />
+              )}
+              {canViewApplication && (
+                <Action propertyStyle title="View Application" onPress={() =>
+                  navigation.push('WaterDetails', { id: consumer.applicationId })
+                } />
               )}
             </View>
-          </ScrollView>
-        </Section>
-        <Section title="Consumer Connection Details">
-          <View style={styles.customerCard}>
-            <DetailRow
-              label="Connection Type"
-              value={connectionDtl.connectionType || 'N/A'}
-            />
-
-            <DetailRow
-              label="Connection Date"
-              value={
-                connectionDtl.connectionDate
-                  ? new Date(connectionDtl.connectionDate).toLocaleDateString()
-                  : 'N/A'
-              }
-            />
-
-            <DetailRow
-              label="Created At"
-              value={
-                connectionDtl.createdAt
-                  ? new Date(connectionDtl.createdAt).toLocaleString()
-                  : 'N/A'
-              }
-            />
-
-            <DetailRow
-              label="Meter No"
-              value={connectionDtl.meterNo || 'N/A'}
-            />
-
-            <DetailRow
-              label="Current Reading"
-              value={connectionDtl.currentReading || 'N/A'}
-            />
-
-            <DetailRow
-              label="Current Reading Date"
-              value={
-                Array.isArray(connectionDtl.currentReadingDate) &&
-                connectionDtl.currentReadingDate.length > 0
-                  ? new Date(
-                      connectionDtl.currentReadingDate[0],
-                    ).toLocaleString()
-                  : 'N/A'
-              }
-            />
-
-            <DetailRow
-              label="User Name"
-              value={connectionDtl.userName || 'N/A'}
-            />
-
-            {/* Show Image */}
-            <View style={styles.imageContainer}>
-              <Text selectable style={styles.text}>Last Reading Img</Text>
-              {connectionDtl.docPath ? (
-                <Image
-                  source={{ uri: connectionDtl.docPath }}
-                  style={styles.image}
-                  resizeMode="contain"
-                />
-              ) : (
-                <Text selectable>No document available</Text>
-              )}
-            </View>
-          </View>
-        </Section>
-
-        {/* Buttons */}
-        <View style={styles.buttonContainer}>
-          <CopyableTouchableOpacity
-            style={[
-              styles.actionBtn,
-              (!meterStatusId || meterStatusId === null) && styles.disabledBtn,
-            ]}
-            onPress={() => setModalVisible(true)}
-            disabled={!meterStatusId || meterStatusId === null}
-          >
-            <Text style={styles.actionBtnText}>Generate Demand</Text>
-          </CopyableTouchableOpacity>
-
-          <CopyableTouchableOpacity
-            style={styles.actionBtn}
-            onPress={() => setShowDemandModal(true)}
-          >
-            <Text style={styles.actionBtnText}>View Demand</Text>
-          </CopyableTouchableOpacity>
-
-          <CopyableTouchableOpacity
-            style={styles.actionBtn}
-            onPress={() => setShowPaymentModal(true)}
-          >
-            <Text style={styles.actionBtnText}>Pay Demand</Text>
-          </CopyableTouchableOpacity>
-
-          <CopyableTouchableOpacity
-            style={styles.actionBtn}
-            onPress={() => setShowDocumentModal(true)}
-          >
-            <Text style={styles.actionBtnText}>View Application</Text>
-          </CopyableTouchableOpacity>
-        </View>
+            {busy && <ActivityIndicator accessibilityLabel="Loading action" />}
+          </>
+        )}
       </ScrollView>
-      {/* Modals */}
-      <ViewDemandModal
-        visible={showDemandModal}
-        onClose={() => setShowDemandModal(false)}
-        customerDue={customerDue}
-        tradeDetails1={tradeDetails}
-        customerDeuDetails={customerDeuDetails}
-      />
-      <PaymentModal
-        visible={showPaymentModal}
-        onClose={() => setShowPaymentModal(false)}
-        customerDue={customerDue}
-        tradeDetails={tradeDetails}
-        customerDeuDetails={customerDeuDetails}
-        id={id}
-      />
-      <DocumentModal
-        visible={showDocumentModal}
-        onClose={() => setShowDocumentModal(false)}
-        documents={documents}
-      />
-      <PaymentReceiptModal
-        visible={showReceipt}
-        onClose={() => setShowReceipt(false)}
-        receiptData={receiptData}
-      />
-      <GenerateDemandModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        connectionDetails={connectionDetails}
-        id={id}
-      />
+
+      {modal === 'demand' && <ViewDemandModal visible onClose={close}
+        customerDue={list(due?.demandList)} tradeDetails1={consumer} customerDeuDetails={due} />}
+      {modal === 'payment' && canTakePayment && <PaymentModal visible onClose={close}
+        customerDue={list(due?.demandList)} tradeDetails={consumer} customerDeuDetails={due} id={id} />}
+      {modal === 'receipt' && <PaymentReceiptModal visible onClose={close} receiptData={receipt} />}
+      {modal === 'generate' && canGenerateDemand && <GenerateDemandModal visible onClose={close}
+        connectionDetails={connection} id={id} />}
     </View>
   );
-};
+}
 
-// Section and Row components
-const Section = ({ title, children }) => (
-  <View style={styles.section}>
-    <Text selectable style={styles.sectionTitle}>{title}</Text>
-    {children}
-  </View>
-);
-
-const DetailRow = ({ label, value }) => (
-  <View style={styles.row}>
-    <Text selectable style={styles.label}>{label}</Text>
-    <Text selectable style={styles.value}>{value}</Text>
-  </View>
-);
-
-const DocRow = ({ name, status }) => {
-  const color =
-    status === 'Verified'
-      ? 'green'
-      : status === 'Pending'
-      ? 'orange'
-      : status === 'Failed'
-      ? 'red'
-      : 'black';
-  return (
-    <View style={styles.docRow}>
-      <Text selectable style={styles.docCol}>{name}</Text>
-      <Text selectable style={styles.docCol}>📄</Text>
-      <Text selectable style={[styles.docCol, { color, fontWeight: 'bold' }]}>
-        {status}
-      </Text>
-    </View>
-  );
-};
-
-export default Details;
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: '#f1f5f9' },
+  content: { padding: 12, gap: 12 },
+  card: { padding: 12, gap: 8, borderRadius: 10, backgroundColor: '#fff' },
+  heading: { color: '#10263a', fontSize: 17, fontWeight: '700', ...cardHeader },
+  grid: { flexDirection: 'row', flexWrap: 'wrap' },
+  field: { width: '50%', padding: 5, gap: 3 },
+  label: { color: '#475569', fontWeight: '600' },
+  value: { color: '#10263a' },
+  link: { color: '#1d4ed8', textDecorationLine: 'underline' },
+  tableRow: { flexDirection: 'row' },
+  tableHeader: { backgroundColor: '#e8eff7' },
+  columnTitle: { color: '#10263a', fontWeight: '700' },
+  cell: { width: 122, padding: 8, borderWidth: StyleSheet.hairlineWidth, borderColor: '#cbd5e1' },
+  numberCell: { width: 42 },
+  image: { width: 150, height: 100 },
+  actions: {
+    flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6,
+    marginTop: 15, marginBottom: 20, paddingHorizontal: 5,
+  },
+  propertyAction: {
+    width: 85, backgroundColor: Colors.primary, borderRadius: 6,
+    paddingVertical: 8, paddingHorizontal: 4, alignItems: 'center',
+    justifyContent: 'center', elevation: 2, shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  propertyActionLabel: { color: '#fff', fontSize: 9, fontWeight: 'bold', textAlign: 'center' },
+  propertyActionDisabled: { opacity: 0.5, backgroundColor: '#ccc' },
+  action: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 7, backgroundColor: '#164e83' },
+  actionLabel: { color: '#fff', fontWeight: '700' },
+  disabled: { opacity: 0.5 },
+});
