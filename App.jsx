@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { propertyRoutes } from './src/Module/Property/PropertyRoutes';
 
 import { waterRoutes } from './src/Module/Water/WaterRoutes';
+import { swmRoutes } from './src/Module/SWM/SwmRoutes';
 
 // Dashboard
 import DashBoard from './src/Screen/DashBoard';
@@ -76,7 +77,7 @@ const App = () => {
                 <Stack.Screen key={name} name={name} component={component} />
               ))}
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-              {waterRoutes.map(({ name, component }) => (
+              {[...waterRoutes, ...swmRoutes].map(({ name, component }) => (
                 <Stack.Screen key={name} name={name} component={component} />
               ))}
 

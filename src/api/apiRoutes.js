@@ -12,11 +12,13 @@ export const CHANGE_PASS_API = `${BASE_URL}/api/otp-change-pass`
 export const usrProfileApi = `${BASE_URL}/api/user-profile`
 
 // Shared services
+export const WARD_LIST_API = `${BASE_URL}/api/ward`;
 export const WORK_FLOW_PERMISSION = `${BASE_URL}/api/get-workflow-permission`;
 
 export const Ulb_Api = (id) => `${BASE_URL}/api/ulb/show/${id}`;
 
 // Property holdings and SAF
+export const PROPERTY_VALIDATE_HOLDING_API = `${BASE_URL}/api/property/validate-holding`;
 export const SAF_INBOX_API = page => `${BASE_URL}/api/property/inbox?page=${page}`;
 export const SAF_SEARCH_API = `${BASE_URL}/api/property/search-saf`;
 export const SAF_DETAILS_API = `${BASE_URL}/api/property/get-saf-dtl`;
@@ -79,3 +81,16 @@ export const WATER_CONSUMER_PAY_DUE_API = `${BASE_URL}/api/water/consumer/pay-du
 export const WATER_CONSUMER_GENERATE_DEMAND_API = `${BASE_URL}/api/water/consumer/generate-demand`;
 export const WATER_CONSUMER_DEMAND_HISTORY_API = `${BASE_URL}/api/water/consumer/demand-history
 `;
+
+// Solid Waste Management
+export const SWM_SEARCH_API = `${BASE_URL}/api/swm/consumer-search`;
+export const SWM_DETAILS_API = `${BASE_URL}/api/swm/consumer-dtl`;
+export const SWM_DEMAND_HISTORY_API = `${BASE_URL}/api/swm/demand-history`;
+export const SWM_DUE_API = `${BASE_URL}/api/swm/consumer-due`;
+export const SWM_GENERATE_DEMAND_API = `${BASE_URL}/api/swm/generate-demand`;
+export const SWM_PAY_DUE_API = `${BASE_URL}/api/swm/pay-due`;
+export const SWM_PAYMENT_RECEIPT_API = `${BASE_URL}/api/swm/payment-receipt`;
+export const SWM_MASTER_DATA_API = `${BASE_URL}/api/swm/get-master-data`;
+export const SWM_SUBCATEGORY_LIST_API = `${BASE_URL}/api/swm/master/sub-category-list`;
+export const SWM_RATE_API = `${BASE_URL}/api/swm/get-rate`;
+export const SWM_ADD_CONSUMER_API = `${BASE_URL}/api/swm/consumer-add`;

@@ -73,7 +73,8 @@ const MenuTreeScreen = () => {
     fetchMenuTree();
   }, []);
 
-  const getIconName = iconName => {
+  const getIconName = item => {
+    const iconName = item.icon;
     const glyphs = Icon.getRawGlyphMap?.() || Icon.glyphMap;
     return glyphs && glyphs[iconName] ? iconName : 'dashboard';
   };
@@ -85,7 +86,7 @@ const MenuTreeScreen = () => {
       setMenuStack([...menuStack, item.children]);
     } else {
       console.log('item:', item.name);
-      navigation.navigate(item.url); // use screen name
+      navigation.navigate(item.url);
     }
   };
 
@@ -100,7 +101,7 @@ const MenuTreeScreen = () => {
   const renderItem = ({ item }) => (
     <CopyableTouchableOpacity style={styles.box} onPress={() => handlePress(item)}>
       <View style={styles.iconContainer}>
-        <Icon name={getIconName(item.icon)} size={40} style={styles.icon} />
+        <Icon name={getIconName(item)} size={40} style={styles.icon} />
       </View>
       <Text style={styles.boxText}>{item.name}</Text>
 
