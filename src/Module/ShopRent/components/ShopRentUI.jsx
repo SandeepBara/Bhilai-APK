@@ -2,12 +2,12 @@ import React from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
-import Button from '../../Components/AppButton';
-import HeaderNavigation from '../../Components/HeaderNavigation';
-import Pagination from '../../Components/Pagination';
-import { cardHeader } from '../../style/cardHeader';
-import { uiColors, uiStyles } from '../../style/theme';
-import { list } from './shopRentRequests';
+import Button from '../../../Components/AppButton';
+import HeaderNavigation from '../../../Components/HeaderNavigation';
+import Pagination from '../../../Components/Pagination';
+import { cardHeader } from '../../../style/cardHeader';
+import { uiColors, uiStyles } from '../../../style/theme';
+import { list } from '../shopRentRequests';
 
 export function ShopPage({ title, children }) {
   return (

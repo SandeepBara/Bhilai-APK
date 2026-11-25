@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Text } from 'react-native';
 import MonthPicker, { ACTION_DATE_SET } from 'react-native-month-year-picker';
 import ReactNativeBlobUtil from 'react-native-blob-util';
-import Button from '../../Components/AppButton';
-import { PROPERTY_VALIDATE_HOLDING_API, SHOP_RENT_ADD_API, SHOP_RENT_MASTER_API, Ulb_Api } from '../../api/apiRoutes';
-import { getUserDetails } from '../../utils/auth';
-import { Choice, Field, Panel, Result, ShopPage } from './ShopRentUI';
-import { errorMessage, shopRentRequest, useShopRentData } from './shopRentRequests';
+import Button from '../../../Components/AppButton';
+import { PROPERTY_VALIDATE_HOLDING_API, SHOP_RENT_ADD_API, SHOP_RENT_MASTER_API, Ulb_Api } from '../../../api/apiRoutes';
+import { getUserDetails } from '../../../utils/auth';
+import OwnerForm from '../components/OwnerForm';
+import { Choice, Field, Panel, Result, ShopPage } from '../components/ShopRentUI';
+import { errorMessage, shopRentRequest, useShopRentData } from '../shopRentRequests';
 
 const emptyRequest = {};
 const maxSize = 5 * 1024 * 1024;
@@ -28,7 +29,6 @@ const propertyFields = [
   ['Pincode', 'pinCode', 'number-pad'],
   ['Monthly Rate Amount', 'monthlyRate', 'decimal-pad'],
 ];
-const relationTypes = ['S/O', 'D/O', 'W/O', 'C/O'].map(id => ({ id }));
 const documentTypes = [
   { id: 'application/pdf', name: 'PDF', extension: 'pdf' },
   { id: 'image/jpeg', name: 'JPG', extension: 'jpg' },
@@ -172,20 +172,11 @@ export default function ShopRentAdd({ navigation }) {
             )}
           </Panel>
           {owners.map((owner, index) => (
-            <Panel title={'Owner ' + (index + 1)} key={owner.id}>
-              <Field label="Owner Name" value={owner.ownerName} editable={!saving}
-                onChangeText={value => updateOwner(owner.id, 'ownerName', value)} />
-              <Field label="Guardian Name" value={owner.guardianName} editable={!saving}
-                onChangeText={value => updateOwner(owner.id, 'guardianName', value)} />
-              <Choice label="Relation" items={relationTypes} labelKey="id" value={owner.relationType}
-                disabled={saving} onChange={value => updateOwner(owner.id, 'relationType', value)} />
-              <Field label="Mobile No." value={owner.mobileNo} keyboardType="number-pad" maxLength={10}
-                editable={!saving} onChangeText={value => updateOwner(owner.id, 'mobileNo', value)} />
-              {owners.length > 1 && (
-                <Button title="Remove Owner" disabled={saving}
-                  onPress={() => setOwners(current => current.filter(item => item.id !== owner.id))} />
-              )}
-            </Panel>
+            <OwnerForm key={owner.id} owner={owner} number={index + 1} disabled={saving}
+              onChange={(field, value) => updateOwner(owner.id, field, value)}
+              onRemove={owners.length > 1
+                ? () => setOwners(current => current.filter(item => item.id !== owner.id))
+                : undefined} />
           ))}
           <Button title="Add Owner" disabled={saving} onPress={() => {
             const owner = newOwner(nextOwner.current++);

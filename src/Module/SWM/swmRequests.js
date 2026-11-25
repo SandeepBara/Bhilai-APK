@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getToken } from '../../utils/auth';
 
+export const rows = value => Array.isArray(value) ? value : Object.values(value ?? {});
+
 export const message = error => {
   const data = error.response?.data;
   return Object.values(data?.errors ?? {}).flat().join('\n') || data?.message || error.message;

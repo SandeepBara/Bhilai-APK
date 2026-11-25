@@ -6,10 +6,10 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import Button from '../../Components/AppButton';
+import Button from '../../../Components/AppButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { uiStyles } from '../../style/theme';
+import { uiStyles } from '../../../style/theme';
 
 const types = [
   { label: 'Full', value: 'FULL' },
