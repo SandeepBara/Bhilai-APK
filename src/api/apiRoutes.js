@@ -1,5 +1,15 @@
 import { BASE_URL } from '../config';
 
+const shopRentApi = `${BASE_URL}/api/shop-rent`;
+export const SHOP_RENT_MASTER_API = `${shopRentApi}/get-master-data`;
+export const SHOP_RENT_ADD_API = `${shopRentApi}/add`;
+export const SHOP_RENT_SEARCH_API = `${shopRentApi}/search`;
+export const SHOP_RENT_DETAILS_API = `${shopRentApi}/dtl`;
+export const SHOP_RENT_GENERATE_API = `${shopRentApi}/generate-demand`;
+export const SHOP_RENT_HISTORY_API = `${shopRentApi}/demand-history`;
+export const SHOP_RENT_DUE_API = `${shopRentApi}/due`;
+export const SHOP_RENT_RECEIPT_API = `${shopRentApi}/payment-receipt`;
+
 // Authentication and user profile
 export const LOGIN_API = `${BASE_URL}/api/login`;
 

@@ -12,6 +12,7 @@ import { propertyRoutes } from './src/Module/Property/PropertyRoutes';
 
 import { waterRoutes } from './src/Module/Water/WaterRoutes';
 import { swmRoutes } from './src/Module/SWM/SwmRoutes';
+import { shopRentRoutes } from './src/Module/ShopRent/ShopRentRoutes';
 
 // Dashboard
 import DashBoard from './src/Screen/DashBoard';
@@ -77,7 +78,7 @@ const App = () => {
                 <Stack.Screen key={name} name={name} component={component} />
               ))}
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-              {[...waterRoutes, ...swmRoutes].map(({ name, component }) => (
+              {[...waterRoutes, ...swmRoutes, ...shopRentRoutes].map(({ name, component }) => (
                 <Stack.Screen key={name} name={name} component={component} />
               ))}
 
