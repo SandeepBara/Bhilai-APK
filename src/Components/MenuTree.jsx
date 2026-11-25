@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../Module/Constants/Colors';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 // import { ImageBackground } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -123,7 +124,7 @@ const MenuTreeScreen = () => {
         {menuStack.length > 1 ? (
           <CopyableTouchableOpacity style={styles.backButton} onPress={goBack}>
             <Icon name="arrow-back" size={24} color="#090748ff" />
-            <Text style={styles.headerText}>Back</Text>
+            <Text style={[styles.headerText, uiStyles.secondaryButtonText]}>Back</Text>
           </CopyableTouchableOpacity>
         ) : (
           <Text selectable style={styles.headerText}>Menu</Text>
@@ -177,8 +178,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   backButton: {
+    ...uiStyles.secondaryButton,
     flexDirection: 'row',
-    alignItems: 'center',
   },
   scrollContainer: {},
   box: {

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const WardCard = ({
   title = 'Ward No',
@@ -89,10 +90,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
-    fontSize: 16,
+    ...uiStyles.label,
   },
   value: {
-    fontSize: 16,
+    ...uiStyles.text,
     fontWeight: 'bold',
   },
   radioGroup: {
@@ -125,10 +126,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 40,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    backgroundColor: '#f2f2f2',
     marginTop: 4,
   },
 });

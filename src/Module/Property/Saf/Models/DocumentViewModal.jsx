@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const DocumentViewModal = ({
   visible,
@@ -107,15 +108,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   docModalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 12,
     textAlign: 'center',
-    color: '#222',
   },
   docTableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     paddingVertical: 6,
     borderBottomWidth: 1,
     borderColor: '#ccc',

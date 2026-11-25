@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { CopyablePressable } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
   return (
@@ -74,11 +75,9 @@ const styles = StyleSheet.create({
     maxHeight: '80%',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 15,
     textAlign: 'center',
-    color: '#333',
   },
   itemText: {
     fontSize: 16,
@@ -86,8 +85,7 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   label: {
-    fontWeight: 'bold',
-    color: '#000',
+    ...uiStyles.label,
   },
   closeButton: {
     marginTop: 20,

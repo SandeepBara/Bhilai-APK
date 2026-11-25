@@ -7,6 +7,7 @@ import {
 } from 'react-native-responsive-dimensions';
 
 import Colors from '../Module/Constants/Colors';
+import { uiStyles } from './theme';
 
 export default StyleSheet.create({
   container: { padding: 10, backgroundColor: '#f4faff' },
@@ -30,9 +31,7 @@ export default StyleSheet.create({
   active: { color: 'green', fontWeight: 'bold' },
 
   sectionTitle: {
-    backgroundColor: Colors.headignColor,
-    paddingVertical: responsiveHeight(1.5),
-    paddingHorizontal: responsiveWidth(4),
+    ...uiStyles.cardTitle,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderWidth: 1,
@@ -44,7 +43,6 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.15,
     shadowRadius: 5,
-    color: '#FFFFFF',
     alignSelf: 'stretch',
   },
 
@@ -75,15 +73,14 @@ export default StyleSheet.create({
     borderBottomColor: Colors.rowDivider || '#eee',
   },
   label: {
-    fontWeight: '600',
-    color: '#333',
+    ...uiStyles.label,
     flex: 1,
     minWidth: responsiveWidth(25),
   },
   value: {
+    ...uiStyles.text,
     flex: 1,
     textAlign: 'right',
-    color: '#000',
     minWidth: responsiveWidth(25),
   },
 
@@ -100,12 +97,9 @@ export default StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   ownerCol: {
+    ...uiStyles.tableCell,
     width: responsiveWidth(25),
     textAlign: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 12,
-    fontSize: responsiveFontSize(1.6),
-    color: '#000',
     fontWeight: 'bold',
     borderRightWidth: 1,
     borderRightColor: '#ddd',
@@ -136,13 +130,10 @@ export default StyleSheet.create({
   },
 
   docCol: {
+    ...uiStyles.tableCell,
     width: responsiveWidth(25),
     textAlign: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 12,
-    color: '#000',
     fontWeight: 'bold',
-    fontSize: responsiveFontSize(1.6),
     borderRightWidth: 1,
     borderRightColor: '#ddd',
   },
@@ -166,12 +157,9 @@ export default StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   paymentCol: {
+    ...uiStyles.tableCell,
     width: responsiveWidth(25),
     textAlign: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 12,
-    fontSize: responsiveFontSize(1.5),
-    color: '#000',
     borderRightWidth: 1,
     borderRightColor: '#ddd',
   },
@@ -257,21 +245,15 @@ export default StyleSheet.create({
 
   // ===== BUTTON STYLES =====
   viewBtn: {
-    backgroundColor: Colors.primary || '#0c3c78',
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    width: 50, // fixed width in px
-    height: 35, // fixed height in px
+    ...uiStyles.primaryButton,
+    width: 50,
+    height: 35,
     marginTop: responsiveHeight(1),
     marginLeft: responsiveWidth(2),
   },
 
   viewBtnText: {
-    color: '#fff',
-    fontWeight: '600',
-    fontSize: responsiveFontSize(1.5),
+    ...uiStyles.primaryButtonText,
   },
 
   // Helper style to remove right border from last column
@@ -313,13 +295,8 @@ export default StyleSheet.create({
     paddingHorizontal: 5,
   },
   actionBtn: {
+    ...uiStyles.primaryButton,
     width: 85,
-    backgroundColor: Colors.primary,
-    borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -327,10 +304,7 @@ export default StyleSheet.create({
     shadowRadius: 2,
   },
   actionBtnText: {
-    color: '#fff',
-    fontSize: 9,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    ...uiStyles.primaryButtonText,
   },
 
   imageContainer: {

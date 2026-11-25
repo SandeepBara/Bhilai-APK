@@ -28,6 +28,7 @@ import back_11 from '../assets/back_11.jpg';
 import LOGO from '../assets/bhilai_logo.png';
 import { CopyableTouchableOpacity } from '../Components/CopyableControl';
 import { LOGIN_API } from '../api/apiRoutes';
+import { uiStyles } from '../style/theme';
 
 const LoginScreen = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -216,7 +217,7 @@ const LoginScreen = ({ navigation }) => {
             {/* Login Button */}
             <View style={styles.emailContainer}>
               <CopyableTouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>Login</Text>
               </CopyableTouchableOpacity>
             </View>
           </View>
@@ -261,25 +262,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
+    ...uiStyles.input,
     height: responsiveHeight(5),
-    borderColor: '#0551a2ff',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderRadius: 8,
     marginTop: 5,
-    color: '#000',
   },
   button: {
-    backgroundColor: '#0551a2ff',
-    paddingVertical: 14,
-    borderRadius: 10,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontSize: responsiveFontSize(2),
-    fontWeight: '600',
   },
   forgotText: {
     color: 'blue',
@@ -308,8 +301,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   label: {
-    fontSize: 16,
-    color: '#000',
+    ...uiStyles.label,
   },
   optionRow: {
     flexDirection: 'row',

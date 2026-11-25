@@ -36,6 +36,7 @@ import { validateExtraChargesDates } from '../../../Validation/validation.';
 import { showToast } from '../../../utils/toast';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { SAF_FIELD_VERIFICATION_API } from '../../../api/apiRoutes';
+import { uiStyles } from '../../../style/theme';
 
 const yesNoOptions = [
   { label: 'Yes', value: 'yes' },
@@ -1466,7 +1467,7 @@ const SurveyPage = ({ route, navigation }) => {
                               onPress={removeFloor}
                               style={styles.removeButton}
                             >
-                              <Text style={styles.buttonText}>
+                              <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>
                                 Remove Floor
                               </Text>
                             </CopyableTouchableOpacity>
@@ -2317,16 +2318,10 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   submitButton: {
-    backgroundColor: '#007AFF', // 👈 your dynamic color
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
   },
   submitButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.primaryButtonText,
   },
   previewButton: {
     backgroundColor: '#007AFF',
@@ -2348,13 +2343,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   input: {
+    ...uiStyles.input,
     height: responsiveHeight(5),
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    fontSize: 16,
-    backgroundColor: '#fff',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -2368,16 +2358,15 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   removeButton: {
-    backgroundColor: 'darkred',
-    padding: 10,
-    borderRadius: 8,
+    ...uiStyles.dangerButton,
     margin: 20,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: 'white',
-    fontWeight: 'bold',
   },
   rowlabel: {
+    ...uiStyles.label,
     flexDirection: 'row',
     alignItems: 'center',
     padding: '5',
@@ -2465,14 +2454,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   label: {
-    fontSize: responsiveFontSize(1.8),
-    color: '#333',
+    ...uiStyles.label,
     marginBottom: responsiveHeight(1),
-    fontWeight: '500',
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
   },
   gradientContainer: {
     borderRadius: 10,
@@ -2486,12 +2473,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 50,
-    borderColor: '#007AFF',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
   },
   placeholder: {
     color: '#999',
@@ -2524,8 +2507,7 @@ const styles = StyleSheet.create({
     maxHeight: '90%',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 12,
     textAlign: 'center',
   },
@@ -2558,16 +2540,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#007AFF',
     paddingVertical: 12,
     paddingHorizontal: 10,
   },
   tableHeaderText: {
+    ...uiStyles.tableHeaderText,
     flex: 1,
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
     textAlign: 'center',
   },
   tableRow: {
@@ -2578,7 +2558,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   tableRowAlternate: {
-    backgroundColor: '#f9f9f9',
+    ...uiStyles.tableStripe,
   },
   tableCellLabel: {
     flex: 1,
@@ -2588,9 +2568,8 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   tableCell: {
+    ...uiStyles.tableCell,
     flex: 1,
-    fontSize: 13,
-    color: '#333',
     textAlign: 'center',
   },
   remarksBox: {
@@ -2672,10 +2651,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   cardTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.cardTitle,
     marginBottom: 12,
-    color: '#0f3969',
   },
   cardRow: {
     flexDirection: 'row',
@@ -2686,8 +2663,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   cardLabel: {
-    fontWeight: '600',
-    color: '#333',
+    ...uiStyles.label,
     flex: 1,
   },
   cardValue: {

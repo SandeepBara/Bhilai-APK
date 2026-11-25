@@ -6,6 +6,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import Colors from '../Module/Constants/Colors';
+import { uiStyles } from './theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   searchhead: {
-    backgroundColor: Colors.headignColor,
+    ...uiStyles.cardHeader,
     paddingVertical: responsiveHeight(1),
     paddingHorizontal: responsiveWidth(1),
     marginBottom: responsiveHeight(1),
@@ -82,37 +83,27 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   dropdown: {
+    ...uiStyles.input,
     height: responsiveHeight(5),
     width: responsiveWidth(40),
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
     marginRight: responsiveWidth(2),
   },
   input: {
+    ...uiStyles.input,
     width: responsiveWidth(40),
     height: responsiveHeight(5),
-    borderColor: '#999',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
   },
   selectWardKey: {
     flexDirection: 'row',
     marginTop: responsiveHeight(1.5),
   },
   button: {
-    backgroundColor: Colors.borderColor,
-    paddingVertical: responsiveHeight(1),
-    borderRadius: responsiveWidth(2),
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: responsiveHeight(2),
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontSize: responsiveFontSize(2),
-    fontWeight: 'bold',
   },
   resultCard: {
     backgroundColor: '#fff',
@@ -132,31 +123,22 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E5E5E5',
   },
   label: {
-    fontSize: responsiveFontSize(1.8),
-    color: '#555',
+    ...uiStyles.label,
     width: '45%',
-    fontWeight: '500',
   },
   value: {
-    fontSize: responsiveFontSize(1.8),
-    color: '#111',
+    ...uiStyles.text,
     width: '55%',
     textAlign: 'right',
     fontWeight: '600',
   },
   viewButton: {
+    ...uiStyles.primaryButton,
     marginTop: responsiveHeight(1),
-    backgroundColor: Colors.primary,
-    paddingVertical: responsiveHeight(1),
-    paddingHorizontal: responsiveWidth(5),
-    borderRadius: 5,
-    alignItems: 'center',
     alignSelf: 'flex-end',
   },
   viewButtonText: {
-    color: '#fff',
-    fontSize: responsiveFontSize(1.8),
-    fontWeight: 'bold',
+    ...uiStyles.primaryButtonText,
   },
 });
 

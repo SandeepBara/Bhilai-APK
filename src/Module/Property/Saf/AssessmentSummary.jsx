@@ -19,6 +19,7 @@ import HeaderNavigation from '../../../Components/HeaderNavigation';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { cardHeader } from '../../../style/cardHeader';
+import { uiStyles } from '../../../style/theme';
 // OR for newer versions:
 
 const Section = ({ title, children }) => (
@@ -342,7 +343,7 @@ const AssessmentSummary = ({ route, navigation }) => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backText}>Back</Text>
+          <Text style={[styles.backText, uiStyles.secondaryButtonText]}>Back</Text>
         </CopyableTouchableOpacity>
         {data && (
           <CopyableTouchableOpacity
@@ -398,13 +399,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
-  sectionTitle: { fontSize: 17, fontWeight: '700', color: '#10263a', marginBottom: 10, ...cardHeader },
+  sectionTitle: {
+    ...uiStyles.cardTitle,
+    marginBottom: 10,
+    ...cardHeader,
+  },
   grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -5 },
   field: { width: '50%', paddingHorizontal: 5, paddingVertical: 5 },
   fullField: { width: '100%' },
-  fieldLabel: { color: '#475569', fontSize: 12, fontWeight: '600', marginBottom: 4 },
+  fieldLabel: {
+    ...uiStyles.label,
+    marginBottom: 4,
+  },
   fieldValue: {
-    color: '#10263a',
+    ...uiStyles.text,
     backgroundColor: '#f1f5f9',
     borderRadius: 6,
     minHeight: 34,
@@ -414,18 +422,21 @@ const styles = StyleSheet.create({
   subheading: { color: '#10263a', fontSize: 14, fontWeight: '700', marginVertical: 8 },
   table: { borderRadius: 8, borderWidth: 1, borderColor: '#e2e8f0' },
   tableRow: { flexDirection: 'row', backgroundColor: '#fff' },
-  tableStripe: { backgroundColor: '#f8fafc' },
+  tableStripe: {
+    ...uiStyles.tableStripe,
+  },
   tableCell: {
+    ...uiStyles.tableCell,
     width: 118,
-    paddingHorizontal: 9,
-    paddingVertical: 9,
-    color: '#1e293b',
     borderRightWidth: StyleSheet.hairlineWidth,
     borderRightColor: '#cbd5e1',
   },
   numberCell: { width: 40, textAlign: 'center' },
   lastCell: { borderRightWidth: 0 },
-  tableHeading: { fontSize: 12, fontWeight: '700', backgroundColor: '#e8eef5' },
+  tableHeading: {
+    ...uiStyles.tableHeaderText,
+    backgroundColor: '#e8eef5',
+  },
   taxEra: { gap: 8, marginBottom: 10 },
   empty: { color: '#475569' },
   error: { color: '#991b1b', backgroundColor: '#fef2f2', padding: 10, borderRadius: 6 },
@@ -438,24 +449,21 @@ const styles = StyleSheet.create({
     borderTopColor: '#e2e8f0',
   },
   backButton: {
+    ...uiStyles.secondaryButton,
     flex: 1,
-    minHeight: 46,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
     borderWidth: 1,
     borderColor: '#cbd5e1',
   },
-  backText: { color: '#10263a', fontWeight: '700' },
-  submitButton: {
-    flex: 2,
-    minHeight: 46,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    backgroundColor: '#14532d',
+  backText: {
+    ...uiStyles.secondaryButtonText,
   },
-  disabledButton: { opacity: 0.5 },
+  submitButton: {
+    ...uiStyles.primaryButton,
+    flex: 2,
+  },
+  disabledButton: {
+    ...uiStyles.disabledButton,
+  },
   submitText: { color: '#fff', fontWeight: '700' },
   modalOverlay: {
     flex: 1,
@@ -476,10 +484,8 @@ const styles = StyleSheet.create({
     elevation: 8, // Android shadow
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...uiStyles.title,
     marginBottom: 15,
-    color: '#333',
   },
   modalText: {
     fontSize: 16,

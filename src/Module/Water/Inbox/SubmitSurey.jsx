@@ -21,6 +21,7 @@ import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const SubmitSurey = () => {
   const navigation = useNavigation();
@@ -209,7 +210,7 @@ const SubmitSurey = () => {
           style={styles.submitButton}
           onPress={() => handleSubmit(data)}
         >
-          <Text style={styles.submitText}>Submit</Text>
+          <Text style={[styles.submitText, uiStyles.primaryButtonText]}>Submit</Text>
         </CopyableTouchableOpacity>
       </ScrollView>
       <Modal visible={isModalVisible} transparent animationType="slide">
@@ -300,13 +301,9 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   submitButton: {
+    ...uiStyles.primaryButton,
     marginTop: 24,
     marginBottom: 50,
-
-    backgroundColor: '#0891b2',
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: 'center',
   },
   submitText: {
     color: 'white',
@@ -328,17 +325,12 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 10,
-    color: '#0891b2',
   },
   input: {
+    ...uiStyles.input,
     height: 100,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
     textAlignVertical: 'top',
     marginBottom: 20,
   },
@@ -347,10 +339,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   actionButton: {
+    ...uiStyles.primaryButton,
     flex: 0.45,
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
   },
   closeButton: {
     position: 'absolute',

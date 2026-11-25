@@ -16,6 +16,7 @@ import {
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const VerificationCard = ({
   label,
@@ -198,13 +199,11 @@ const styles = StyleSheet.create({
     shadowRadius: 1.5,
   },
   label: {
-    fontSize: responsiveFontSize(1.8),
-    color: 'white',
-    fontWeight: '500',
+    ...uiStyles.label,
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
   },
   row: {
     flexDirection: 'row',
@@ -213,6 +212,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   rowlabel: {
+    ...uiStyles.label,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 5,
@@ -257,10 +257,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   dropdown: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    borderRadius: 8,
-    padding: 10,
+    ...uiStyles.input,
     marginHorizontal: responsiveWidth(2),
   },
   divider: {
@@ -286,18 +283,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: responsiveWidth(4),
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    borderRadius: 8,
-    padding: 12,
+    ...uiStyles.input,
     marginTop: 10,
-    fontSize: responsiveFontSize(1.8),
-    color: '#333',
-    backgroundColor: '#fff',
   },
   errorText: {
-    color: 'red',
-    fontSize: responsiveFontSize(1.6),
+    ...uiStyles.errorText,
     marginHorizontal: responsiveWidth(4),
     marginBottom: 5,
   },

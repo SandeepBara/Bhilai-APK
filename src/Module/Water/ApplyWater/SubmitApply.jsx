@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useState } from 'react';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const SubmitApply = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -232,7 +233,7 @@ const SubmitApply = ({ route }) => {
         </View>
 
         <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.submitButtonText}>FINAL SUBMIT</Text>
+          <Text style={[styles.submitButtonText, uiStyles.primaryButtonText]}>FINAL SUBMIT</Text>
         </CopyableTouchableOpacity>
       </ScrollView>
 
@@ -295,8 +296,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.6,
     borderBottomColor: '#eee',
   },
-  label: { fontSize: 15, fontWeight: '500', color: '#444' },
-  value: { fontSize: 15, color: '#555', maxWidth: '60%', textAlign: 'right' },
+  label: {
+    ...uiStyles.label,
+  },
+  value: {
+    ...uiStyles.text,
+    maxWidth: '60%',
+    textAlign: 'right',
+  },
   subCard: {
     borderWidth: 1,
     borderColor: '#ddd',
@@ -306,14 +313,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fdfdfd',
   },
   submitButton: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 14,
-    borderRadius: 10,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
     marginBottom: 20,
   },
-  submitButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  submitButtonText: {
+    ...uiStyles.primaryButtonText,
+  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)', // dark transparent background
@@ -333,10 +339,8 @@ const styles = StyleSheet.create({
     elevation: 8, // Android shadow
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: '700',
+    ...uiStyles.title,
     marginBottom: 15,
-    color: '#333',
   },
   modalText: {
     fontSize: 16,

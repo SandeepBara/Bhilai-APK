@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 import { handleFocus, handleBlur } from "./focusHandlers";
+import { uiStyles } from '../style/theme';
 
 export default function App() {
   const [state, setState] = useState({ focused: false, error: "" });
@@ -32,8 +33,12 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", padding: 20 },
-  input: { borderWidth: 1, borderColor: "gray", borderRadius: 5, padding: 10 },
+  input: {
+    ...uiStyles.input,
+  },
   inputFocused: { borderColor: "blue" },
-  inputError: { borderColor: "red" },
+  inputError: {
+    ...uiStyles.inputError,
+  },
   error: { color: "red", marginTop: 5 },
 });

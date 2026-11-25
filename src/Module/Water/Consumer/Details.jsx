@@ -16,6 +16,7 @@ import { getToken } from '../../../utils/auth';
 import { PaymentReceiptModal, ViewDemandModal } from './Model';
 import GenerateDemandModal from './Model/GenerateDemandModal';
 import { cardHeader } from '../../../style/cardHeader';
+import { uiStyles } from '../../../style/theme';
 
 const enabled = value => [true, 1, '1', 'true'].includes(value);
 const dateOnly = value => value?.match?.(/^\d{4}-\d{2}-\d{2}/)?.[0] ?? value;
@@ -306,12 +307,20 @@ const styles = StyleSheet.create({
   heading: { color: '#10263a', fontSize: 17, fontWeight: '700', ...cardHeader },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   field: { width: '50%', padding: 5, gap: 3 },
-  label: { color: '#475569', fontWeight: '600' },
-  value: { color: '#10263a' },
+  label: {
+    ...uiStyles.label,
+  },
+  value: {
+    ...uiStyles.text,
+  },
   link: { color: '#1d4ed8', textDecorationLine: 'underline' },
   tableRow: { flexDirection: 'row' },
-  tableHeader: { backgroundColor: '#e8eff7' },
-  columnTitle: { color: '#10263a', fontWeight: '700' },
+  tableHeader: {
+    ...uiStyles.tableHeader,
+  },
+  columnTitle: {
+    ...uiStyles.tableHeaderText,
+  },
   cell: { width: 122, padding: 8, borderWidth: StyleSheet.hairlineWidth, borderColor: '#cbd5e1' },
   numberCell: { width: 42 },
   image: { width: 150, height: 100 },
@@ -320,13 +329,17 @@ const styles = StyleSheet.create({
     marginTop: 15, marginBottom: 20, paddingHorizontal: 5,
   },
   propertyAction: {
-    width: 85, backgroundColor: Colors.primary, borderRadius: 6,
-    paddingVertical: 8, paddingHorizontal: 4, alignItems: 'center',
-    justifyContent: 'center', elevation: 2, shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.2,
+    ...uiStyles.primaryButton,
+    width: 85,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
     shadowRadius: 2,
   },
-  propertyActionLabel: { color: '#fff', fontSize: 9, fontWeight: 'bold', textAlign: 'center' },
+  propertyActionLabel: {
+    ...uiStyles.primaryButtonText,
+  },
   propertyActionDisabled: { opacity: 0.5, backgroundColor: '#ccc' },
   action: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 7, backgroundColor: '#164e83' },
   actionLabel: { color: '#fff', fontWeight: '700' },

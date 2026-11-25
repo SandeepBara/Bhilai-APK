@@ -6,6 +6,7 @@ import MonthYearPicker from 'react-native-month-year-picker';
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 import { formatDate } from '../utils/helpers';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const ExtraFloorForm = ({
   floors,
@@ -168,7 +169,7 @@ const ExtraFloorForm = ({
             onPress={removeFloor}
             style={styles.removeButton}
           >
-            <Text style={styles.buttonText}>Remove Floor</Text>
+            <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>Remove Floor</Text>
           </CopyableTouchableOpacity>
         )}
       </View>
@@ -192,6 +193,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   rowlabel: {
+    ...uiStyles.label,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 5,
@@ -200,19 +202,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   label: {
-    fontSize: 14,
-    color: '#333',
+    ...uiStyles.label,
     marginTop: 10,
     marginBottom: 5,
-    fontWeight: '500',
   },
   dropdown: {
+    ...uiStyles.input,
     height: 50,
-    borderColor: '#007AFF',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
   },
   placeholder: {
     color: '#999',
@@ -223,13 +219,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   input: {
+    ...uiStyles.input,
     height: responsiveHeight(5),
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    fontSize: 16,
-    backgroundColor: '#fff',
   },
   dateBox: {
     borderWidth: 1,
@@ -252,14 +243,12 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   removeButton: {
-    backgroundColor: 'darkred',
-    padding: 10,
-    borderRadius: 8,
+    ...uiStyles.dangerButton,
     margin: 20,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: 'white',
-    fontWeight: 'bold',
   },
 });
 

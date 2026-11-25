@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { uiStyles } from '../../../../style/theme';
 
 const AddressSection = ({
   address,
@@ -95,27 +96,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 14,
-    color: '#555',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
-    backgroundColor: '#fff',
     marginBottom: 8,
-    fontSize: 16,
-    color: '#333',
   },
   inputError: {
-    borderColor: '#e63946', // red border for error
+    ...uiStyles.inputError,
   },
   errorText: {
-    color: '#e63946',
-    fontSize: 12,
+    ...uiStyles.errorText,
     marginBottom: 8,
   },
 });

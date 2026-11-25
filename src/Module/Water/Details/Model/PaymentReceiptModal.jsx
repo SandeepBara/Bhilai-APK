@@ -18,6 +18,7 @@ import {
 } from '@linvix-sistemas/react-native-escpos-buffer';
 import { useBluetoothPrinter } from '../../../../utils/BluetoothService';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const PaymentReceiptModal = ({ visible, onClose, receiptData }) => {
   console.log('reciept data', receiptData);
@@ -568,18 +569,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   mainTitle: {
-    fontSize: 18,
-    color: '#1E40AF',
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 12,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 20,
-    color: '#222',
   },
   receiptContainer: {
     backgroundColor: '#fff',
@@ -673,31 +670,21 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   printBtn: {
-    backgroundColor: '#1E40AF',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginBottom: 10,
   },
   printText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   scanBtn: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     borderWidth: 2,
     borderColor: '#1E40AF',
   },
   scanText: {
+    ...uiStyles.buttonText,
     color: '#1E40AF',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   // Printer Modal Styles
   printerModalContent: {
@@ -720,9 +707,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e5e7eb',
   },
   printerModalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1E40AF',
+    ...uiStyles.title,
   },
   closeIconBtn: {
     padding: 4,
@@ -732,9 +717,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#374151',
+    ...uiStyles.title,
     marginTop: 8,
     marginBottom: 12,
     textTransform: 'uppercase',

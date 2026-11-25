@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import { Picker } from '@react-native-picker/picker';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 
 // --- Mock Export Functions ---
 const mockExportToExcel = async (title, headers, data) => {
@@ -338,14 +339,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
+    ...uiStyles.primaryButton,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 6,
-    minHeight: 40,
-    // Add shadow/elevation for a lifted feel
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -369,17 +364,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textInput: {
+    ...uiStyles.input,
     flex: 1,
-    paddingHorizontal: 12,
     paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: COLORS.colorBorder,
-    borderRadius: 6,
     marginRight: 8,
-    backgroundColor: '#fff',
-    color: '#000',
-    minHeight: 45,
-    fontSize: 15,
   },
 
   // --- Items per page (Picker) ---

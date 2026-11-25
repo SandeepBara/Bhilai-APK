@@ -9,6 +9,7 @@ import {
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const OwnerDetailsSection = ({
   ownerName,
@@ -201,26 +202,17 @@ export default OwnerDetailsSection;
 
 const styles = StyleSheet.create({
   label: {
-    fontSize: 14,
-    color: '#000000ff',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
     marginBottom: 12,
-    fontSize: 16,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
     marginBottom: 12,
     justifyContent: 'center',
   },

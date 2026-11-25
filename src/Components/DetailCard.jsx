@@ -7,6 +7,7 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../Constants/Colors';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 
 function DetailCard({ title, note, data = [] }) {
   const hasData = data && data.length > 0;
@@ -100,13 +101,12 @@ const styles = StyleSheet.create({
   },
 
   headingWrapper: {
-    backgroundColor: Colors.headignColor,
+    ...uiStyles.cardHeader,
     paddingVertical: responsiveHeight(1.5),
     paddingHorizontal: responsiveWidth(4),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     borderWidth: 1,
-    borderColor: Colors.headignColor,
     borderBottomWidth: 0,
     elevation: 6,
     zIndex: 2,
@@ -116,9 +116,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   headingText: {
-    fontSize: responsiveWidth(4.5),
-    fontWeight: '700',
-    color: '#FFFFFF',
+    ...uiStyles.cardHeaderText,
     textAlign: 'left',
   },
   card: {
@@ -165,18 +163,15 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: responsiveWidth(3.8),
+    ...uiStyles.label,
     marginVertical: 0,
-    fontWeight: 'bold',
-    color: Colors.textLabel || '#555',
     minWidth: responsiveWidth(25),
     maxWidth: responsiveWidth(40),
     marginRight: responsiveWidth(2),
   },
   value: {
+    ...uiStyles.text,
     flex: 1,
-    fontSize: responsiveWidth(3.8),
-    color: Colors.textValue || '#222',
     textAlign: 'left',
     flexWrap: 'wrap',
     paddingRight: responsiveWidth(2),
@@ -207,10 +202,8 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   modalTitle: {
-    fontSize: responsiveWidth(5),
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: responsiveHeight(1),
-    color: Colors.headingColor || '#1f3e7a',
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     paddingBottom: responsiveHeight(0.5),

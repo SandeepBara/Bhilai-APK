@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import Button from '../../Components/AppButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { uiStyles } from '../../style/theme';
 
 const types = [
   { label: 'Full', value: 'FULL' },
@@ -101,8 +109,12 @@ export function SwmPaymentForm({ payable, saving, onCancel, onSubmit }) {
 
 const styles = StyleSheet.create({
   form: { gap: 8 },
-  label: { fontWeight: '600', color: '#334155' },
-  input: { minHeight: 44, borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 6, paddingHorizontal: 10 },
+  label: {
+    ...uiStyles.label,
+  },
+  input: {
+    ...uiStyles.input,
+  },
   readOnly: { backgroundColor: '#f1f5f9' },
   actions: { flexDirection: 'row', justifyContent: 'space-between', gap: 10 },
 });

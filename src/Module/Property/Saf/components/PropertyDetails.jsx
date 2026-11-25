@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { uiStyles } from '../../../../style/theme';
 
 // Error Display Component
 const ErrorText = ({ error }) => {
@@ -144,28 +145,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 14,
-    color: '#000000ff',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
-    backgroundColor: '#fff',
     marginBottom: 12,
-    fontSize: 16,
-    color: '#333',
   },
   inputError: {
-    borderColor: '#e63946',
+    ...uiStyles.inputError,
     borderWidth: 1.5,
   },
   errorText: {
-    color: '#e63946',
-    fontSize: 12,
+    ...uiStyles.errorText,
     marginTop: -4,
     marginBottom: 8,
     marginLeft: 4,

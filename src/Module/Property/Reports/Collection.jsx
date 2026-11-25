@@ -24,6 +24,7 @@ import { useMasterData } from '../../../Context/MasterDataContext';
 import Pagination from '../../../Components/Pagination';
 import PaymentReceiptModal from '../Saf/PaymentReceiptModal';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 const CollectionReport = () => {
   const [wardOptions, setWardOptions] = useState([]);
 
@@ -374,28 +375,18 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: rf(1.6),
+    ...uiStyles.label,
     marginBottom: 4,
-    color: '#4A4A4A',
-    fontWeight: '600',
   },
 
   input: {
-    borderWidth: 1,
-    borderColor: '#cfcfcf',
-    borderRadius: 8,
+    ...uiStyles.input,
     paddingVertical: rh(1.2),
-    paddingHorizontal: rw(3),
-    backgroundColor: '#fafafa',
   },
 
   dropdown: {
-    borderWidth: 1,
-    borderColor: '#cfcfcf',
-    borderRadius: 8,
+    ...uiStyles.input,
     height: rh(6),
-    paddingHorizontal: rw(3),
-    backgroundColor: '#fafafa',
   },
 
   cardSearchButton: {
@@ -416,8 +407,8 @@ const styles = StyleSheet.create({
 
   /* 🔶 TABLE HEADER */
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: Colors.primary,
     paddingVertical: rh(1.2),
     paddingHorizontal: rw(1),
     borderTopLeftRadius: 6,
@@ -443,20 +434,14 @@ const styles = StyleSheet.create({
   },
 
   tableCell: {
-    fontSize: 10,
-    color: '#2b2b2b',
+    ...uiStyles.tableCell,
     textAlign: 'center',
-    paddingHorizontal: rw(1),
   },
 
   /* 🔶 ACTION BUTTON in table */
   actionButton: {
+    ...uiStyles.primaryButton,
     flex: 2,
-    backgroundColor: '#a1a3ed',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: rh(0.8),
-    borderRadius: 6,
   },
 
   actionText: {

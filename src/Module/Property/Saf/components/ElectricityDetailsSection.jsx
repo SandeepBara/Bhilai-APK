@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { uiStyles } from '../../../../style/theme';
 
 const ElectricityDetailsSection = ({
   kno,
@@ -90,37 +91,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 14,
-    color: '#555',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
-    backgroundColor: '#fff',
     marginBottom: 8,
-    fontSize: 16,
-    color: '#333',
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
     marginBottom: 8,
     justifyContent: 'center',
   },
   inputError: {
-    borderColor: '#e63946',
+    ...uiStyles.inputError,
   },
   errorText: {
-    color: '#e63946',
-    fontSize: 12,
+    ...uiStyles.errorText,
     marginBottom: 8,
   },
 });

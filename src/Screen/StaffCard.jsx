@@ -9,6 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from './Header';
 import React, { useState } from 'react';
+import { uiStyles } from '../style/theme';
 
 const staffData = [
   {
@@ -143,11 +144,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   searchInput: {
+    ...uiStyles.input,
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    paddingHorizontal: 12,
     paddingVertical: 8,
   },
   card: {

@@ -25,6 +25,7 @@ import moment from 'moment';
 import ImageResizer from 'react-native-image-resizer';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { cardHeader } from '../../../style/cardHeader';
+import { uiStyles } from '../../../style/theme';
 
 const Card = ({ title, children }) => (
   <View style={styles.card}>
@@ -466,7 +467,7 @@ const SubmitVarification = ({ route }) => {
 
         <View style={styles.submitButtonContainer}>
           <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>Submit</Text>
+            <Text style={[styles.submitButtonText, uiStyles.primaryButtonText]}>Submit</Text>
           </CopyableTouchableOpacity>
         </View>
       </ScrollView>
@@ -521,14 +522,12 @@ export default SubmitVarification;
 
 const styles = StyleSheet.create({
   actionButton: {
-    borderRadius: 8,
-    padding: 5,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    elevation: 3, // for Android shadow
+    elevation: 3,
   },
   forwardButton: {
     backgroundColor: '#4CAF50', // Green
@@ -541,9 +540,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   submitButtonContainer: {
     marginTop: 20,
@@ -551,15 +549,10 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   submitButton: {
-    backgroundColor: '#2e86de',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 8,
+    ...uiStyles.primaryButton,
   },
   submitButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.primaryButtonText,
   },
   container: {
     padding: 16,
@@ -570,9 +563,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
+    ...uiStyles.cardTitle,
     marginTop: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
     ...cardHeader,
   },
   card: {
@@ -587,10 +579,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cardTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.cardTitle,
     marginBottom: 8,
-    color: '#2e86de',
     ...cardHeader,
   },
   image: {
@@ -620,15 +610,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    ...uiStyles.input,
     height: 100,
     textAlignVertical: 'top',
     marginBottom: 15,

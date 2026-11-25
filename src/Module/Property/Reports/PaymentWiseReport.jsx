@@ -21,6 +21,7 @@ import axios from 'axios';
 import { getToken } from '../../../utils/auth';
 import { useMasterData } from '../../../Context/MasterDataContext';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const PaymentWiseReport = () => {
   const [wardOptions, setWardOptions] = useState([]);
@@ -367,26 +368,16 @@ const styles = StyleSheet.create({
     marginBottom: rh(1),
   },
   label: {
-    fontSize: rf(1.6),
+    ...uiStyles.label,
     marginBottom: 4,
-    color: '#333',
-    fontWeight: '500',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
+    ...uiStyles.input,
     paddingVertical: rh(1.2),
-    paddingHorizontal: rw(3),
-    backgroundColor: '#fff',
   },
   dropdown: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
+    ...uiStyles.input,
     height: rh(6),
-    paddingHorizontal: rw(3),
-    backgroundColor: '#fff',
   },
   cardSearchButton: {
     backgroundColor: Colors.primary || '#007bff',
@@ -426,17 +417,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#dee2e6',
   },
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#e9ecef',
     paddingVertical: rh(1),
     paddingHorizontal: rw(3),
     borderBottomWidth: 1,
     borderBottomColor: '#dee2e6',
   },
   tableHeaderText: {
-    fontWeight: 'bold',
-    fontSize: rf(1.6),
-    color: '#495057',
+    ...uiStyles.tableHeaderText,
   },
   tableRow: {
     flexDirection: 'row',
@@ -445,7 +434,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e9ecef',
   },
-  tableCell: { fontSize: rf(1.5), color: '#495057' },
+  tableCell: {
+    ...uiStyles.tableCell,
+  },
   totalRow: {
     flexDirection: 'row',
     paddingVertical: rh(1),

@@ -1,7 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Button, Modal, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import Button from '../../Components/AppButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown';
 import HeaderNavigation from '../../Components/HeaderNavigation';
 import Pagination from '../../Components/Pagination';
 import { BluetoothReceiptModal } from '../../Components/BluetoothReceiptModal';
@@ -13,6 +23,7 @@ import {
   WARD_LIST_API, SWM_SEARCH_API, SWM_DETAILS_API,
   SWM_DUE_API, SWM_GENERATE_DEMAND_API, SWM_PAY_DUE_API, SWM_PAYMENT_RECEIPT_API,
 } from '../../api/apiRoutes';
+import { uiStyles } from '../../style/theme';
 
 const flag = value => [true, 1, '1', 'true'].includes(value);
 const rows = value => Array.isArray(value) ? value : Object.values(value ?? {});
@@ -129,20 +140,20 @@ function PagedResults({ result, page, onPage, renderRow }) {
 
 export function SwmSearch({ navigation }) {
   const [keyword, setKeyword] = useState('');
-  const [wardIds, setWardIds] = useState([]);
+  const [wardId, setWardId] = useState(null);
   const [query, setQuery] = useState(undefined);
   const wards = useData(WARD_LIST_API, null);
   const result = useData(SWM_SEARCH_API, query);
-  const search = () => setQuery({ wardId: wardIds, keyWord: keyword.trim(), page: 1, perPage: PAGE_SIZE });
+  const search = () => setQuery({ wardId: wardId == null ? [] : [wardId], keyWord: keyword.trim(), page: 1, perPage: PAGE_SIZE });
 
   return (
     <Page>
       <Card title="Search SWM Consumer">
         <Text selectable style={styles.label}>Ward No.</Text>
-        <MultiSelect style={styles.input}
+        <Dropdown style={styles.input}
           data={rows(wards?.data).map(ward => ({ label: String(ward.wardNo ?? ''), value: ward.id }))}
-          accessibilityLabel="Ward No." placeholder="Select Ward(s)" labelField="label" valueField="value"
-          value={wardIds} onChange={setWardIds} />
+          accessibilityLabel="Ward No." placeholder="Select Ward" labelField="label" valueField="value"
+          value={wardId} onChange={item => setWardId(item.value)} />
         {wards?.error ? <Text selectable accessibilityRole="alert">{wards.error}</Text> : null}
         <Text selectable style={styles.label}>Enter Keywords</Text>
         <TextInput style={styles.input} accessibilityLabel="Enter Keywords"
@@ -502,14 +513,27 @@ const styles = StyleSheet.create({
   title: { ...cardHeader, fontSize: 16, fontWeight: '700' },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   field: { width: '50%', padding: 5, gap: 3 },
-  label: { color: '#475569', fontWeight: '600' },
-  input: { minHeight: 44, borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 6, paddingHorizontal: 10 },
+  label: {
+    ...uiStyles.label,
+  },
+  input: {
+    ...uiStyles.input,
+  },
   link: { color: '#1d4ed8', textDecorationLine: 'underline' },
   tableRow: { flexDirection: 'row', alignItems: 'stretch' },
-  tableHeading: { backgroundColor: '#e8eff7' },
-  tableHeadingText: { color: '#10263a', fontWeight: '700' },
-  tableStripe: { backgroundColor: '#f1f5f9' },
-  tableCell: { padding: 8, borderWidth: StyleSheet.hairlineWidth, borderColor: '#cbd5e1' },
+  tableHeading: {
+    ...uiStyles.tableHeader,
+  },
+  tableHeadingText: {
+    ...uiStyles.tableHeaderText,
+  },
+  tableStripe: {
+    ...uiStyles.tableStripe,
+  },
+  tableCell: {
+    ...uiStyles.tableCell,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
   record: { paddingBottom: 8, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#cbd5e1' },
   demandOverlay: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 12, backgroundColor: 'rgba(0,0,0,0.48)' },
   demandPanel: { width: '100%', maxWidth: 1100, height: '92%', backgroundColor: '#fff', borderRadius: 10 },

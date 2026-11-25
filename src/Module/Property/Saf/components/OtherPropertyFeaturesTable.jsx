@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { formatDate } from '../utils/helpers';
+import { uiStyles } from '../../../../style/theme';
 
 const OtherPropertyFeaturesTable = ({
   mobileTower,
@@ -135,16 +136,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#007AFF',
     paddingVertical: 12,
     paddingHorizontal: 10,
   },
   tableHeaderText: {
+    ...uiStyles.tableHeaderText,
     flex: 1,
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
     textAlign: 'center',
   },
   tableRow: {
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   tableRowAlternate: {
-    backgroundColor: '#f9f9f9',
+    ...uiStyles.tableStripe,
   },
   tableCellLabel: {
     flex: 1,
@@ -165,9 +164,8 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   tableCell: {
+    ...uiStyles.tableCell,
     flex: 1,
-    fontSize: 13,
-    color: '#333',
     textAlign: 'center',
   },
 });

@@ -20,6 +20,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Colors from '../../../Constants/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const getToken = async () => {
   try {
@@ -156,10 +157,10 @@ export const PayNowModal = ({
 
         <View style={styles.modalButtons}>
           <CopyableTouchableOpacity onPress={onClose} style={styles.cancelButton}>
-            <Text>Cancel</Text>
+            <Text style={uiStyles.secondaryButtonText}>Cancel</Text>
           </CopyableTouchableOpacity>
           <CopyableTouchableOpacity onPress={onProceed} style={styles.confirmButton}>
-            <Text>Proceed</Text>
+            <Text style={uiStyles.primaryButtonText}>Proceed</Text>
           </CopyableTouchableOpacity>
         </View>
       </View>
@@ -390,7 +391,7 @@ export const ViewDemandModal = ({
                   style={styles.payNowButton}
                   onPress={onPayNowPress}
                 >
-                  <Text style={styles.payNowButtonText}>💳 Pay Now</Text>
+                  <Text style={[styles.payNowButtonText, uiStyles.primaryButtonText]}>💳 Pay Now</Text>
                 </CopyableTouchableOpacity>
               )}
 
@@ -548,15 +549,13 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
   },
   labelFixed: {
-    fontSize: 13,
+    ...uiStyles.label,
     marginVertical: 2,
-    fontWeight: '600',
-    color: '#555',
     width: 120,
   },
   value: {
+    ...uiStyles.text,
     flex: 1,
-    color: '#222',
   },
   headerRow: {
     backgroundColor: Colors.textSecondary,
@@ -587,23 +586,19 @@ const styles = StyleSheet.create({
   },
 
   tableHeader: {
-    backgroundColor: '#f0f0f0',
+    ...uiStyles.tableHeader,
   },
 
   tableCell: {
+    ...uiStyles.tableCell,
     minWidth: 80,
-    padding: 4,
     textAlign: 'center',
     borderRightWidth: 0.5,
-    borderColor: '#ccc',
-    fontSize: 10,
-    color: '#000',
     flex: 1,
   },
 
   headerText: {
-    fontWeight: 'bold',
-    color: '#fff',
+    ...uiStyles.tableHeaderText,
   },
 
   modalContainer: {
@@ -646,7 +641,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
-    fontSize: 13,
+    ...uiStyles.label,
     marginVertical: 2,
   },
   bold: {
@@ -658,8 +653,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   tableHeaderRow: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     padding: 6,
   },
   tableRowModal: {
@@ -714,15 +709,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   docModalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 12,
     textAlign: 'center',
-    color: '#222',
   },
   docTableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     paddingVertical: 6,
     borderBottomWidth: 1,
     borderColor: '#ccc',
@@ -764,22 +757,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   viewButton: {
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...uiStyles.primaryButton,
     marginHorizontal: 2,
   },
   viewButtonText: {
-    color: Colors.background,
+    ...uiStyles.primaryButtonText,
     backgroundColor: Colors.primary,
-    fontSize: 11,
     padding: 8,
     borderRadius: 8,
-    fontWeight: 'bold',
   },
   disabledButton: {
-    opacity: 0.5,
+    ...uiStyles.disabledButton,
     backgroundColor: '#ccc',
   },
   disabledButtonText: {
@@ -818,12 +806,12 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   label: {
-    fontWeight: '600',
+    ...uiStyles.label,
     width: '60%',
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
   },
   penaltyBox: {
     backgroundColor: '#ffe6e6',
@@ -873,24 +861,20 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
   tableHeader: {
-    backgroundColor: '#003366',
+    ...uiStyles.tableHeader,
   },
   tableSubHeader: {
-    backgroundColor: '#f0f0f0',
+    ...uiStyles.tableHeader,
   },
   tableFooter: {
     backgroundColor: 'white',
   },
   payNowButton: {
-    backgroundColor: '#28a745',
-    borderRadius: 6,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
   },
   payNowButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    ...uiStyles.primaryButtonText,
     padding: 10,
   },
   modalOverlay: {
@@ -906,8 +890,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -917,37 +900,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cancelButton: {
-    backgroundColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.secondaryButton,
     flex: 1,
     marginRight: 10,
   },
   confirmButton: {
-    backgroundColor: '#28a745',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.primaryButton,
     flex: 1,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
     marginBottom: 10,
-    borderColor: '#ccc',
-    borderRadius: 8,
   },
   label: {
-    fontWeight: '600',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    ...uiStyles.input,
     marginBottom: 10,
   },
   fullScreenModalContainer: {

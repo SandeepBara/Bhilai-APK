@@ -5,6 +5,7 @@ import axios from 'axios';
 import { WATER_CONSUMER_PAY_DUE_API } from '../../../../api/apiRoutes';
 import { getToken } from '../../../../utils/auth';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const paymentTypes = [
   { label: 'Full Payment', value: 'FULL' },
@@ -82,8 +83,12 @@ export function PaymentForm({ id, payableAmount, submitting, onSubmittingChange,
 const styles = StyleSheet.create({
   form: { gap: 8, padding: 4 },
   title: { fontSize: 17, fontWeight: '700', color: '#10263a' },
-  label: { fontWeight: '600', color: '#334155' },
-  input: { minHeight: 44, paddingHorizontal: 10, borderRadius: 6, borderWidth: 1, borderColor: '#cbd5e1' },
+  label: {
+    ...uiStyles.label,
+  },
+  input: {
+    ...uiStyles.input,
+  },
   actions: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   cancel: { backgroundColor: '#e2e8f0', borderRadius: 6, padding: 12 },
   submit: { backgroundColor: '#14532d', borderRadius: 6, padding: 12 },

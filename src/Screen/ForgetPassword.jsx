@@ -16,6 +16,7 @@ import {
   CHANGE_PASS_API,
 } from '../api/apiRoutes';
 import { CopyableTouchableOpacity } from '../Components/CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -244,19 +245,16 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 12,
+    ...uiStyles.input,
     marginBottom: 20,
-    borderRadius: 6,
   },
   button: {
-    backgroundColor: '#007AFF',
-    padding: 12,
-    borderRadius: 6,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
   },
-  buttonText: { color: 'white', fontSize: 16 },
+  buttonText: {
+    ...uiStyles.buttonText,
+    color: 'white',
+  },
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -269,8 +267,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 15,
     textAlign: 'center',
   },

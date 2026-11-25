@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const PreviewModal = ({ visible, onClose, previewData }) => {
   return (
@@ -52,8 +53,7 @@ const styles = StyleSheet.create({
     maxHeight: '80%',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 12,
     textAlign: 'center',
   },

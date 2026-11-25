@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { CopyableTouchableOpacity } from '../Components/CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const MessageModal = ({ visible, type, message, onClose }) => {
   return (
@@ -22,7 +23,7 @@ const MessageModal = ({ visible, type, message, onClose }) => {
           </Text>
           <Text selectable style={styles.message}>{message}</Text>
           <CopyableTouchableOpacity style={styles.button} onPress={onClose}>
-            <Text style={styles.buttonText}>OK</Text>
+            <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>OK</Text>
           </CopyableTouchableOpacity>
         </View>
       </View>
@@ -62,14 +63,11 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   button: {
-    backgroundColor: '#007bff',
-    paddingVertical: 8,
-    paddingHorizontal: 25,
-    borderRadius: 5,
+    ...uiStyles.primaryButton,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
   },
 });
 

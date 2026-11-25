@@ -1,6 +1,9 @@
 // components/PrintButton.js
 import React from 'react';
-import { Button, Alert } from 'react-native';
+import {
+  Alert,
+} from 'react-native';
+import Button from './AppButton';
 import RNPrint from 'react-native-print';
 
 const PrintButton = ({ fileUrl, title = 'Print Document' }) => {

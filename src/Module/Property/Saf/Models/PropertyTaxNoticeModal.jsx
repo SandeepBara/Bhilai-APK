@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const PropertyTaxNoticeModal = ({ visible, onClose }) => {
   return (
@@ -154,13 +155,13 @@ const styles = StyleSheet.create({
   normal: { fontSize: 13, marginTop: 5, lineHeight: 18 },
   table: { borderWidth: 1, borderColor: '#000', marginVertical: 10 },
   tableRow: { flexDirection: 'row', borderBottomWidth: 1, borderColor: '#000' },
-  tableHeader: { backgroundColor: '#eee' },
+  tableHeader: {
+    ...uiStyles.tableHeader,
+  },
   tableCell: {
+    ...uiStyles.tableCell,
     flex: 1,
-    padding: 6,
-    fontSize: 13,
     borderRightWidth: 1,
-    borderColor: '#000',
   },
   totalRow: { backgroundColor: '#f5f5f5' },
   signature: { marginTop: 20, textAlign: 'right', fontStyle: 'italic' },

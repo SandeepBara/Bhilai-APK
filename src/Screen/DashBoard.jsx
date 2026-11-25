@@ -15,6 +15,7 @@ import FooterSection from './FooterSection';
 
 import back_15 from '../assets/back_15.jpg';
 import Sidebar from './Sidebar';
+import { uiStyles } from '../style/theme';
 
 const DashBoard = ({ navigation }) => {
   const [menuItems, setMenuItems] = useState([]);
@@ -117,8 +118,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   errorText: {
-    fontSize: 16,
-    color: '#d32f2f',
+    ...uiStyles.errorText,
     textAlign: 'center',
     paddingHorizontal: 20,
   },

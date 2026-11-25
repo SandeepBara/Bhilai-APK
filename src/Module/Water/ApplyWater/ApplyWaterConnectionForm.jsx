@@ -30,6 +30,7 @@ import { showToast } from '../../../utils/toast';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { cardHeader } from '../../../style/cardHeader';
 import { NEW_WARD_BY_OLD_API } from '../../../api/apiRoutes';
+import { uiStyles } from '../../../style/theme';
 
 const ApplyWaterConnectionForm = () => {
   const [focusedField, setFocusedField] = useState(null);
@@ -847,7 +848,7 @@ const ApplyWaterConnectionForm = () => {
                   style={styles.removeButton}
                   onPress={() => removeApplicant(index)}
                 >
-                  <Text style={styles.removeButtonText}>Remove</Text>
+                  <Text style={[styles.removeButtonText, uiStyles.primaryButtonText]}>Remove</Text>
                 </CopyableTouchableOpacity>
               )}
             </View>
@@ -858,7 +859,7 @@ const ApplyWaterConnectionForm = () => {
           </CopyableTouchableOpacity>
 
           <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>SUBMIT</Text>
+            <Text style={[styles.submitButtonText, uiStyles.primaryButtonText]}>SUBMIT</Text>
           </CopyableTouchableOpacity>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -868,7 +869,11 @@ const ApplyWaterConnectionForm = () => {
 
 const styles = StyleSheet.create({
   container: { padding: 16 },
-  sectionTitle: { fontSize: rf(2.2), fontWeight: 'bold', marginVertical: 10, ...cardHeader },
+  sectionTitle: {
+    ...uiStyles.cardTitle,
+    marginVertical: 10,
+    ...cardHeader,
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -881,15 +886,19 @@ const styles = StyleSheet.create({
   },
 
   fullWidthInputContainer: { flex: 1, marginBottom: 12 },
-  label: { marginBottom: 4 },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 8, borderRadius: 6 },
+  label: {
+    ...uiStyles.label,
+    marginBottom: 4,
+  },
+  input: {
+    ...uiStyles.input,
+  },
   inputFocused: { borderColor: Colors.primary },
-  inputError: { borderColor: 'red' },
+  inputError: {
+    ...uiStyles.inputError,
+  },
   dropdown: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    padding: 12,
-    borderRadius: 8,
+    ...uiStyles.input,
   },
   sectionCard: {
     borderWidth: 1,
@@ -910,21 +919,17 @@ const styles = StyleSheet.create({
   },
   addButtonText: { color: '#fff', fontWeight: 'bold' },
   removeButton: {
-    backgroundColor: 'red',
-    padding: 8,
-    borderRadius: 6,
-    alignItems: 'center',
+    ...uiStyles.dangerButton,
     marginTop: 8,
   },
   removeButtonText: { color: '#fff', fontWeight: 'bold' },
   submitButton: {
-    backgroundColor: Colors.primary,
-    padding: 14,
-    borderRadius: 6,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 16,
   },
-  submitButtonText: { color: '#fff', fontWeight: 'bold', fontSize: rf(2) },
+  submitButtonText: {
+    ...uiStyles.primaryButtonText,
+  },
   card: {
     backgroundColor: '#fff',
     borderRadius: 16,

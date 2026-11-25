@@ -22,6 +22,7 @@ import Colors from '../../Constants/Colors';
 import { showToast } from '../../../utils/toast';
 import { getToken } from '../../../utils/auth';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const Inbox = ({ navigation }) => {
   const wardData = [
@@ -262,36 +263,34 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-  inputBox: { width: '48%', marginBottom: 16 },
-  label: { fontWeight: '600', color: '#333', marginBottom: 6 },
+  inputBox: {
+    ...uiStyles.input,
+    width: '48%',
+    marginBottom: 16,
+  },
+  label: {
+    ...uiStyles.label,
+    marginBottom: 6,
+  },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
-    fontSize: 16,
-    backgroundColor: '#f8f8f8',
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    backgroundColor: '#fff',
   },
   placeholderStyle: { color: '#999' },
   selectedTextStyle: { color: '#000' },
   button: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
     width: '100%',
   },
-  buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  buttonText: {
+    ...uiStyles.buttonText,
+    color: '#fff',
+  },
 
   applicationList: {
     flex: 1,
@@ -317,11 +316,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
-  cardLabel: { fontWeight: '600', color: '#333', fontSize: 10 },
+  cardLabel: {
+    ...uiStyles.label,
+  },
   value: {
-    color: '#555',
-    width: 130, // example width in dp
-    fontSize: 10, // example font size in dp
+    ...uiStyles.text,
+    width: 130,
   },
   button1: {
     marginTop: 16,

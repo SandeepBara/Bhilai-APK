@@ -16,6 +16,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { formatLocalDate } from "../../../utils/common";
 import VerificationPreviewModal from "./component/VerificationPreviewModal";
 import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
+import { uiStyles } from '../../style/theme';
 
 
 function SurveyPage() {
@@ -1156,15 +1157,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   label: {
-    fontSize: responsiveFontSize(1.8),
-    color: '#333',
-    fontWeight: '500',
+    ...uiStyles.label,
     marginBottom: responsiveHeight(0.5),
     marginLeft: responsiveWidth(1),
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: Colors.primary,
   },
   gradientContainer: {
     borderRadius: 10,
@@ -1178,13 +1177,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   dropdown: {
+    ...uiStyles.input,
     height: responsiveHeight(5.5),
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
     marginBottom: 15,
-    backgroundColor: '#fff',
   },
   placeholder: {
     color: '#aaa',
@@ -1195,14 +1190,10 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   input: {
+    ...uiStyles.input,
     height: responsiveHeight(5.5),
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
     marginBottom: 15,
-    backgroundColor: '#fff',
-    justifyContent: 'center', // For TouchableOpacity date inputs
+    justifyContent: 'center',
   },
   extraFloorContainer: {
     marginTop: responsiveHeight(2),
@@ -1219,6 +1210,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   rowlabel: {
+    ...uiStyles.label,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -1318,8 +1310,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   errorText: {
-    color: 'red',
-    fontSize: responsiveFontSize(1.6),
+    ...uiStyles.errorText,
     marginLeft: responsiveWidth(4),
     marginBottom: responsiveHeight(1),
   },

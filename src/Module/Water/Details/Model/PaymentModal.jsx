@@ -15,6 +15,7 @@ import { getToken } from '../../../../utils/auth';
 import { WATER_APPLICATION_PAY_DEMAND_API } from '../../../../api/apiRoutes';
 import axios from 'axios';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const PaymentModal = ({
   visible,
@@ -202,7 +203,7 @@ export const PaymentModal = ({
                   onPress={() => setPayNowModalVisible(true)}
                   style={styles.confirmButton}
                 >
-                  <Text>Pay Now</Text>
+                  <Text style={uiStyles.primaryButtonText}>Pay Now</Text>
                 </CopyableTouchableOpacity>
               </View>
             </ScrollView>
@@ -311,7 +312,7 @@ export const PaymentModal = ({
                 onPress={() => setPayNowModalVisible(false)}
                 style={styles.cancelButton}
               >
-                <Text>Cancel</Text>
+                <Text style={uiStyles.secondaryButtonText}>Cancel</Text>
               </CopyableTouchableOpacity>
 
               <CopyableTouchableOpacity
@@ -344,7 +345,7 @@ export const PaymentModal = ({
                 }}
                 style={styles.confirmButton}
               >
-                <Text>Proceed</Text>
+                <Text style={uiStyles.primaryButtonText}>Proceed</Text>
               </CopyableTouchableOpacity>
             </View>
           </View>
@@ -383,30 +384,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   mainTitle: {
-    fontSize: 18,
-    color: '#1E40AF',
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 12,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
+    ...uiStyles.cardTitle,
     marginVertical: 10,
-    color: '#333',
   },
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#1E40AF',
     paddingVertical: 8,
     borderRadius: 6,
     marginBottom: 4,
   },
   tableHeaderText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    ...uiStyles.tableHeaderText,
     textAlign: 'center',
-    fontSize: 13,
   },
   tableRow: {
     flexDirection: 'row',
@@ -415,9 +410,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   tableCell: {
+    ...uiStyles.tableCell,
     textAlign: 'center',
-    fontSize: 13,
-    color: '#000',
   },
   demandBox: {
     backgroundColor: '#f9f9f9',
@@ -462,28 +456,19 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 20,
-    color: '#222',
   },
   dropdown: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
     marginBottom: 14,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
     marginBottom: 14,
-    backgroundColor: '#f9f9f9',
   },
   modalButtons: {
     flexDirection: 'row',
@@ -491,19 +476,13 @@ const styles = StyleSheet.create({
     marginTop: 18,
   },
   cancelButton: {
+    ...uiStyles.secondaryButton,
     flex: 1,
-    backgroundColor: '#e0e0e0',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
     marginRight: 8,
   },
   confirmButton: {
+    ...uiStyles.primaryButton,
     flex: 1,
-    backgroundColor: 'red',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
     marginLeft: 8,
   },
 });

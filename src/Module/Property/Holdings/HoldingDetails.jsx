@@ -38,6 +38,7 @@ import {
   HOLDING_PAY_DEMAND_API,
 } from '../../../api/apiRoutes';
 import { CopyableText, CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 const yesNo = value => [true, 1, '1', 'true'].includes(value) ? 'Yes' : 'No';
 
 function HoldingFields({ title, fields, notice }) {
@@ -611,7 +612,7 @@ const HoldingDetails = ({ route, navigation }) => {
             style={styles.actionBtn}
             onPress={() => navigation.navigate('SafDetails', { id: safData.safDetailId })}
           >
-            <Text style={styles.actionBtnText}>View SAF</Text>
+            <Text style={[styles.actionBtnText, uiStyles.primaryButtonText]}>View SAF</Text>
           </CopyableTouchableOpacity>
         )}
         {yesNo(safData?.userPermission?.canAdd) === 'Yes' && (
@@ -776,15 +777,13 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
   },
   labelFixed: {
-    fontSize: 13,
+    ...uiStyles.label,
     marginVertical: 2,
-    fontWeight: '600',
-    color: '#555',
     width: 120,
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
     width: '50%',
     display: 'flex',
     textAlign: 'right',
@@ -819,23 +818,19 @@ const styles = StyleSheet.create({
   },
 
   tableHeader: {
-    backgroundColor: '#f0f0f0',
+    ...uiStyles.tableHeader,
   },
 
   tableCell: {
+    ...uiStyles.tableCell,
     width: 120,
-    padding: 4,
     textAlign: 'center',
     borderRightWidth: 0.5,
-    borderColor: '#ccc',
-    fontSize: 10,
-    color: '#000',
     flex: 1,
   },
 
   headerText: {
-    fontWeight: 'bold',
-    color: '#fff',
+    ...uiStyles.tableHeaderText,
   },
 
   modalContainer: {
@@ -878,7 +873,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
-    fontSize: 13,
+    ...uiStyles.label,
     marginVertical: 2,
   },
   bold: {
@@ -890,8 +885,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   tableHeaderRow: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     padding: 6,
   },
   tableRowModal: {
@@ -946,15 +941,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   docModalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 12,
     textAlign: 'center',
-    color: '#222',
   },
   docTableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     paddingVertical: 6,
     borderBottomWidth: 1,
     borderColor: '#ccc',
@@ -1004,13 +997,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   actionBtn: {
+    ...uiStyles.primaryButton,
     width: 85,
-    backgroundColor: Colors.primary,
-    borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -1019,13 +1007,10 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   actionBtnText: {
-    color: '#fff',
-    fontSize: 9,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    ...uiStyles.primaryButtonText,
   },
   disabledButton: {
-    opacity: 0.5,
+    ...uiStyles.disabledButton,
     backgroundColor: '#ccc',
   },
   disabledButtonText: {
@@ -1075,8 +1060,8 @@ const styles = StyleSheet.create({
   //   width: '60%',
   // },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
   },
   penaltyBox: {
     backgroundColor: '#ffe6e6',
@@ -1126,24 +1111,20 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
   tableHeader: {
-    backgroundColor: '#003366',
+    ...uiStyles.tableHeader,
   },
   tableSubHeader: {
-    backgroundColor: '#f0f0f0',
+    ...uiStyles.tableHeader,
   },
   tableFooter: {
     backgroundColor: 'white',
   },
   payNowButton: {
-    backgroundColor: '#28a745',
-    borderRadius: 6,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
   },
   payNowButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    ...uiStyles.primaryButtonText,
     padding: 10,
   },
   modalOverlay: {
@@ -1159,8 +1140,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -1170,37 +1150,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cancelButton: {
-    backgroundColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.secondaryButton,
     flex: 1,
     marginRight: 10,
   },
   confirmButton: {
-    backgroundColor: '#28a745',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.primaryButton,
     flex: 1,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
     marginBottom: 10,
-    borderColor: '#ccc',
-    borderRadius: 8,
   },
   label: {
-    fontWeight: '600',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    ...uiStyles.input,
     marginBottom: 10,
   },
   fullScreenModalContainer: {

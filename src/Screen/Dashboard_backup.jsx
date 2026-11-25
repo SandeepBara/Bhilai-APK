@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import Button from '../Components/AppButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './Header';
@@ -7,6 +13,7 @@ import HeaderNavigation from '../Components/HeaderNavigation';
 import LogoutButton from '../Components/LogoutButton';
 import MenuTree from '../Components/MenuTree';
 import { CopyableTouchableOpacity } from '../Components/CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const DashBoard = ({ navigation }) => {
   const [menuItems, setMenuItems] = useState([]);
@@ -167,8 +174,7 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   errorText: {
-    fontSize: 16,
-    color: '#d32f2f',
+    ...uiStyles.errorText,
     textAlign: 'center',
     paddingHorizontal: 20,
   },

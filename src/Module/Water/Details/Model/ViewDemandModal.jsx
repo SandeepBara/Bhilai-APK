@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const ViewDemandModal = ({ visible, onClose, tradeDetails }) => (
   <Modal visible={visible} transparent animationType="slide">
@@ -105,30 +106,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   mainTitle: {
-    fontSize: 18,
-    color: '#1E40AF',
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 12,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
+    ...uiStyles.cardTitle,
     marginVertical: 10,
-    color: '#333',
   },
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#1E40AF',
     paddingVertical: 8,
     borderRadius: 6,
     marginBottom: 4,
   },
   tableHeaderText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    ...uiStyles.tableHeaderText,
     textAlign: 'center',
-    fontSize: 13,
   },
   tableRow: {
     flexDirection: 'row',
@@ -137,9 +132,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   tableCell: {
+    ...uiStyles.tableCell,
     textAlign: 'center',
-    fontSize: 13,
-    color: '#000',
   },
   demandBox: {
     backgroundColor: '#f9f9f9',

@@ -25,6 +25,7 @@ import { showToast } from '../../../utils/toast';
 import HeaderNavigation from '../../../Components/HeaderNavigation';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { SAF_MASTER_DATA_API, NEW_WARD_BY_OLD_API } from '../../../api/apiRoutes';
+import { uiStyles } from '../../../style/theme';
 
 const ApplyAssessmentComponentized = ({ navigation, route }) => {
   // Get data from route params if it's a reassessment or mutation
@@ -967,7 +968,7 @@ const ApplyAssessmentComponentized = ({ navigation, route }) => {
           />
         )}
         <CopyableTouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>Submit</Text>
         </CopyableTouchableOpacity>
       </ScrollView>
     </View>
@@ -990,39 +991,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
-    backgroundColor: '#fff',
     marginBottom: 12,
-    fontSize: 16,
-    color: '#333',
   },
   dropdown: {
+    ...uiStyles.input,
     height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
     marginBottom: 12,
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#2e86de',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
     marginBottom: 30,
     elevation: 2,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontSize: 17,
-    fontWeight: '600',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -1041,25 +1028,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   checkboxLabel: {
-    fontSize: 14,
-    color: '#000',
+    ...uiStyles.label,
     flexShrink: 1,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    paddingHorizontal: 8,
     marginBottom: 12,
-    borderRadius: 6,
   },
   input: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    paddingHorizontal: 10,
     marginBottom: 12,
-    borderRadius: 6,
   },
   dateInput: {
     height: 45,
@@ -1099,13 +1079,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
-    fontSize: 14,
-    color: '#555',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   errorText: {
-    color: 'red',
-    fontSize: 12,
+    ...uiStyles.errorText,
     marginTop: 2,
   },
 });

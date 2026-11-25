@@ -1,5 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Button, Modal, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import Button from '../../Components/AppButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,6 +22,7 @@ import {
   SWM_RATE_API, SWM_SUBCATEGORY_LIST_API,
 } from '../../api/apiRoutes';
 import { message, request, useData } from './swmRequests';
+import { uiStyles } from '../../style/theme';
 
 const text = value => String(value ?? '');
 const month = date => date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
@@ -438,8 +450,12 @@ const styles = StyleSheet.create({
   card: { backgroundColor: '#fff', borderRadius: 10, padding: 12, gap: 9 },
   title: { ...cardHeader, fontSize: 16, fontWeight: '700' },
   field: { gap: 4 },
-  label: { color: '#334155', fontWeight: '600' },
-  input: { minHeight: 44, borderWidth: 1, borderColor: '#cbd5e1', borderRadius: 6, paddingHorizontal: 10, color: '#10263a' },
+  label: {
+    ...uiStyles.label,
+  },
+  input: {
+    ...uiStyles.input,
+  },
   dateInput: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, backgroundColor: '#fff' },
   monthOverlay: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.45)', padding: 20 },
   monthDialog: { width: '100%', maxWidth: 360, backgroundColor: '#fff', padding: 14, borderRadius: 10, gap: 12 },

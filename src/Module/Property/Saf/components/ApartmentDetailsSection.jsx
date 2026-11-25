@@ -11,6 +11,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import { formatDate1 } from '../utils/helpers';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const ApartmentDetailsSection = ({
   selectedDate,
@@ -91,10 +92,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   label: {
-    fontSize: 14,
-    color: '#333',
+    ...uiStyles.label,
     marginBottom: 5,
-    fontWeight: '500',
   },
   errorLabel: {
     color: 'red',
@@ -106,15 +105,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 50,
-    borderColor: '#007AFF',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
   },
   errorInput: {
-    borderColor: 'red',
+    ...uiStyles.inputError,
   },
 });
 

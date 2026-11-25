@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CopyableTouchableOpacity } from '../Components/CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const LeftSidebar = () => {
   const [screen, setScreen] = useState('Dashboard');
@@ -74,13 +75,13 @@ const LeftSidebar = () => {
                 onPress={() => setShowModal(false)}
                 style={styles.cancelButton}
               >
-                <Text>Cancel</Text>
+                <Text style={uiStyles.secondaryButtonText}>Cancel</Text>
               </CopyableTouchableOpacity>
               <CopyableTouchableOpacity
                 onPress={handleLogout}
                 style={styles.confirmButton}
               >
-                <Text style={{ color: 'white' }}>Logout</Text>
+                <Text style={[{ color: 'white' }, uiStyles.primaryButtonText]}>Logout</Text>
               </CopyableTouchableOpacity>
             </View>
           </View>
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 18,
+    ...uiStyles.title,
     marginBottom: 20,
   },
   modalActions: {
@@ -145,11 +146,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cancelButton: {
-    padding: 10,
+    ...uiStyles.secondaryButton,
   },
   confirmButton: {
-    backgroundColor: '#6200EE',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.primaryButton,
   },
 });

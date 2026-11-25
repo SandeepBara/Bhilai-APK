@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const SubmissionModal = ({
   visible,
@@ -73,15 +74,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    ...uiStyles.input,
     height: 100,
     textAlignVertical: 'top',
     marginBottom: 15,
@@ -91,9 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   actionButton: {
-    borderRadius: 8,
-    padding: 12,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -107,9 +102,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F44336',
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   closeButton: {
     position: 'absolute',

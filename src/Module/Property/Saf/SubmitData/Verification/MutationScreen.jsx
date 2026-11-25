@@ -4,16 +4,17 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  Button,
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import Button from '../../../../../Components/AppButton';
 import Colors from '../../../../Constants/Colors';
 import axios from 'axios';
 import { SAF_APPLY_API } from '../../../../../api/apiRoutes'; // make sure this is your API route
 import { getToken } from '../../../../../utils/auth';
 import HeaderNavigation from '../../../../../Components/HeaderNavigation';
 import MessageModal from '../../../../../utils/MessageModal';
+import { uiStyles } from '../../../../../style/theme';
 
 const Row = ({ label, value }) => (
   <View style={styles.row}>
@@ -460,12 +461,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   sectionTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    ...uiStyles.cardTitle,
     marginBottom: 8,
-    color: '#ffffffff',
-    padding: 10,
-    backgroundColor: Colors.headignColor,
   },
   row: {
     flexDirection: 'row',
@@ -473,13 +470,12 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   label: {
-    fontWeight: '600',
-    color: '#555',
+    ...uiStyles.label,
     flex: 1,
   },
   value: {
+    ...uiStyles.text,
     flex: 1,
-    color: '#222',
     textAlign: 'right',
   },
 });

@@ -26,6 +26,7 @@ import {
   sendToLevel,
 } from '../Holdings/Surveysubmission/submissionApi';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const VerifiedStatus = ({ route }) => {
   const [isULBUser, setIsULBUser] = useState(false);
@@ -680,14 +681,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tableRow: { flexDirection: 'row', paddingVertical: 12, paddingHorizontal: 8 },
-  tableRowEven: { backgroundColor: '#f9f9f9' },
+  tableRowEven: {
+    ...uiStyles.tableStripe,
+  },
   tableRowOdd: { backgroundColor: '#fff' },
   tableHeader: {
-    backgroundColor: '#007AFF',
+    ...uiStyles.tableHeader,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
   },
-  tableHeaderText: { color: '#fff', fontWeight: '700', fontSize: 14 },
+  tableHeaderText: {
+    ...uiStyles.tableHeaderText,
+  },
   tableCellLabel: { flex: 1, fontSize: 14, fontWeight: '600', color: '#333' },
   tableCellValue: { flex: 1, fontSize: 14, color: '#000', textAlign: 'right' },
 
@@ -792,14 +797,15 @@ const styles = StyleSheet.create({
   captureButtonIcon: { color: '#fff', fontSize: 20 },
   captureButtonText: { color: '#fff', fontSize: 12 },
   button: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginVertical: 20,
   },
-  buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  buttonText: {
+    ...uiStyles.buttonText,
+    color: '#fff',
+  },
   disabledButton: {
+    ...uiStyles.disabledButton,
     backgroundColor: '#ccc',
   },
 

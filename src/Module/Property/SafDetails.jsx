@@ -17,6 +17,7 @@ import SAMModal from "./component/SAMModal";
 import PaymentReceiptModal from "./component/PaymentReceiptModal";
 import DocViewModal from "./component/DocViewModal"
 import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
+import { uiStyles } from '../../style/theme';
 
 function SafDetails() {
     const route = useRoute();
@@ -449,7 +450,7 @@ function SafDetails() {
                                                 setPaymentReceiptId(item.id);
                                             }}
                                         >
-                                            <Text style={styles.buttonText}>View</Text>
+                                            <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>View</Text>
                                         </CopyableTouchableOpacity>
                                     )
                                     ,
@@ -480,7 +481,7 @@ function SafDetails() {
                                                 setIsShowVerificationModal(true);
                                             }}
                                         >
-                                            <Text style={styles.buttonText}>View</Text>
+                                            <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>View</Text>
                                         </CopyableTouchableOpacity>
                                     )
                                     ,
@@ -519,7 +520,7 @@ function SafDetails() {
                                                     setSamReceiptId(item.id);
                                             }}
                                         >
-                                            <Text style={styles.buttonText}>View</Text>
+                                            <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>View</Text>
                                         </CopyableTouchableOpacity>
                                     )
                                     ,
@@ -623,15 +624,13 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
     },
     labelFixed: {
-        fontSize: 13,
-        marginVertical: 2,
-        fontWeight: '600',
-        color: '#555',
-        width: 120,
+      ...uiStyles.label,
+      marginVertical: 2,
+      width: 120,
     },
     value: {
-        flex: 1,
-        color: '#222',
+      ...uiStyles.text,
+      flex: 1,
     },
     headerRow: {
         backgroundColor: Colors.textSecondary,
@@ -662,23 +661,19 @@ const styles = StyleSheet.create({
     },
 
     tableHeader: {
-        backgroundColor: '#f0f0f0',
+      ...uiStyles.tableHeader,
     },
 
     tableCell: {
-        minWidth: 80,
-        padding: 4,
-        textAlign: 'center',
-        borderRightWidth: 0.5,
-        borderColor: '#ccc',
-        fontSize: 10,
-        color: '#000',
-        flex: 1,
+      ...uiStyles.tableCell,
+      minWidth: 80,
+      textAlign: 'center',
+      borderRightWidth: 0.5,
+      flex: 1,
     },
 
     headerText: {
-        fontWeight: 'bold',
-        color: '#fff',
+      ...uiStyles.tableHeaderText,
     },
 
     modalContainer: {
@@ -721,8 +716,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     label: {
-        fontSize: 13,
-        marginVertical: 2,
+      ...uiStyles.label,
+      marginVertical: 2,
     },
     bold: {
         fontWeight: 'bold',
@@ -733,9 +728,9 @@ const styles = StyleSheet.create({
         marginTop: 15,
     },
     tableHeaderRow: {
-        flexDirection: 'row',
-        backgroundColor: '#f0f0f0',
-        padding: 6,
+      ...uiStyles.tableHeader,
+      flexDirection: 'row',
+      padding: 6,
     },
     tableRowModal: {
         flexDirection: 'row',
@@ -789,18 +784,16 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     docModalTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 12,
-        textAlign: 'center',
-        color: '#222',
+      ...uiStyles.title,
+      marginBottom: 12,
+      textAlign: 'center',
     },
     docTableHeader: {
-        flexDirection: 'row',
-        backgroundColor: '#f0f0f0',
-        paddingVertical: 6,
-        borderBottomWidth: 1,
-        borderColor: '#ccc',
+      ...uiStyles.tableHeader,
+      flexDirection: 'row',
+      paddingVertical: 6,
+      borderBottomWidth: 1,
+      borderColor: '#ccc',
     },
     docTableRow: {
         flexDirection: 'row',
@@ -839,23 +832,18 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     viewButton: {
-        paddingHorizontal: 4,
-        paddingVertical: 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 2,
+      ...uiStyles.primaryButton,
+      marginHorizontal: 2,
     },
     viewButtonText: {
-        color: Colors.background,
-        backgroundColor: Colors.primary,
-        fontSize: 11,
-        padding: 8,
-        borderRadius: 8,
-        fontWeight: 'bold',
+      ...uiStyles.primaryButtonText,
+      backgroundColor: Colors.primary,
+      padding: 8,
+      borderRadius: 8,
     },
     disabledButton: {
-        opacity: 0.5,
-        backgroundColor: '#ccc',
+      ...uiStyles.disabledButton,
+      backgroundColor: '#ccc',
     },
     disabledButtonText: {
         color: '#888',
@@ -913,22 +901,18 @@ const styles = StyleSheet.create({
         minWidth: 1200,
     },
     tableSubHeader: {
-        backgroundColor: '#f0f0f0',
+      ...uiStyles.tableHeader,
     },
     tableFooter: {
         backgroundColor: 'white',
     },
     payNowButton: {
-        backgroundColor: '#28a745',
-        borderRadius: 6,
-        alignItems: 'center',
-        marginTop: 10,
+      ...uiStyles.primaryButton,
+      marginTop: 10,
     },
     payNowButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 16,
-        padding: 10,
+      ...uiStyles.primaryButtonText,
+      padding: 10,
     },
     modalContent: {
         backgroundColor: '#fff',
@@ -937,10 +921,9 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     modalTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 15,
-        textAlign: 'center',
+      ...uiStyles.title,
+      marginBottom: 15,
+      textAlign: 'center',
     },
     modalButtons: {
         flexDirection: 'row',
@@ -948,32 +931,22 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     cancelButton: {
-        backgroundColor: '#ccc',
-        padding: 10,
-        borderRadius: 5,
-        flex: 1,
-        marginRight: 10,
+      ...uiStyles.secondaryButton,
+      flex: 1,
+      marginRight: 10,
     },
     confirmButton: {
-        backgroundColor: '#28a745',
-        padding: 10,
-        borderRadius: 5,
-        flex: 1,
+      ...uiStyles.primaryButton,
+      flex: 1,
     },
     dropdown: {
-        height: 45,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        marginBottom: 10,
+      ...uiStyles.input,
+      height: 45,
+      marginBottom: 10,
     },
     input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        padding: 10,
-        marginBottom: 10,
+      ...uiStyles.input,
+      marginBottom: 10,
     },
     fullScreenModalContainer: {
         flex: 1,
@@ -1023,19 +996,16 @@ const styles = StyleSheet.create({
         marginHorizontal: '0.66%', 
         marginBottom: 10,
     },
-    button: { 
-        width: '100%',      
-        alignItems: 'center',
-        justifyContent: 'center',
+    button: {
+      ...uiStyles.primaryButton,
+      width: '100%',
     },
-    buttonText: { 
-        padding: 10,
-        borderRadius: 8,   
-        backgroundColor: Colors.primary,
-        color: '#fff', 
-        fontWeight: '700', 
-        fontSize: responsiveWidth(3.2), 
-        textAlign: "center",
-        flexWrap: 'wrap', 
+    buttonText: {
+      ...uiStyles.buttonText,
+      padding: 10,
+      borderRadius: 8,
+      backgroundColor: Colors.primary,
+      color: '#fff',
+      flexWrap: 'wrap',
     },
 });

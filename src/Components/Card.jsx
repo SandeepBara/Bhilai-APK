@@ -7,6 +7,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import Colors from '../Module/Constants/Colors';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 const Card = ({
   applicationNo,
   wardNo,
@@ -36,7 +37,7 @@ const Card = ({
       )}
 
       <CopyableTouchableOpacity onPress={onPress} style={styles.button}>
-        <Text style={styles.buttonText}>View</Text>
+        <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>View</Text>
       </CopyableTouchableOpacity>
     </View>
   );
@@ -69,27 +70,20 @@ const styles = StyleSheet.create({
     paddingBottom: rh(0.5),
   },
   label: {
-    fontSize: rf(1.7),
-    color: '#333',
-    fontWeight: '500',
+    ...uiStyles.label,
     width: '45%',
   },
   value: {
-    fontSize: rf(1.7),
-    color: '#555',
+    ...uiStyles.text,
     width: '50%',
     textAlign: 'right',
   },
   button: {
-    backgroundColor: Colors.primary || '#28a745',
-    paddingVertical: rh(1),
-    borderRadius: 6,
+    ...uiStyles.primaryButton,
     marginTop: rh(2),
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    textAlign: 'center',
-    fontSize: rf(1.8),
-    fontWeight: '600',
   },
 });

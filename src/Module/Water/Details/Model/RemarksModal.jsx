@@ -12,6 +12,7 @@ import { getToken } from '../../../../utils/auth';
 import { WATER_APPLICATION_POST_NEXT_API } from '../../../../api/apiRoutes';
 import axios from 'axios';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const RemarksModal = ({
   visible,
@@ -105,7 +106,7 @@ export const RemarksModal = ({
 
           <View style={styles.buttons}>
             <CopyableTouchableOpacity style={styles.cancelBtn} onPress={onClose}>
-              <Text style={styles.cancelText}>Cancel</Text>
+              <Text style={[styles.cancelText, uiStyles.secondaryButtonText]}>Cancel</Text>
             </CopyableTouchableOpacity>
 
             <CopyableTouchableOpacity style={styles.sendBtn} onPress={handleSend}>
@@ -148,10 +149,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputError: {
-    borderColor: 'red',
+    ...uiStyles.inputError,
   },
   errorText: {
-    color: 'red',
+    ...uiStyles.errorText,
     marginTop: 6,
     marginBottom: 10,
   },
@@ -160,10 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   cancelBtn: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#6c757d',
-    borderRadius: 6,
+    ...uiStyles.secondaryButton,
   },
   cancelText: {
     color: 'white',

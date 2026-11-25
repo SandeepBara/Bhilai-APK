@@ -18,6 +18,7 @@ import Toast from 'react-native-toast-message';
 import { showToast } from '../../../../utils/toast';
 import { toastConfig } from '../../../../utils/toastConfig';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -171,7 +172,7 @@ export const DocumentModal = ({ visible, onClose, documents }) => {
                         style={styles.viewBtn}
                         onPress={() => openPreview(index)}
                       >
-                        <Text style={styles.viewBtnText}>View</Text>
+                        <Text style={[styles.viewBtnText, uiStyles.primaryButtonText]}>View</Text>
                       </CopyableTouchableOpacity>
                     </View>
                   </View>
@@ -261,9 +262,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   mainTitle: {
-    fontSize: 18,
-    color: '#1E40AF',
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 12,
   },
@@ -299,17 +298,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   viewBtn: {
-    backgroundColor: '#1E40AF',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 6,
+    ...uiStyles.primaryButton,
     marginTop: 8,
     width: 80,
-    alignItems: 'center',
   },
   viewBtnText: {
-    color: '#fff',
-    fontWeight: 'bold'
+    ...uiStyles.primaryButtonText,
   },
   previewOverlay: {
     flex: 1,

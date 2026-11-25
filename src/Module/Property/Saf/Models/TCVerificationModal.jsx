@@ -14,6 +14,7 @@ import axios from 'axios';
 import { SAF_FIELD_VERIFICATION_DETAILS_API } from '../../../../api/apiRoutes';
 import Colors from '../../../Constants/Colors';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const TCVerificationModal = ({ visible, onClose, id }) => {
   const [extraFloor, setExtraFloor] = useState([]);
@@ -348,12 +349,8 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.cardTitle,
     marginBottom: 8,
-    backgroundColor: Colors.primary,
-    color: Colors.background,
-    padding: 5,
   },
   tableRowHeader: {
     flexDirection: 'row',

@@ -17,6 +17,7 @@ import {
 } from '@linvix-sistemas/react-native-escpos-buffer';
 import { useBluetoothPrinter } from '../../../../utils/BluetoothService';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const PaymentReceiptModal = ({ visible, onClose, paymentDtls }) => {
   // Local modal state
@@ -615,10 +616,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   labelFixed: {
-    fontSize: 13,
+    ...uiStyles.label,
     marginVertical: 2,
-    fontWeight: '600',
-    color: '#555',
   },
   bold: {
     fontWeight: 'bold',
@@ -629,8 +628,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   tableHeaderRow: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     padding: 6,
   },
   tableRowModal: {
@@ -682,31 +681,21 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   printBtn: {
-    backgroundColor: '#1E40AF',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginBottom: 10,
   },
   printText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   scanBtn: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     borderWidth: 2,
     borderColor: '#1E40AF',
   },
   scanText: {
+    ...uiStyles.buttonText,
     color: '#1E40AF',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   // Printer Modal Styles
   overlay: {
@@ -736,9 +725,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e5e7eb',
   },
   printerModalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1E40AF',
+    ...uiStyles.title,
   },
   closeIconBtn: {
     padding: 4,
@@ -753,9 +740,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#374151',
+    ...uiStyles.title,
     marginTop: 8,
     marginBottom: 12,
     textTransform: 'uppercase',

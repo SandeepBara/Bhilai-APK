@@ -1,5 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+} from 'react-native';
+import Button from '../../../Components/AppButton';
+import { uiStyles } from '../../../style/theme';
 
 const LoginForm = () => {
   const emailRef = useRef(null);
@@ -69,10 +76,7 @@ const LoginForm = () => {
 const styles = StyleSheet.create({
   container: { padding: 20 },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 6,
+    ...uiStyles.input,
     marginBottom: 5,
   },
   error: { color: 'red', marginBottom: 10 },

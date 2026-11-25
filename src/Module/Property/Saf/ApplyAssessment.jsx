@@ -29,6 +29,7 @@ import {
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
 import { cardHeader } from '../../../style/cardHeader';
 import { NEW_WARD_BY_OLD_API } from '../../../api/apiRoutes';
+import { uiStyles } from '../../../style/theme';
 
 const assessmentFlags = [
   ['isBpl', 'BPL category'],
@@ -2053,7 +2054,7 @@ const ApplyAssessment = ({ navigation, route }) => {
           disabled={previewing}
           accessibilityState={{ busy: previewing, disabled: previewing }}
         >
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>Submit</Text>
         </CopyableTouchableOpacity>
       </ScrollView>
     </View>
@@ -2086,10 +2087,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.cardTitle,
     marginBottom: 12,
-    color: '#2c3e50',
     paddingLeft: 4,
     ...cardHeader,
   },
@@ -2104,22 +2103,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#e1e8ed',
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    ...uiStyles.input,
     paddingVertical: 10,
-    backgroundColor: '#fff',
     marginBottom: 12,
-    fontSize: 16,
   },
   errorInput: {
-    borderColor: '#e74c3c',
+    ...uiStyles.inputError,
     borderWidth: 1.5,
   },
   errorText: {
-    color: '#e74c3c',
-    fontSize: 12,
+    ...uiStyles.errorText,
     marginTop: -8,
     marginBottom: 8,
     marginLeft: 4,
@@ -2134,20 +2127,13 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   dropdown: {
+    ...uiStyles.input,
     height: 50,
-    borderColor: '#e1e8ed',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
     marginBottom: 12,
     justifyContent: 'center',
   },
   button: {
-    backgroundColor: '#3498db',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 20,
     marginBottom: 30,
     elevation: 3,
@@ -2160,9 +2146,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontSize: 17,
-    fontWeight: '600',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -2182,10 +2167,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#3498db',
   },
   checkboxLabel: {
-    fontSize: 14,
-    color: '#2c3e50',
+    ...uiStyles.label,
     flexShrink: 1,
-    fontWeight: '500',
   },
   dateInput: {
     height: 45,
@@ -2245,10 +2228,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   label: {
-    fontSize: 14,
-    color: '#34495e',
+    ...uiStyles.label,
     marginBottom: 6,
-    fontWeight: '500',
   },
 });
 

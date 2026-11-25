@@ -9,6 +9,7 @@ import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import Colors from '../Module/Constants/Colors';
 import { CopyablePressable } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const FormField = forwardRef(
   (
@@ -121,7 +122,7 @@ const FormField = forwardRef(
 
     const renderButton = () => (
       <CopyablePressable onPress={onPressButton} style={styles.button}>
-        <Text style={styles.buttonText}>{buttonLabel}</Text>
+        <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>{buttonLabel}</Text>
       </CopyablePressable>
     );
 
@@ -178,26 +179,19 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
+    ...uiStyles.label,
     marginBottom: 4,
-    fontWeight: '600',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#aaa',
-    padding: 12,
-    borderRadius: 8,
+    ...uiStyles.input,
   },
   button: {
-    backgroundColor: Colors.primary,
-    padding: 14,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 22,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   selectedTextStyle: {
     fontSize: 14,
@@ -227,8 +221,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   errorText: {
-    color: 'red',
-    fontSize: 12,
+    ...uiStyles.errorText,
     marginTop: 4,
   },
 });

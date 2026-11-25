@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Colors from '../../Constants/Colors';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const { height } = Dimensions.get('window');
 
@@ -652,14 +653,12 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: 13,
-    color: '#555',
+    ...uiStyles.label,
     marginTop: 6,
   },
 
   value: {
-    fontSize: 14,
-    color: '#111',
+    ...uiStyles.text,
     fontWeight: '500',
   },
 
@@ -673,12 +672,9 @@ const styles = StyleSheet.create({
   },
 
   inputBox: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 6,
+    ...uiStyles.input,
     height: 36,
     marginTop: 4,
-    paddingHorizontal: 8,
   },
 
   uploadBox: {
@@ -694,16 +690,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#f59e0b', // amber color
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
   },
 
   buttonText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 
   closeBtn: {
@@ -730,17 +722,15 @@ const styles = StyleSheet.create({
   },
 
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: Colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 8,
   },
 
   tableHeaderText: {
+    ...uiStyles.tableHeaderText,
     flex: 1,
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 12,
     textAlign: 'center',
   },
 
@@ -753,7 +743,7 @@ const styles = StyleSheet.create({
   },
 
   tableRowEven: {
-    backgroundColor: '#f9f9f9',
+    ...uiStyles.tableStripe,
   },
 
   tableRowOdd: {

@@ -17,6 +17,7 @@ import { getToken } from '../../../../utils/auth';
 import { WATER_CONSUMER_GENERATE_DEMAND_API } from '../../../../api/apiRoutes';
 import axios from 'axios';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
   const [state, setState] = useState({
@@ -258,13 +259,13 @@ const GenerateDemandModal = ({ visible, onClose, connectionDetails, id }) => {
                 style={styles.submitButton}
                 onPress={handleSubmit}
               >
-                <Text style={styles.submitButtonText}>Submit</Text>
+                <Text style={[styles.submitButtonText, uiStyles.primaryButtonText]}>Submit</Text>
               </CopyableTouchableOpacity>
               <CopyableTouchableOpacity
                 style={styles.cancelButton}
                 onPress={handleCancel}
               >
-                <Text style={styles.cancelButtonText}>Cancel</Text>
+                <Text style={[styles.cancelButtonText, uiStyles.secondaryButtonText]}>Cancel</Text>
               </CopyableTouchableOpacity>
             </View>
           </View>
@@ -339,10 +340,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 14,
-    color: '#666',
+    ...uiStyles.label,
     marginBottom: 8,
-    fontWeight: '500',
   },
   labelRequired: {
     fontSize: 14,
@@ -354,14 +353,8 @@ const styles = StyleSheet.create({
     color: '#e74c3c',
   },
   textInput: {
-    paddingHorizontal: 15,
+    ...uiStyles.input,
     paddingVertical: 12,
-    fontSize: 16,
-    color: '#333',
-    borderRadius: 8,
-    backgroundColor: '#f8f9fc',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
   },
   dateInputContainer: {
     flexDirection: 'row',
@@ -390,28 +383,18 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   submitButton: {
+    ...uiStyles.primaryButton,
     flex: 1,
-    backgroundColor: '#28a745',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
   },
   submitButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.primaryButtonText,
   },
   cancelButton: {
+    ...uiStyles.secondaryButton,
     flex: 1,
-    backgroundColor: '#dc3545',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
   },
   cancelButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.secondaryButtonText,
   },
   photoContainer: {
     marginBottom: 20,

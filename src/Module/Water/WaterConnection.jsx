@@ -14,6 +14,7 @@ import * as Print from 'expo-print'; // ✅ Import print module
 import { SAF_FIELD_VERIFICATION_DETAILS_API } from '../../api/apiRoutes';
 import { getToken } from '../../utils/auth';
 import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
+import { uiStyles } from '../../style/theme';
 
 export const TCVerificationModal = ({ visible, onClose, id }) => {
   const [extraFloor, setExtraFloor] = useState([]);
@@ -127,7 +128,7 @@ export const TCVerificationModal = ({ visible, onClose, id }) => {
               <Text style={styles.closeText}>✕</Text>
             </CopyableTouchableOpacity>
             <CopyableTouchableOpacity style={styles.printBtn} onPress={handlePrint}>
-              <Text style={styles.printText}>🖨️ Print</Text>
+              <Text style={[styles.printText, uiStyles.primaryButtonText]}>🖨️ Print</Text>
             </CopyableTouchableOpacity>
           </View>
 
@@ -166,11 +167,11 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   printBtn: {
+    ...uiStyles.primaryButton,
     marginBottom: 5,
   },
   printText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.buttonText,
     color: 'green',
   },
   header: {

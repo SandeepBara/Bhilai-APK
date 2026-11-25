@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from './Header';
+import { uiStyles } from '../style/theme';
 
 const sampleData = [
   {
@@ -315,11 +316,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   searchInput: {
+    ...uiStyles.input,
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 10,
     height: 40,
     marginRight: 10,
   },

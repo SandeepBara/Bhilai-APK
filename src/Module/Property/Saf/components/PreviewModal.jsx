@@ -5,6 +5,7 @@ import FloorDetailsTable from './FloorDetailsTable';
 import OtherPropertyFeaturesTable from './OtherPropertyFeaturesTable';
 import { getLabelByValue, formatDate } from '../utils/helpers';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 const PreviewModal = ({
   visible,
@@ -195,8 +196,7 @@ const styles = StyleSheet.create({
     maxHeight: '90%',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 12,
     textAlign: 'center',
   },
@@ -215,10 +215,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   cardTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.cardTitle,
     marginBottom: 12,
-    color: '#0f3969',
   },
   cardRow: {
     flexDirection: 'row',
@@ -229,8 +227,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   cardLabel: {
-    fontWeight: '600',
-    color: '#333',
+    ...uiStyles.label,
     flex: 1,
   },
   cardValue: {
@@ -259,16 +256,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   submitButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
   },
   submitButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.primaryButtonText,
   },
 });
 

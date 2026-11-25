@@ -16,6 +16,7 @@ import Colors from '../Module/Constants/Colors';
 import HeaderNavigation from '../Components/HeaderNavigation';
 import FooterSection from '../Screen/FooterSection';
 import back_15 from '../assets/back_15.jpg';
+import { uiStyles } from '../style/theme';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -199,13 +200,10 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   label: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#333',
+    ...uiStyles.label,
   },
   value: {
-    fontSize: 15,
-    color: '#666',
+    ...uiStyles.text,
     textAlign: 'right',
     flexShrink: 1,
   },

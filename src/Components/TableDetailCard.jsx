@@ -4,6 +4,7 @@ import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimen
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../Constants/Colors';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 function TableDetailCard({ title, note, headers = [], data = [] }) {
     const hasData = data && data.length > 0;
     const [modalVisible, setModalVisible] = useState(false);
@@ -132,26 +133,23 @@ const styles = StyleSheet.create({
         marginVertical: responsiveHeight(1), 
     },
     headingWrapper: {
-        backgroundColor: Colors.headignColor,
-        paddingVertical: responsiveHeight(1.5),
-        paddingHorizontal: responsiveWidth(4),
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,        
-        borderWidth: 1, 
-        borderColor: Colors.headignColor,
-        borderBottomWidth: 0,
-        elevation: 6,
-        zIndex: 2, 
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.15,
-        shadowRadius: 5,
+      ...uiStyles.cardHeader,
+      paddingVertical: responsiveHeight(1.5),
+      paddingHorizontal: responsiveWidth(4),
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      borderWidth: 1,
+      borderBottomWidth: 0,
+      elevation: 6,
+      zIndex: 2,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.15,
+      shadowRadius: 5,
     },
     headingText: {
-        fontSize: responsiveWidth(4.5), 
-        fontWeight: '700', 
-        color: '#FFFFFF', 
-        textAlign: 'left',
+      ...uiStyles.cardHeaderText,
+      textAlign: 'left',
     },
 
     card: {
@@ -208,27 +206,22 @@ const styles = StyleSheet.create({
         minHeight: responsiveHeight(5),
     },
     tableHeader: {
-        backgroundColor: Colors.tableHeader || '#0b0b0bff',
-        borderRightWidth: 1,
-        borderRightColor: Colors.rowDivider || '#4f4848ff',        
+      ...uiStyles.tableHeader,
+      borderRightWidth: 1,
+      borderRightColor: Colors.rowDivider || '#4f4848ff',
     },
     headerText: {
-        fontWeight: 'bold',
-        color:"#fff",
-        textAlign: 'center',
-        paddingVertical: responsiveHeight(1),
-        fontSize: responsiveWidth(3.5),
+      ...uiStyles.tableHeaderText,
+      textAlign: 'center',
+      paddingVertical: responsiveHeight(1),
     },
     tableCell: {
-        paddingHorizontal: responsiveWidth(1.5),
-        paddingVertical: responsiveHeight(1),
-        borderRightWidth: 1,
-        borderRightColor: Colors.rowDivider || '#eee',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: responsiveWidth(3.2),
-        color: Colors.textValue || '#222',
-        textAlign: 'left',
+      ...uiStyles.tableCell,
+      borderRightWidth: 1,
+      borderRightColor: Colors.rowDivider || '#eee',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'left',
     },
     tableBodyContainer: {
         // The container for the actual data rows
@@ -256,13 +249,11 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     modalTitle: {
-        fontSize: responsiveWidth(5),
-        fontWeight: 'bold',
-        marginBottom: responsiveHeight(1),
-        color: Colors.headingColor || '#1f3e7a',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        paddingBottom: responsiveHeight(0.5),
+      ...uiStyles.title,
+      marginBottom: responsiveHeight(1),
+      borderBottomWidth: 1,
+      borderBottomColor: '#ddd',
+      paddingBottom: responsiveHeight(0.5),
     },
     modalInfo: {
         fontSize: responsiveWidth(4),

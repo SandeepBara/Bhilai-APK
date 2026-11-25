@@ -11,6 +11,7 @@ import {
 import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const PayNowModal = ({
   visible,
@@ -167,14 +168,14 @@ export const PayNowModal = ({
           {/* Buttons */}
           <View style={styles.modalButtons}>
             <CopyableTouchableOpacity onPress={onClose} style={styles.cancelButton}>
-              <Text>Cancel</Text>
+              <Text style={uiStyles.secondaryButtonText}>Cancel</Text>
             </CopyableTouchableOpacity>
 
             <CopyableTouchableOpacity
               onPress={handleProceed}
               style={styles.confirmButton}
             >
-              <Text>Proceed</Text>
+              <Text style={uiStyles.primaryButtonText}>Proceed</Text>
             </CopyableTouchableOpacity>
           </View>
         </View>
@@ -197,8 +198,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -208,37 +208,25 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cancelButton: {
-    backgroundColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.secondaryButton,
     flex: 1,
     marginRight: 10,
   },
   confirmButton: {
-    backgroundColor: '#28a745',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.primaryButton,
     flex: 1,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 45,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
     marginBottom: 10,
-    borderColor: '#ccc',
-    borderRadius: 8,
   },
   label: {
-    fontWeight: '600',
+    ...uiStyles.label,
     marginBottom: 5,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    ...uiStyles.input,
     marginBottom: 10,
   },
 });

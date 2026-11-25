@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Colors from '../../../Constants/Colors';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 export const ViewDemandModal = ({
   visible,
@@ -401,7 +402,7 @@ export const ViewDemandModal = ({
                     style={styles.payNowButton}
                     onPress={onPayNowPress}
                   >
-                    <Text style={styles.payNowButtonText}>💳 Pay Now</Text>
+                    <Text style={[styles.payNowButtonText, uiStyles.primaryButtonText]}>💳 Pay Now</Text>
                   </CopyableTouchableOpacity>
                 )}
 
@@ -468,12 +469,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   label: {
-    fontWeight: '600',
+    ...uiStyles.label,
     width: '60%',
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
     width: '40%',
     textAlign: 'right',
   },
@@ -526,38 +527,30 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
   tableHeader: {
-    backgroundColor: '#003366',
+    ...uiStyles.tableHeader,
   },
   tableSubHeader: {
-    backgroundColor: '#f0f0f0',
+    ...uiStyles.tableHeader,
   },
   tableFooter: {
     backgroundColor: 'white',
   },
   tableCell: {
+    ...uiStyles.tableCell,
     width: 120,
-    padding: 4,
     textAlign: 'center',
     borderRightWidth: 0.5,
-    borderColor: '#ccc',
-    fontSize: 10,
-    color: '#000',
     flex: 1,
   },
   headerText: {
-    fontWeight: 'bold',
-    color: '#fff',
+    ...uiStyles.tableHeaderText,
   },
   payNowButton: {
-    backgroundColor: '#28a745',
-    borderRadius: 6,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
   },
   payNowButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    ...uiStyles.primaryButtonText,
     padding: 10,
   },
 });

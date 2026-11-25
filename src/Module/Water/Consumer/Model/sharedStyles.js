@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import Colors from '../../../Constants/Colors';
+import { uiStyles } from '../../../../style/theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,31 +16,21 @@ export const sharedStyles = StyleSheet.create({
     marginBottom: 8,
   },
   printBtn: {
-    backgroundColor: '#1E40AF',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginBottom: 10,
   },
   printText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   scanBtn: {
-    backgroundColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     borderWidth: 2,
     borderColor: '#1E40AF',
   },
   scanText: {
+    ...uiStyles.buttonText,
     color: '#1E40AF',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   // Printer Modal Styles
   printerModalContent: {
@@ -62,9 +53,7 @@ export const sharedStyles = StyleSheet.create({
     borderBottomColor: '#e5e7eb',
   },
   printerModalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1E40AF',
+    ...uiStyles.title,
   },
   closeIconBtn: {
     padding: 4,
@@ -74,9 +63,7 @@ export const sharedStyles = StyleSheet.create({
     padding: 16,
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#374151',
+    ...uiStyles.cardTitle,
     marginTop: 8,
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -176,9 +163,7 @@ export const sharedStyles = StyleSheet.create({
     fontSize: 16,
   },
   mainTitle: {
-    fontSize: 18,
-    color: '#b30000',
-    fontWeight: 'bold',
+    ...uiStyles.title,
     textAlign: 'center',
     marginBottom: 8,
   },
@@ -202,10 +187,8 @@ export const sharedStyles = StyleSheet.create({
     borderRadius: 8,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
+    ...uiStyles.cardTitle,
     marginBottom: 10,
-    color: '#333',
   },
   rowContainer: {
     flexDirection: 'row',
@@ -214,14 +197,13 @@ export const sharedStyles = StyleSheet.create({
     paddingVertical: 4,
   },
   label: {
-    fontWeight: '600',
+    ...uiStyles.label,
     flex: 1,
-    color: '#555',
   },
   value: {
+    ...uiStyles.text,
     flex: 1,
     textAlign: 'right',
-    color: '#000',
   },
   declaration: {
     marginTop: 12,
@@ -242,16 +224,12 @@ export const sharedStyles = StyleSheet.create({
     textAlign: 'center',
   },
   printBtn: {
+    ...uiStyles.primaryButton,
     marginTop: 18,
-    backgroundColor: '#0c3c78',
-    paddingVertical: 12,
-    alignItems: 'center',
-    borderRadius: 6,
   },
   printText: {
+    ...uiStyles.buttonText,
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
   },
   divider: {
     height: 1,
@@ -264,22 +242,14 @@ export const sharedStyles = StyleSheet.create({
     color: '#000',
   },
   dropdown: {
+    ...uiStyles.input,
     height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#fff',
   },
   row: {
     marginBottom: 12,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 6,
-    padding: 10,
-    backgroundColor: '#fff',
+    ...uiStyles.input,
   },
   submitBtn: {
     backgroundColor: '#b30000',
@@ -318,16 +288,11 @@ export const sharedStyles = StyleSheet.create({
     marginBottom: 5,
   },
   viewBtn: {
-    backgroundColor: '#0c3c78',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 5,
+    ...uiStyles.primaryButton,
     marginTop: 4,
   },
   viewBtnText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 12,
+    ...uiStyles.primaryButtonText,
   },
   paymentModalContent: {
     maxWidth: 500,
@@ -406,16 +371,11 @@ export const sharedStyles = StyleSheet.create({
     color: '#92400e',
   },
   payNowButton: {
-    backgroundColor: '#3b82f6',
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: 'center',
+    ...uiStyles.primaryButton,
     marginTop: 10,
   },
   payNowButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    ...uiStyles.primaryButtonText,
   },
   paymentSummarySection: {
     marginTop: 20,
@@ -424,18 +384,15 @@ export const sharedStyles = StyleSheet.create({
     paddingTop: 20,
   },
   tableHeader: {
-    backgroundColor: '#f3f4f6',
+    ...uiStyles.tableHeader,
     borderBottomWidth: 2,
     borderBottomColor: '#d1d5db',
   },
   tableCell: {
-    paddingHorizontal: 8,
-    paddingVertical: 12,
-    fontSize: 12,
-    color: '#374151',
+    ...uiStyles.tableCell,
   },
   rowEven: {
-    backgroundColor: '#f9fafb',
+    ...uiStyles.tableStripe,
   },
   rowOdd: {
     backgroundColor: '#ffffff',
@@ -457,19 +414,13 @@ export const sharedStyles = StyleSheet.create({
     color: '#b30000',
   },
   payButton: {
-    backgroundColor: Colors.primary,
-    padding: 12,
-    borderRadius: 8,
+    ...uiStyles.primaryButton,
     marginTop: 10,
     width: 120,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
   },
   payButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    ...uiStyles.primaryButtonText,
   },
   previewOverlay: {
     flex: 1,
@@ -538,7 +489,7 @@ export const sharedStyles = StyleSheet.create({
     paddingVertical: 8,
   },
   tableHeaderRow: {
-    backgroundColor: '#f1f1f1',
+    ...uiStyles.tableHeader,
   },
   tableHeaderCell: {
     fontWeight: 'bold',

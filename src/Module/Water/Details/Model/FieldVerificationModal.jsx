@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { CopyableTouchableOpacity } from '../../../../Components/CopyableControl';
+import { uiStyles } from '../../../../style/theme';
 
 // Reusable InfoRow Component
 const InfoRow = ({ label, value, fullWidth = false }) => (
@@ -206,8 +207,7 @@ const styles = StyleSheet.create({
   },
   section: { marginBottom: 24 },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: '600',
+    ...uiStyles.cardTitle,
     marginBottom: 8,
   },
   sectionDivider: {
@@ -231,18 +231,23 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   fullWidth: { width: '100%' },
-  label: { fontSize: 10, color: '#6b7280' },
-  value: { fontSize: 10, fontWeight: '500', width: '60%' },
+  label: {
+    ...uiStyles.label,
+  },
+  value: {
+    ...uiStyles.text,
+    fontWeight: '500',
+    width: '60%',
+  },
   table: { marginTop: 12 },
   tableHeader: {
+    ...uiStyles.tableHeader,
     flexDirection: 'row',
-    backgroundColor: '#f9fafb',
     paddingVertical: 12,
     borderBottomWidth: 1,
   },
   tableHeaderText: {
-    fontSize: 13,
-    fontWeight: '600',
+    ...uiStyles.tableHeaderText,
   },
   tableRow: {
     flexDirection: 'row',
@@ -250,8 +255,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
-  tableRowEven: { backgroundColor: '#fafafa' },
-  tableCell: { fontSize: 13 },
+  tableRowEven: {
+    ...uiStyles.tableStripe,
+  },
+  tableCell: {
+    ...uiStyles.tableCell,
+  },
   colField: { flex: 2 },
   colApp: { flex: 2 },
   colVerify: { flex: 2 },

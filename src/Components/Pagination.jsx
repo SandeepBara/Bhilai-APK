@@ -14,6 +14,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import Colors from '../Module/Constants/Colors';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const Pagination = ({
   page,
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   },
 
   disabledBtn: {
+    ...uiStyles.disabledButton,
     backgroundColor: '#CCCCCC',
   },
 

@@ -11,6 +11,7 @@ import Colors from '../../../Constants/Colors';
 import { safSearchApi } from '../../../api/endpoint';
 import { statusColor } from '../../../utils/common';
 import { CopyableTouchableOpacity } from '../../Components/CopyableControl';
+import { uiStyles } from '../../style/theme';
 
 function SearchSaf() {
     const navigation = useNavigation();
@@ -220,8 +221,14 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         flexWrap: 'wrap',
     },
-    cardLabel: { fontWeight: '600', color: '#333', width: '40%' },
-    value: { color: '#555', width: '55%' },
+    cardLabel: {
+      ...uiStyles.label,
+      width: '40%',
+    },
+    value: {
+      ...uiStyles.text,
+      width: '55%',
+    },
     safRow: {
         flexDirection: 'row',
         alignItems: 'center',

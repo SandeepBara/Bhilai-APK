@@ -4,14 +4,15 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  Button,
   ActivityIndicator,
 } from 'react-native';
+import Button from '../../../../Components/AppButton';
 import Colors from '../../../Constants/Colors';
 import axios from 'axios';
 import { SAF_APPLY_API } from '../../../../api/apiRoutes';
 import { getToken } from '../../../../utils/auth';
 import MessageModal from '../../../../utils/MessageModal';
+import { uiStyles } from '../../../../style/theme';
 
 const Row = ({ label, value }) => (
   <View style={styles.row}>
@@ -400,20 +401,23 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   sectionTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    ...uiStyles.cardTitle,
     marginBottom: 8,
-    color: '#fff',
-    padding: 10,
-    backgroundColor: Colors.headignColor,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 6,
   },
-  label: { fontWeight: '600', color: '#555', flex: 1 },
-  value: { flex: 1, color: '#222', textAlign: 'right' },
+  label: {
+    ...uiStyles.label,
+    flex: 1,
+  },
+  value: {
+    ...uiStyles.text,
+    flex: 1,
+    textAlign: 'right',
+  },
 });
 
 export default RessesmentSummry;

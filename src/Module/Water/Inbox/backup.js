@@ -21,6 +21,7 @@ import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { fetchFieldVerificationData } from './BackendData/fetchFieldVerificationData';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const WaterSurvey = () => {
   const route = useRoute();
@@ -604,8 +605,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: responsiveFontSize(2),
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 10,
   },
   modalContent: {
@@ -654,15 +654,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   saveButton: {
-    backgroundColor: '#059669',
-    paddingHorizontal: responsiveWidth(6),
-    paddingVertical: responsiveHeight(1),
-    borderRadius: 6,
+    ...uiStyles.primaryButton,
   },
   saveButtonText: {
-    color: 'white',
-    fontSize: responsiveFontSize(1.8),
-    fontWeight: '600',
+    ...uiStyles.primaryButtonText,
   },
   scrollContainer: {
     flex: 1,
@@ -717,24 +712,17 @@ const styles = StyleSheet.create({
     shadowRadius: 1.5,
   },
   dropdown: {
+    ...uiStyles.input,
     height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
     marginHorizontal: 8,
     marginVertical: 8,
-    backgroundColor: '#fff',
   },
   label: {
+    ...uiStyles.label,
     marginBottom: 5,
-    fontWeight: 'bold',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
+    ...uiStyles.input,
     marginTop: 5,
   },
   sectionHeader: {

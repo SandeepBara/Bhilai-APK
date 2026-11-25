@@ -1,9 +1,3 @@
-import Colors from '../Module/Constants/Colors';
+import { uiStyles } from './theme';
 
-export const cardHeader = {
-  backgroundColor: Colors.headignColor,
-  color: Colors.white,
-  paddingHorizontal: 10,
-  paddingVertical: 8,
-  borderRadius: 6,
-};
+export const cardHeader = uiStyles.cardTitle;

@@ -11,6 +11,7 @@ import {
 import MonthPicker from 'react-native-month-year-picker';
 import moment from 'moment';
 import { CopyableTouchableOpacity } from '../../../Components/CopyableControl';
+import { uiStyles } from '../../../style/theme';
 
 const DatePickerForm = () => {
   const [date, setDate] = useState(new Date());
@@ -57,7 +58,7 @@ const DatePickerForm = () => {
 
         {/* Submit Button */}
         <CopyableTouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-          <Text style={styles.submitButtonText}>Submit</Text>
+          <Text style={[styles.submitButtonText, uiStyles.primaryButtonText]}>Submit</Text>
         </CopyableTouchableOpacity>
 
         {/* Date Picker Modal */}
@@ -95,10 +96,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
+    ...uiStyles.label,
     marginBottom: 8,
-    color: '#333',
   },
   dateInput: {
     borderWidth: 1,
@@ -120,9 +119,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   submitButton: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 8,
+    ...uiStyles.primaryButton,
     marginTop: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -134,10 +131,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   submitButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    ...uiStyles.primaryButtonText,
   },
 });
 

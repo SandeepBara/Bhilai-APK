@@ -6,6 +6,7 @@ import Colors from '../Module/Constants/Colors';
 import { showToast } from '../utils/toast';
 import Icon from 'react-native-vector-icons/Feather';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const LogoutButton = () => {
   const navigation = useNavigation();
@@ -33,7 +34,7 @@ const LogoutButton = () => {
       >
         <Icon name="log-out" size={20} color={Colors.primary} />
 
-        <Text style={styles.icon}>Logout</Text>
+        <Text style={[styles.icon, uiStyles.primaryButtonText]}>Logout</Text>
       </CopyableTouchableOpacity>
 
       {/* Confirmation Modal */}
@@ -77,14 +78,12 @@ export default LogoutButton;
 
 const styles = StyleSheet.create({
   button: {
+    ...uiStyles.primaryButton,
     flexDirection: 'row',
-    borderRadius: 6,
-    alignItems: 'center',
-    justifyContent: 'flex-start', // ✅ align icon & text to left
     marginVertical: 10,
-    width: 100, // optional: increase if too small
+    width: 100,
     height: 40,
-    marginLeft: 20, // ✅ push slightly from left edge
+    marginLeft: 20,
   },
 
   icon: {
@@ -108,10 +107,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.title,
     marginBottom: 10,
-    color: Colors.primary,
   },
   modalMessage: {
     fontSize: 14,
@@ -132,7 +129,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   cancelButton: {
-    backgroundColor: '#ccc',
+    ...uiStyles.secondaryButton,
   },
   logoutButton: {
     backgroundColor: Colors.primary,

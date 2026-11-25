@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import React from 'react';
 import HeaderNavigation from '../../../../../Components/HeaderNavigation';
+import { uiStyles } from '../../../../../style/theme';
 
 const Card = ({ title, children }) => (
   <View style={styles.card}>
@@ -186,13 +187,11 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    ...uiStyles.cardTitle,
     marginBottom: 12,
-    color: '#2e86de',
   },
   label: {
-    fontWeight: 'bold',
+    ...uiStyles.label,
   },
   photoBox: {
     marginBottom: 12,

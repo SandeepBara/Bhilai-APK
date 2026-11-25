@@ -4,6 +4,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
+import { uiStyles } from '../../../../style/theme';
 
 const ApplicationInfo = ({ data }) => {
   if (!data) return null;
@@ -41,13 +42,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   label: {
-    fontSize: responsiveFontSize(1.8),
-    color: '#333',
-    fontWeight: '500',
+    ...uiStyles.label,
   },
   value: {
+    ...uiStyles.text,
     fontWeight: 'bold',
-    color: '#000',
   },
 });
 

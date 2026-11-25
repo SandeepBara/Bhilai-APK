@@ -8,6 +8,7 @@ import {
   responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import { CopyableTouchableOpacity } from './CopyableControl';
+import { uiStyles } from '../style/theme';
 
 const CustomAlert = ({ visible, message, onClose }) => {
   return (
@@ -16,7 +17,7 @@ const CustomAlert = ({ visible, message, onClose }) => {
         <View style={styles.alertBox}>
           <Text selectable style={styles.message}>{message}</Text>
           <CopyableTouchableOpacity onPress={onClose} style={styles.button}>
-            <Text style={styles.buttonText}>OK</Text>
+            <Text style={[styles.buttonText, uiStyles.primaryButtonText]}>OK</Text>
           </CopyableTouchableOpacity>
         </View>
       </View>
@@ -54,14 +55,10 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(2),
   },
   button: {
-    backgroundColor: Colors.primary,
-    paddingVertical: responsiveHeight(1.2),
-    paddingHorizontal: responsiveWidth(5),
-    borderRadius: responsiveWidth(2),
+    ...uiStyles.primaryButton,
   },
   buttonText: {
+    ...uiStyles.buttonText,
     color: Colors.background,
-    fontSize: responsiveFontSize(1.8),
-    fontWeight: 'bold',
   },
 });
